@@ -2,7 +2,7 @@ import 'package:bestfriend/bestfriend.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceServiceImplementation implements SharedPreferenceService {
-  late final SharedPreferences _prefs;
+  late SharedPreferences _prefs;
 
   @override
   Future<void> call() async {

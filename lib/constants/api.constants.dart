@@ -1,8 +1,9 @@
 /// --------------------------------------------------
 /// ------------- Base URL for the API ---------------
 /// --------------------------------------------------
-const auBaseURL = "https://dev.flexyear.com/backend/";
+const auBaseURL = "https://dev.flexyear.com/backend/flexyear_api/api/web/v1/";
 
 /// --------------------------------------------------
 /// ---------------  API Endpoints -------------------
 /// --------------------------------------------------
+const auAppAccess = "appaccess/index";

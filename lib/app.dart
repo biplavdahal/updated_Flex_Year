@@ -4,8 +4,8 @@ import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/start_up/start_up.view.dart';
 import 'package:flutter/material.dart';
 
-class FlexyearTabletApp extends StatelessWidget {
-  const FlexyearTabletApp({Key? key}) : super(key: key);
+class FlexYearApp extends StatelessWidget {
+  const FlexYearApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +19,20 @@ class FlexyearTabletApp extends StatelessWidget {
           settings,
           routesAndViews(settings),
         ),
+        builder: (context, child) {
+          return Navigator(
+            onGenerateRoute: (settings) => MaterialPageRoute(
+                builder: (context) => SnackbarManager(
+                      behavior: SnackBarBehavior.floating,
+                      elevation: 0,
+                      infoColor: AppColor.primary,
+                      errorColor: Colors.red,
+                      successColor: Colors.green,
+                      warningColor: AppColor.accent,
+                      body: child!,
+                    )),
+          );
+        },
         navigatorKey: locator<NavigationService>().navigationKey,
         home: const StartUpView(),
       ),
