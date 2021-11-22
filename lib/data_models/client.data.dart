@@ -8,8 +8,8 @@ part 'client.data.g.dart';
 @freezed
 class ClientData with _$ClientData {
   const factory ClientData({
-    @JsonKey(name: 'client_id') required int clientId,
-    @JsonKey(name: 'company_id') required int companyId,
+    @JsonKey(name: 'client_id') required String clientId,
+    @JsonKey(name: 'company_id') required String companyId,
     @JsonKey(name: 'name') required String name,
     @JsonKey(name: 'address') required String address,
   }) = _ClientData;

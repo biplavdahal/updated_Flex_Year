@@ -15,7 +15,7 @@ Future<void> main() async {
   await locator<SharedPreferenceService>()();
 
   locator<ApiService>()(
-    baseUrl: auBaseURL,
+    baseUrl: auApiBaseUrl,
   );
 
   await locator<SharedPreferenceService>()();

@@ -40,7 +40,7 @@ class AppAccessServiceImplementation implements AppAccessService {
 
       final data = constructResponse(_response.data);
 
-      if (data!["status"] == false) {
+      if (data!.containsKey("status") && data["status"] == false) {
         throw data["response"];
       }
 

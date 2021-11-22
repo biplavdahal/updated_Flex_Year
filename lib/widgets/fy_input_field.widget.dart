@@ -6,6 +6,7 @@ class FYInputField extends StatefulWidget {
   final TextInputType keyboardType;
   final TextEditingController? controller;
   final bool obscureText;
+  final String? Function(String?)? validator;
 
   const FYInputField({
     Key? key,
@@ -14,6 +15,7 @@ class FYInputField extends StatefulWidget {
     this.maxLength,
     this.keyboardType = TextInputType.text,
     this.obscureText = false,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -47,6 +49,7 @@ class _FYInputFieldState extends State<FYInputField> {
               )
             : null,
       ),
+      validator: widget.validator,
       style: const TextStyle(fontSize: 14),
       maxLength: widget.maxLength,
       keyboardType: widget.obscureText

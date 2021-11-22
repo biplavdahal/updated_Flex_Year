@@ -11,16 +11,23 @@ part 'user.data.g.dart';
 
 @freezed
 class UserData with _$UserData {
-  const factory UserData({
-    @JsonKey(name: 'angular_role') required String role,
-    @JsonKey(name: 'access_token') required String accessToken,
-    @JsonKey(name: 'id') required int it,
-    @JsonKey(name: 'access_level') required String accessLevel,
-    @JsonKey(name: 'staff') required StaffData staff,
-    @JsonKey(name: 'staffaddressper') required List<StaffAddressData> staffAddresses,
-    @JsonKey(name: 'designation') required DesignationData designation,
-    @JsonKey(name: 'client') required List<ClientData> clients
-  }) = _UserData;
+  const factory UserData(
+      {@JsonKey(name: 'angular_role')
+          required String role,
+      @JsonKey(name: 'access_token')
+          required String accessToken,
+      @JsonKey(name: 'id')
+          required int id,
+      @JsonKey(name: 'access_level')
+          required int accessLevel,
+      @JsonKey(name: 'staff')
+          required StaffData staff,
+      @JsonKey(name: 'staffaddressper')
+          required List<StaffAddressData> staffAddresses,
+      @JsonKey(name: 'designation')
+          DesignationData? designation,
+      @JsonKey(name: 'client')
+          required List<ClientData> clients}) = _UserData;
 
   factory UserData.fromJson(Map<String, dynamic> json) =>
       _$UserDataFromJson(json);

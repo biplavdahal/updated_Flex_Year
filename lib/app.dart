@@ -1,4 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
+import 'package:flex_year_tablet/managers/dialog/dialog.manager.dart';
 import 'package:flex_year_tablet/routes.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/start_up/start_up.view.dart';
@@ -22,14 +23,16 @@ class FlexYearApp extends StatelessWidget {
         builder: (context, child) {
           return Navigator(
             onGenerateRoute: (settings) => MaterialPageRoute(
-                builder: (context) => SnackbarManager(
-                      behavior: SnackBarBehavior.floating,
-                      elevation: 0,
-                      infoColor: AppColor.primary,
-                      errorColor: Colors.red,
-                      successColor: Colors.green,
-                      warningColor: AppColor.accent,
-                      body: child!,
+                builder: (context) => DialogManager(
+                      child: SnackbarManager(
+                        behavior: SnackBarBehavior.floating,
+                        elevation: 0,
+                        infoColor: AppColor.primary,
+                        errorColor: Colors.red,
+                        successColor: Colors.green,
+                        warningColor: AppColor.accent,
+                        body: child!,
+                      ),
                     )),
           );
         },

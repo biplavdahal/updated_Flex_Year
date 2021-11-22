@@ -1,4 +1,6 @@
+import 'package:bestfriend/bestfriend.dart';
 import 'package:bestfriend/ui/view.dart';
+import 'package:flex_year_tablet/helper/fy_validator.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/login/login.model.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
@@ -16,6 +18,7 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return View<LoginModel>(
       enableTouchRepeal: true,
+      onModelReady: (model) => model.init(),
       builder: (ctx, model, child) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
@@ -98,6 +101,7 @@ class LoginView extends StatelessWidget {
                 FYInputField(
                   label: "Username",
                   controller: model.usernameController,
+                  validator: FYValidator.isRequired,
                 ),
                 const SizedBox(
                   height: 12,
@@ -106,6 +110,7 @@ class LoginView extends StatelessWidget {
                   label: "Password",
                   controller: model.passwordController,
                   obscureText: true,
+                  validator: FYValidator.isRequired,
                 ),
                 const SizedBox(
                   height: 12,
@@ -123,7 +128,9 @@ class LoginView extends StatelessWidget {
                     Expanded(
                       child: FYPrimaryButton(
                         label: "Login",
-                        onPressed: () {},
+                        onPressed: () {
+                          model.login();
+                        },
                       ),
                     ),
                     const SizedBox(
@@ -183,6 +190,7 @@ class LoginView extends StatelessWidget {
                   controller: model.pinController,
                   keyboardType: TextInputType.number,
                   maxLength: 6,
+                  validator: FYValidator.isRequired,
                 ),
                 const SizedBox(
                   height: 12,
@@ -192,7 +200,9 @@ class LoginView extends StatelessWidget {
                     Expanded(
                       child: FYPrimaryButton(
                         label: "Send",
-                        onPressed: () {},
+                        onPressed: () {
+                          model.login();
+                        },
                       ),
                     ),
                     const SizedBox(

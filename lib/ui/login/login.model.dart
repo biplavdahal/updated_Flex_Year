@@ -1,7 +1,17 @@
+import 'package:bestfriend/bestfriend.dart';
+import 'package:bestfriend/mixins/snack_bar.mixin.dart';
 import 'package:bestfriend/ui/view.model.dart';
+import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
+import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
+import 'package:flex_year_tablet/services/authentication.service.dart';
+import 'package:flex_year_tablet/ui/dashboard/dashboard.view.dart';
 import 'package:flutter/material.dart';
 
-class LoginModel extends ViewModel {
+class LoginModel extends ViewModel with DialogMixin, SnackbarMixin {
+  // Services
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
+
   // UI components
   final GlobalKey<FormState> _loginWithPinFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> get loginWithPinFormKey => _loginWithPinFormKey;
@@ -32,5 +42,73 @@ class LoginModel extends ViewModel {
   }
 
   // Actions
-  Future<void> login() async {}
+  Future<void> init() async {
+    _usernameController.text =
+        await _authenticationService.getSavedUsername() ?? "";
+    setIdle();
+  }
+
+  Future<void> login() async {
+    try {
+      if (_showLoginWithPin && loginWithPinFormKey.currentState!.validate()) {
+        dialog.showDialog(
+          DialogRequest(
+            type: DialogType.progress,
+            title: "Checking login detail...",
+          ),
+        );
+
+        await _loginWithPin();
+      } else if (!_showLoginWithPin &&
+          loginWithUsernamePasswordFormKey.currentState!.validate()) {
+        dialog.showDialog(
+          DialogRequest(
+            type: DialogType.progress,
+            title: "Checking login detail...",
+          ),
+        );
+        await _loginWithUsernameAndPassword();
+      }
+      dialog.hideDialog();
+    } catch (e) {
+      dialog.hideDialog();
+      setIdle();
+      snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
+    }
+  }
+
+  Future<void> _loginWithUsernameAndPassword() async {
+    try {
+      await _authenticationService.authByUsername(
+        username: _usernameController.text.trim(),
+        password: _passwordController.text,
+      );
+
+      if (_rememberMe) {
+        await _authenticationService.saveUsername(_usernameController.text);
+      }
+
+      setSuccess();
+      gotoAndClear(DashboardView.tag);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> _loginWithPin() async {
+    try {
+      await _authenticationService.authByPin(
+        pin: _pinController.text,
+      );
+
+      if (_rememberMe) {
+        await _authenticationService.saveUsername(_usernameController.text);
+      }
+
+      setSuccess();
+      gotoAndClear(DashboardView.tag);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

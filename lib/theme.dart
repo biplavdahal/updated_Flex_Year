@@ -19,6 +19,11 @@ getThemeDataTheme(BuildContext context) {
     textTheme: GoogleFonts.montserratTextTheme(
       Theme.of(context).textTheme,
     ),
+    appBarTheme: const AppBarTheme(
+      color: AppColor.primary,
+      elevation: 0,
+      centerTitle: true,
+    ),
     colorScheme: ColorScheme.fromSwatch().copyWith(secondary: AppColor.accent),
     inputDecorationTheme: const InputDecorationTheme(
       labelStyle: TextStyle(
@@ -66,6 +71,11 @@ getThemeDataTheme(BuildContext context) {
         ),
         side: const BorderSide(color: AppColor.primary, width: 1),
       ),
+    ),
+    
+    iconTheme: const IconThemeData(
+      color: AppColor.primary,
+      size: 24,
     ),
   );
 }

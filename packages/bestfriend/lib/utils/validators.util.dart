@@ -10,7 +10,7 @@ class Validators {
   ];
 
   /// Method created for email validation
-  String? validateEmail(String? value) {
+  static String? validateEmail(String? value) {
     // Created pattern to match with emailid pattern
     // Using the regular expression https://www.codegrepper.com/code-examples/dart/dart+regex+for+email
 
@@ -30,7 +30,7 @@ class Validators {
   }
 
   /// Method created for password validation
-  String? validatePassword(String? value) {
+  static String? validatePassword(String? value) {
     String pattern =
         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
     RegExp regExp = RegExp(pattern);
@@ -46,7 +46,7 @@ class Validators {
     return null;
   }
 
-  String? validateConfirmPassword(String? confirm, String password) {
+  static String? validateConfirmPassword(String? confirm, String password) {
     // Checking the password is empty or not
     if (confirm == null) {
       return "Please re-enter the password.";
@@ -59,7 +59,7 @@ class Validators {
   }
 
   /// Method created for Phone validation
-  String? validatePhoneNumber(String? phoneNumber) {
+  static String? validatePhoneNumber(String? phoneNumber) {
     // Checking if the phone is empty
 
     if (phoneNumber == null) {
@@ -79,7 +79,7 @@ class Validators {
     return "Invalid phone number.";
   }
 
-  String? validateFullName(String? fullName) {
+  static String? validateFullName(String? fullName) {
     // Checking whether the fullName is empty
     if (fullName == null) {
       return "Please enter your name";
