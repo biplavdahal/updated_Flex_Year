@@ -12,3 +12,6 @@ const auAppAccess = "appaccess/index";
 const auUserLogin = "user/login";
 const auUserPinLogin = "user/pinlogin";
 const auUserLogout = "user/logout";
+
+const auAttendanceStatus = "attendance/attstatus";
+const auAttendanceForgot = "attendance/forgottocheckout";

@@ -1,5 +1,6 @@
 import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
+import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/dashboard/dashboard.model.dart';
@@ -7,6 +8,8 @@ import 'package:flex_year_tablet/ui/dashboard/widgets/attendance_button.dart';
 import 'package:flex_year_tablet/ui/dashboard/widgets/dashboard_drawer.dart';
 import 'package:flex_year_tablet/ui/dashboard/widgets/utility_item.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
+import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
+import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_section.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -80,15 +83,18 @@ class DashboardView extends StatelessWidget {
                 topRight: Radius.circular(10),
               ),
             ),
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildTodaysAttendance(),
-                  _buildForgotToCheckout(),
-                  _buildUtilities(),
-                ],
+            child: RefreshIndicator(
+              onRefresh: model.init,
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildForgotToCheckout(model),
+                    _buildTodaysAttendance(model),
+                    _buildUtilities(),
+                  ],
+                ),
               ),
             ),
           ),
@@ -97,60 +103,89 @@ class DashboardView extends StatelessWidget {
     );
   }
 
-  Widget _buildForgotToCheckout() {
-    return FYSection(
-      title: "Forgot To Checkout",
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const Text(
-            "You forgot to checkout in 2021-11-18. You can not checkout next time until review previous checkout.",
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          FYPrimaryButton(
-            label: "Checkout Request for 2021-11-18",
-            onPressed: () {},
-          ),
-        ],
-      ),
-    );
+  Widget _buildForgotToCheckout(DashboardModel model) {
+    return model.attendanceForgot == null
+        ? Container()
+        : FYSection(
+            infoBox: true,
+            title: "Forgot To Checkout",
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  "You forgot to checkout in ${model.attendanceForgot!.forgottonDate}. You can not checkout next time until review previous checkout.",
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                FYPrimaryButton(
+                  label:
+                      "Checkout Request for ${model.attendanceForgot!.forgottonDate}",
+                  onPressed: () {},
+                  backgroundColor: Colors.orange,
+                ),
+              ],
+            ),
+          );
   }
 
-  Widget _buildTodaysAttendance() {
+  Widget _buildTodaysAttendance(DashboardModel model) {
     return FYSection(
       title: "Today's Attendance",
-      child: GridView.count(
-        physics: const NeverScrollableScrollPhysics(),
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        childAspectRatio: 3.5,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        children: const [
-          AttendanceButton(
-            title: "Check In",
-            icon: MdiIcons.clockStart,
-            color: Colors.green,
-          ),
-          AttendanceButton(
-            title: "Break In",
-            icon: MdiIcons.food,
-            color: AppColor.primary,
-          ),
-          AttendanceButton(
-            title: "Check Out",
-            icon: MdiIcons.clockEnd,
-            color: Colors.green,
-          ),
-          AttendanceButton(
-            title: "Break Out",
-            icon: MdiIcons.foodOff,
-            color: AppColor.primary,
-          ),
-        ],
-      ),
+      child: model.isBusyWidget('todays-attendance')
+          ? const FYLinearLoader()
+          : Column(
+              children: [
+                FYDropdown<ClientData>(
+                  title: "Select client",
+                  labels: model.clientLabels,
+                  items: model.user.clients,
+                  onChanged: model.onClientChanged,
+                  value: model.selectedClientLabel,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                GridView.count(
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: 2,
+                  shrinkWrap: true,
+                  childAspectRatio: 3.5,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  children: [
+                    AttendanceButton(
+                      title: "Check In",
+                      icon: MdiIcons.clockStart,
+                      color: Colors.green,
+                      onPressed:
+                          model.attendanceStatus.checkIn == 1 ? () {} : null,
+                    ),
+                    AttendanceButton(
+                      title: "Check Out",
+                      icon: MdiIcons.clockEnd,
+                      color: Colors.green,
+                      onPressed:
+                          model.attendanceStatus.checkOut == 1 ? () {} : null,
+                    ),
+                    AttendanceButton(
+                      title: "Lunch In",
+                      icon: MdiIcons.food,
+                      color: AppColor.primary,
+                      onPressed:
+                          model.attendanceStatus.lunchIn == 1 ? () {} : null,
+                    ),
+                    AttendanceButton(
+                      title: "Lunch Out",
+                      icon: MdiIcons.foodOff,
+                      color: AppColor.primary,
+                      onPressed:
+                          model.attendanceStatus.lunchOut == 1 ? () {} : null,
+                    ),
+                  ],
+                ),
+              ],
+            ),
     );
   }
 

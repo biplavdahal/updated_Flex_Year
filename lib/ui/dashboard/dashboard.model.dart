@@ -2,16 +2,23 @@ import 'dart:async';
 
 import 'package:bestfriend/bestfriend.dart';
 import 'package:bestfriend/ui/view.model.dart';
+import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
+import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
+import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/data_models/company.data.dart';
 import 'package:flex_year_tablet/data_models/company_logo.data.dart';
 import 'package:flex_year_tablet/data_models/user.data.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
+import 'package:flex_year_tablet/services/attendance.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/ui/login/login.view.dart';
 
 class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
+  // Services
+  final AttendanceService _attendanceService = locator<AttendanceService>();
+
   // Data
   CompanyData get company => locator<AppAccessService>().appAccess!.company;
   CompanyLogoData get logo => locator<AppAccessService>().appAccess!.logo;
@@ -20,13 +27,61 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   String _currentDateTime = DateTime.now().toString();
   String get currentDateTime => _currentDateTime;
 
-  late Timer? _currentDateTimeTimer;
+  Timer? _currentDateTimeTimer;
+
+  late AttendanceStatusData _attendanceStatus;
+  AttendanceStatusData get attendanceStatus => _attendanceStatus;
+
+  AttendanceForgotData? _attendanceForgot;
+  AttendanceForgotData? get attendanceForgot => _attendanceForgot;
+
+  late List<String> _clientLabels;
+  List<String> get clientLabels => _clientLabels;
+
+  late ClientData _selectedClient;
+  ClientData get selectedClient => _selectedClient;
+
+  late String _selectedClientLabel;
+  String get selectedClientLabel => _selectedClientLabel;
 
   // Actions
   Future<void> init() async {
+    _attendanceForgot = null;
+
     _currentDateTimeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _currentDateTime = DateTime.now().toString();
       setIdle();
+    });
+
+    _clientLabels = [];
+
+    for (var client in user.clients) {
+      _clientLabels.add(client.name);
+    }
+
+    _selectedClientLabel = _clientLabels.first;
+    _selectedClient = user.clients.first;
+
+    setWidgetBusy('todays-attendance');
+
+    _attendanceService
+        .getAttendanceStatus(clientId: _selectedClient.clientId)
+        .then((status) {
+      _attendanceStatus = status;
+      unsetWidgetBusy("todays-attendance");
+    }).catchError((e) {
+      unsetWidgetBusy("todays-attendance");
+      unsetWidgetBusy('dashboard');
+      snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
+    });
+
+    _attendanceService.getAttendanceForgot().then((status) {
+      if (status != null) {
+        _attendanceForgot = status;
+        setIdle();
+      }
+    }).catchError((e) {
+      snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     });
   }
 
@@ -44,8 +99,34 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       gotoAndClear(LoginView.tag);
     } catch (e) {
       dialog.hideDialog();
-      setIdle();
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     }
+  }
+
+  Future<void> onClientChanged(String? label) async {
+    if (label == null) {
+      return;
+    }
+
+    if (_selectedClientLabel == label) {
+      return;
+    }
+
+    _selectedClientLabel = label;
+    _selectedClient = user.clients.firstWhere((client) => client.name == label);
+
+    setWidgetBusy('todays-attendance');
+    _attendanceService
+        .getAttendanceStatus(clientId: _selectedClient.clientId)
+        .then((status) {
+      _attendanceStatus = status;
+      unsetWidgetBusy("todays-attendance");
+    }).catchError((e) {
+      unsetWidgetBusy("todays-attendance");
+      unsetWidgetBusy('dashboard');
+      snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
+    });
+
+    setIdle();
   }
 }

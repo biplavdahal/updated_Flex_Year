@@ -18,30 +18,38 @@ class AttendanceButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Opacity(
       opacity: onPressed == null ? 0.3 : 1,
-      child: GestureDetector(
-        onTap: onPressed,
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            children: [
-              Icon(
-                icon,
-                color: Colors.white,
+      child: Material(
+        color: color.withOpacity(0.95),
+        borderRadius: BorderRadius.circular(10),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(10),
+          onTap: onPressed,
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: color,
+                width: 2,
               ),
-              Expanded(
-                child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  icon,
+                  color: Colors.white,
                 ),
-              )
-            ],
+                Expanded(
+                  child: Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

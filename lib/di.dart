@@ -2,8 +2,10 @@ import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.service.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.service.impl.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
+import 'package:flex_year_tablet/services/attendance.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/services/implementations/app_access.service.impl.dart';
+import 'package:flex_year_tablet/services/implementations/attendance.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/authentication.service.impl.dart';
 import 'package:flex_year_tablet/ui/app_access/app_access.model.dart';
 import 'package:flex_year_tablet/ui/dashboard/dashboard.model.dart';
@@ -26,6 +28,8 @@ Future<void> setupLocator() async {
       () => AuthenticationServiceImpl());
   locator.registerLazySingleton<DialogService>(
       () => DialogServiceImplementation());
+  locator
+      .registerLazySingleton<AttendanceService>(() => AttendanceServiceImpl());
 
   // Killable models
   locator.registerFactory(() => StartUpModel());

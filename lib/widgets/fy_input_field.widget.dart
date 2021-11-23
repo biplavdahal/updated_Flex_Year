@@ -23,10 +23,10 @@ class FYInputField extends StatefulWidget {
 }
 
 class _FYInputFieldState extends State<FYInputField> {
-  bool _visiblePassword = false;
+  bool _hidePassword = true;
   set visiblePassword(bool value) {
     setState(() {
-      _visiblePassword = value;
+      _hidePassword = value;
     });
   }
 
@@ -40,11 +40,11 @@ class _FYInputFieldState extends State<FYInputField> {
             ? IconButton(
                 visualDensity: VisualDensity.compact,
                 icon: Icon(
-                  _visiblePassword ? Icons.visibility : Icons.visibility_off,
+                  _hidePassword ? Icons.visibility : Icons.visibility_off,
                   color: Theme.of(context).primaryColor,
                 ),
                 onPressed: () {
-                  visiblePassword = !_visiblePassword;
+                  visiblePassword = !_hidePassword;
                 },
               )
             : null,
@@ -55,7 +55,7 @@ class _FYInputFieldState extends State<FYInputField> {
       keyboardType: widget.obscureText
           ? TextInputType.visiblePassword
           : widget.keyboardType,
-      obscureText: widget.obscureText == false ? false : _visiblePassword,
+      obscureText: widget.obscureText == false ? false : _hidePassword,
     );
   }
 }
