@@ -7,6 +7,7 @@ import 'package:flex_year_tablet/helper/api_response.helper.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/attendance.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
+import 'package:flutter/material.dart';
 
 class AttendanceServiceImpl implements AttendanceService {
   final ApiService _apiService = locator<ApiService>();
@@ -29,7 +30,7 @@ class AttendanceServiceImpl implements AttendanceService {
       final data = constructResponse(_response.data);
 
       if (data!.containsKey("status") && data["status"] == false) {
-        throw data["response"];
+        throw data["response"] ?? data["data"] ?? data["detail"];
       }
 
       return AttendanceStatusData.fromJson(data);
@@ -47,14 +48,10 @@ class AttendanceServiceImpl implements AttendanceService {
         'company_id': _appAccessService.appAccess!.company.companyId,
       });
 
-      final data = constructResponse(_response.data[0]);
+      final data = constructResponse(_response.data);
 
       if (data!.containsKey("status") && data["status"] == false) {
-        throw data["response"];
-      }
-
-      if (data.containsKey("data") && data["data"] == "No data found") {
-        return null;
+        throw data["response"] ?? data["data"] ?? data["detail"];
       }
 
       return AttendanceForgotData.fromJson({
@@ -66,8 +63,35 @@ class AttendanceServiceImpl implements AttendanceService {
     }
   }
 
+  // FIXME: Need to fix this API
   @override
-  Future<void> postAttendanceStatus({required String clientId, required String status}) async {
-    
+  Future<void> postAttendanceStatus(
+      {required String time,
+      required String clientId,
+      required String status}) async {
+    try {
+      debugPrint(time);
+
+      final _response = await _apiService.post(auAttendanceInOut, {}, params: {
+        'access_token': _authenticationService.user!.accessToken,
+        'id': _authenticationService.user!.id,
+        'company_id': _appAccessService.appAccess!.company.companyId,
+        'client_id': clientId,
+        'type': status,
+        'datetime': time,
+      });
+
+      final data = constructResponse(_response.data);
+
+      debugPrint(data.toString());
+
+      if (data!.containsKey("status") && data["status"] == false) {
+        throw data["response"] ?? data["detail"] ?? data["data"];
+      }
+
+      return;
+    } catch (e) {
+      throw apiError(e);
+    }
   }
 }

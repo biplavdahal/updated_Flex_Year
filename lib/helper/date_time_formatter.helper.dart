@@ -17,3 +17,9 @@ String formattedDate(String unformattedDateTime) {
 
   return formattedDate;
 }
+
+String getCurrentDateTime() {
+  DateTime now = DateTime.now();
+
+  return "${now.year}-${now.month}-${now.day} ${now.hour}:${now.minute}";
+}

@@ -7,6 +7,7 @@ import 'package:flex_year_tablet/ui/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/dashboard/widgets/attendance_button.dart';
 import 'package:flex_year_tablet/ui/dashboard/widgets/dashboard_drawer.dart';
 import 'package:flex_year_tablet/ui/dashboard/widgets/utility_item.dart';
+import 'package:flex_year_tablet/ui/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
@@ -86,13 +87,13 @@ class DashboardView extends StatelessWidget {
             child: RefreshIndicator(
               onRefresh: model.init,
               child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildForgotToCheckout(model),
                     _buildTodaysAttendance(model),
-                    _buildUtilities(),
+                    _buildUtilities(model),
                   ],
                 ),
               ),
@@ -158,29 +159,41 @@ class DashboardView extends StatelessWidget {
                       title: "Check In",
                       icon: MdiIcons.clockStart,
                       color: Colors.green,
-                      onPressed:
-                          model.attendanceStatus.checkIn == 1 ? () {} : null,
+                      onPressed: model.attendanceStatus.checkIn == 1
+                          ? () {
+                              model.onAttendanceButtonPressed('checkin');
+                            }
+                          : null,
                     ),
                     AttendanceButton(
                       title: "Check Out",
                       icon: MdiIcons.clockEnd,
                       color: Colors.green,
-                      onPressed:
-                          model.attendanceStatus.checkOut == 1 ? () {} : null,
+                      onPressed: model.attendanceStatus.checkOut == 1
+                          ? () {
+                              model.onAttendanceButtonPressed('checkout');
+                            }
+                          : null,
                     ),
                     AttendanceButton(
                       title: "Lunch In",
                       icon: MdiIcons.food,
                       color: AppColor.primary,
-                      onPressed:
-                          model.attendanceStatus.lunchIn == 1 ? () {} : null,
+                      onPressed: model.attendanceStatus.lunchIn == 1
+                          ? () {
+                              model.onAttendanceButtonPressed('lunchin');
+                            }
+                          : null,
                     ),
                     AttendanceButton(
                       title: "Lunch Out",
                       icon: MdiIcons.foodOff,
                       color: AppColor.primary,
-                      onPressed:
-                          model.attendanceStatus.lunchOut == 1 ? () {} : null,
+                      onPressed: model.attendanceStatus.lunchOut == 1
+                          ? () {
+                              model.onAttendanceButtonPressed('lunchout');
+                            }
+                          : null,
                     ),
                   ],
                 ),
@@ -189,7 +202,7 @@ class DashboardView extends StatelessWidget {
     );
   }
 
-  Widget _buildUtilities() {
+  Widget _buildUtilities(DashboardModel model) {
     return FYSection(
       title: "Utilities",
       child: GridView.count(
@@ -198,23 +211,26 @@ class DashboardView extends StatelessWidget {
         childAspectRatio: 1.5,
         shrinkWrap: true,
         crossAxisSpacing: 8,
-        children: const [
+        children: [
           UtilityItem(
             title: "Leave Request",
             icon: MdiIcons.shieldAirplaneOutline,
             iconColor: Colors.orange,
+            onPressed: () {
+              model.goto(LeaveRequestView.tag);
+            },
           ),
-          UtilityItem(
+          const UtilityItem(
             title: "Report",
             iconColor: Colors.lightGreen,
             icon: MdiIcons.chartBoxOutline,
           ),
-          UtilityItem(
+          const UtilityItem(
             title: "Daily Report",
             iconColor: Colors.lightGreen,
             icon: MdiIcons.chartBoxOutline,
           ),
-          UtilityItem(
+          const UtilityItem(
             title: "Weekly Report",
             iconColor: Colors.lightGreen,
             icon: MdiIcons.chartBoxOutline,

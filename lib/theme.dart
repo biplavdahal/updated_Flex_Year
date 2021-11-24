@@ -72,10 +72,15 @@ getThemeDataTheme(BuildContext context) {
         side: const BorderSide(color: AppColor.primary, width: 1),
       ),
     ),
-    
     iconTheme: const IconThemeData(
       color: AppColor.primary,
       size: 24,
+    ),
+    dialogTheme: DialogTheme(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
     ),
   );
 }

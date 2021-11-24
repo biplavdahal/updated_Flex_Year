@@ -4,6 +4,7 @@ import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
+import 'package:flex_year_tablet/services/company.service.dart';
 import 'package:flex_year_tablet/ui/dashboard/dashboard.view.dart';
 import 'package:flutter/material.dart';
 
@@ -88,6 +89,8 @@ class LoginModel extends ViewModel with DialogMixin, SnackbarMixin {
         await _authenticationService.saveUsername(_usernameController.text);
       }
 
+      await locator<CompanyService>().init();
+
       setSuccess();
       gotoAndClear(DashboardView.tag);
     } catch (e) {
@@ -101,9 +104,7 @@ class LoginModel extends ViewModel with DialogMixin, SnackbarMixin {
         pin: _pinController.text,
       );
 
-      if (_rememberMe) {
-        await _authenticationService.saveUsername(_usernameController.text);
-      }
+      await locator<CompanyService>().init();
 
       setSuccess();
       gotoAndClear(DashboardView.tag);

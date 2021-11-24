@@ -12,8 +12,8 @@ abstract class AttendanceService {
 
   /// Post attendance status
   Future<void> postAttendanceStatus({
+    required String time,
     required String clientId,
     required String status,
   });
-
 }
