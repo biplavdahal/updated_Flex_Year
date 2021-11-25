@@ -6,12 +6,16 @@ class FYDateField extends StatelessWidget {
   final DateTime? value;
   final String? title;
   final ValueSetter<DateTime?>? onChanged;
+  final DateTime? firstDate;
+  final DateTime? lastDate;
 
   const FYDateField({
     Key? key,
     this.value,
     this.title,
     this.onChanged,
+    this.firstDate,
+    this.lastDate,
   }) : super(key: key);
 
   @override
@@ -62,10 +66,11 @@ class FYDateField extends StatelessWidget {
       context: context,
       helpText: title,
       initialDate: value ?? DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(
-        const Duration(days: 365),
-      ),
+      firstDate: firstDate ?? DateTime.now(),
+      lastDate: lastDate ??
+          DateTime.now().add(
+            const Duration(days: 365),
+          ),
       builder: (context, child) {
         return Theme(
           data: ThemeData.dark().copyWith(

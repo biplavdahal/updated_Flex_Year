@@ -17,14 +17,14 @@ class AttendanceServiceImpl implements AttendanceService {
 
   @override
   Future<AttendanceStatusData> getAttendanceStatus({
-    required String clientId,
+    String? clientId,
   }) async {
     try {
       final _response = await _apiService.get(auAttendanceStatus, params: {
         'access_token': _authenticationService.user!.accessToken,
         'id': _authenticationService.user!.id,
         'company_id': _appAccessService.appAccess!.company.companyId,
-        'client_id': clientId,
+        if (clientId != null) 'client_id': clientId,
       });
 
       final data = constructResponse(_response.data);
@@ -48,7 +48,15 @@ class AttendanceServiceImpl implements AttendanceService {
         'company_id': _appAccessService.appAccess!.company.companyId,
       });
 
-      final data = constructResponse(_response.data);
+      debugPrint({
+        'access_token': _authenticationService.user!.accessToken,
+        'id': _authenticationService.user!.id,
+        'company_id': _appAccessService.appAccess!.company.companyId,
+      }.toString());
+
+      final data = constructResponse(_response.data[0]);
+
+      debugPrint(data.toString());
 
       if (data!.containsKey("status") && data["status"] == false) {
         throw data["response"] ?? data["data"] ?? data["detail"];
@@ -65,10 +73,8 @@ class AttendanceServiceImpl implements AttendanceService {
 
   // FIXME: Need to fix this API
   @override
-  Future<void> postAttendanceStatus(
-      {required String time,
-      required String clientId,
-      required String status}) async {
+  Future<AttendanceStatusData> postAttendanceStatus(
+      {required String time, String? clientId, required String status}) async {
     try {
       debugPrint(time);
 
@@ -76,20 +82,18 @@ class AttendanceServiceImpl implements AttendanceService {
         'access_token': _authenticationService.user!.accessToken,
         'id': _authenticationService.user!.id,
         'company_id': _appAccessService.appAccess!.company.companyId,
-        'client_id': clientId,
+        if (clientId != null) 'client_id': clientId,
         'type': status,
         'datetime': time,
       });
 
       final data = constructResponse(_response.data);
 
-      debugPrint(data.toString());
-
       if (data!.containsKey("status") && data["status"] == false) {
         throw data["response"] ?? data["detail"] ?? data["data"];
       }
 
-      return;
+      return AttendanceStatusData.fromJson(data["data"]["data"]);
     } catch (e) {
       throw apiError(e);
     }

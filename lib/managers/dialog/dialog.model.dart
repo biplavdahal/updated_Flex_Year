@@ -1,5 +1,6 @@
 enum DialogType {
   progress,
+  confirmation,
 }
 
 class DialogRequest<T> {

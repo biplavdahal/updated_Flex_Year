@@ -36,14 +36,14 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   AttendanceForgotData? _attendanceForgot;
   AttendanceForgotData? get attendanceForgot => _attendanceForgot;
 
-  late List<String> _clientLabels;
-  List<String> get clientLabels => _clientLabels;
+  List<String>? _clientLabels;
+  List<String>? get clientLabels => _clientLabels;
 
-  late ClientData _selectedClient;
-  ClientData get selectedClient => _selectedClient;
+  ClientData? _selectedClient;
+  ClientData? get selectedClient => _selectedClient;
 
-  late String _selectedClientLabel;
-  String get selectedClientLabel => _selectedClientLabel;
+  String? _selectedClientLabel;
+  String? get selectedClientLabel => _selectedClientLabel;
 
   // Actions
   Future<void> init() async {
@@ -57,16 +57,20 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     _clientLabels = [];
 
     for (var client in user.clients) {
-      _clientLabels.add(client.name);
+      _clientLabels?.add(client.name);
     }
 
-    _selectedClientLabel = _clientLabels.first;
-    _selectedClient = user.clients.first;
+    if (_clientLabels!.isNotEmpty) {
+      _selectedClientLabel = _clientLabels!.first;
+      _selectedClient = user.clients.first;
+    }
 
     setWidgetBusy('todays-attendance');
 
     _attendanceService
-        .getAttendanceStatus(clientId: _selectedClient.clientId)
+        .getAttendanceStatus(
+            clientId:
+                _selectedClient != null ? _selectedClient!.clientId : null)
         .then((status) {
       _attendanceStatus = status;
       unsetWidgetBusy("todays-attendance");
@@ -105,30 +109,33 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   }
 
   Future<void> onClientChanged(String? label) async {
-    if (label == null) {
-      return;
+    if (_clientLabels != null && _clientLabels!.isNotEmpty) {
+      if (label == null) {
+        return;
+      }
+
+      if (_selectedClientLabel == label) {
+        return;
+      }
+
+      _selectedClientLabel = label;
+      _selectedClient =
+          user.clients.firstWhere((client) => client.name == label);
+
+      setWidgetBusy('todays-attendance');
+      _attendanceService
+          .getAttendanceStatus(clientId: _selectedClient!.clientId)
+          .then((status) {
+        _attendanceStatus = status;
+        unsetWidgetBusy("todays-attendance");
+      }).catchError((e) {
+        unsetWidgetBusy("todays-attendance");
+        unsetWidgetBusy('dashboard');
+        snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
+      });
+
+      setIdle();
     }
-
-    if (_selectedClientLabel == label) {
-      return;
-    }
-
-    _selectedClientLabel = label;
-    _selectedClient = user.clients.firstWhere((client) => client.name == label);
-
-    setWidgetBusy('todays-attendance');
-    _attendanceService
-        .getAttendanceStatus(clientId: _selectedClient.clientId)
-        .then((status) {
-      _attendanceStatus = status;
-      unsetWidgetBusy("todays-attendance");
-    }).catchError((e) {
-      unsetWidgetBusy("todays-attendance");
-      unsetWidgetBusy('dashboard');
-      snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
-    });
-
-    setIdle();
   }
 
   Future<void> onAttendanceButtonPressed(String status) async {
@@ -138,8 +145,8 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
             type: DialogType.progress, title: "Action in progress..."),
       );
 
-      await _attendanceService.postAttendanceStatus(
-        clientId: _selectedClient.clientId,
+      _attendanceStatus = await _attendanceService.postAttendanceStatus(
+        clientId: _selectedClient != null ? _selectedClient!.clientId : null,
         status: status,
         time: _attendanceForgot == null
             ? getCurrentDateTime()
@@ -147,7 +154,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       );
 
       dialog.hideDialog();
-      init();
+      setIdle();
     } catch (e) {
       dialog.hideDialog();
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));

@@ -4,10 +4,10 @@ import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/company.service.dart';
 import 'package:flex_year_tablet/services/leave.service.dart';
+import 'package:flex_year_tablet/ui/write_leave_request/write_leave_request.arguments.dart';
 import 'package:flutter/material.dart';
 
-class CreateLeaveRequestModel extends ViewModel
-    with DialogMixin, SnackbarMixin {
+class WriteLeaveRequestModel extends ViewModel with DialogMixin, SnackbarMixin {
   // Services
   final LeaveService _leaveService = locator<LeaveService>();
 
@@ -65,11 +65,39 @@ class CreateLeaveRequestModel extends ViewModel
   TextEditingController get leaveDescriptionController =>
       _leaveDescriptionController;
 
+  bool _isEditMode = false;
+  String? _requestId;
+
   // Actions
 
-  void init() {
-    _selectedLeaveType = leaveTypes.first;
-    _selectedLeaveTypeLabel = _selectedLeaveType.title;
+  void init(WriteLeaveRequestViewArguments? arguments) {
+    if (arguments?.request != null) {
+      _isEditMode = true;
+      _requestId = arguments!.request!.id;
+      _selectedLeaveType = leaveTypes.firstWhere(
+        (e) => e.id.toString() == arguments.request!.leaveType,
+      );
+      _selectedLeaveTypeLabel = _selectedLeaveType.title;
+      _leaveDateFrom = DateTime.parse(arguments.request!.dateFrom);
+      _leaveDateUpto = DateTime.parse(arguments.request!.dateTo);
+      _isHalfDayLeave =
+          arguments.request!.totalHours != "00:00:00" ? true : false;
+      if (_isHalfDayLeave) {
+        _leaveTimeFrom = TimeOfDay(
+          hour: int.parse(arguments.request!.fromTime!.split(":")[0]),
+          minute: int.parse(arguments.request!.fromTime!.split(":")[1]),
+        );
+        _leaveTimeUpto = TimeOfDay(
+          hour: int.parse(arguments.request!.toTime!.split(":")[0]),
+          minute: int.parse(arguments.request!.toTime!.split(":")[1]),
+        );
+      }
+
+      _leaveDescriptionController.text = arguments.request!.reason;
+    } else {
+      _selectedLeaveType = leaveTypes.first;
+      _selectedLeaveTypeLabel = _selectedLeaveType.title;
+    }
     setIdle();
   }
 
@@ -85,10 +113,15 @@ class CreateLeaveRequestModel extends ViewModel
     try {
       dialog.showDialog(
         DialogRequest(
-            type: DialogType.progress, title: 'Creating leave request...'),
+            type: DialogType.progress,
+            title: '${_isEditMode ? 'Updating' : 'Creating'} leave request...'),
       );
 
-      await _leaveService.createLeaveRequest(prepareDate());
+      if (_isEditMode) {
+        await _leaveService.updateLeaveRequest(prepareDate());
+      } else {
+        await _leaveService.createLeaveRequest(prepareDate());
+      }
 
       dialog.hideDialog();
       goBack(result: true);
@@ -168,6 +201,10 @@ class CreateLeaveRequestModel extends ViewModel
     if (_isHalfDayLeave) {
       data['from_time'] = "${_leaveTimeFrom!.hour}:${_leaveTimeFrom!.minute}";
       data['to_time'] = "${_leaveTimeUpto!.hour}:${_leaveTimeUpto!.minute}";
+    }
+
+    if (_isEditMode) {
+      data['id'] = _requestId;
     }
 
     return data;

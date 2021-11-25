@@ -1,8 +1,12 @@
+import 'package:bestfriend/bestfriend.dart';
 import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
+import 'package:flex_year_tablet/ui/attendance_report_filter/attendance_report_filter.arguments.dart';
+import 'package:flex_year_tablet/ui/attendance_report_filter/attendance_report_filter.model.dart';
+import 'package:flex_year_tablet/ui/attendance_report_filter/attendance_report_filter.view.dart';
 import 'package:flex_year_tablet/ui/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/dashboard/widgets/attendance_button.dart';
 import 'package:flex_year_tablet/ui/dashboard/widgets/dashboard_drawer.dart';
@@ -137,13 +141,15 @@ class DashboardView extends StatelessWidget {
           ? const FYLinearLoader()
           : Column(
               children: [
-                FYDropdown<ClientData>(
-                  title: "Select client",
-                  labels: model.clientLabels,
-                  items: model.user.clients,
-                  onChanged: model.onClientChanged,
-                  value: model.selectedClientLabel,
-                ),
+                if (model.clientLabels != null &&
+                    model.clientLabels!.isNotEmpty)
+                  FYDropdown<ClientData>(
+                    title: "Select client",
+                    labels: model.clientLabels!,
+                    items: model.user.clients,
+                    onChanged: model.onClientChanged,
+                    value: model.selectedClientLabel!,
+                  ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -220,21 +226,62 @@ class DashboardView extends StatelessWidget {
               model.goto(LeaveRequestView.tag);
             },
           ),
-          const UtilityItem(
+          UtilityItem(
             title: "Report",
             iconColor: Colors.lightGreen,
             icon: MdiIcons.chartBoxOutline,
+            onPressed:
+                model.clientLabels != null && model.clientLabels!.isNotEmpty
+                    ? () {
+                        model.goto(
+                          AttendanceReportFilterView.tag,
+                          arguments: AttendanceReportFilterArguments(
+                            type: AttendanceReportFilterType.monthly,
+                          ),
+                        );
+                      }
+                    : null,
           ),
-          const UtilityItem(
+          UtilityItem(
             title: "Daily Report",
             iconColor: Colors.lightGreen,
             icon: MdiIcons.chartBoxOutline,
+            onPressed:
+                model.clientLabels != null && model.clientLabels!.isNotEmpty
+                    ? () {
+                        model.goto(
+                          AttendanceReportFilterView.tag,
+                          arguments: AttendanceReportFilterArguments(
+                            type: AttendanceReportFilterType.daily,
+                          ),
+                        );
+                      }
+                    : null,
           ),
-          const UtilityItem(
-            title: "Weekly Report",
-            iconColor: Colors.lightGreen,
-            icon: MdiIcons.chartBoxOutline,
-          ),
+          if (model.clientLabels != null && model.clientLabels!.isNotEmpty)
+            UtilityItem(
+              title: "Weekly Report",
+              iconColor: Colors.lightGreen,
+              icon: MdiIcons.chartBoxOutline,
+              onPressed:
+                  model.clientLabels != null && model.clientLabels!.isNotEmpty
+                      ? () {
+                          model.goto(
+                            AttendanceReportFilterView.tag,
+                            arguments: AttendanceReportFilterArguments(
+                              type: AttendanceReportFilterType.weekly,
+                            ),
+                          );
+                        }
+                      : null,
+            )
+          else
+            const UtilityItem(
+              title: "Message",
+              iconColor: Colors.orange,
+              icon: MdiIcons.chatOutline,
+              onPressed: null,
+            )
         ],
       ),
     );

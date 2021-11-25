@@ -1,6 +1,8 @@
+import 'package:bestfriend/bestfriend.dart';
 import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/data_models/leave_type.data.dart';
-import 'package:flex_year_tablet/ui/create_leave_request/create_leave_request.model.dart';
+import 'package:flex_year_tablet/ui/write_leave_request/write_leave_request.arguments.dart';
+import 'package:flex_year_tablet/ui/write_leave_request/write_leave_request.model.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_checkbox.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_date_time_field.widget.dart';
@@ -8,20 +10,27 @@ import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_input_field.widget.dart';
 import 'package:flutter/material.dart';
 
-class CreateLeaveRequestView extends StatelessWidget {
-  static String tag = 'create-leave-request-view';
+class WriteLeaveRequestView extends StatelessWidget {
+  static String tag = 'write-leave-request-view';
 
-  const CreateLeaveRequestView({Key? key}) : super(key: key);
+  final Arguments? arguments;
+
+  const WriteLeaveRequestView(this.arguments, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return View<CreateLeaveRequestModel>(
-      onModelReady: (model) => model.init(),
+    return View<WriteLeaveRequestModel>(
+      onModelReady: (model) =>
+          model.init(arguments as WriteLeaveRequestViewArguments),
       enableTouchRepeal: true,
       builder: (ctx, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Create Leave Request'),
+            title: Text(
+              arguments != null
+                  ? 'Update Leave Request'
+                  : 'Create Leave Request',
+            ),
           ),
           body: Container(
             padding: const EdgeInsets.all(16),

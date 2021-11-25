@@ -6,6 +6,7 @@ import 'package:flex_year_tablet/helper/api_response.helper.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/services/leave.service.dart';
+import 'package:flutter/material.dart';
 
 class LeaveServiceImpl implements LeaveService {
   final ApiService _apiService = locator<ApiService>();
@@ -55,6 +56,50 @@ class LeaveServiceImpl implements LeaveService {
       return data["data"]
           .map<LeaveRequestData>((item) => LeaveRequestData.fromJson(item))
           .toList();
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<void> deleteLeaveRequest(String id) async {
+    try {
+      final _response = await _apiService.post(auRemoveLeaveRequest, {
+        'access_token': _authenticationService.user!.accessToken,
+        'id': id,
+      });
+
+      final data = constructResponse(_response.data);
+
+      if (data!.containsKey("status") && data["status"] == false) {
+        throw data["response"] ?? data["detail"] ?? data["data"];
+      }
+
+      return;
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<void> updateLeaveRequest(Map<String, dynamic> leaveData) async {
+    try {
+      final _response = await _apiService.post(auEditLeaveRequest, {
+        ...leaveData,
+        'user_id': _authenticationService.user!.id,
+        'access_token': _authenticationService.user!.accessToken,
+        'company_id': _appAccessService.appAccess!.company.companyId,
+      });
+
+      final data = constructResponse(_response.data);
+
+      debugPrint(data.toString());
+
+      if (data!.containsKey("status") && data["status"] == false) {
+        throw data["response"] ?? data["detail"] ?? data["data"];
+      }
+
+      return;
     } catch (e) {
       throw apiError(e);
     }

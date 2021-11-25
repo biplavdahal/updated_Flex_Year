@@ -1,6 +1,7 @@
 import 'package:bestfriend/ui/view.dart';
-import 'package:flex_year_tablet/ui/create_leave_request/create_leave_request.view.dart';
 import 'package:flex_year_tablet/ui/leave_requests/leave_requests.model.dart';
+import 'package:flex_year_tablet/ui/leave_requests/widgets/leave_request_item.dart';
+import 'package:flex_year_tablet/ui/write_leave_request/write_leave_request.view.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,7 @@ class LeaveRequestView extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.add),
             onPressed: () async {
-              final response = await model.goto(CreateLeaveRequestView.tag);
+              final response = await model.goto(WriteLeaveRequestView.tag);
               if (response != null) {
                 model.init();
               }
@@ -45,6 +46,7 @@ class LeaveRequestView extends StatelessWidget {
                   ),
                 ),
                 if (model.isLoading) const FYLinearLoader(),
+                const SizedBox(height: 16),
                 if (!model.isLoading)
                   if (model.requestsToShow.isNotEmpty)
                     Expanded(
@@ -53,8 +55,12 @@ class LeaveRequestView extends StatelessWidget {
                         child: ListView.separated(
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            return const ListTile(
-                              title: Text("1"),
+                            return LeaveRequestItem(
+                              request: model.requestsToShow[index],
+                              isBusy: model
+                                  .isBusyWidget(model.requestsToShow[index].id),
+                              onRemoveTap: model.removeLeave,
+                              onEditTap: model.onUpdatePressed,
                             );
                           },
                           separatorBuilder: (context, index) {

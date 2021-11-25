@@ -1,6 +1,7 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.service.dart';
+import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,16 +27,22 @@ class _DialogManagerState extends State<DialogManager> {
     if (request.type == DialogType.progress) {
       _baseDialog(child: _buildProgressType(request));
     }
+
+    if (request.type == DialogType.confirmation) {
+      _baseDialog(
+          child: _buildConfirmationType(request),
+          dismissable: request.dismissable);
+    }
   }
 
-  _baseDialog({Widget? title, Widget? child, bool dismissable = false}) {
+  _baseDialog({Widget? child, bool dismissable = false}) {
     showDialog(
       barrierDismissible: dismissable,
       context: context,
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: title,
+          // title: title,
           content: child,
         );
       },
@@ -50,6 +57,40 @@ class _DialogManagerState extends State<DialogManager> {
         ),
         const SizedBox(width: 32),
         Expanded(child: Text(request.title)),
+      ],
+    );
+  }
+
+  _buildConfirmationType(DialogRequest request) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(request.title),
+        const SizedBox(height: 16),
+        SizedBox(
+          width: double.infinity,
+          child: Row(
+            children: [
+              Expanded(
+                child: FYPrimaryButton(
+                  onPressed: () {
+                    _dialogService.hideDialog(DialogResponse(result: true));
+                  },
+                  label: "Yes",
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: FYSecondaryButton(
+                  label: "No",
+                  onPressed: () {
+                    _dialogService.hideDialog();
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

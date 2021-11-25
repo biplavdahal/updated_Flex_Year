@@ -17,6 +17,9 @@ class LeaveRequestData with _$LeaveRequestData {
     @JsonKey(name: 'hour') required String totalHours,
     @JsonKey(name: 'leave_type') required String leaveType,
     @JsonKey(name: 'title') required String title,
+    @JsonKey(name: 'from_time') String? fromTime,
+    @JsonKey(name: 'to_time') String? toTime,
+    @JsonKey(name: 'requested_date') required String requestedDate,
   }) = _LeaveRequestData;
 
   factory LeaveRequestData.fromJson(Map<String, dynamic> json) =>
