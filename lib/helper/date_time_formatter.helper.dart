@@ -37,15 +37,78 @@ String hourFormatter(String unformattedHour) {
     formattedHour += "${_token[1]} Minute(s)";
   }
 
-  return formattedHour;
+  return formattedHour.isEmpty ? "0 Minute(s)" : formattedHour;
 }
 
-String lastDateOfMonth() {
-  var now = DateTime.now();
+String lastDateOfMonth([int? month]) {
+  var now = month == null
+      ? DateTime.now()
+      : DateTime.parse(
+          "${DateTime.now().year}-${month < 10 ? '0$month' : month}-01",
+        );
 
   var lastDayDateTime = (now.month < 12)
       ? DateTime(now.year, now.month + 1, 0)
       : DateTime(now.year + 1, 1, 0);
 
   return "${lastDayDateTime.year}-${lastDayDateTime.month}-${lastDayDateTime.day}";
+}
+
+String getMonthStringFromDateString(
+  String date, {
+  bool shortten = false,
+}) {
+  List<String> months = [
+    "",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+
+  List<String> shortMonths = [
+    "",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
+
+  String month = date.split("-")[1];
+
+  if (month.length == 1) {
+    month = '0$month';
+  }
+
+  DateTime dateTime = DateTime.parse('2021-$month-01');
+
+  if (shortten) {
+    return shortMonths[dateTime.month];
+  } else {
+    return months[dateTime.month];
+  }
+}
+
+String weekDayFromDateString(String date) {
+  List<String> weekDays = ["", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  DateTime dateTime = DateTime.parse(date);
+
+  return weekDays[dateTime.weekday];
 }

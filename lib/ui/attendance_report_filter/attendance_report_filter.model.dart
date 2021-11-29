@@ -1,8 +1,10 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
-import 'package:flex_year_tablet/data_models/company.data.dart';
+import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
+import 'package:flex_year_tablet/ui/attendance_report/attendance_report.arguments.dart';
+import 'package:flex_year_tablet/ui/attendance_report/attendance_report.view.dart';
 import 'package:flex_year_tablet/ui/attendance_report_filter/attendance_report_filter.arguments.dart';
 
 enum AttendanceReportFilterType {
@@ -30,7 +32,7 @@ class AttendanceReportFilterModel extends ViewModel {
     setIdle();
   }
 
-  List<String> get attendanceTypes => ["Present", "Absent", "All"];
+  List<String> get attendanceTypes => ["All", "Present", "Absent"];
   late String _selectedAttendanceType;
   String get selectedAttendanceType => _selectedAttendanceType;
   set selectedAttendanceType(String value) {
@@ -76,11 +78,16 @@ class AttendanceReportFilterModel extends ViewModel {
     setIdle();
   }
 
+  bool _returnBack = false;
+
   // Actions
   void init(AttendanceReportFilterArguments arguments) {
     _filterType = arguments.type;
-    _selectedClient = clients.first;
-    _selectedClientLabel = _selectedClient.name;
+    _returnBack = arguments.returnBack;
+    if (clients.isNotEmpty) {
+      _selectedClient = clients.first;
+      _selectedClientLabel = _selectedClient.name;
+    }
     _selectedAttendanceType = attendanceTypes.first;
 
     if (_filterType == AttendanceReportFilterType.monthly) {
@@ -92,5 +99,47 @@ class AttendanceReportFilterModel extends ViewModel {
     }
 
     setIdle();
+  }
+
+  void onViewReportPressed() {
+    Map<String, dynamic> _searchParams = {};
+
+    if (_filterType == AttendanceReportFilterType.monthly) {
+      _searchParams['date_from'] =
+          "${DateTime.now().year}-${(months.indexOf(_selectedMonth) + 1).toString().length == 1 ? '0${months.indexOf(_selectedMonth) + 1}' : months.indexOf(_selectedMonth) + 1}-01";
+      _searchParams['date_to'] =
+          lastDateOfMonth(months.indexOf(_selectedMonth) + 1);
+    } else if (_filterType == AttendanceReportFilterType.daily) {
+      _searchParams['date'] =
+          '${_attendanceDate!.year}-${_attendanceDate!.month}-${_attendanceDate!.day}';
+    } else {
+      _searchParams['begDate'] =
+          '${_weekFrom!.year}-${_weekFrom!.month}-${_weekFrom!.day}';
+      _searchParams['endDate'] =
+          '${_weekTo!.year}-${_weekTo!.month}-${_weekTo!.day}';
+    }
+
+    if (clients.isNotEmpty) {
+      _searchParams['client_id'] = _selectedClient.clientId;
+      _searchParams['client_name'] = _selectedClientLabel;
+    }
+
+    _searchParams['type'] = _selectedAttendanceType;
+    if (_returnBack) {
+      goBack(
+        result: AttendanceReportArguments(
+          type: _filterType,
+          searchParams: _searchParams,
+        ),
+      );
+    } else {
+      gotoAndPop(
+        AttendanceReportView.tag,
+        arguments: AttendanceReportArguments(
+          type: _filterType,
+          searchParams: _searchParams,
+        ),
+      );
+    }
   }
 }

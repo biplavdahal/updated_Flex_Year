@@ -1,5 +1,7 @@
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
+import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
+import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
 
 abstract class AttendanceService {
   /// Get attendance status for dashboard
@@ -17,7 +19,16 @@ abstract class AttendanceService {
     required String status,
   });
 
-  /// Get attendance report by date range and client ID
-  /// 
+  /// Get monthly report
+  ///
+  /// Goto [AttendanceReportFilterModel] to see what [data] holds
+  Future<List<AttendanceReportData>> getMonthlyReport({
+    required Map<String, dynamic> data,
+  });
 
+  /// Get attendance summary
+  Future<List<AttendanceSummaryData>> getAttendanceSummary({
+    required String date,
+    String? clientId,
+  });
 }

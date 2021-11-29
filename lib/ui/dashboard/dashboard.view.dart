@@ -230,50 +230,41 @@ class DashboardView extends StatelessWidget {
             title: "Report",
             iconColor: Colors.lightGreen,
             icon: MdiIcons.chartBoxOutline,
-            onPressed:
-                model.clientLabels != null && model.clientLabels!.isNotEmpty
-                    ? () {
-                        model.goto(
-                          AttendanceReportFilterView.tag,
-                          arguments: AttendanceReportFilterArguments(
-                            type: AttendanceReportFilterType.monthly,
-                          ),
-                        );
-                      }
-                    : null,
+            onPressed: () {
+              model.goto(
+                AttendanceReportFilterView.tag,
+                arguments: AttendanceReportFilterArguments(
+                  type: AttendanceReportFilterType.monthly,
+                ),
+              );
+            },
           ),
           UtilityItem(
-            title: "Daily Report",
+            title: "One-day Report",
             iconColor: Colors.lightGreen,
             icon: MdiIcons.chartBoxOutline,
-            onPressed:
-                model.clientLabels != null && model.clientLabels!.isNotEmpty
-                    ? () {
-                        model.goto(
-                          AttendanceReportFilterView.tag,
-                          arguments: AttendanceReportFilterArguments(
-                            type: AttendanceReportFilterType.daily,
-                          ),
-                        );
-                      }
-                    : null,
+            onPressed: () {
+              model.goto(
+                AttendanceReportFilterView.tag,
+                arguments: AttendanceReportFilterArguments(
+                  type: AttendanceReportFilterType.daily,
+                ),
+              );
+            },
           ),
           if (model.clientLabels != null && model.clientLabels!.isNotEmpty)
             UtilityItem(
               title: "Weekly Report",
               iconColor: Colors.lightGreen,
               icon: MdiIcons.chartBoxOutline,
-              onPressed:
-                  model.clientLabels != null && model.clientLabels!.isNotEmpty
-                      ? () {
-                          model.goto(
-                            AttendanceReportFilterView.tag,
-                            arguments: AttendanceReportFilterArguments(
-                              type: AttendanceReportFilterType.weekly,
-                            ),
-                          );
-                        }
-                      : null,
+              onPressed: () {
+                model.goto(
+                  AttendanceReportFilterView.tag,
+                  arguments: AttendanceReportFilterArguments(
+                    type: AttendanceReportFilterType.weekly,
+                  ),
+                );
+              },
             )
           else
             const UtilityItem(

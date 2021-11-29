@@ -39,22 +39,25 @@ class AttendanceReportFilterView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  FYDropdown<ClientData>(
-                    items: model.clients,
-                    labels: model.clientsLabel,
-                    value: model.selectedClientLabel,
-                    title: 'Select client',
-                    onChanged: (value) => model.selectedClientLabel = value!,
-                  ),
+                  if (model.clients.isNotEmpty)
+                    FYDropdown<ClientData>(
+                      items: model.clients,
+                      labels: model.clientsLabel,
+                      value: model.selectedClientLabel,
+                      title: 'Select client',
+                      onChanged: (value) => model.selectedClientLabel = value!,
+                    ),
                   const SizedBox(height: 16),
-                  FYDropdown<String>(
-                    items: model.attendanceTypes,
-                    labels: model.attendanceTypes,
-                    value: model.selectedAttendanceType,
-                    title: 'Attendance Type',
-                    onChanged: (value) => model.selectedAttendanceType = value!,
-                  ),
-                  const SizedBox(height: 16),
+                  if (model.clients.isNotEmpty)
+                    FYDropdown<String>(
+                      items: model.attendanceTypes,
+                      labels: model.attendanceTypes,
+                      value: model.selectedAttendanceType,
+                      title: 'Attendance Type',
+                      onChanged: (value) =>
+                          model.selectedAttendanceType = value!,
+                    ),
+                  if (model.clients.isNotEmpty) const SizedBox(height: 16),
                   if (model.filterType == AttendanceReportFilterType.daily)
                     _buildFieldForDailyReportFilter(model),
                   if (model.filterType == AttendanceReportFilterType.weekly)
@@ -64,7 +67,7 @@ class AttendanceReportFilterView extends StatelessWidget {
                   const SizedBox(height: 16),
                   FYPrimaryButton(
                     label: "View Report",
-                    onPressed: () {},
+                    onPressed: model.onViewReportPressed,
                   ),
                 ],
               ),

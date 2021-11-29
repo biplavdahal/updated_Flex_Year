@@ -13,7 +13,7 @@ part 'user.data.g.dart';
 @freezed
 class UserData with _$UserData {
   const factory UserData({
-    @JsonKey(name: 'angular_role') required String role,
+    @JsonKey(name: 'angular_role') String? role,
     @JsonKey(name: 'access_token') required String accessToken,
     @JsonKey(name: 'id') required int id,
     @JsonKey(name: 'access_level') required int accessLevel,

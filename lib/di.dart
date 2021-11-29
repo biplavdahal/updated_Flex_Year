@@ -14,6 +14,7 @@ import 'package:flex_year_tablet/services/leave.service.dart';
 import 'package:flex_year_tablet/ui/app_access/app_access.model.dart';
 import 'package:flex_year_tablet/ui/attendance_report/attandance_report.model.dart';
 import 'package:flex_year_tablet/ui/attendance_report_filter/attendance_report_filter.model.dart';
+import 'package:flex_year_tablet/ui/attendance_summary/attendance_summary.model.dart';
 import 'package:flex_year_tablet/ui/write_leave_request/write_leave_request.model.dart';
 import 'package:flex_year_tablet/ui/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/leave_requests/leave_requests.model.dart';
@@ -50,6 +51,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => WriteLeaveRequestModel());
   locator.registerFactory(() => AttendanceReportModel());
   locator.registerFactory(() => AttendanceReportFilterModel());
+  locator.registerFactory(() => AttendanceSummaryModel());
 
   // Unkillable models
   locator.registerLazySingleton(() => LeaveRequestModel());

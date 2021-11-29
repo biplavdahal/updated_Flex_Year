@@ -8,6 +8,8 @@ import 'package:flex_year_tablet/helper/api_error.helper.dart';
 import 'package:flex_year_tablet/helper/api_response.helper.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
+import 'package:flex_year_tablet/ui/leave_requests/leave_requests.model.dart';
+import 'package:flutter/material.dart';
 
 class AuthenticationServiceImpl implements AuthenticationService {
   // Services
@@ -46,6 +48,8 @@ class AuthenticationServiceImpl implements AuthenticationService {
       });
 
       final data = constructResponse(_response.data);
+
+      debugPrint(data.toString());
 
       if (data!.containsKey("status") && data["status"] == false) {
         throw data["response"];
@@ -101,6 +105,10 @@ class AuthenticationServiceImpl implements AuthenticationService {
       });
 
       _sharedPreferenceService.remove(pfLoggedInUser);
+
+      if (locator<LeaveRequestModel>().onModelReadyCalled) {
+        locator<LeaveRequestModel>().setOnModelReadyCalled(status: false);
+      }
     } catch (e) {
       throw apiError(e);
     }

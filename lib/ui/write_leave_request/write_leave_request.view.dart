@@ -21,7 +21,7 @@ class WriteLeaveRequestView extends StatelessWidget {
   Widget build(BuildContext context) {
     return View<WriteLeaveRequestModel>(
       onModelReady: (model) =>
-          model.init(arguments as WriteLeaveRequestViewArguments),
+          model.init(arguments as WriteLeaveRequestViewArguments?),
       enableTouchRepeal: true,
       builder: (ctx, model, child) {
         return Scaffold(

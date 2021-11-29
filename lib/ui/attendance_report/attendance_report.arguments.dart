@@ -1,12 +1,12 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/ui/attendance_report_filter/attendance_report_filter.model.dart';
 
-class AttendanceReportFilterArguments extends Arguments {
+class AttendanceReportArguments extends Arguments {
   final AttendanceReportFilterType type;
-  final bool returnBack;
+  final Map<String, dynamic> searchParams;
 
-  AttendanceReportFilterArguments({
+  AttendanceReportArguments({
     required this.type,
-    this.returnBack = false,
+    required this.searchParams,
   });
 }
