@@ -1,6 +1,7 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/dashboard/dashboard.model.dart';
+import 'package:flex_year_tablet/ui/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/profile/profile.view.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -83,7 +84,9 @@ class DashboardDrawer extends StatelessWidget {
                 'Holidays',
                 style: TextStyle(color: AppColor.primary),
               ),
-              onTap: () {},
+              onTap: () {
+                locator<DashboardModel>().goto(HolidaysView.tag);
+              },
               leading: const Icon(
                 MdiIcons.calendarMonth,
                 color: AppColor.primary,

@@ -19,6 +19,7 @@ const auAttendanceForgot = "attendance/forgottocheckout";
 const auAttendanceInOut = "attendance/inout";
 const auMonthlyAttendanceReport = "attendance/reportclient";
 const auAttendanceSummary = "userstaff/staff-attendance";
+const auWeeklyReport = "attendance/weekly-report";
 
 const auLeaveTypes = "leavetype/index";
 // This API takes user id as staff id so beaware of that.
@@ -26,3 +27,5 @@ const auLeaveHistory = "leave/search";
 const auNewLeaveRequest = "leave/add";
 const auRemoveLeaveRequest = "leave/remove";
 const auEditLeaveRequest = "leave/edit";
+
+const auHolidays = "holiday/index";

@@ -82,5 +82,15 @@ getThemeDataTheme(BuildContext context) {
         borderRadius: BorderRadius.circular(10),
       ),
     ),
+    cardTheme: CardTheme(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          color: Colors.grey.shade300,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+    ),
   );
 }

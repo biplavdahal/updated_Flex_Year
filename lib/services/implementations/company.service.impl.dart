@@ -1,5 +1,6 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
+import 'package:flex_year_tablet/data_models/holiday.data.dart';
 import 'package:flex_year_tablet/data_models/leave_type.data.dart';
 import 'package:flex_year_tablet/helper/api_error.helper.dart';
 import 'package:flex_year_tablet/helper/api_response.helper.dart';
@@ -48,6 +49,34 @@ class CompanyServiceImpl implements CompanyService {
           _typesJson.map((json) => LeaveTypeData.fromJson(json)).toList();
     } catch (e) {
       rethrow;
+    }
+  }
+
+  @override
+  Future<List<HolidayData>> getHolidays() async {
+    try {
+      final _response = await _apiService.get(auHolidays, params: {
+        'access_token': _authenticationService.user!.accessToken,
+        'company_id': _appAccessService.appAccess!.company.companyId,
+      });
+
+      debugPrint(_response.data.toString());
+
+      final data = constructResponse(_response.data);
+
+      if (data!.containsKey('status') && data['status'] == false) {
+        throw data['response'] ?? data['detail'] ?? data['data'];
+      }
+
+      final _holidaysJson = data['data'] as List;
+
+      return _holidaysJson
+          .map((json) => HolidayData.fromJson(json))
+          .where(
+              (holiday) => DateTime.parse(holiday.date).isAfter(DateTime.now()))
+          .toList();
+    } catch (e) {
+      throw apiError(e);
     }
   }
 }

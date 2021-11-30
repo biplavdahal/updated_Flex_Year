@@ -1,3 +1,4 @@
+import 'package:flex_year_tablet/data_models/holiday.data.dart';
 import 'package:flex_year_tablet/data_models/leave_type.data.dart';
 
 abstract class CompanyService {
@@ -6,4 +7,7 @@ abstract class CompanyService {
 
   /// Preset all company required data by initing company service
   Future<void> init();
+
+  /// Get company holidays
+  Future<List<HolidayData>> getHolidays();
 }

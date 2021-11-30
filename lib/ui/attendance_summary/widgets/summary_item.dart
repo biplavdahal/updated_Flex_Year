@@ -20,14 +20,14 @@ class SummaryItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  summary.statusIn,
+                  summary.statusIn ?? '-',
                   style: const TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  summary.chekinDatetime,
+                  summary.chekinDatetime ?? '-',
                   style: const TextStyle(
                     color: Colors.green,
                   ),
@@ -39,14 +39,14 @@ class SummaryItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  summary.statusOut,
+                  summary.statusOut ?? '-',
                   style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  summary.checkoutDatetime,
+                  summary.checkoutDatetime ?? '-',
                   style: const TextStyle(
                     color: Colors.red,
                   ),
@@ -63,7 +63,7 @@ class SummaryItem extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(hourFormatter(summary.totalWorkedHour)),
+                Text(hourFormatter(summary.totalWorkedHour ?? '00:00:00')),
               ],
             ),
             const SizedBox(height: 16),

@@ -1,6 +1,7 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
+import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/attendance_report/attandance_report.model.dart';
 import 'package:flex_year_tablet/ui/attendance_report/attendance_report.arguments.dart';
 import 'package:flex_year_tablet/ui/attendance_report/widgets/report_item.dart';
@@ -154,6 +155,204 @@ class AttendanceReportView extends StatelessWidget {
             );
           },
           itemCount: model.monthlyReport.length,
+        ),
+      );
+    }
+
+    if (model.filterType == AttendanceReportFilterType.weekly) {
+      return Expanded(
+        child: ListView.builder(
+          itemBuilder: (context, index) {
+            final _report = model.weeklyReport[index];
+
+            return Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: AppColor.primary,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        const Text(
+                          "Employee name:",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          _report.name,
+                          style: const TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: DataTable(
+                      headingRowColor: MaterialStateProperty.all<Color>(
+                        AppColor.primary.withOpacity(0.16),
+                      ),
+                      columns: const [
+                        DataColumn(
+                          label: Text('Weekday'),
+                        ),
+                        DataColumn(
+                          label: Text('Working Hr.'),
+                        ),
+                      ],
+                      rows: [
+                        DataRow(
+                          cells: [
+                            const DataCell(Text("Monday")),
+                            DataCell(
+                              Text(
+                                _report.monday,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: _report.monday == "NS"
+                                      ? Colors.red
+                                      : Colors.green,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        DataRow(
+                          cells: [
+                            const DataCell(Text("Tuesday")),
+                            DataCell(
+                              Text(
+                                _report.tuesday,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: _report.tuesday == "NS"
+                                      ? Colors.red
+                                      : Colors.green,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        DataRow(
+                          cells: [
+                            const DataCell(Text("Wednesday")),
+                            DataCell(
+                              Text(
+                                _report.wednesday,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: _report.wednesday == "NS"
+                                      ? Colors.red
+                                      : Colors.green,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        DataRow(
+                          cells: [
+                            const DataCell(Text("Thursday")),
+                            DataCell(
+                              Text(
+                                _report.thursday,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: _report.thursday == "NS"
+                                      ? Colors.red
+                                      : Colors.green,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        DataRow(
+                          cells: [
+                            const DataCell(Text("Friday")),
+                            DataCell(
+                              Text(
+                                _report.friday,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: _report.friday == "NS"
+                                      ? Colors.red
+                                      : Colors.green,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        DataRow(
+                          cells: [
+                            const DataCell(Text("Saturday")),
+                            DataCell(
+                              Text(
+                                _report.saturday,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: _report.saturday == "NS"
+                                      ? Colors.red
+                                      : Colors.green,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        DataRow(
+                          cells: [
+                            const DataCell(Text("Sunday")),
+                            DataCell(
+                              Text(
+                                _report.sunday,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: _report.sunday == "NS"
+                                      ? Colors.red
+                                      : Colors.green,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        DataRow(
+                          cells: [
+                            const DataCell(
+                              Text(
+                                "Total",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                _report.totalWorkingHr,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+          itemCount: model.weeklyReport.length,
         ),
       );
     }

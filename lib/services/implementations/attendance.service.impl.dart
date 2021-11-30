@@ -4,6 +4,7 @@ import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
+import 'package:flex_year_tablet/data_models/attendance_weekly_report.data.dart';
 import 'package:flex_year_tablet/helper/api_error.helper.dart';
 import 'package:flex_year_tablet/helper/api_response.helper.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
@@ -132,8 +133,10 @@ class AttendanceServiceImpl implements AttendanceService {
 
   // FIXME: Need to fix this API
   @override
-  Future<List<AttendanceSummaryData>> getAttendanceSummary(
-      {required String date, String? clientId}) async {
+  Future<List<AttendanceSummaryData>> getAttendanceSummary({
+    required String date,
+    String? clientId,
+  }) async {
     try {
       final _response = await _apiService.get(auAttendanceSummary, params: {
         'date': date,
@@ -142,19 +145,62 @@ class AttendanceServiceImpl implements AttendanceService {
         'id': _authenticationService.user!.staff.staffId,
       });
 
+      debugPrint({
+        'date': date,
+        'access_token': _authenticationService.user!.accessToken,
+        'client_id': clientId,
+        'id': _authenticationService.user!.staff.staffId,
+      }.toString());
+
       if (_response.data is String) {
         throw 'Something went wrong!';
       }
 
+      if (_response.data is List) {
+        return (_response.data as List)
+            .map<AttendanceSummaryData>(
+              (e) => AttendanceSummaryData.fromJson(e),
+            )
+            .toList();
+      }
+
       final _data = constructResponse(_response.data);
+
+      debugPrint(_data.toString());
 
       if (_data!.containsKey("status") && _data["status"] == false) {
         throw _data["response"] ?? _data["detail"] ?? _data["data"];
       }
 
-      return (_response.data as List)
-          .map<AttendanceSummaryData>(
-            (e) => AttendanceSummaryData.fromJson(e),
+      return [];
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<List<AttendanceWeeklyReportData>> getWeeklyReport(
+      {required Map<String, dynamic> data}) async {
+    try {
+      final _response = await _apiService.post(auWeeklyReport, {
+        ...data,
+        'user': [_authenticationService.user!.id],
+        'company_id': _appAccessService.appAccess!.company.companyId,
+        'page': 1,
+        'limit': 10000,
+      }, params: {
+        'access_token': _authenticationService.user!.accessToken,
+      });
+
+      final _data = constructResponse(_response.data);
+
+      if (_data!.containsKey("status") && _data["status"] == false) {
+        throw _data["response"] ?? _data["data"] ?? _data["detail"];
+      }
+
+      return (_data['data'] as List<dynamic>)
+          .map<AttendanceWeeklyReportData>(
+            (e) => AttendanceWeeklyReportData.fromJson(e),
           )
           .toList();
     } catch (e) {
