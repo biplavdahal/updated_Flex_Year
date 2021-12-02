@@ -72,7 +72,7 @@ class ProfileView extends StatelessWidget {
                         label: "Address",
                         value: model.user.staffAddresses.isEmpty
                             ? "N/A"
-                            : "${model.user.staffAddresses[0].addressLine1}, ${model.user.staffAddresses[0].city}, ${model.user.staffAddresses[0].state} - ${model.user.staffAddresses[0].zipCode}, ${model.user.staffAddresses[0].country}",
+                            : model.user.staffAddresses[0].addressLine1,
                         icon: MdiIcons.mapMarkerOutline,
                       ),
                     ],

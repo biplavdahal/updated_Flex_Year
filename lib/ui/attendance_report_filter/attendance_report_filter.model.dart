@@ -1,11 +1,16 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
+import 'package:flex_year_tablet/data_models/company.data.dart';
+import 'package:flex_year_tablet/data_models/company_staff.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/ui/attendance_report/attendance_report.arguments.dart';
 import 'package:flex_year_tablet/ui/attendance_report/attendance_report.view.dart';
 import 'package:flex_year_tablet/ui/attendance_report_filter/attendance_report_filter.arguments.dart';
+import 'package:flex_year_tablet/ui/staffs/staffs.arguments.dart';
+import 'package:flex_year_tablet/ui/staffs/staffs.view.dart';
+import 'package:flutter/material.dart';
 
 enum AttendanceReportFilterType {
   daily,
@@ -80,6 +85,9 @@ class AttendanceReportFilterModel extends ViewModel {
 
   bool _returnBack = false;
 
+  Set<CompanyStaffData> _selectedStaffs = {};
+  Set<CompanyStaffData> get selectedStaffs => _selectedStaffs;
+
   // Actions
   void init(AttendanceReportFilterArguments arguments) {
     _filterType = arguments.type;
@@ -140,6 +148,22 @@ class AttendanceReportFilterModel extends ViewModel {
           searchParams: _searchParams,
         ),
       );
+    }
+  }
+
+  Future<void> onSelectStaffPressed() async {
+    final _response = await goto(
+      StaffsView.tag,
+      arguments: StaffsArguments(
+        isSelectMode: true,
+      ),
+    );
+
+    debugPrint(_response.toString());
+
+    if ((_response as Set<CompanyStaffData>).isNotEmpty) {
+      _selectedStaffs = _response;
+      setIdle();
     }
   }
 }

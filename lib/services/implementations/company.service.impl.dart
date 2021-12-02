@@ -1,5 +1,6 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
+import 'package:flex_year_tablet/data_models/company_staff.data.dart';
 import 'package:flex_year_tablet/data_models/holiday.data.dart';
 import 'package:flex_year_tablet/data_models/leave_type.data.dart';
 import 'package:flex_year_tablet/helper/api_error.helper.dart';
@@ -74,6 +75,31 @@ class CompanyServiceImpl implements CompanyService {
           .map((json) => HolidayData.fromJson(json))
           .where(
               (holiday) => DateTime.parse(holiday.date).isAfter(DateTime.now()))
+          .toList();
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<List<CompanyStaffData>> getStaffs() async {
+    try {
+      final _response = await _apiService.get(auStaffsList, params: {
+        'access_token': _authenticationService.user!.accessToken,
+        'company_id': _appAccessService.appAccess!.company.companyId,
+      });
+
+      final data = constructResponse(_response.data);
+
+      if (data!.containsKey('status') && data['status'] == false) {
+        throw data['response'] ?? data['detail'] ?? data['data'];
+      }
+
+      final _staffsJson = data['data'] as List;
+
+      return _staffsJson
+          .where((staff) => staff["user_id"] != null)
+          .map((json) => CompanyStaffData.fromJson(json))
           .toList();
     } catch (e) {
       throw apiError(e);

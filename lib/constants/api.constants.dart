@@ -34,3 +34,5 @@ const auRemoveLeaveRequest = "leave/remove";
 const auEditLeaveRequest = "leave/edit";
 
 const auHolidays = "holiday/index";
+
+const auStaffsList = "staff/index";

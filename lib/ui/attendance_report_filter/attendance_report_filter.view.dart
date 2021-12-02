@@ -1,5 +1,6 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
+import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/ui/attendance_report_filter/attendance_report_filter.arguments.dart';
 import 'package:flex_year_tablet/ui/attendance_report_filter/attendance_report_filter.model.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
@@ -35,41 +36,75 @@ class AttendanceReportFilterView extends StatelessWidget {
           ),
           body: Padding(
             padding: const EdgeInsets.all(16),
-            child: Form(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  if (model.clients.isNotEmpty)
-                    FYDropdown<ClientData>(
-                      items: model.clients,
-                      labels: model.clientsLabel,
-                      value: model.selectedClientLabel,
-                      title: 'Select client',
-                      onChanged: (value) => model.selectedClientLabel = value!,
+            child: SingleChildScrollView(
+              child: Form(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (locator<AuthenticationService>().user!.role ==
+                        "Manager")
+                      Container(
+                          alignment: Alignment.centerLeft,
+                          child: Wrap(
+                            spacing: 8,
+                            children: [
+                              for (int i = 0;
+                                  i < model.selectedStaffs.length;
+                                  i++)
+                                Chip(
+                                  label: Text(model.selectedStaffs
+                                      .toList()[i]
+                                      .fullName),
+                                  onDeleted: () {
+                                    model.selectedStaffs.remove(
+                                      model.selectedStaffs.toList()[i],
+                                    );
+                                    model.setIdle();
+                                  },
+                                ),
+                              ActionChip(
+                                label: const Text("Select Staffs"),
+                                onPressed: model.onSelectStaffPressed,
+                                backgroundColor: Colors.green,
+                              ),
+                            ],
+                          )),
+                    if (locator<AuthenticationService>().user!.role ==
+                        "Manager")
+                      const SizedBox(height: 16),
+                    if (model.clients.isNotEmpty)
+                      FYDropdown<ClientData>(
+                        items: model.clients,
+                        labels: model.clientsLabel,
+                        value: model.selectedClientLabel,
+                        title: 'Select client',
+                        onChanged: (value) =>
+                            model.selectedClientLabel = value!,
+                      ),
+                    const SizedBox(height: 16),
+                    if (model.clients.isNotEmpty)
+                      FYDropdown<String>(
+                        items: model.attendanceTypes,
+                        labels: model.attendanceTypes,
+                        value: model.selectedAttendanceType,
+                        title: 'Attendance Type',
+                        onChanged: (value) =>
+                            model.selectedAttendanceType = value!,
+                      ),
+                    if (model.clients.isNotEmpty) const SizedBox(height: 16),
+                    if (model.filterType == AttendanceReportFilterType.daily)
+                      _buildFieldForDailyReportFilter(model),
+                    if (model.filterType == AttendanceReportFilterType.weekly)
+                      _buildFieldForWeeklyReportFilter(model),
+                    if (model.filterType == AttendanceReportFilterType.monthly)
+                      _buildFieldForMonthlyReportFilter(model),
+                    const SizedBox(height: 16),
+                    FYPrimaryButton(
+                      label: "View Report",
+                      onPressed: model.onViewReportPressed,
                     ),
-                  const SizedBox(height: 16),
-                  if (model.clients.isNotEmpty)
-                    FYDropdown<String>(
-                      items: model.attendanceTypes,
-                      labels: model.attendanceTypes,
-                      value: model.selectedAttendanceType,
-                      title: 'Attendance Type',
-                      onChanged: (value) =>
-                          model.selectedAttendanceType = value!,
-                    ),
-                  if (model.clients.isNotEmpty) const SizedBox(height: 16),
-                  if (model.filterType == AttendanceReportFilterType.daily)
-                    _buildFieldForDailyReportFilter(model),
-                  if (model.filterType == AttendanceReportFilterType.weekly)
-                    _buildFieldForWeeklyReportFilter(model),
-                  if (model.filterType == AttendanceReportFilterType.monthly)
-                    _buildFieldForMonthlyReportFilter(model),
-                  const SizedBox(height: 16),
-                  FYPrimaryButton(
-                    label: "View Report",
-                    onPressed: model.onViewReportPressed,
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

@@ -36,8 +36,8 @@ class DashboardDrawer extends StatelessWidget {
                         ),
                       ),
                     ),
-                    accountName: const Text(''),
-                    accountEmail: Text(
+                    accountEmail: Text(_user.role!.toUpperCase()),
+                    accountName: Text(
                         '[EMP - ${_user.staff.empId}] ${_user.staff.firstName} ${_user.staff.lastName}'),
                   ),
                 ),
