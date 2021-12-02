@@ -1,9 +1,11 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/ui/app_access/app_access.view.dart';
+import 'package:flex_year_tablet/ui/attendance_correction/attendance_correction.view.dart';
 import 'package:flex_year_tablet/ui/attendance_report/attendance_report.view.dart';
 import 'package:flex_year_tablet/ui/attendance_report_filter/attendance_report_filter.view.dart';
 import 'package:flex_year_tablet/ui/attendance_summary/attendance_summary.view.dart';
 import 'package:flex_year_tablet/ui/holidays/holidays.view.dart';
+import 'package:flex_year_tablet/ui/request_review/request_review.view.dart';
 import 'package:flex_year_tablet/ui/write_leave_request/write_leave_request.view.dart';
 import 'package:flex_year_tablet/ui/dashboard/dashboard.view.dart';
 import 'package:flex_year_tablet/ui/leave_requests/leave_requests.view.dart';
@@ -17,9 +19,12 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
       DashboardView.tag: const DashboardView(),
       ProfileView.tag: const ProfileView(),
       HolidaysView.tag: const HolidaysView(),
+      AttendanceCorrectionView.tag: const AttendanceCorrectionView(),
       LeaveRequestView.tag: const LeaveRequestView(),
       WriteLeaveRequestView.tag:
           WriteLeaveRequestView(settings.arguments as Arguments?),
+      RequestReviewView.tag:
+          RequestReviewView(settings.arguments as Arguments?),
       AttendanceReportView.tag:
           AttendanceReportView(settings.arguments as Arguments?),
       AttendanceReportFilterView.tag:

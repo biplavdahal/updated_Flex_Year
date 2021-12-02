@@ -1,3 +1,4 @@
+import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
@@ -36,5 +37,34 @@ abstract class AttendanceService {
   // Get weekly report
   Future<List<AttendanceWeeklyReportData>> getWeeklyReport({
     required Map<String, dynamic> data,
+  });
+
+  /// Get list of attendance corrections
+  Future<List<AttendanceCorrectionData>> getAttendanceCorrections();
+
+  /// Post forget checkout review
+  Future<void> postForgetCheckoutReview({
+    required String attendanceId,
+    required String dateTime,
+    String? message,
+  });
+
+  /// Remove attendance correction
+  Future<void> removeAttendanceCorrection(String attendanceId);
+
+  /// Post attendance correction
+  Future<void> addAttendanceCorrection({
+    required String attendanceId,
+    required String inDateTime,
+    required String outDateTime,
+    String? message,
+  });
+
+  /// Edit attendance correction
+  Future<void> editAttendanceCorrection({
+    required String attendanceId,
+    required String inDateTime,
+    required String outDateTime,
+    String? message,
   });
 }

@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
+import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
@@ -192,6 +195,15 @@ class AttendanceServiceImpl implements AttendanceService {
         'access_token': _authenticationService.user!.accessToken,
       });
 
+      debugPrint(jsonEncode({
+        ...data,
+        'user': [_authenticationService.user!.id],
+        'company_id': _appAccessService.appAccess!.company.companyId,
+        'page': 1,
+        'limit': 10000,
+        'access_token': _authenticationService.user!.accessToken,
+      }));
+
       final _data = constructResponse(_response.data);
 
       if (_data!.containsKey("status") && _data["status"] == false) {
@@ -203,6 +215,137 @@ class AttendanceServiceImpl implements AttendanceService {
             (e) => AttendanceWeeklyReportData.fromJson(e),
           )
           .toList();
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<List<AttendanceCorrectionData>> getAttendanceCorrections() async {
+    try {
+      final _response = await _apiService.get(auGetCorrectionRequest, params: {
+        'access_token': _authenticationService.user!.accessToken,
+        'id': _authenticationService.user!.id,
+        'status': 1,
+      });
+
+      final _data = constructResponse(_response.data);
+
+      if (_data!.containsKey("status") && _data["status"] == false) {
+        throw _data["response"] ?? _data["detail"] ?? _data["data"];
+      }
+
+      return (_data['data'] as List<dynamic>)
+          .map<AttendanceCorrectionData>(
+            (e) => AttendanceCorrectionData.fromJson(e),
+          )
+          .toList();
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<void> postForgetCheckoutReview({
+    required String attendanceId,
+    required String dateTime,
+    String? message,
+  }) async {
+    try {
+      final _response =
+          await _apiService.post(auForgotCheckoutReviewRequest, {}, params: {
+        'id': attendanceId,
+        'datetime': dateTime,
+        'message': message,
+        'access_token': _authenticationService.user!.accessToken,
+      });
+
+      final _data = constructResponse(_response.data);
+
+      debugPrint(_data.toString());
+
+      if (_data!.containsKey("status") && _data["status"] == false) {
+        throw _data["response"] ?? _data["detail"] ?? _data["data"];
+      }
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<void> removeAttendanceCorrection(String attendanceId) async {
+    try {
+      final _response = await _apiService.post(auDeleteAttendanceCorrection, {
+        'id': attendanceId,
+        'access_token': _authenticationService.user!.accessToken,
+      });
+
+      debugPrint(_response.data.toString());
+
+      final _data = constructResponse(_response.data);
+
+      if (_data!.containsKey("status") && _data["status"] == false) {
+        throw _data["response"] ?? _data["detail"] ?? _data["data"];
+      }
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<void> addAttendanceCorrection({
+    required String attendanceId,
+    required String inDateTime,
+    required String outDateTime,
+    String? message,
+  }) async {
+    try {
+      final _response = await _apiService.post(
+        auPostAttendanceCorrection,
+        {
+          'access_token': _authenticationService.user!.accessToken,
+          'attendance_id': attendanceId,
+          'in_datetime': inDateTime,
+          'out_datetime': outDateTime,
+          'message': message,
+        },
+      );
+
+      final _data = constructResponse(_response.data);
+
+      if (_data!.containsKey("status") && _data["status"] == false) {
+        throw _data["response"] ?? _data["detail"] ?? _data["data"];
+      }
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<void> editAttendanceCorrection({
+    required String attendanceId,
+    required String inDateTime,
+    required String outDateTime,
+    String? message,
+  }) async {
+    try {
+      final _response = await _apiService.post(
+        auAttendanceCorrectionEdit,
+        {
+          'access_token': _authenticationService.user!.accessToken,
+          'id': attendanceId,
+          'checkin_datetime': inDateTime,
+          'checkout_datetime': outDateTime,
+          'message': message,
+          'company_id': _appAccessService.appAccess!.company.companyId,
+        },
+      );
+
+      final _data = constructResponse(_response.data);
+
+      if (_data!.containsKey("status") && _data["status"] == false) {
+        throw _data["response"] ?? _data["detail"] ?? _data["data"];
+      }
     } catch (e) {
       throw apiError(e);
     }

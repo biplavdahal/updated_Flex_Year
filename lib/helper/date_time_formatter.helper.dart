@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 String formattedTime(String unformattedDateTime) {
@@ -51,7 +52,7 @@ String lastDateOfMonth([int? month]) {
       ? DateTime(now.year, now.month + 1, 0)
       : DateTime(now.year + 1, 1, 0);
 
-  return "${lastDayDateTime.year}-${lastDayDateTime.month}-${lastDayDateTime.day}";
+  return "${lastDayDateTime.year}-${lastDayDateTime.month < 10 ? '0${lastDayDateTime.month}' : lastDayDateTime.month}-${lastDayDateTime.day < 10 ? '0${lastDayDateTime.day}' : lastDayDateTime.day}";
 }
 
 String getMonthStringFromDateString(
@@ -111,4 +112,15 @@ String weekDayFromDateString(String date) {
   DateTime dateTime = DateTime.parse(date);
 
   return weekDays[dateTime.weekday];
+}
+
+TimeOfDay stringTimeToTimeOfDay(String strTime) {
+  final _time = strTime.split(" ")[1];
+
+  final _token = _time.split(":");
+
+  return TimeOfDay(
+    hour: int.parse(_token[0]),
+    minute: int.parse(_token[1]),
+  );
 }

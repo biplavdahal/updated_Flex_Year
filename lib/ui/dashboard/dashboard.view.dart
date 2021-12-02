@@ -1,6 +1,7 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
+import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
@@ -12,6 +13,9 @@ import 'package:flex_year_tablet/ui/dashboard/widgets/attendance_button.dart';
 import 'package:flex_year_tablet/ui/dashboard/widgets/dashboard_drawer.dart';
 import 'package:flex_year_tablet/ui/dashboard/widgets/utility_item.dart';
 import 'package:flex_year_tablet/ui/leave_requests/leave_requests.view.dart';
+import 'package:flex_year_tablet/ui/request_review/request_review.arguments.dart';
+import 'package:flex_year_tablet/ui/request_review/request_review.model.dart';
+import 'package:flex_year_tablet/ui/request_review/request_review.view.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
@@ -126,7 +130,19 @@ class DashboardView extends StatelessWidget {
                 FYPrimaryButton(
                   label:
                       "Checkout Request for ${model.attendanceForgot!.forgottonDate}",
-                  onPressed: () {},
+                  onPressed: () async {
+                    final response = await locator<DashboardModel>().goto(
+                      RequestReviewView.tag,
+                      arguments: RequestReviewArguments<AttendanceForgotData>(
+                        type: RequestReviewType.checkoutReview,
+                        payload: model.attendanceForgot,
+                      ),
+                    );
+
+                    if (response) {
+                      model.init();
+                    }
+                  },
                   backgroundColor: Colors.orange,
                 ),
               ],

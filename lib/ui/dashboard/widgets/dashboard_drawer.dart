@@ -1,5 +1,6 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/theme.dart';
+import 'package:flex_year_tablet/ui/attendance_correction/attendance_correction.view.dart';
 import 'package:flex_year_tablet/ui/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/profile/profile.view.dart';
@@ -73,7 +74,9 @@ class DashboardDrawer extends StatelessWidget {
                 'Attendance Correction',
                 style: TextStyle(color: AppColor.primary),
               ),
-              onTap: () {},
+              onTap: () {
+                locator<DashboardModel>().goto(AttendanceCorrectionView.tag);
+              },
               leading: const Icon(
                 MdiIcons.checkboxOutline,
                 color: AppColor.primary,

@@ -1,4 +1,9 @@
+import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
+import 'package:flex_year_tablet/ui/attendance_summary/attendance_summary.model.dart';
+import 'package:flex_year_tablet/ui/request_review/request_review.arguments.dart';
+import 'package:flex_year_tablet/ui/request_review/request_review.model.dart';
+import 'package:flex_year_tablet/ui/request_review/request_review.view.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
@@ -22,15 +27,12 @@ class SummaryItem extends StatelessWidget {
                 Text(
                   summary.statusIn ?? '-',
                   style: const TextStyle(
-                    color: Colors.green,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   summary.chekinDatetime ?? '-',
-                  style: const TextStyle(
-                    color: Colors.green,
-                  ),
+                  style: const TextStyle(),
                 ),
               ],
             ),
@@ -41,15 +43,12 @@ class SummaryItem extends StatelessWidget {
                 Text(
                   summary.statusOut ?? '-',
                   style: const TextStyle(
-                    color: Colors.red,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   summary.checkoutDatetime ?? '-',
-                  style: const TextStyle(
-                    color: Colors.red,
-                  ),
+                  style: const TextStyle(),
                 ),
               ],
             ),
@@ -71,7 +70,15 @@ class SummaryItem extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: FYPrimaryButton(
                 label: "Request Review",
-                onPressed: () {},
+                onPressed: () {
+                  locator<AttendanceSummaryModel>().goto(
+                    RequestReviewView.tag,
+                    arguments: RequestReviewArguments<AttendanceSummaryData>(
+                      type: RequestReviewType.attendanceReview,
+                      payload: summary,
+                    ),
+                  );
+                },
               ),
             ),
           ],

@@ -1,8 +1,8 @@
 /// --------------------------------------------------
 /// ------------- Base URL for the API ---------------
 /// --------------------------------------------------
-// const auBaseURL = "https://dev.flexyear.com/backend/";
-const auBaseURL = "https://flexsaas.flexyear.com/";
+const auBaseURL = "https://dev.flexyear.com/backend/";
+// const auBaseURL = "https://flexsaas.flexyear.com/";
 const auApiBaseUrl = "${auBaseURL}flexyear_api/api/web/v1/";
 
 /// --------------------------------------------------
@@ -20,6 +20,11 @@ const auAttendanceInOut = "attendance/inout";
 const auMonthlyAttendanceReport = "attendance/reportclient";
 const auAttendanceSummary = "userstaff/staff-attendance";
 const auWeeklyReport = "attendance/weekly-report";
+const auGetCorrectionRequest = "userstaff/attendance";
+const auForgotCheckoutReviewRequest = "attendance/checkoutreview";
+const auDeleteAttendanceCorrection = "attendance/remove";
+const auPostAttendanceCorrection = "attendance/correction-review";
+const auAttendanceCorrectionEdit = "attendance/edit";
 
 const auLeaveTypes = "leavetype/index";
 // This API takes user id as staff id so beaware of that.
