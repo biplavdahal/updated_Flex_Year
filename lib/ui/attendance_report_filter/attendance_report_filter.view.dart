@@ -27,7 +27,9 @@ class AttendanceReportFilterView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(
-              model.filterType == AttendanceReportFilterType.daily
+              model.filterType == AttendanceReportFilterType.daily ||
+                      model.filterType ==
+                          AttendanceReportFilterType.oneDayReport
                   ? 'One Day Report'
                   : model.filterType == AttendanceReportFilterType.weekly
                       ? 'Weekly Report'
@@ -41,8 +43,11 @@ class AttendanceReportFilterView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    if (locator<AuthenticationService>().user!.role ==
-                        "Manager")
+                    if (locator<AuthenticationService>()
+                            .user!
+                            .role
+                            ?.toLowerCase() !=
+                        "staff")
                       Container(
                           alignment: Alignment.centerLeft,
                           child: Wrap(
@@ -92,7 +97,9 @@ class AttendanceReportFilterView extends StatelessWidget {
                             model.selectedAttendanceType = value!,
                       ),
                     if (model.clients.isNotEmpty) const SizedBox(height: 16),
-                    if (model.filterType == AttendanceReportFilterType.daily)
+                    if (model.filterType == AttendanceReportFilterType.daily ||
+                        model.filterType ==
+                            AttendanceReportFilterType.oneDayReport)
                       _buildFieldForDailyReportFilter(model),
                     if (model.filterType == AttendanceReportFilterType.weekly)
                       _buildFieldForWeeklyReportFilter(model),
@@ -103,6 +110,23 @@ class AttendanceReportFilterView extends StatelessWidget {
                       label: "View Report",
                       onPressed: model.onViewReportPressed,
                     ),
+                    if (locator<AuthenticationService>()
+                            .user!
+                            .role
+                            ?.toLowerCase() !=
+                        "staff")
+                      const SizedBox(height: 16),
+                    if (locator<AuthenticationService>()
+                            .user!
+                            .role
+                            ?.toLowerCase() !=
+                        "staff")
+                      const Text(
+                        "Note: Not selecting any staff will, by default, show your own report.",
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
                   ],
                 ),
               ),

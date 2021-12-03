@@ -26,6 +26,7 @@ class AttendanceSummaryModel extends ViewModel with SnackbarMixin {
       _summary = await _attendanceService.getAttendanceSummary(
         date: _summaryData.date,
         clientId: _summaryData.clientId,
+        staffId: _summaryData.staffId,
       );
 
       setIdle();

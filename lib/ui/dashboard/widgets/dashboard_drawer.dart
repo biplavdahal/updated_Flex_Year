@@ -1,4 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
+import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/attendance_correction/attendance_correction.view.dart';
 import 'package:flex_year_tablet/ui/dashboard/dashboard.model.dart';
@@ -95,6 +96,51 @@ class DashboardDrawer extends StatelessWidget {
                 color: AppColor.primary,
               ),
             ),
+            if (locator<AuthenticationService>().user!.role?.toLowerCase() !=
+                'staff')
+              const Divider(),
+            if (locator<AuthenticationService>().user!.role?.toLowerCase() !=
+                'staff')
+              ListTile(
+                title: const Text(
+                  'Attendance Correction Requests',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                onTap: () {},
+                leading: const Icon(
+                  MdiIcons.checkboxMultipleMarked,
+                  color: Colors.blue,
+                ),
+              ),
+            if (locator<AuthenticationService>().user!.role?.toLowerCase() !=
+                'staff')
+              ListTile(
+                title: const Text(
+                  'Add Attendance',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                onTap: () {},
+                leading: const Icon(
+                  MdiIcons.plusBoxMultiple,
+                  color: Colors.blue,
+                ),
+              ),
+            if (locator<AuthenticationService>().user!.role?.toLowerCase() !=
+                'staff')
+              ListTile(
+                title: const Text(
+                  'Leave Request Received',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                onTap: () {},
+                leading: const Icon(
+                  MdiIcons.airplaneAlert,
+                  color: Colors.blue,
+                ),
+              ),
+            if (locator<AuthenticationService>().user!.role?.toLowerCase() !=
+                'staff')
+              const Divider(),
             ListTile(
               title: const Text(
                 'Logout',

@@ -3,11 +3,11 @@ import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
 
-class ReportItem extends StatelessWidget {
+class MonthlyReportItem extends StatelessWidget {
   final AttendanceReportData report;
   final VoidCallback? onTap;
 
-  const ReportItem(
+  const MonthlyReportItem(
     this.report, {
     Key? key,
     this.onTap,

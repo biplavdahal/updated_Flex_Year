@@ -22,14 +22,16 @@ class StaffsView extends StatelessWidget {
           appBar: AppBar(
             title: Text(model.isSelectMode ? 'Select Staffs' : 'Staffs'),
           ),
-          floatingActionButton: model.selectedStaffs.isNotEmpty
-              ? FloatingActionButton(
-                  child: const Icon(Icons.check),
-                  onPressed: () => model.goBack(
-                    result: model.selectedStaffs,
-                  ),
-                )
-              : null,
+          floatingActionButton: model.isSingleSelect
+              ? null
+              : model.selectedStaffs.isNotEmpty
+                  ? FloatingActionButton(
+                      child: const Icon(Icons.check),
+                      onPressed: () => model.goBack(
+                        result: model.selectedStaffs,
+                      ),
+                    )
+                  : null,
           body: model.isLoading
               ? const FYLinearLoader()
               : Padding(

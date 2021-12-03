@@ -1,5 +1,6 @@
 import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
+import 'package:flex_year_tablet/data_models/attendance_one_day_report.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
@@ -32,6 +33,7 @@ abstract class AttendanceService {
   Future<List<AttendanceSummaryData>> getAttendanceSummary({
     required String date,
     String? clientId,
+    String? staffId,
   });
 
   // Get weekly report
@@ -66,5 +68,10 @@ abstract class AttendanceService {
     required String inDateTime,
     required String outDateTime,
     String? message,
+  });
+
+  /// Get one day report
+  Future<List<AttendanceOneDayReportData>> getOneDayReport({
+    required Map<String, dynamic> data,
   });
 }

@@ -1,7 +1,6 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
-import 'package:flex_year_tablet/data_models/company.data.dart';
 import 'package:flex_year_tablet/data_models/company_staff.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
@@ -16,6 +15,7 @@ enum AttendanceReportFilterType {
   daily,
   weekly,
   monthly,
+  oneDayReport,
 }
 
 class AttendanceReportFilterModel extends ViewModel {
@@ -117,7 +117,8 @@ class AttendanceReportFilterModel extends ViewModel {
           "${DateTime.now().year}-${(months.indexOf(_selectedMonth) + 1).toString().length == 1 ? '0${months.indexOf(_selectedMonth) + 1}' : months.indexOf(_selectedMonth) + 1}-01";
       _searchParams['date_to'] =
           lastDateOfMonth(months.indexOf(_selectedMonth) + 1);
-    } else if (_filterType == AttendanceReportFilterType.daily) {
+    } else if (_filterType == AttendanceReportFilterType.daily ||
+        _filterType == AttendanceReportFilterType.oneDayReport) {
       _searchParams['date'] =
           '${_attendanceDate!.year}-${_attendanceDate!.month < 10 ? '0${_attendanceDate!.month}' : _attendanceDate!.month}-${_attendanceDate!.day < 10 ? '0${_attendanceDate!.day}' : _attendanceDate!.day}';
     } else {
@@ -133,10 +134,18 @@ class AttendanceReportFilterModel extends ViewModel {
     }
 
     _searchParams['type'] = _selectedAttendanceType;
+
+    if (_selectedStaffs.isNotEmpty) {
+      _searchParams['user'] = _selectedStaffs.map((e) => e.userId).toList();
+    }
+
     if (_returnBack) {
       goBack(
         result: AttendanceReportArguments(
-          type: _filterType,
+          type: _filterType == AttendanceReportFilterType.daily &&
+                  _selectedStaffs.isNotEmpty
+              ? AttendanceReportFilterType.oneDayReport
+              : _filterType,
           searchParams: _searchParams,
         ),
       );
@@ -144,7 +153,10 @@ class AttendanceReportFilterModel extends ViewModel {
       gotoAndPop(
         AttendanceReportView.tag,
         arguments: AttendanceReportArguments(
-          type: _filterType,
+          type: _filterType == AttendanceReportFilterType.daily &&
+                  _selectedStaffs.isNotEmpty
+              ? AttendanceReportFilterType.oneDayReport
+              : _filterType,
           searchParams: _searchParams,
         ),
       );
@@ -156,6 +168,8 @@ class AttendanceReportFilterModel extends ViewModel {
       StaffsView.tag,
       arguments: StaffsArguments(
         isSelectMode: true,
+        selectedStaffs: _selectedStaffs.toList(),
+        isSingleSelect: _filterType == AttendanceReportFilterType.monthly,
       ),
     );
 

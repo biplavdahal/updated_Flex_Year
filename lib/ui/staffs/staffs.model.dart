@@ -25,6 +25,9 @@ class StaffsModel extends ViewModel with SnackbarMixin {
     setIdle();
   }
 
+  bool _isSingleSelect = false;
+  bool get isSingleSelect => _isSingleSelect;
+
   List<CompanyStaffData> _staffs = [];
 
   List<CompanyStaffData> get staffsToShow => _staffs
@@ -35,12 +38,18 @@ class StaffsModel extends ViewModel with SnackbarMixin {
   final Set<CompanyStaffData> _selectedStaffs = {};
   Set<CompanyStaffData> get selectedStaffs => _selectedStaffs;
   void addSelectedStaffs(CompanyStaffData staff) {
-    if (_selectedStaffs.contains(staff)) {
-      _selectedStaffs.remove(staff);
-    } else {
+    if (_isSingleSelect) {
+      _selectedStaffs.clear();
       _selectedStaffs.add(staff);
+      goBack(result: _selectedStaffs);
+    } else {
+      if (_selectedStaffs.contains(staff)) {
+        _selectedStaffs.remove(staff);
+      } else {
+        _selectedStaffs.add(staff);
+      }
+      setIdle();
     }
-    setIdle();
   }
 
   bool isSelected(CompanyStaffData staff) => _selectedStaffs.contains(staff);
@@ -49,6 +58,10 @@ class StaffsModel extends ViewModel with SnackbarMixin {
   Future<void> init(StaffsArguments? arguments) async {
     if (arguments != null) {
       _isSelectMode = arguments.isSelectMode;
+      if (arguments.selectedStaffs != null) {
+        _selectedStaffs.addAll(arguments.selectedStaffs!);
+      }
+      _isSingleSelect = arguments.isSingleSelect;
     }
     setIdle();
 

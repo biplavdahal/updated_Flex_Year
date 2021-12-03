@@ -1,6 +1,7 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:bestfriend/mixins/snack_bar.mixin.dart';
 import 'package:bestfriend/ui/view.model.dart';
+import 'package:flex_year_tablet/data_models/attendance_one_day_report.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_weekly_report.data.dart';
@@ -30,6 +31,9 @@ class AttendanceReportModel extends ViewModel with SnackbarMixin {
   List<AttendanceWeeklyReportData> _weeklyReport = [];
   List<AttendanceWeeklyReportData> get weeklyReport => _weeklyReport;
 
+  List<AttendanceOneDayReportData> _oneDayReports = [];
+  List<AttendanceOneDayReportData> get oneDayReports => _oneDayReports;
+
   // Actions
   Future<void> init(AttendanceReportArguments arguments) async {
     _filterType = arguments.type;
@@ -52,8 +56,12 @@ class AttendanceReportModel extends ViewModel with SnackbarMixin {
         _weeklyReport = await _attendanceService.getWeeklyReport(
           data: _searchParams,
         );
+      } else if (_filterType == AttendanceReportFilterType.oneDayReport) {
+        _oneDayReports = await _attendanceService.getOneDayReport(
+          data: _searchParams,
+        );
 
-        debugPrint(_weeklyReport.toString());
+        debugPrint(_oneDayReports.toString());
       }
 
       setSuccess();
