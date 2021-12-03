@@ -136,7 +136,12 @@ class AttendanceReportFilterModel extends ViewModel {
     _searchParams['type'] = _selectedAttendanceType;
 
     if (_selectedStaffs.isNotEmpty) {
-      _searchParams['user'] = _selectedStaffs.map((e) => e.userId).toList();
+      if (_filterType == AttendanceReportFilterType.daily &&
+          _selectedStaffs.isNotEmpty) {
+        _searchParams['user'] = _selectedStaffs.map((e) => e.staffId).toList();
+      } else {
+        _searchParams['user'] = _selectedStaffs.map((e) => e.userId).toList();
+      }
     }
 
     if (_returnBack) {
