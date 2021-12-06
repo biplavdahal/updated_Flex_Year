@@ -37,13 +37,15 @@ class LeaveServiceImpl implements LeaveService {
   }
 
   @override
-  Future<List<LeaveRequestData>> getAllLeaveRequests() async {
+  Future<List<LeaveRequestData>> getAllLeaveRequests([bool self = true]) async {
     try {
-      final _response = await _apiService.post(auLeaveHistory, {
+      final _response = await _apiService.post(auLeaveSearch, {
         'access_token': _authenticationService.user!.accessToken,
         'company_id': _appAccessService.appAccess!.company.companyId,
+        'sortnane': 'date_to',
+        'sortno': 2,
         'search': {
-          'staff_id': _authenticationService.user!.id,
+          if (self) 'staff_id': _authenticationService.user!.id,
         }
       });
 
@@ -51,6 +53,16 @@ class LeaveServiceImpl implements LeaveService {
 
       if (data!.containsKey("status") && data["status"] == false) {
         throw data["response"] ?? data["detail"] ?? data["data"];
+      }
+
+      if (!self) {
+        return data["data"]
+            .where((json) =>
+                json.containsKey('staffname') && json['staffname'] != null)
+            .map<LeaveRequestData>((item) => LeaveRequestData.fromJson(item))
+            .where((item) =>
+                item.staffId != _authenticationService.user!.id.toString())
+            .toList();
       }
 
       return data["data"]
@@ -100,6 +112,26 @@ class LeaveServiceImpl implements LeaveService {
       }
 
       return;
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<void> actionOnLeaveRequest(
+      {required String requestId, required String action}) async {
+    try {
+      final _response = await _apiService.post(auActionOnLeaveRequest, {
+        'access_token': _authenticationService.user!.accessToken,
+        'id': requestId,
+        'status': action,
+      });
+
+      final data = constructResponse(_response.data);
+
+      if (data!.containsKey("status") && data["status"] == false) {
+        throw data["response"] ?? data["detail"] ?? data["data"];
+      }
     } catch (e) {
       throw apiError(e);
     }

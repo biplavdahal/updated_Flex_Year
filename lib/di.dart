@@ -18,6 +18,7 @@ import 'package:flex_year_tablet/ui/attendance_report/attandance_report.model.da
 import 'package:flex_year_tablet/ui/attendance_report_filter/attendance_report_filter.model.dart';
 import 'package:flex_year_tablet/ui/attendance_summary/attendance_summary.model.dart';
 import 'package:flex_year_tablet/ui/holidays/holidays.model.dart';
+import 'package:flex_year_tablet/ui/leave_requests_received/leave_request_received.model.dart';
 import 'package:flex_year_tablet/ui/request_review/request_review.model.dart';
 import 'package:flex_year_tablet/ui/staffs/staffs.model.dart';
 import 'package:flex_year_tablet/ui/write_leave_request/write_leave_request.model.dart';
@@ -62,6 +63,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => RequestReviewModel());
   locator.registerFactory(() => StaffsModel());
   locator.registerFactory(() => AttendanceCorrectionReviewModel());
+  locator.registerFactory(() => LeaveRequestReceivedModel());
 
   // Unkillable models
   locator.registerLazySingleton(() => LeaveRequestModel());

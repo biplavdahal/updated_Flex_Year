@@ -1,41 +1,41 @@
 import 'package:bestfriend/ui/view.dart';
-import 'package:flex_year_tablet/ui/attendance_correction_review/attendance_correction_review.model.dart';
-import 'package:flex_year_tablet/ui/attendance_correction_review/widgets/review_item.dart';
+import 'package:flex_year_tablet/ui/leave_requests_received/leave_request_received.model.dart';
+import 'package:flex_year_tablet/ui/leave_requests_received/widgets/request_item.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
 
-class AttendanceCorrectionReviewView extends StatelessWidget {
-  static String tag = 'attendance-correction-review-view';
+class LeaveRequestReceivedView extends StatelessWidget {
+  static String tag = 'leave-request-received-view';
 
-  const AttendanceCorrectionReviewView({Key? key}) : super(key: key);
+  const LeaveRequestReceivedView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return View<AttendanceCorrectionReviewModel>(
+    return View<LeaveRequestReceivedModel>(
       onModelReady: (model) => model.init(),
       builder: (ctx, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Attendance Correction Review'),
+            title: const Text('Leave Request Received'),
           ),
           body: model.isLoading
               ? const FYLinearLoader()
               : Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16),
                   child: RefreshIndicator(
                     onRefresh: model.init,
                     child: ListView.builder(
                       physics: const AlwaysScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return ReviewItem(
-                          isProcessing: model.isBusyWidget(
-                              '${model.reviews[index].id}-review'),
-                          correction: model.reviews[index],
+                      itemCount: model.requests.length,
+                      itemBuilder: (ctx, index) {
+                        final leaveRequest = model.requests[index];
+                        return RequestItem(
+                          request: leaveRequest,
+                          isBusy: model.isBusyWidget('$leaveRequest-request'),
                           onApprove: model.onApprove,
                           onDecline: model.onDecline,
                         );
                       },
-                      itemCount: model.reviews.length,
                     ),
                   ),
                 ),

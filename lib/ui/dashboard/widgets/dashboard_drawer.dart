@@ -5,6 +5,7 @@ import 'package:flex_year_tablet/ui/attendance_correction/attendance_correction.
 import 'package:flex_year_tablet/ui/attendance_correction_review/attendance_correction_review.view.dart';
 import 'package:flex_year_tablet/ui/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/holidays/holidays.view.dart';
+import 'package:flex_year_tablet/ui/leave_requests_received/leave_request_received.view.dart';
 import 'package:flex_year_tablet/ui/profile/profile.view.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -136,7 +137,9 @@ class DashboardDrawer extends StatelessWidget {
                   'Leave Request Received',
                   style: TextStyle(color: Colors.blue),
                 ),
-                onTap: () {},
+                onTap: () {
+                  locator<DashboardModel>().goto(LeaveRequestReceivedView.tag);
+                },
                 leading: const Icon(
                   MdiIcons.airplaneAlert,
                   color: Colors.blue,

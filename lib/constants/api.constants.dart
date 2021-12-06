@@ -31,10 +31,11 @@ const auPostAttendanceCorrectionReview = "attendance/status";
 
 const auLeaveTypes = "leavetype/index";
 // This API takes user id as staff id so beaware of that.
-const auLeaveHistory = "leave/search";
+const auLeaveSearch = "leave/search";
 const auNewLeaveRequest = "leave/add";
 const auRemoveLeaveRequest = "leave/remove";
 const auEditLeaveRequest = "leave/edit";
+const auActionOnLeaveRequest = "leave/status";
 
 const auHolidays = "holiday/index";
 

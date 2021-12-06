@@ -1,6 +1,7 @@
 import 'package:flex_year_tablet/data_models/attendance_correction_review.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ReviewItem extends StatelessWidget {
   final AttendanceCorrectionReviewData correction;
@@ -65,7 +66,7 @@ class ReviewItem extends StatelessWidget {
                     children: [
                       GestureDetector(
                         child: Icon(
-                          Icons.check,
+                          MdiIcons.check,
                           color:
                               _status[correction.correctionStatus] == 'Approved'
                                   ? Colors.grey
@@ -81,7 +82,7 @@ class ReviewItem extends StatelessWidget {
                       const SizedBox(width: 14),
                       GestureDetector(
                         child: Icon(
-                          Icons.cancel_outlined,
+                          MdiIcons.cancel,
                           color:
                               _status[correction.correctionStatus] == 'Declined'
                                   ? Colors.grey

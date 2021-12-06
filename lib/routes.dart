@@ -6,6 +6,7 @@ import 'package:flex_year_tablet/ui/attendance_report/attendance_report.view.dar
 import 'package:flex_year_tablet/ui/attendance_report_filter/attendance_report_filter.view.dart';
 import 'package:flex_year_tablet/ui/attendance_summary/attendance_summary.view.dart';
 import 'package:flex_year_tablet/ui/holidays/holidays.view.dart';
+import 'package:flex_year_tablet/ui/leave_requests_received/leave_request_received.view.dart';
 import 'package:flex_year_tablet/ui/request_review/request_review.view.dart';
 import 'package:flex_year_tablet/ui/staffs/staffs.view.dart';
 import 'package:flex_year_tablet/ui/write_leave_request/write_leave_request.view.dart';
@@ -36,4 +37,5 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
       StaffsView.tag: StaffsView(settings.arguments as Arguments?),
       AttendanceCorrectionReviewView.tag:
           const AttendanceCorrectionReviewView(),
+      LeaveRequestReceivedView.tag: const LeaveRequestReceivedView(),
     };
