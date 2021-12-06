@@ -1,4 +1,5 @@
 import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
+import 'package:flex_year_tablet/data_models/attendance_correction_review.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_one_day_report.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
@@ -73,5 +74,14 @@ abstract class AttendanceService {
   /// Get one day report
   Future<List<AttendanceOneDayReportData>> getOneDayReport({
     required Map<String, dynamic> data,
+  });
+
+  /// Get all attendance correction reviews
+  Future<List<AttendanceCorrectionReviewData>> getAttendanceCorrectionReviews();
+
+  /// Approve or decline attendance review
+  Future<void> actionOnAttendanceCorrectionReview({
+    required String attendanceId,
+    required String status, // 0 pending, 1 approve, 2 decline
   });
 }

@@ -2,6 +2,7 @@ import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/attendance_correction/attendance_correction.view.dart';
+import 'package:flex_year_tablet/ui/attendance_correction_review/attendance_correction_review.view.dart';
 import 'package:flex_year_tablet/ui/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/profile/profile.view.dart';
@@ -106,7 +107,10 @@ class DashboardDrawer extends StatelessWidget {
                   'Attendance Correction Requests',
                   style: TextStyle(color: Colors.blue),
                 ),
-                onTap: () {},
+                onTap: () {
+                  locator<DashboardModel>()
+                      .goto(AttendanceCorrectionReviewView.tag);
+                },
                 leading: const Icon(
                   MdiIcons.checkboxMultipleMarked,
                   color: Colors.blue,

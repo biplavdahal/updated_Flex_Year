@@ -1,6 +1,7 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/ui/app_access/app_access.view.dart';
 import 'package:flex_year_tablet/ui/attendance_correction/attendance_correction.view.dart';
+import 'package:flex_year_tablet/ui/attendance_correction_review/attendance_correction_review.view.dart';
 import 'package:flex_year_tablet/ui/attendance_report/attendance_report.view.dart';
 import 'package:flex_year_tablet/ui/attendance_report_filter/attendance_report_filter.view.dart';
 import 'package:flex_year_tablet/ui/attendance_summary/attendance_summary.view.dart';
@@ -33,4 +34,6 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
       AttendanceSummaryView.tag:
           AttendanceSummaryView(settings.arguments as Arguments?),
       StaffsView.tag: StaffsView(settings.arguments as Arguments?),
+      AttendanceCorrectionReviewView.tag:
+          const AttendanceCorrectionReviewView(),
     };

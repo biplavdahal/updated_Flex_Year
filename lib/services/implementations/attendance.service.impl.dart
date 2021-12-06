@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
+import 'package:flex_year_tablet/data_models/attendance_correction_review.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_one_day_report.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
@@ -373,6 +374,63 @@ class AttendanceServiceImpl implements AttendanceService {
             (e) => AttendanceOneDayReportData.fromJson(e),
           )
           .toList();
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<List<AttendanceCorrectionReviewData>>
+      getAttendanceCorrectionReviews() async {
+    try {
+      final _response =
+          await _apiService.post(auGetAttendanceCorrectionReviews, {
+        'access_token': _authenticationService.user!.accessToken,
+        'company_id': _appAccessService.appAccess!.company.companyId,
+        'search': {
+          'correction_request': 1,
+        }
+      });
+
+      final _data = constructResponse(_response.data);
+
+      if (_data!.containsKey("status") && _data["status"] == false) {
+        throw _data["response"] ?? _data["detail"] ?? _data["data"];
+      }
+
+      return (_data['data'] as List<dynamic>)
+          .map<AttendanceCorrectionReviewData>(
+            (e) => AttendanceCorrectionReviewData.fromJson(e),
+          )
+          .where((review) =>
+              review.userId != _authenticationService.user!.id.toString())
+          .toList();
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<void> actionOnAttendanceCorrectionReview(
+      {required String attendanceId, required String status}) async {
+    try {
+      final _response =
+          await _apiService.post(auPostAttendanceCorrectionReview, {
+        'access_token': _authenticationService.user!.accessToken,
+        'attendance_id': attendanceId,
+        'status': status,
+        'company_id': _appAccessService.appAccess!.company.companyId,
+      });
+
+      debugPrint(_response.data.toString());
+
+      final _data = constructResponse(_response.data);
+
+      debugPrint(_data.toString());
+
+      if (_data!.containsKey("status") && _data["status"] == false) {
+        throw _data["response"] ?? _data["detail"] ?? _data["data"];
+      }
     } catch (e) {
       throw apiError(e);
     }

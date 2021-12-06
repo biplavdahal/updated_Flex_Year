@@ -1,5 +1,5 @@
-import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.service.dart';
+import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.service.impl.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/attendance.service.dart';
@@ -13,6 +13,7 @@ import 'package:flex_year_tablet/services/implementations/leave.service.impl.dar
 import 'package:flex_year_tablet/services/leave.service.dart';
 import 'package:flex_year_tablet/ui/app_access/app_access.model.dart';
 import 'package:flex_year_tablet/ui/attendance_correction/attendance_correction.model.dart';
+import 'package:flex_year_tablet/ui/attendance_correction_review/attendance_correction_review.model.dart';
 import 'package:flex_year_tablet/ui/attendance_report/attandance_report.model.dart';
 import 'package:flex_year_tablet/ui/attendance_report_filter/attendance_report_filter.model.dart';
 import 'package:flex_year_tablet/ui/attendance_summary/attendance_summary.model.dart';
@@ -60,6 +61,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => AttendanceCorrectionModel());
   locator.registerFactory(() => RequestReviewModel());
   locator.registerFactory(() => StaffsModel());
+  locator.registerFactory(() => AttendanceCorrectionReviewModel());
 
   // Unkillable models
   locator.registerLazySingleton(() => LeaveRequestModel());

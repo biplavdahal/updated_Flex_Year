@@ -26,6 +26,8 @@ const auDeleteAttendanceCorrection = "attendance/remove";
 const auPostAttendanceCorrection = "attendance/correction-review";
 const auAttendanceCorrectionEdit = "attendance/edit";
 const auOneDayReport = "attendance/oneday-report";
+const auGetAttendanceCorrectionReviews = "attendance/search";
+const auPostAttendanceCorrectionReview = "attendance/status";
 
 const auLeaveTypes = "leavetype/index";
 // This API takes user id as staff id so beaware of that.
