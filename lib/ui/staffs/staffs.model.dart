@@ -2,6 +2,7 @@ import 'package:bestfriend/bestfriend.dart';
 import 'package:bestfriend/mixins/snack_bar.mixin.dart';
 import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/data_models/company_staff.data.dart';
+import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/services/company.service.dart';
 import 'package:flex_year_tablet/ui/staffs/staffs.arguments.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,8 @@ class StaffsModel extends ViewModel with SnackbarMixin {
   bool _isSingleSelect = false;
   bool get isSingleSelect => _isSingleSelect;
 
+  bool _preventSelf = false;
+
   List<CompanyStaffData> _staffs = [];
 
   List<CompanyStaffData> get staffsToShow => _staffs
@@ -38,6 +41,17 @@ class StaffsModel extends ViewModel with SnackbarMixin {
   final Set<CompanyStaffData> _selectedStaffs = {};
   Set<CompanyStaffData> get selectedStaffs => _selectedStaffs;
   void addSelectedStaffs(CompanyStaffData staff) {
+    debugPrint(staff.toString());
+    debugPrint(locator<AuthenticationService>().user!.id.toString());
+    debugPrint(_preventSelf.toString());
+
+    if (staff.userId == locator<AuthenticationService>().user!.id.toString() &&
+        _preventSelf) {
+      snackbar.displaySnackbar(
+          SnackbarRequest.of(message: "You can not select yourself!"));
+      return;
+    }
+
     if (_isSingleSelect) {
       _selectedStaffs.clear();
       _selectedStaffs.add(staff);
@@ -62,6 +76,7 @@ class StaffsModel extends ViewModel with SnackbarMixin {
         _selectedStaffs.addAll(arguments.selectedStaffs!);
       }
       _isSingleSelect = arguments.isSingleSelect;
+      _preventSelf = arguments.preventSelf;
     }
     setIdle();
 

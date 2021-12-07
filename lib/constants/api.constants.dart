@@ -28,6 +28,7 @@ const auAttendanceCorrectionEdit = "attendance/edit";
 const auOneDayReport = "attendance/oneday-report";
 const auGetAttendanceCorrectionReviews = "attendance/search";
 const auPostAttendanceCorrectionReview = "attendance/status";
+const auAddMultipleAttendance = "attendance/addmultiple";
 
 const auLeaveTypes = "leavetype/index";
 // This API takes user id as staff id so beaware of that.
@@ -40,3 +41,5 @@ const auActionOnLeaveRequest = "leave/status";
 const auHolidays = "holiday/index";
 
 const auStaffsList = "staff/index";
+
+const auClients = "client/index";

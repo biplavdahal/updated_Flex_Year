@@ -84,4 +84,14 @@ abstract class AttendanceService {
     required String attendanceId,
     required String status, // 0 pending, 1 approve, 2 decline
   });
+
+  /// Add attendance to staff
+  Future<void> addAttendanceToStaff({
+    String checkInDateTime = '',
+    String checkOutDateTime = '',
+    String lunchInDateTime = '',
+    String lunchOutDateTime = '',
+    required List<String> userIds,
+    String? clientId ,
+  });
 }

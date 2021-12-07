@@ -4,6 +4,7 @@ import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/data_models/company_staff.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
+import 'package:flex_year_tablet/services/company.service.dart';
 import 'package:flex_year_tablet/ui/attendance_report/attendance_report.arguments.dart';
 import 'package:flex_year_tablet/ui/attendance_report/attendance_report.view.dart';
 import 'package:flex_year_tablet/ui/attendance_report_filter/attendance_report_filter.arguments.dart';
@@ -24,7 +25,10 @@ class AttendanceReportFilterModel extends ViewModel {
   AttendanceReportFilterType? get filterType => _filterType;
 
   List<ClientData> get clients =>
-      locator<AuthenticationService>().user!.clients;
+      locator<AuthenticationService>().user!.role!.toLowerCase() != 'staff'
+          ? locator<CompanyService>().clients!
+          : locator<AuthenticationService>().user!.clients;
+
   List<String> get clientsLabel => clients.map((e) => e.name).toList();
 
   late ClientData _selectedClient;

@@ -49,31 +49,31 @@ class AttendanceReportFilterView extends StatelessWidget {
                             ?.toLowerCase() !=
                         "staff")
                       Container(
-                          alignment: Alignment.centerLeft,
-                          child: Wrap(
-                            spacing: 8,
-                            children: [
-                              for (int i = 0;
-                                  i < model.selectedStaffs.length;
-                                  i++)
-                                Chip(
-                                  label: Text(model.selectedStaffs
-                                      .toList()[i]
-                                      .fullName),
-                                  onDeleted: () {
-                                    model.selectedStaffs.remove(
-                                      model.selectedStaffs.toList()[i],
-                                    );
-                                    model.setIdle();
-                                  },
-                                ),
-                              ActionChip(
-                                label: const Text("Select Staffs"),
-                                onPressed: model.onSelectStaffPressed,
-                                backgroundColor: Colors.green,
+                        alignment: Alignment.centerLeft,
+                        child: Wrap(
+                          spacing: 8,
+                          children: [
+                            for (int i = 0;
+                                i < model.selectedStaffs.length;
+                                i++)
+                              Chip(
+                                label: Text(
+                                    model.selectedStaffs.toList()[i].fullName),
+                                onDeleted: () {
+                                  model.selectedStaffs.remove(
+                                    model.selectedStaffs.toList()[i],
+                                  );
+                                  model.setIdle();
+                                },
                               ),
-                            ],
-                          )),
+                            ActionChip(
+                              label: const Text("Select Staffs"),
+                              onPressed: model.onSelectStaffPressed,
+                              backgroundColor: Colors.green,
+                            ),
+                          ],
+                        ),
+                      ),
                     if (locator<AuthenticationService>().user!.role ==
                         "Manager")
                       const SizedBox(height: 16),

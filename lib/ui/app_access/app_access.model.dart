@@ -20,7 +20,7 @@ class AppAccessModel extends ViewModel with SnackbarMixin {
     if (_appAccessFormKey.currentState!.validate()) {
       try {
         setLoading();
-        await _appAccessService.getApAccess(appAccessController.text);
+        await _appAccessService.getAppAccess(appAccessController.text);
         gotoAndClear(LoginView.tag);
         setSuccess();
       } catch (e) {

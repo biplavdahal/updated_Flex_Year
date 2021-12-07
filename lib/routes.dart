@@ -1,4 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
+import 'package:flex_year_tablet/ui/add_attendance/add_attendance.view.dart';
 import 'package:flex_year_tablet/ui/app_access/app_access.view.dart';
 import 'package:flex_year_tablet/ui/attendance_correction/attendance_correction.view.dart';
 import 'package:flex_year_tablet/ui/attendance_correction_review/attendance_correction_review.view.dart';
@@ -38,4 +39,5 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
       AttendanceCorrectionReviewView.tag:
           const AttendanceCorrectionReviewView(),
       LeaveRequestReceivedView.tag: const LeaveRequestReceivedView(),
+      AddAttendanceView.tag: const AddAttendanceView(),
     };

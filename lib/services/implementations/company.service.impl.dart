@@ -1,5 +1,6 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
+import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/data_models/company_staff.data.dart';
 import 'package:flex_year_tablet/data_models/holiday.data.dart';
 import 'package:flex_year_tablet/data_models/leave_type.data.dart';
@@ -20,10 +21,15 @@ class CompanyServiceImpl implements CompanyService {
   @override
   List<LeaveTypeData>? get leaveTypes => _leaveTypes;
 
+  List<ClientData>? _clients;
+  @override
+  List<ClientData>? get clients => _clients;
+
   @override
   Future<void> init() async {
     try {
       await _fetchLeaveTypes();
+      await _fetchClients();
 
       debugPrint(_leaveTypes.toString());
     } catch (e) {
@@ -101,6 +107,27 @@ class CompanyServiceImpl implements CompanyService {
           .where((staff) => staff["user_id"] != null)
           .map((json) => CompanyStaffData.fromJson(json))
           .toList();
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  Future<void> _fetchClients() async {
+    try {
+      final _response = await _apiService.get(auClients, params: {
+        'access_token': _authenticationService.user!.accessToken,
+        'company_id': _appAccessService.appAccess!.company.companyId,
+      });
+
+      final data = constructResponse(_response.data);
+
+      if (data!.containsKey('status') && data['status'] == false) {
+        throw data['response'] ?? data['detail'] ?? data['data'];
+      }
+
+      final _clientsJson = data['data'] as List;
+
+      _clients = _clientsJson.map((json) => ClientData.fromJson(json)).toList();
     } catch (e) {
       throw apiError(e);
     }

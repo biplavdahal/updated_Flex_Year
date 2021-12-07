@@ -11,6 +11,7 @@ import 'package:flex_year_tablet/services/implementations/authentication.service
 import 'package:flex_year_tablet/services/implementations/company.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/leave.service.impl.dart';
 import 'package:flex_year_tablet/services/leave.service.dart';
+import 'package:flex_year_tablet/ui/add_attendance/add_attendance.model.dart';
 import 'package:flex_year_tablet/ui/app_access/app_access.model.dart';
 import 'package:flex_year_tablet/ui/attendance_correction/attendance_correction.model.dart';
 import 'package:flex_year_tablet/ui/attendance_correction_review/attendance_correction_review.model.dart';
@@ -64,6 +65,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => StaffsModel());
   locator.registerFactory(() => AttendanceCorrectionReviewModel());
   locator.registerFactory(() => LeaveRequestReceivedModel());
+  locator.registerFactory(() => AddAttendanceModel());
 
   // Unkillable models
   locator.registerLazySingleton(() => LeaveRequestModel());

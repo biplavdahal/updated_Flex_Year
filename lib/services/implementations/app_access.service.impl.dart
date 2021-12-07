@@ -32,7 +32,7 @@ class AppAccessServiceImplementation implements AppAccessService {
   }
 
   @override
-  Future<void> getApAccess(String token) async {
+  Future<void> getAppAccess(String token) async {
     try {
       final _response = await _apiService.get(auAppAccess, params: {
         'token': token,

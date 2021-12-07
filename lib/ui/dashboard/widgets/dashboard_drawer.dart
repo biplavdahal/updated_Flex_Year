@@ -1,6 +1,7 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/theme.dart';
+import 'package:flex_year_tablet/ui/add_attendance/add_attendance.view.dart';
 import 'package:flex_year_tablet/ui/attendance_correction/attendance_correction.view.dart';
 import 'package:flex_year_tablet/ui/attendance_correction_review/attendance_correction_review.view.dart';
 import 'package:flex_year_tablet/ui/dashboard/dashboard.model.dart';
@@ -124,7 +125,9 @@ class DashboardDrawer extends StatelessWidget {
                   'Add Attendance',
                   style: TextStyle(color: Colors.blue),
                 ),
-                onTap: () {},
+                onTap: () {
+                  locator<DashboardModel>().goto(AddAttendanceView.tag);
+                },
                 leading: const Icon(
                   MdiIcons.plusBoxMultiple,
                   color: Colors.blue,

@@ -5,5 +5,5 @@ abstract class AppAccessService {
 
   Future<void> init();
 
-  Future<void> getApAccess(String token);
+  Future<void> getAppAccess(String token);
 }

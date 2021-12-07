@@ -435,4 +435,35 @@ class AttendanceServiceImpl implements AttendanceService {
       throw apiError(e);
     }
   }
+
+  @override
+  Future<void> addAttendanceToStaff(
+      {String? clientId,
+      String checkInDateTime = '',
+      String checkOutDateTime = '',
+      String lunchInDateTime = '',
+      String lunchOutDateTime = '',
+      required List<String> userIds}) async {
+    try {
+      final _response = await _apiService.post(auAddMultipleAttendance, {
+        'company_id': _appAccessService.appAccess!.company.companyId,
+        'checkin_datetime': checkInDateTime,
+        'checkout_datetime': checkOutDateTime,
+        'lunchin_datetime': lunchInDateTime,
+        'lunchout_datetime': lunchOutDateTime,
+        'user_id': userIds,
+        'client_id': clientId,
+      }, params: {
+        'access_token': _authenticationService.user!.accessToken,
+      });
+
+      final _data = constructResponse(_response.data);
+
+      if (_data!.containsKey("status") && _data["status"] == false) {
+        throw _data["response"] ?? _data["detail"] ?? _data["data"];
+      }
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
 }

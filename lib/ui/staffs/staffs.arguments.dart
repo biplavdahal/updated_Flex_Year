@@ -5,9 +5,12 @@ class StaffsArguments extends Arguments {
   final bool isSelectMode;
   final List<CompanyStaffData>? selectedStaffs;
   final bool isSingleSelect;
+  final bool preventSelf;
 
-  StaffsArguments(
-      {this.isSelectMode = false,
-      this.selectedStaffs,
-      this.isSingleSelect = false});
+  StaffsArguments({
+    this.isSelectMode = false,
+    this.selectedStaffs,
+    this.preventSelf = false,
+    this.isSingleSelect = false,
+  });
 }
