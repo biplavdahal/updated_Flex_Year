@@ -97,6 +97,7 @@ class AddAttendanceModel extends ViewModel with SnackbarMixin, DialogMixin {
         isSelectMode: true,
         selectedStaffs: _selectedStaffs.toList(),
         preventSelf: true,
+        clientId: _selectedClient.clientId,
       ),
     );
 

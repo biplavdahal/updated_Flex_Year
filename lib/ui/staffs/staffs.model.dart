@@ -83,7 +83,7 @@ class StaffsModel extends ViewModel with SnackbarMixin {
     try {
       setLoading();
 
-      _staffs = await _companyService.getStaffs();
+      _staffs = await _companyService.getStaffs(clientId: arguments!.clientId);
 
       _searchController.addListener(() {
         query = _searchController.text;

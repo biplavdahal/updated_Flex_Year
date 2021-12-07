@@ -17,5 +17,7 @@ abstract class CompanyService {
   Future<List<HolidayData>> getHolidays();
 
   /// Get all staffs
-  Future<List<CompanyStaffData>> getStaffs();
+  Future<List<CompanyStaffData>> getStaffs({
+    String? clientId,
+  });
 }

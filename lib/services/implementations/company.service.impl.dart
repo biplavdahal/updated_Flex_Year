@@ -88,11 +88,12 @@ class CompanyServiceImpl implements CompanyService {
   }
 
   @override
-  Future<List<CompanyStaffData>> getStaffs() async {
+  Future<List<CompanyStaffData>> getStaffs({String? clientId}) async {
     try {
       final _response = await _apiService.get(auStaffsList, params: {
         'access_token': _authenticationService.user!.accessToken,
         'company_id': _appAccessService.appAccess!.company.companyId,
+        'client_id': clientId,
       });
 
       final data = constructResponse(_response.data);

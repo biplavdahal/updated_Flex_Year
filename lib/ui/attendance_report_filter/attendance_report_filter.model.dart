@@ -179,6 +179,7 @@ class AttendanceReportFilterModel extends ViewModel {
         isSelectMode: true,
         selectedStaffs: _selectedStaffs.toList(),
         isSingleSelect: _filterType == AttendanceReportFilterType.monthly,
+        clientId: _selectedClient.clientId,
       ),
     );
 
