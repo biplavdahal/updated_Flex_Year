@@ -33,6 +33,13 @@ class _DialogManagerState extends State<DialogManager> {
           child: _buildConfirmationType(request),
           dismissable: request.dismissable);
     }
+
+    if (request.type == DialogType.selections) {
+      _baseDialog(
+        child: _buildSelectionType(request),
+        dismissable: request.dismissable,
+      );
+    }
   }
 
   _baseDialog({Widget? child, bool dismissable = false}) {
@@ -91,6 +98,27 @@ class _DialogManagerState extends State<DialogManager> {
             ],
           ),
         ),
+      ],
+    );
+  }
+
+  _buildSelectionType(DialogRequest request) {
+    final _options = request.payload as List<String>;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(request.title),
+        const SizedBox(height: 16),
+        for (int i = 0; i < _options.length; i++) ...[
+          const SizedBox(height: 16),
+          FYPrimaryButton(
+            onPressed: () {
+              _dialogService.hideDialog(DialogResponse(result: _options[i]));
+            },
+            label: _options[i],
+          ),
+        ]
       ],
     );
   }

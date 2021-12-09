@@ -9,6 +9,7 @@ const auApiBaseUrl = "${auBaseURL}flexyear_api/api/web/v1/";
 /// ---------------  API Endpoints -------------------
 /// --------------------------------------------------
 const auAppAccess = "appaccess/index";
+const auAppAccessClientCode = "appaccess/clientcode";
 
 const auUserLogin = "user/login";
 const auUserPinLogin = "user/pinlogin";

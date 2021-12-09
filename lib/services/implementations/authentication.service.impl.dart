@@ -8,7 +8,7 @@ import 'package:flex_year_tablet/helper/api_error.helper.dart';
 import 'package:flex_year_tablet/helper/api_response.helper.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
-import 'package:flex_year_tablet/ui/leave_requests/leave_requests.model.dart';
+import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.model.dart';
 import 'package:flutter/material.dart';
 
 class AuthenticationServiceImpl implements AuthenticationService {

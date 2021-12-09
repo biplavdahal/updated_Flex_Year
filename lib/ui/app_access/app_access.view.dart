@@ -1,4 +1,6 @@
+import 'package:bestfriend/bestfriend.dart';
 import 'package:bestfriend/ui/view.dart';
+import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/app_access/app_access.model.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
@@ -14,6 +16,7 @@ class AppAccessView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return View<AppAccessModel>(
+      onModelReady: (model) => model.init(),
       enableTouchRepeal: true,
       builder: (ctx, model, child) {
         return Scaffold(
@@ -29,17 +32,21 @@ class AppAccessView extends StatelessWidget {
                 ),
                 color: AppColor.primary,
                 width: double.infinity,
-                child: Image.asset(
-                  'assets/images/flex_year_login_image.png',
-                  width: 150,
-                ),
+                child: model.appAccess == null
+                    ? Image.asset(
+                        'assets/images/flex_year_login_image.png',
+                        width: 150,
+                      )
+                    : Image.network(auBaseURL + model.appAccess!.logo.logoPath),
               ),
               if (model.isLoading) const FYLinearLoader(),
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  color: Colors.white,
-                  child: Padding(
+              if (model.appAccess != null)
+                _buildAppUsageSelection(model)
+              else
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    color: Colors.white,
                     padding: const EdgeInsets.all(16),
                     child: Form(
                       key: model.appAccessFormKey,
@@ -72,11 +79,69 @@ class AppAccessView extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
             ],
           ),
         );
       },
+    );
+  }
+
+  Widget _buildAppUsageSelection(AppAccessModel model) {
+    return Expanded(
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 16,
+          ),
+          Text('Company: ${model.appAccess!.company.companyName}'),
+          Card(
+            margin: const EdgeInsets.all(16),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text(
+                    "How is this app suppose to be used?",
+                    style: TextStyle(
+                        color: AppColor.primary, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  FYPrimaryButton(
+                    label: 'Personal Use',
+                    onPressed: () {
+                      model.onUsagesPressed("PERSONAL");
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  FYPrimaryButton(
+                    label: 'Frontdesk Use',
+                    onPressed: () {
+                      model.onUsagesPressed("FRONTDESK");
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const Spacer(),
+          TextButton.icon(
+            icon: const Icon(Icons.reset_tv),
+            onPressed: model.onResetPressed,
+            label: const Text("Reset Company"),
+            style: TextButton.styleFrom(
+              primary: Colors.red,
+            ),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+        ],
+      ),
     );
   }
 }
