@@ -106,8 +106,19 @@ String getMonthStringFromDateString(
   }
 }
 
-String weekDayFromDateString(String date) {
-  List<String> weekDays = ["", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+String weekDayFromDateString(String date, {bool shortten = true}) {
+  List<String> weekDays = shortten
+      ? ["", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+      : [
+          "",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ];
 
   DateTime dateTime = DateTime.parse(date);
 

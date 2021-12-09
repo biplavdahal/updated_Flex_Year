@@ -1,8 +1,9 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
-import 'package:flex_year_tablet/ui/_test/test.view.dart';
+import 'package:flex_year_tablet/ui/frontdesk/enter_pin/enter_pin.view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppAccessClientCodeModel extends ViewModel with SnackbarMixin {
   // Services
@@ -24,7 +25,11 @@ class AppAccessClientCodeModel extends ViewModel with SnackbarMixin {
         await _appAccessService.getClientAccess(codeController.text);
 
         setIdle();
-        gotoAndClear(TestView.tag);
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.landscapeRight,
+          DeviceOrientation.landscapeLeft,
+        ]);
+        gotoAndClear(EnterPinView.tag);
       }
     } catch (e) {
       setIdle();

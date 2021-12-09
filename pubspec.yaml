@@ -21,6 +21,7 @@ dependencies:
   intl: ^0.17.0
   json_annotation: ^4.3.0
   material_design_icons_flutter: ^5.0.6295
+  pin_code_fields: ^7.3.0
 
 dev_dependencies:
   build_runner: null

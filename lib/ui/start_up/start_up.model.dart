@@ -4,10 +4,11 @@ import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/services/company.service.dart';
-import 'package:flex_year_tablet/ui/_test/test.view.dart';
 import 'package:flex_year_tablet/ui/app_access/app_access.view.dart';
+import 'package:flex_year_tablet/ui/frontdesk/enter_pin/enter_pin.view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.view.dart';
 import 'package:flex_year_tablet/ui/personal/login/login.view.dart';
+import 'package:flutter/services.dart';
 
 class StartUpModel extends ViewModel with SnackbarMixin {
   // Services
@@ -36,7 +37,11 @@ class StartUpModel extends ViewModel with SnackbarMixin {
             if (_appAccessService.client == null) {
               gotoAndClear(AppAccessView.tag);
             } else {
-              gotoAndClear(TestView.tag);
+              SystemChrome.setPreferredOrientations([
+                DeviceOrientation.landscapeRight,
+                DeviceOrientation.landscapeLeft,
+              ]);
+              gotoAndClear(EnterPinView.tag);
             }
           }
         }
