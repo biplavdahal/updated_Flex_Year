@@ -119,40 +119,38 @@ class EnterPinView extends StatelessWidget {
               const SizedBox(height: 16),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5,
-                child: PinCodeTextField(
-                  appContext: context,
-                  enabled: false,
-                  length: 6,
-                  textStyle: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                child: AbsorbPointer(
+                  absorbing: true,
+                  child: PinCodeTextField(
+                    appContext: context,
+                    enabled: true,
+                    length: 6,
+                    textStyle: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    obscureText: true,
+                    animationType: AnimationType.fade,
+                    pinTheme: PinTheme(
+                      disabledColor: AppColor.primary.withOpacity(0.08),
+                      borderWidth: 1,
+                      shape: PinCodeFieldShape.box,
+                      borderRadius: BorderRadius.circular(5),
+                      fieldHeight: 42,
+                      fieldWidth: 42,
+                      activeFillColor: Colors.white,
+                      inactiveFillColor: Colors.white,
+                    ),
+                    animationDuration: const Duration(milliseconds: 300),
+                    enableActiveFill: true,
+                    controller: model.pinController,
+                    onCompleted: (v) {
+                      debugPrint("Completed");
+                    },
+                    onChanged: (value) {
+                      debugPrint(value);
+                    },
                   ),
-                  obscureText: true,
-                  animationType: AnimationType.fade,
-                  pinTheme: PinTheme(
-                    disabledColor: AppColor.primary.withOpacity(0.08),
-                    borderWidth: 1,
-                    shape: PinCodeFieldShape.box,
-                    borderRadius: BorderRadius.circular(5),
-                    fieldHeight: 42,
-                    fieldWidth: 42,
-                    activeFillColor: Colors.white,
-                  ),
-                  animationDuration: const Duration(milliseconds: 300),
-                  enableActiveFill: true,
-                  controller: model.pinController,
-                  onCompleted: (v) {
-                    debugPrint("Completed");
-                  },
-                  onChanged: (value) {
-                    debugPrint(value);
-                  },
-                  beforeTextPaste: (text) {
-                    debugPrint("Allowing to paste $text");
-                    //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                    //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                    return true;
-                  },
                 ),
               ),
               for (int i = 0; i < 4; i++) ...[
