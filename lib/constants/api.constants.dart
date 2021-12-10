@@ -44,3 +44,9 @@ const auHolidays = "holiday/index";
 const auStaffsList = "staff/index";
 
 const auClients = "client/index";
+
+// ------ TABLET SPECIFIC API ------
+const auGetPins = "appaccess/pin";
+const auTabletAttendanceStatus = "appaccess/attstatus";
+const auTabletPostAttendance = "appaccess/inout";
+const auTabletSync = "appaccess/bulkinout";

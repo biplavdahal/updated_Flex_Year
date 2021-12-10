@@ -36,6 +36,9 @@ class AppAccessServiceImplementation implements AppAccessService {
   }
 
   @override
+  String? get apiKey => "fe37a9b05d21502e483350beae61b0e7d00b6b49";
+
+  @override
   Future<void> init() async {
     final appAccessDataStr =
         await _sharedPreferenceService.get<String?>(pfAccessData);

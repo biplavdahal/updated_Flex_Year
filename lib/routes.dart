@@ -1,5 +1,6 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/ui/_test/test.view.dart';
+import 'package:flex_year_tablet/ui/frontdesk/attendance/attendance.view.dart';
 import 'package:flex_year_tablet/ui/frontdesk/enter_pin/enter_pin.view.dart';
 import 'package:flex_year_tablet/ui/personal/add_attendance/add_attendance.view.dart';
 import 'package:flex_year_tablet/ui/app_access/app_access.view.dart';
@@ -46,4 +47,5 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
       LeaveRequestReceivedView.tag: const LeaveRequestReceivedView(),
       AddAttendanceView.tag: const AddAttendanceView(),
       EnterPinView.tag: const EnterPinView(),
+      AttendanceView.tag: const AttendanceView(),
     };

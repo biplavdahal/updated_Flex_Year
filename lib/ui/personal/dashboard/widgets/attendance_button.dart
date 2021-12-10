@@ -5,6 +5,7 @@ class AttendanceButton extends StatelessWidget {
   final String title;
   final Color color;
   final VoidCallback? onPressed;
+  final bool isTablet;
 
   const AttendanceButton({
     Key? key,
@@ -12,6 +13,7 @@ class AttendanceButton extends StatelessWidget {
     required this.color,
     required this.title,
     this.onPressed,
+    this.isTablet = false,
   }) : super(key: key);
 
   @override
@@ -38,13 +40,15 @@ class AttendanceButton extends StatelessWidget {
                 Icon(
                   icon,
                   color: Colors.white,
+                  size: isTablet ? 64 : null,
                 ),
                 Expanded(
                   child: Text(
                     title,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
+                      fontSize: isTablet ? 32 : null,
                     ),
                   ),
                 )

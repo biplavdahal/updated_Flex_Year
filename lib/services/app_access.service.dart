@@ -9,6 +9,8 @@ abstract class AppAccessService {
 
   ClientData? get client;
 
+  String? get apiKey;
+
   Future<void> init();
 
   Future<void> getAppAccess(String token);

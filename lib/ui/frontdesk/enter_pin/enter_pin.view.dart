@@ -1,9 +1,11 @@
 import 'package:bestfriend/ui/view.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/frontdesk/enter_pin/enter_pin.model.dart';
 import 'package:flex_year_tablet/ui/frontdesk/enter_pin/widgets/input_pin.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -47,9 +49,25 @@ class EnterPinView extends StatelessWidget {
             ),
           ],
         ),
-        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: model.isOnline ? Colors.green : Colors.grey,
+              ),
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                model.isOnline ? 'Online' : 'Offline',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
             const SizedBox(height: 16),
             Text(
               formattedTime(model.currentDateTime),
@@ -75,13 +93,31 @@ class EnterPinView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.network(
-                    auBaseURL + model.appAccessData.logo.logoPath,
+                  CachedNetworkImage(
+                    imageUrl: auBaseURL + model.appAccessData.logo.logoPath,
                     width: 150,
+                    errorWidget: (context, url, error) => Image.asset(
+                      'assets/images/flex_year_image.png',
+                      width: 150,
+                    ),
+                    placeholder: (context, url) => const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CupertinoActivityIndicator(),
+                    ),
                   ),
+                  const SizedBox(height: 32),
                 ],
               ),
             ),
+            if (model.lastSyncedDate != null)
+              Text(
+                "Last Synced: ${formattedDate(model.lastSyncedDate!)} ${formattedTime(model.lastSyncedDate!)}",
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.white54,
+                ),
+              ),
             const SizedBox(height: 32),
           ],
         ),
@@ -122,6 +158,17 @@ class EnterPinView extends StatelessWidget {
                 child: AbsorbPointer(
                   absorbing: true,
                   child: PinCodeTextField(
+                    errorAnimationDuration: 1000,
+                    boxShadows: [
+                      BoxShadow(
+                        color: Colors.grey.shade400,
+                        offset: const Offset(2, 0),
+                        blurRadius: 4,
+                      ),
+                    ],
+                    hintCharacter: '#',
+                    obscuringCharacter: "#",
+                    blinkWhenObscuring: true,
                     appContext: context,
                     enabled: true,
                     length: 6,
@@ -144,12 +191,8 @@ class EnterPinView extends StatelessWidget {
                     animationDuration: const Duration(milliseconds: 300),
                     enableActiveFill: true,
                     controller: model.pinController,
-                    onCompleted: (v) {
-                      debugPrint("Completed");
-                    },
-                    onChanged: (value) {
-                      debugPrint(value);
-                    },
+                    onCompleted: model.onPinEnterCompleted,
+                    onChanged: (_) {},
                   ),
                 ),
               ),

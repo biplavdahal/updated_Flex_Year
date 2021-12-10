@@ -11,6 +11,8 @@ environment:
 dependencies:
   bestfriend:
     path: ./packages/bestfriend
+  cached_network_image: ^3.2.0
+  connectivity_plus: ^2.1.0
   cupertino_icons: ^1.0.2
   device_preview: ^0.8.0
   dio: ^4.0.3
