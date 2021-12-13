@@ -1,0 +1,37 @@
+name: flex_year_tablet
+description: Flexyear tablet app.
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  bestfriend:
+    path: ./packages/bestfriend
+  cached_network_image: ^3.2.0
+  connectivity_plus: ^2.1.0
+  cupertino_icons: ^1.0.2
+  device_preview: ^0.8.0
+  dio: ^4.0.3
+  flutter:
+    sdk: flutter
+  freezed_annotation: null
+  google_fonts: ^2.1.0
+  intl: ^0.17.0
+  json_annotation: ^4.3.0
+  material_design_icons_flutter: ^5.0.6295
+  pin_code_fields: ^7.3.0
+
+dev_dependencies:
+  build_runner: null
+  flutter_lints: ^1.0.4
+  freezed: null
+  json_serializable: ^6.0.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
