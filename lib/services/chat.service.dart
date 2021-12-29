@@ -10,7 +10,7 @@ abstract class ChatService {
   StreamController<List<ChatMessageData>> get messagesStreamController;
 
   /// Stream messages
-  Future<List<ChatMessageData>> messages(int receiverId);
+  Future<List<ChatMessageData>> messages(int receiverId, int senderId);
 
   /// Stop stream
   void stopMessageStream();
@@ -18,6 +18,7 @@ abstract class ChatService {
   /// Send message
   Future<ChatMessageData> sendMessage({
     required int receiverId,
+    required int senderId,
     required String message,
   });
 }

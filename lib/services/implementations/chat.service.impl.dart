@@ -10,6 +10,7 @@ import 'package:flex_year_tablet/helper/api_response.helper.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/services/chat.service.dart';
+import 'package:flutter/material.dart';
 
 class ChatServiceImpl implements ChatService {
   final ApiService _apiService = locator<ApiService>();
@@ -48,11 +49,19 @@ class ChatServiceImpl implements ChatService {
     }
   }
 
-  Future<List<ChatMessageData>> _fetchMessages(int receiverId) async {
+  Future<List<ChatMessageData>> _fetchMessages(
+      int receiverId, int senderId) async {
     try {
+      debugPrint({
+        'access_token': _authenticationService.user!.accessToken,
+        'sender_id': senderId,
+        'receiver_id': receiverId,
+        'company_id': _appAccessService.appAccess!.company.companyId,
+      }.toString());
+
       final response = await _apiService.get(auGetMessages, params: {
         'access_token': _authenticationService.user!.accessToken,
-        'sender_id': _authenticationService.user!.id,
+        'sender_id': senderId,
         'receiver_id': receiverId,
         'company_id': _appAccessService.appAccess!.company.companyId,
       });
@@ -82,17 +91,17 @@ class ChatServiceImpl implements ChatService {
   }
 
   @override
-  Future<List<ChatMessageData>> messages(int receiverId) async {
+  Future<List<ChatMessageData>> messages(int receiverId, int senderId) async {
     try {
       _chatStreamController =
           StreamController<List<ChatMessageData>>.broadcast();
-      final data = await _fetchMessages(receiverId);
+      final data = await _fetchMessages(receiverId, senderId);
 
       Stopwatch watch = Stopwatch();
       _timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
         if (!watch.isRunning) {
           watch.start();
-          await _fetchMessages(receiverId);
+          await _fetchMessages(receiverId, senderId);
           watch.stop();
         }
       });
@@ -112,15 +121,24 @@ class ChatServiceImpl implements ChatService {
   }
 
   @override
-  Future<ChatMessageData> sendMessage(
-      {required int receiverId, required String message}) async {
+  Future<ChatMessageData> sendMessage({
+    required int receiverId,
+    required int senderId,
+    required String message,
+  }) async {
     try {
+      debugPrint({
+        'access_token': _authenticationService.user!.accessToken,
+        'receiver_id': receiverId,
+        'sender_id': senderId,
+        'message': message,
+      }.toString());
       final response = await _apiService.post(
         auSendTextMessage,
         {
           'access_token': _authenticationService.user!.accessToken,
           'receiver_id': receiverId,
-          'sender_id': _authenticationService.user!.id,
+          'sender_id': senderId,
           'message': message,
         },
         asFormData: true,

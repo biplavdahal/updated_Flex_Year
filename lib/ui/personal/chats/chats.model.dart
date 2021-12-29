@@ -1,5 +1,6 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:bestfriend/ui/view.model.dart';
+import 'package:flex_year_tablet/data_models/chat_contact.data.dart';
 import 'package:flex_year_tablet/data_models/chat_message.data.dart';
 import 'package:flex_year_tablet/services/chat.service.dart';
 import 'package:flex_year_tablet/ui/personal/chats/chats.argument.dart';
@@ -15,8 +16,8 @@ class ChatsModel extends ViewModel with SnackbarMixin {
 
   late String _receiverName;
   String get receiverName => _receiverName;
-  late String _receiverId;
-  String get receiverId => _receiverId;
+  late ChatContactData _contact;
+  ChatContactData get contact => _contact;
 
   List<ChatMessageData> _messages = [];
   List<ChatMessageData> get messages => _messages;
@@ -40,7 +41,7 @@ class ChatsModel extends ViewModel with SnackbarMixin {
 
   // Action
   Future<void> init(ChatsArgument argument) async {
-    _receiverId = argument.contact.to;
+    _contact = argument.contact;
     _receiverName =
         argument.contact.firstName + ' ' + argument.contact.lastName;
     setIdle();
@@ -48,7 +49,8 @@ class ChatsModel extends ViewModel with SnackbarMixin {
     try {
       setLoading();
 
-      _messages = await _chatService.messages(int.parse(receiverId));
+      _messages = await _chatService.messages(
+          int.parse(_contact.to), int.parse(_contact.from));
 
       setIdle();
 
@@ -91,7 +93,8 @@ class ChatsModel extends ViewModel with SnackbarMixin {
     try {
       setWidgetBusy('send-btn');
       final message = await _chatService.sendMessage(
-        receiverId: int.parse(_receiverId),
+        receiverId: int.parse(_contact.to),
+        senderId: int.parse(_contact.from),
         message: _messageController.text.trim(),
       );
       unsetWidgetBusy('send-btn');

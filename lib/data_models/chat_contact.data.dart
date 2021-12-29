@@ -10,6 +10,7 @@ class ChatContactData with _$ChatContactData {
   const factory ChatContactData({
     @JsonKey(name: 'acc_message_id') required String accMessageId,
     @JsonKey(name: 'to') required String to,
+    @JsonKey(name: 'from') required String from,
     @JsonKey(name: 'username') required String username,
     @JsonKey(name: 'first_name') required String firstName,
     @JsonKey(name: 'last_name') required String lastName,
