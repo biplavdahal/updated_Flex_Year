@@ -1,6 +1,4 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/mixins/snack_bar.mixin.dart';
-import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/data_models/attendance_one_day_report.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';

@@ -1,5 +1,4 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/ui/frontdesk/enter_pin/enter_pin.view.dart';
 import 'package:flutter/material.dart';

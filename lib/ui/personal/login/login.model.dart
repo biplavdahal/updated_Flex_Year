@@ -1,6 +1,4 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/mixins/snack_bar.mixin.dart';
-import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';

@@ -1,5 +1,4 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/data_models/holiday.data.dart';
 import 'package:flex_year_tablet/services/company.service.dart';
 

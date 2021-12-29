@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/ui/view.model.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flex_year_tablet/constants/prefs.constants.dart';
 import 'package:flex_year_tablet/data_models/app_access.data.dart';

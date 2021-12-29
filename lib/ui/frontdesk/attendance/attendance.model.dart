@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/ui/view.model.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
 import 'package:flex_year_tablet/data_models/pin.data.dart';

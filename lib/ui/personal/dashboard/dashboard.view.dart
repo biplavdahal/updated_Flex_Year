@@ -1,5 +1,4 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';

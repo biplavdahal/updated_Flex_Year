@@ -1,5 +1,4 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_summary/attendance_summary.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_summary/attendance_summary.model.dart';

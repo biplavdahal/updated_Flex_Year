@@ -2,8 +2,6 @@ import 'package:bestfriend/bestfriend.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../di.dart';
-
 class View<T extends ViewModel> extends StatefulWidget {
   /// Provides a builder function that will build/re-build the widget/screen
   final Widget Function(BuildContext ctx, T model, Widget? child) builder;
