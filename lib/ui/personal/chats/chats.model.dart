@@ -92,8 +92,8 @@ class ChatsModel extends ViewModel with SnackbarMixin {
     try {
       setWidgetBusy('send-btn');
       final message = await _chatService.sendMessage(
-        receiverId: int.parse(_contact.to),
-        senderId: int.parse(_contact.from),
+        receiverId: int.parse(_contact.from),
+        senderId: int.parse(_contact.to),
         message: _messageController.text.trim(),
       );
       unsetWidgetBusy('send-btn');

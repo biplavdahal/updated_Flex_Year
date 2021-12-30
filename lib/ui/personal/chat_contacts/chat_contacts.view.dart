@@ -23,32 +23,37 @@ class ChatContactsView extends StatelessWidget {
           ),
           body: model.isLoading
               ? const FYLinearLoader()
-              : ListView.separated(
-                  itemBuilder: (context, index) {
-                    final _contact = model.contacts[index];
+              : RefreshIndicator(
+                  onRefresh: model.init,
+                  triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                  child: ListView.separated(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final _contact = model.contacts[index];
 
-                    return ListTile(
-                      onTap: () {
-                        model.goto(
-                          ChatsView.tag,
-                          arguments: ChatsArgument(contact: _contact),
-                        );
-                      },
-                      leading: CircleAvatar(
-                        child: Text(_contact.firstName.substring(0, 1)),
-                      ),
-                      title: Text(
-                        '${_contact.firstName} ${_contact.lastName}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
+                      return ListTile(
+                        onTap: () {
+                          model.goto(
+                            ChatsView.tag,
+                            arguments: ChatsArgument(contact: _contact),
+                          );
+                        },
+                        leading: CircleAvatar(
+                          child: Text(_contact.firstName.substring(0, 1)),
                         ),
-                      ),
-                      subtitle: Text(_contact.username),
-                      trailing: const Icon(Icons.chevron_right),
-                    );
-                  },
-                  separatorBuilder: (context, index) => const Divider(),
-                  itemCount: model.contacts.length,
+                        title: Text(
+                          '${_contact.firstName} ${_contact.lastName}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Text(_contact.username),
+                        trailing: const Icon(Icons.chevron_right),
+                      );
+                    },
+                    separatorBuilder: (context, index) => const Divider(),
+                    itemCount: model.contacts.length,
+                  ),
                 ),
         );
       },
