@@ -88,7 +88,7 @@ class LoginModel extends ViewModel with DialogMixin, SnackbarMixin {
       }
 
       await locator<CompanyService>().init();
-
+      debugPrint(_authenticationService.user.toString());
       setSuccess();
       gotoAndClear(DashboardView.tag);
     } catch (e) {
