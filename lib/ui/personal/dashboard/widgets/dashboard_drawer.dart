@@ -40,7 +40,9 @@ class DashboardDrawer extends StatelessWidget {
                         ),
                       ),
                     ),
-                    accountEmail: Text(_user.role!.toUpperCase()),
+                    accountEmail: Text(_user.role != null
+                        ? _user.role!.toUpperCase()
+                        : 'Staff'),
                     accountName: Text(
                         '[EMP - ${_user.staff.empId}] ${_user.staff.firstName} ${_user.staff.lastName}'),
                   ),
@@ -99,11 +101,11 @@ class DashboardDrawer extends StatelessWidget {
                 color: AppColor.primary,
               ),
             ),
-            if (locator<AuthenticationService>().user!.role?.toLowerCase() !=
-                'staff')
+            if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
+                'manager')
               const Divider(),
-            if (locator<AuthenticationService>().user!.role?.toLowerCase() !=
-                'staff')
+            if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
+                'manager')
               ListTile(
                 title: const Text(
                   'Attendance Correction Requests',
@@ -118,8 +120,8 @@ class DashboardDrawer extends StatelessWidget {
                   color: Colors.blue,
                 ),
               ),
-            if (locator<AuthenticationService>().user!.role?.toLowerCase() !=
-                'staff')
+            if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
+                'manager')
               ListTile(
                 title: const Text(
                   'Add Attendance',
@@ -133,8 +135,8 @@ class DashboardDrawer extends StatelessWidget {
                   color: Colors.blue,
                 ),
               ),
-            if (locator<AuthenticationService>().user!.role?.toLowerCase() !=
-                'staff')
+            if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
+                'manager')
               ListTile(
                 title: const Text(
                   'Leave Request Received',
@@ -148,8 +150,8 @@ class DashboardDrawer extends StatelessWidget {
                   color: Colors.blue,
                 ),
               ),
-            if (locator<AuthenticationService>().user!.role?.toLowerCase() !=
-                'staff')
+            if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
+                'manager')
               const Divider(),
             ListTile(
               title: const Text(

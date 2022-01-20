@@ -10,6 +10,8 @@ import 'package:flex_year_tablet/ui/personal/attendance_correction_review/attend
 import 'package:flex_year_tablet/ui/personal/attendance_report/attendance_report.view.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.view.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_summary/attendance_summary.view.dart';
+import 'package:flex_year_tablet/ui/personal/chat_contacts/chat_contacts.view.dart';
+import 'package:flex_year_tablet/ui/personal/chats/chats.view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.dart';
@@ -48,4 +50,6 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
       AddAttendanceView.tag: const AddAttendanceView(),
       EnterPinView.tag: const EnterPinView(),
       AttendanceView.tag: const AttendanceView(),
+      ChatContactsView.tag: const ChatContactsView(),
+      ChatsView.tag: ChatsView(settings.arguments as Arguments?),
     };

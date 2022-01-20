@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
@@ -69,8 +68,9 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
     _attendanceService
         .getAttendanceStatus(
-            clientId:
-                _selectedClient != null ? _selectedClient!.clientId : null)
+            clientId: _selectedClient != null
+                ? _selectedClient!.clientId.toString()
+                : null)
         .then((status) {
       _attendanceStatus = status;
       unsetWidgetBusy("todays-attendance");
@@ -124,7 +124,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
       setWidgetBusy('todays-attendance');
       _attendanceService
-          .getAttendanceStatus(clientId: _selectedClient!.clientId)
+          .getAttendanceStatus(clientId: _selectedClient!.clientId.toString())
           .then((status) {
         _attendanceStatus = status;
         unsetWidgetBusy("todays-attendance");
@@ -146,7 +146,9 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       );
 
       _attendanceStatus = await _attendanceService.postAttendanceStatus(
-        clientId: _selectedClient != null ? _selectedClient!.clientId : null,
+        clientId: _selectedClient != null
+            ? _selectedClient!.clientId.toString()
+            : null,
         status: status,
         time: _attendanceForgot == null
             ? getCurrentDateTime()

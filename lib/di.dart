@@ -4,10 +4,12 @@ import 'package:flex_year_tablet/managers/dialog/dialog.service.impl.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/attendance.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
+import 'package:flex_year_tablet/services/chat.service.dart';
 import 'package:flex_year_tablet/services/company.service.dart';
 import 'package:flex_year_tablet/services/implementations/app_access.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/attendance.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/authentication.service.impl.dart';
+import 'package:flex_year_tablet/services/implementations/chat.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/company.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/leave.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/tablet.service.impl.dart';
@@ -23,6 +25,8 @@ import 'package:flex_year_tablet/ui/personal/attendance_correction_review/attend
 import 'package:flex_year_tablet/ui/personal/attendance_report/attandance_report.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_summary/attendance_summary.model.dart';
+import 'package:flex_year_tablet/ui/personal/chat_contacts/chat_contacts.model.dart';
+import 'package:flex_year_tablet/ui/personal/chats/chats.model.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.model.dart';
@@ -54,6 +58,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<CompanyService>(() => CompanyServiceImpl());
   locator.registerLazySingleton<LeaveService>(() => LeaveServiceImpl());
   locator.registerLazySingleton<TabletService>(() => TabletServiceImpl());
+  locator.registerLazySingleton<ChatService>(() => ChatServiceImpl());
 
   // Killable models
   locator.registerFactory(() => StartUpModel());
@@ -75,6 +80,8 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => AppAccessClientCodeModel());
   locator.registerFactory(() => EnterPinModel());
   locator.registerFactory(() => AttendanceModel());
+  locator.registerFactory(() => ChatContactsModel());
+  locator.registerFactory(() => ChatsModel());
 
   // Unkillable models
   locator.registerLazySingleton(() => LeaveRequestModel());

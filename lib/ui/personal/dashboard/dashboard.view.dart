@@ -1,5 +1,4 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
@@ -8,6 +7,7 @@ import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.view.dart';
+import 'package:flex_year_tablet/ui/personal/chat_contacts/chat_contacts.view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/attendance_button.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/dashboard_drawer.dart';
@@ -36,6 +36,15 @@ class DashboardView extends StatelessWidget {
         return Scaffold(
           backgroundColor: AppColor.primary,
           drawer: const DashboardDrawer(),
+          floatingActionButton: model.isLoading
+              ? null
+              : FloatingActionButton(
+                  onPressed: () {
+                    model.goto(ChatContactsView.tag);
+                  },
+                  child: const Icon(Icons.chat_bubble),
+                  backgroundColor: AppColor.accent,
+                ),
           appBar: AppBar(
             centerTitle: true,
             title: Image.network(
@@ -281,13 +290,6 @@ class DashboardView extends StatelessWidget {
                   ),
                 );
               },
-            )
-          else
-            const UtilityItem(
-              title: "Message",
-              iconColor: Colors.orange,
-              icon: MdiIcons.chatOutline,
-              onPressed: null,
             )
         ],
       ),

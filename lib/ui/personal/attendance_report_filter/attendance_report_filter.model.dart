@@ -1,5 +1,4 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/data_models/company_staff.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
@@ -25,7 +24,7 @@ class AttendanceReportFilterModel extends ViewModel {
   AttendanceReportFilterType? get filterType => _filterType;
 
   List<ClientData> get clients =>
-      locator<AuthenticationService>().user!.role!.toLowerCase() != 'staff'
+      locator<AuthenticationService>().user!.role?.toLowerCase() != 'staff'
           ? locator<CompanyService>().clients!
           : locator<AuthenticationService>().user!.clients;
 
@@ -179,7 +178,7 @@ class AttendanceReportFilterModel extends ViewModel {
         isSelectMode: true,
         selectedStaffs: _selectedStaffs.toList(),
         isSingleSelect: _filterType == AttendanceReportFilterType.monthly,
-        clientId: _selectedClient.clientId,
+        clientId: _selectedClient.clientId.toString(),
       ),
     );
 

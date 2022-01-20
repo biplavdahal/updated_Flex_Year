@@ -52,3 +52,9 @@ const auGetPins = "appaccess/pin";
 const auTabletAttendanceStatus = "appaccess/attstatus";
 const auTabletPostAttendance = "appaccess/inout";
 const auTabletSync = "appaccess/bulkinout";
+
+// ----- CHAT API ------
+const auGetContactLists = "message/accessmessage";
+const auSendAttachmentMessage = "message/upload";
+const auGetMessages = "message/index";
+const auSendTextMessage = "message/post";

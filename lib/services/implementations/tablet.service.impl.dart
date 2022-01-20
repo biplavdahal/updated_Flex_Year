@@ -125,7 +125,7 @@ class TabletServiceImpl implements TabletService {
         userId: _loggedInAs!.userId,
         dateTime: getCurrentDateTime(),
         type: status,
-        clientId: _appAccessService.client!.clientId,
+        clientId: _appAccessService.client!.clientId.toString(),
       );
 
       _attendances.add(newAttendance);

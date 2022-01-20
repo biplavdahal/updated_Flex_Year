@@ -1,5 +1,4 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/data_models/leave_type.data.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.model.dart';
