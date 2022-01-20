@@ -58,7 +58,6 @@ class AttendanceServiceImpl implements AttendanceService {
 
       final data = constructResponse(_response.data[0]);
 
-      debugPrint(data.toString());
 
       if (data!.containsKey("status") && data["status"] == false) {
         throw data["response"] ?? data["data"] ?? data["detail"];

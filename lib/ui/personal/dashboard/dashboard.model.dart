@@ -68,8 +68,9 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
     _attendanceService
         .getAttendanceStatus(
-            clientId:
-                _selectedClient != null ? _selectedClient!.clientId : null)
+            clientId: _selectedClient != null
+                ? _selectedClient!.clientId.toString()
+                : null)
         .then((status) {
       _attendanceStatus = status;
       unsetWidgetBusy("todays-attendance");
@@ -123,7 +124,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
       setWidgetBusy('todays-attendance');
       _attendanceService
-          .getAttendanceStatus(clientId: _selectedClient!.clientId)
+          .getAttendanceStatus(clientId: _selectedClient!.clientId.toString())
           .then((status) {
         _attendanceStatus = status;
         unsetWidgetBusy("todays-attendance");
@@ -145,7 +146,9 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       );
 
       _attendanceStatus = await _attendanceService.postAttendanceStatus(
-        clientId: _selectedClient != null ? _selectedClient!.clientId : null,
+        clientId: _selectedClient != null
+            ? _selectedClient!.clientId.toString()
+            : null,
         status: status,
         time: _attendanceForgot == null
             ? getCurrentDateTime()

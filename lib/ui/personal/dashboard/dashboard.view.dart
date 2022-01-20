@@ -291,13 +291,6 @@ class DashboardView extends StatelessWidget {
                 );
               },
             )
-          else
-            const UtilityItem(
-              title: "Message",
-              iconColor: Colors.orange,
-              icon: MdiIcons.chatOutline,
-              onPressed: null,
-            )
         ],
       ),
     );

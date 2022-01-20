@@ -24,7 +24,7 @@ class AttendanceReportFilterModel extends ViewModel {
   AttendanceReportFilterType? get filterType => _filterType;
 
   List<ClientData> get clients =>
-      locator<AuthenticationService>().user!.role!.toLowerCase() != 'staff'
+      locator<AuthenticationService>().user!.role?.toLowerCase() != 'staff'
           ? locator<CompanyService>().clients!
           : locator<AuthenticationService>().user!.clients;
 
@@ -178,7 +178,7 @@ class AttendanceReportFilterModel extends ViewModel {
         isSelectMode: true,
         selectedStaffs: _selectedStaffs.toList(),
         isSingleSelect: _filterType == AttendanceReportFilterType.monthly,
-        clientId: _selectedClient.clientId,
+        clientId: _selectedClient.clientId.toString(),
       ),
     );
 

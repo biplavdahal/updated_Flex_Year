@@ -56,8 +56,8 @@ class AttendanceReportFilterView extends StatelessWidget {
                     if (locator<AuthenticationService>()
                             .user!
                             .role
-                            ?.toLowerCase() !=
-                        "staff")
+                            ?.toLowerCase() ==
+                        "manager")
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Wrap(

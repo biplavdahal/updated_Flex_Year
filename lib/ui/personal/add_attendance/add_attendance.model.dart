@@ -95,7 +95,7 @@ class AddAttendanceModel extends ViewModel with SnackbarMixin, DialogMixin {
         isSelectMode: true,
         selectedStaffs: _selectedStaffs.toList(),
         preventSelf: true,
-        clientId: _selectedClient.clientId,
+        clientId: _selectedClient.clientId.toString(),
       ),
     );
 
@@ -116,7 +116,7 @@ class AddAttendanceModel extends ViewModel with SnackbarMixin, DialogMixin {
 
       await _attendanceService.addAttendanceToStaff(
         userIds: _selectedStaffs.map((e) => e.userId).toList(),
-        clientId: _selectedClient.clientId,
+        clientId: _selectedClient.clientId.toString(),
         checkInDateTime: _isCheckInCheckOutSelected
             ? '${attendanceDate!.year}-${attendanceDate!.month}-${attendanceDate!.day} ${_checkInTime!.hour}:${_checkOutTime!.minute}'
             : '',
