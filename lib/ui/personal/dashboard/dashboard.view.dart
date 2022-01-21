@@ -277,20 +277,20 @@ class DashboardView extends StatelessWidget {
               );
             },
           ),
-          if (model.clientLabels != null && model.clientLabels!.isNotEmpty)
-            UtilityItem(
-              title: "Weekly Report",
-              iconColor: Colors.lightGreen,
-              icon: MdiIcons.chartBoxOutline,
-              onPressed: () {
-                model.goto(
-                  AttendanceReportFilterView.tag,
-                  arguments: AttendanceReportFilterArguments(
-                    type: AttendanceReportFilterType.weekly,
-                  ),
-                );
-              },
-            )
+          // if (model.clientLabels != null && model.clientLabels!.isNotEmpty)
+          UtilityItem(
+            title: "Weekly Report",
+            iconColor: Colors.lightGreen,
+            icon: MdiIcons.chartBoxOutline,
+            onPressed: () {
+              model.goto(
+                AttendanceReportFilterView.tag,
+                arguments: AttendanceReportFilterArguments(
+                  type: AttendanceReportFilterType.weekly,
+                ),
+              );
+            },
+          )
         ],
       ),
     );

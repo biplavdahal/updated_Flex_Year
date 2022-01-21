@@ -26,11 +26,11 @@ class AddAttendanceView extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  if (model.clients.isNotEmpty)
+                  if (model.clients != null && model.clients!.isNotEmpty)
                     FYDropdown<ClientData>(
-                      items: model.clients,
-                      labels: model.clientsLabel,
-                      value: model.selectedClientLabel,
+                      items: model.clients!,
+                      labels: model.clientsLabel!,
+                      value: model.selectedClientLabel!,
                       title: 'Select client',
                       onChanged: (value) => model.selectedClientLabel = value!,
                     ),

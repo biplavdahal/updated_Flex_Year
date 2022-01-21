@@ -58,7 +58,6 @@ class AttendanceServiceImpl implements AttendanceService {
 
       final data = constructResponse(_response.data[0]);
 
-
       if (data!.containsKey("status") && data["status"] == false) {
         throw data["response"] ?? data["data"] ?? data["detail"];
       }
@@ -145,6 +144,13 @@ class AttendanceServiceImpl implements AttendanceService {
     String? staffId,
   }) async {
     try {
+      debugPrint(jsonEncode({
+        'date': date,
+        'access_token': _authenticationService.user!.accessToken,
+        'client_id': clientId,
+        'id': staffId ?? _authenticationService.user!.staff.staffId,
+      }));
+
       final _response = await _apiService.get(auAttendanceSummary, params: {
         'date': date,
         'access_token': _authenticationService.user!.accessToken,

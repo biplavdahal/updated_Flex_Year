@@ -23,20 +23,20 @@ class AttendanceReportFilterModel extends ViewModel {
   late AttendanceReportFilterType _filterType;
   AttendanceReportFilterType? get filterType => _filterType;
 
-  List<ClientData> get clients =>
+  List<ClientData>? get clients =>
       locator<AuthenticationService>().user!.role?.toLowerCase() != 'staff'
-          ? locator<CompanyService>().clients!
+          ? locator<CompanyService>().clients
           : locator<AuthenticationService>().user!.clients;
 
-  List<String> get clientsLabel => clients.map((e) => e.name).toList();
+  List<String>? get clientsLabel => clients?.map((e) => e.name).toList();
 
-  late ClientData _selectedClient;
-  late String _selectedClientLabel;
-  String get selectedClientLabel => _selectedClientLabel;
+  ClientData? _selectedClient;
+  String? _selectedClientLabel;
+  String? get selectedClientLabel => _selectedClientLabel;
 
-  set selectedClientLabel(String value) {
+  set selectedClientLabel(String? value) {
     _selectedClientLabel = value;
-    _selectedClient = clients.firstWhere((e) => e.name == value);
+    _selectedClient = clients?.firstWhere((e) => e.name == value);
     setIdle();
   }
 
@@ -95,9 +95,9 @@ class AttendanceReportFilterModel extends ViewModel {
   void init(AttendanceReportFilterArguments arguments) {
     _filterType = arguments.type;
     _returnBack = arguments.returnBack;
-    if (clients.isNotEmpty) {
-      _selectedClient = clients.first;
-      _selectedClientLabel = _selectedClient.name;
+    if (clients != null && clients!.isNotEmpty) {
+      _selectedClient = clients!.first;
+      _selectedClientLabel = _selectedClient!.name;
     }
     _selectedAttendanceType = attendanceTypes.first;
 
@@ -131,8 +131,8 @@ class AttendanceReportFilterModel extends ViewModel {
           '${_weekTo!.year}-${_weekTo!.month < 10 ? '0${_weekTo!.month}' : _weekTo!.month}-${_weekTo!.day < 10 ? '0${_weekTo!.day}' : _weekTo!.day}';
     }
 
-    if (clients.isNotEmpty) {
-      _searchParams['client_id'] = _selectedClient.clientId;
+    if (clients != null && clients!.isNotEmpty) {
+      _searchParams['client_id'] = _selectedClient!.clientId;
       _searchParams['client_name'] = _selectedClientLabel;
     }
 
@@ -178,15 +178,17 @@ class AttendanceReportFilterModel extends ViewModel {
         isSelectMode: true,
         selectedStaffs: _selectedStaffs.toList(),
         isSingleSelect: _filterType == AttendanceReportFilterType.monthly,
-        clientId: _selectedClient.clientId.toString(),
+        clientId: _selectedClient?.clientId.toString(),
       ),
     );
 
     debugPrint(_response.toString());
 
-    if ((_response as Set<CompanyStaffData>).isNotEmpty) {
-      _selectedStaffs = _response;
-      setIdle();
+    if (_response != null) {
+      if ((_response as Set<CompanyStaffData>).isNotEmpty) {
+        _selectedStaffs = _response;
+        setIdle();
+      }
     }
   }
 }
