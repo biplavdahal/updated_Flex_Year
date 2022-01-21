@@ -15,7 +15,7 @@ class LeaveRequestData with _$LeaveRequestData {
     @JsonKey(name: 'description') required String reason,
     @JsonKey(name: 'is_approved') required String status,
     @JsonKey(name: 'no_of_days') required String numberOfDays,
-    @JsonKey(name: 'hour') required String totalHours,
+    @JsonKey(name: 'hour') String? totalHours,
     @JsonKey(name: 'leave_type') required String leaveType,
     @JsonKey(name: 'title') required String title,
     @JsonKey(name: 'from_time') String? fromTime,

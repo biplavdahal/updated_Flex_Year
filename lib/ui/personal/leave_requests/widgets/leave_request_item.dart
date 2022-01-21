@@ -128,7 +128,7 @@ class LeaveRequestItem extends StatelessWidget {
                           ),
                           DataCell(
                             Text(
-                              "${hourFormatter(request.totalHours)}\n(${request.fromTime} - ${request.toTime})",
+                              "${request.totalHours != null ? hourFormatter(request.totalHours!) : '-'}\n(${request.fromTime} - ${request.toTime})",
                               style: const TextStyle(
                                 height: 1.5,
                               ),

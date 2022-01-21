@@ -122,13 +122,14 @@ class CompanyServiceImpl implements CompanyService {
 
       final data = constructResponse(_response.data);
 
-      if (data!.containsKey('status') && data['status'] == false) {
-        throw data['response'] ?? data['detail'] ?? data['data'];
+      if (data?['data'] is String) {
+        // Do nothing
+      } else {
+        final _clientsJson = data?['data'] as List;
+
+        _clients =
+            _clientsJson.map((json) => ClientData.fromJson(json)).toList();
       }
-
-      final _clientsJson = data['data'] as List;
-
-      _clients = _clientsJson.map((json) => ClientData.fromJson(json)).toList();
     } catch (e) {
       throw apiError(e);
     }

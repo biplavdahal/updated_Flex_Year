@@ -14,16 +14,16 @@ class AddAttendanceModel extends ViewModel with SnackbarMixin, DialogMixin {
   final AttendanceService _attendanceService = locator<AttendanceService>();
 
   // Data
-  List<ClientData> get clients => locator<CompanyService>().clients!;
-  List<String> get clientsLabel => clients.map((e) => e.name).toList();
+  List<ClientData>? get clients => locator<CompanyService>().clients;
+  List<String>? get clientsLabel => clients?.map((e) => e.name).toList();
 
-  late ClientData _selectedClient;
-  late String _selectedClientLabel;
-  String get selectedClientLabel => _selectedClientLabel;
+  ClientData? _selectedClient;
+  String? _selectedClientLabel;
+  String? get selectedClientLabel => _selectedClientLabel;
 
-  set selectedClientLabel(String value) {
+  set selectedClientLabel(String? value) {
     _selectedClientLabel = value;
-    _selectedClient = clients.firstWhere((e) => e.name == value);
+    _selectedClient = clients?.firstWhere((e) => e.name == value);
     setIdle();
   }
 
@@ -81,9 +81,9 @@ class AddAttendanceModel extends ViewModel with SnackbarMixin, DialogMixin {
 
   // Actions
   Future<void> init() async {
-    if (clients.isNotEmpty) {
-      _selectedClient = clients.first;
-      _selectedClientLabel = _selectedClient.name;
+    if (clients != null && clients!.isNotEmpty) {
+      _selectedClient = clients!.first;
+      _selectedClientLabel = _selectedClient!.name;
     }
     setIdle();
   }
@@ -95,7 +95,7 @@ class AddAttendanceModel extends ViewModel with SnackbarMixin, DialogMixin {
         isSelectMode: true,
         selectedStaffs: _selectedStaffs.toList(),
         preventSelf: true,
-        clientId: _selectedClient.clientId.toString(),
+        clientId: _selectedClient?.clientId.toString(),
       ),
     );
 
@@ -116,7 +116,7 @@ class AddAttendanceModel extends ViewModel with SnackbarMixin, DialogMixin {
 
       await _attendanceService.addAttendanceToStaff(
         userIds: _selectedStaffs.map((e) => e.userId).toList(),
-        clientId: _selectedClient.clientId.toString(),
+        clientId: _selectedClient?.clientId.toString(),
         checkInDateTime: _isCheckInCheckOutSelected
             ? '${attendanceDate!.year}-${attendanceDate!.month}-${attendanceDate!.day} ${_checkInTime!.hour}:${_checkOutTime!.minute}'
             : '',
