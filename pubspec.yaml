@@ -1,14 +1,15 @@
 name: flex_year_tablet
 description: Flexyear tablet app.
 
-publish_to: "none"
+publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
+  awesome_notifications: ^0.6.21
   bestfriend:
     path: ./packages/bestfriend
   cached_network_image: ^3.2.0
@@ -16,6 +17,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   device_preview: ^0.8.0
   dio: ^4.0.3
+  firebase_core: ^1.11.0
+  firebase_messaging: ^11.2.5
   flutter:
     sdk: flutter
   freezed_annotation: null
