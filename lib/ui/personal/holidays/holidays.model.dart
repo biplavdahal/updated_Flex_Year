@@ -7,19 +7,22 @@ class HolidaysModel extends ViewModel with SnackbarMixin {
   final CompanyService _companyService = locator<CompanyService>();
 
   // Data
-  List<HolidayData> _holidays = [];
-  List<HolidayData> get holidays => _holidays;
+  List<HolidayData> get holiday => _companyService.holidays;
+  // List<HolidayData> _holidays = [];
+  // List<HolidayData> get holidays => _holidays;
 
   // Actions
   Future<void> init() async {
     try {
       setLoading();
+      final _holidays = await _companyService.getHolidays();
+      _companyService.holidays = _holidays;
 
-      _holidays = await _companyService.getHolidays();
+      // _holidays = await _companyService.getHolidays();
 
       setIdle();
     } catch (e) {
-      setIdle();
+      // setIdle();
       snackbar.displaySnackbar(
         SnackbarRequest.of(
           message: e.toString(),

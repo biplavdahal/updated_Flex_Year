@@ -25,6 +25,14 @@ class CompanyServiceImpl implements CompanyService {
   @override
   List<ClientData>? get clients => _clients;
 
+  List<HolidayData> _holidays = [];
+  @override
+  List<HolidayData> get holidays => _holidays;
+  @override
+  set holidays(List<HolidayData> value) {
+    _holidays = value;
+  }
+
   @override
   Future<void> init() async {
     try {
@@ -67,21 +75,28 @@ class CompanyServiceImpl implements CompanyService {
         'company_id': _appAccessService.appAccess!.company.companyId,
       });
 
-      debugPrint(_response.data.toString());
+      if (_response.statusCode == 200) {
+        final _data = _response.data['data'] as List;
 
-      final data = constructResponse(_response.data);
-
-      if (data!.containsKey('status') && data['status'] == false) {
-        throw data['response'] ?? data['detail'] ?? data['data'];
+        return _data.map((e) => HolidayData.fromJson(e)).toList();
       }
+      return [];
 
-      final _holidaysJson = data['data'] as List;
+      // debugPrint(_response.data.toString());
 
-      return _holidaysJson
-          .map((json) => HolidayData.fromJson(json))
-          .where(
-              (holiday) => DateTime.parse(holiday.date).isAfter(DateTime.now()))
-          .toList();
+      // final data = constructResponse(_response.data);
+
+      // if (data!.containsKey('status') && data['status'] == false) {
+      //   throw data['response'] ?? data['detail'] ?? data['data'];
+      // }
+
+      // final _holidaysJson = data['data'] as List;
+
+      // return _holidaysJson
+      //     .map((json) => HolidayData.fromJson(json))
+      //     .where(
+      //         (holiday) => DateTime.parse(holiday.date).isAfter(DateTime.now()))
+      //     .toList();
     } catch (e) {
       throw apiError(e);
     }

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class HolidayItem extends StatelessWidget {
   final HolidayData holiday;
 
-  const HolidayItem(this.holiday, {Key? key}) : super(key: key);
+  const HolidayItem({Key? key, required this.holiday}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

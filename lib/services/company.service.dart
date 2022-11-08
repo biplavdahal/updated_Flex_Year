@@ -13,6 +13,12 @@ abstract class CompanyService {
   /// Preset all company required data by initing company service
   Future<void> init();
 
+  ///Getter for all holiday list
+  List<HolidayData> get holidays;
+
+  ///Set holiday List
+  set holidays(List<HolidayData> value);
+
   /// Get company holidays
   Future<List<HolidayData>> getHolidays();
 
