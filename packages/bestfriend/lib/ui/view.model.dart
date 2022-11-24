@@ -9,7 +9,7 @@ class ViewModel extends ChangeNotifier {
 
   EState _state = EState.idle;
   EState get state => _state;
-  void setState(EState viewState) {
+   void setState(EState viewState) {
     _state = viewState;
     notifyListeners();
   }
@@ -33,7 +33,7 @@ class ViewModel extends ChangeNotifier {
     setState(viewState);
   }
 
-  void setLoading() {
+   void setLoading() {
     setState(EState.loading);
   }
 

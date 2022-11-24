@@ -71,6 +71,7 @@ class AttendanceView extends StatelessWidget {
                           crossAxisSpacing: 24,
                           children: [
                             AttendanceButton(
+                              titles: '',
                               isTablet: true,
                               title: "Check In",
                               icon: MdiIcons.clockStart,
@@ -83,6 +84,7 @@ class AttendanceView extends StatelessWidget {
                                   : null,
                             ),
                             AttendanceButton(
+                              titles: '',
                               isTablet: true,
                               title: "Check Out",
                               icon: MdiIcons.clockEnd,
@@ -95,6 +97,7 @@ class AttendanceView extends StatelessWidget {
                                   : null,
                             ),
                             AttendanceButton(
+                              titles: '',
                               isTablet: true,
                               title: "Lunch In",
                               icon: MdiIcons.food,
@@ -107,6 +110,7 @@ class AttendanceView extends StatelessWidget {
                                   : null,
                             ),
                             AttendanceButton(
+                              titles: '',
                               isTablet: true,
                               title: "Lunch Out",
                               icon: MdiIcons.foodOff,

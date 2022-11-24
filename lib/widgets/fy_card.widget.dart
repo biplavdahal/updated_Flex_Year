@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class FYCard extends StatelessWidget {
   final Widget child;
   final double? elevation;
+  final VoidCallback? onPressed;
 
-  const FYCard({Key? key, required this.child, this.elevation})
+  const FYCard({Key? key, required this.child,this.onPressed,
+   this.elevation})
       : super(key: key);
 
   @override
@@ -14,6 +16,8 @@ class FYCard extends StatelessWidget {
       elevation: elevation ?? 6,
       shadowColor: Colors.black54,
       child: child,
+      
+      
     );
   }
 }

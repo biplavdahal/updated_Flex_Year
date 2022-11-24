@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:bestfriend/bestfriend.dart';
+import 'package:dio/dio.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/constants/prefs.constants.dart';
+import 'package:flex_year_tablet/data_models/staff.data.dart';
 import 'package:flex_year_tablet/data_models/user.data.dart';
 import 'package:flex_year_tablet/helper/api_error.helper.dart';
 import 'package:flex_year_tablet/helper/api_response.helper.dart';
@@ -22,6 +24,14 @@ class AuthenticationServiceImpl implements AuthenticationService {
   UserData? _user;
   @override
   UserData? get user => _user;
+
+  StaffData? _staffData;
+  @override
+  StaffData? get staffData => _staffData;
+
+  bool _isNormalUser = false;
+  @override
+  bool get isNormalUser => _isNormalUser;
 
   @override
   Future<bool> isLoggedIn() async {
@@ -86,6 +96,28 @@ class AuthenticationServiceImpl implements AuthenticationService {
   }
 
   @override
+  Future<String> requestResetPassword(
+      {required String email, required int company_id}) async {
+    try {
+      final response =
+          await _apiService.post(auRequestResetPassword, {}, params: {
+        'email': email,
+        'company_id': _appAccessService.appAccess!.company.companyId,
+      });
+
+      final data = constructResponse(response.data);
+
+      if (!data!["status"]) {
+        throw data;
+      }
+
+      return data["response"];
+    } on DioError catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
   Future<String?> getSavedUsername() async {
     final _response =
         await _sharedPreferenceService.get<String?>(pfSavedUsername);
@@ -95,6 +127,18 @@ class AuthenticationServiceImpl implements AuthenticationService {
   @override
   Future<void> saveUsername(String username) async {
     await _sharedPreferenceService.set<String>(pfSavedUsername, username);
+  }
+
+  @override
+  Future<String?> getSavedPassword() async {
+    final _response =
+        await _sharedPreferenceService.get<String?>(pfSavedPassword);
+    return _response.value;
+  }
+
+  @override
+  Future<void> savePassword(String password) async {
+    await _sharedPreferenceService.set<String>(pfSavedPassword, password);
   }
 
   @override
@@ -112,5 +156,18 @@ class AuthenticationServiceImpl implements AuthenticationService {
     } catch (e) {
       throw apiError(e);
     }
+  }
+
+  @override
+  Future<void> updateUser(Map<String, dynamic> data) async {
+    _user = _user!.copyWith(staff: StaffData.fromJson(data));
+
+    await _sharedPreferenceService.set<String>(
+      pfLoggedInUser,
+      jsonEncode(
+        _user!.toJson(),
+      ),
+    );
+    _isNormalUser = _user!.role == "staff";
   }
 }

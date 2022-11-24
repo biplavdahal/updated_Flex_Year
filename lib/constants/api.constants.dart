@@ -47,6 +47,10 @@ const auStaffsList = "staff/index";
 
 const auClients = "client/index";
 
+//update profile
+const auUpdateProfile = "staff/upload";
+const auChangePassword = "staff/changepassword";
+
 // ------ TABLET SPECIFIC API ------
 const auGetPins = "appaccess/pin";
 const auTabletAttendanceStatus = "appaccess/attstatus";
@@ -58,3 +62,6 @@ const auGetContactLists = "message/accessmessage";
 const auSendAttachmentMessage = "message/upload";
 const auGetMessages = "message/index";
 const auSendTextMessage = "message/post";
+
+// ----- Reset password ----
+const auRequestResetPassword = "user/request-password-reset";

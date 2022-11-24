@@ -10,13 +10,18 @@ class LeaveRequestItem extends StatelessWidget {
   final ValueSetter<String>? onRemoveTap;
   final ValueSetter<LeaveRequestData>? onEditTap;
 
-  const LeaveRequestItem({
+  LeaveRequestItem({
     Key? key,
     required this.request,
     this.isBusy = false,
     this.onRemoveTap,
     this.onEditTap,
   }) : super(key: key);
+
+  final Map<String, Color> _statusColor = {
+    "0": Colors.yellow.shade300,
+    '1': Colors.green.shade300,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +33,7 @@ class LeaveRequestItem extends StatelessWidget {
         child: Card(
           shape: RoundedRectangleBorder(
             side: BorderSide(
-              color: Colors.grey.shade300,
+              color: _statusColor[request.status] ?? Colors.red.shade300,
               width: 1,
             ),
             borderRadius: BorderRadius.circular(10),
@@ -79,6 +84,7 @@ class LeaveRequestItem extends StatelessWidget {
                   ],
                 ),
               ),
+              
               SizedBox(
                 width: double.infinity,
                 child: DataTable(
@@ -95,6 +101,7 @@ class LeaveRequestItem extends StatelessWidget {
                   ],
                   rows: [
                     if (request.totalHours == "00:00:00")
+                    
                       DataRow(
                         cells: [
                           const DataCell(

@@ -10,10 +10,14 @@ import 'package:flex_year_tablet/ui/personal/attendance_correction_review/attend
 import 'package:flex_year_tablet/ui/personal/attendance_report/attendance_report.view.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.view.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_summary/attendance_summary.view.dart';
+import 'package:flex_year_tablet/ui/personal/change_password/change_password_view.dart';
 import 'package:flex_year_tablet/ui/personal/chat_contacts/chat_contacts.view.dart';
 import 'package:flex_year_tablet/ui/personal/chats/chats.view.dart';
+import 'package:flex_year_tablet/ui/personal/edit_profile/edit_profile.view.dart';
+import 'package:flex_year_tablet/ui/personal/forget%20password/forget_password_view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
+import 'package:flex_year_tablet/ui/personal/login/login.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.dart';
 import 'package:flex_year_tablet/ui/personal/staffs/staffs.view.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.view.dart';
@@ -24,7 +28,10 @@ import 'package:flex_year_tablet/ui/personal/profile/profile.view.dart';
 import 'package:flutter/material.dart';
 
 Map<String, Widget> routesAndViews(RouteSettings settings) => {
+      ForgetPasswordFragment.tag: const ForgetPasswordFragment(),
+      ChangePasswordView.tag: const ChangePasswordView(),
       TestView.tag: const TestView(),
+      EditProfileView.tag: const EditProfileView(),
       LoginView.tag: const LoginView(),
       AppAccessView.tag: const AppAccessView(),
       AppAccessClientCodeView.tag: const AppAccessClientCodeView(),

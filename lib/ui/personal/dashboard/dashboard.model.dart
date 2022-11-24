@@ -13,7 +13,10 @@ import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/attendance.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
+import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/login/login.view.dart';
+import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
+import 'package:flutter/material.dart';
 
 class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   // Services
@@ -88,6 +91,12 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     }).catchError((e) {
       // snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     });
+    try {
+      const FYLinearLoader();
+      HolidaysModel.holidaydata();
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<void> logout() async {
@@ -157,6 +166,23 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
       dialog.hideDialog();
       setIdle();
+      if (status == 'checkin') {
+        Fluttertoast.showToast(
+            msg: 'You have successfully checkin',
+            backgroundColor: Colors.green);
+      } else if (status == 'checkout') {
+        Fluttertoast.showToast(
+            msg: 'You have successfully checkout',
+            backgroundColor: Colors.green);
+      } else if (status == 'lunchin') {
+        Fluttertoast.showToast(
+            msg: 'You have Successfully lunchin',
+            backgroundColor: Colors.green);
+      } else {
+        Fluttertoast.showToast(
+            msg: 'You have successfully lunchout',
+            backgroundColor: Colors.green);
+      }
     } catch (e) {
       dialog.hideDialog();
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));

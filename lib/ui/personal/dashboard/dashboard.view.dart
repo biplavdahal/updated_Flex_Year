@@ -12,6 +12,8 @@ import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/attendance_button.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/dashboard_drawer.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/utility_item.dart';
+import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
+import 'package:flex_year_tablet/ui/personal/holidays/widgets/holiday_item.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
@@ -111,6 +113,7 @@ class DashboardView extends StatelessWidget {
                     _buildForgotToCheckout(model),
                     _buildTodaysAttendance(model),
                     _buildUtilities(model),
+                    _buildCalander(model)
                   ],
                 ),
               ),
@@ -187,7 +190,8 @@ class DashboardView extends StatelessWidget {
                   crossAxisSpacing: 10,
                   children: [
                     AttendanceButton(
-                      title: "Check In",
+                      titles: formattedTime(model.currentDateTime),
+                      title: "Check in",
                       icon: MdiIcons.clockStart,
                       color: Colors.green,
                       onPressed: model.attendanceStatus.checkIn == 1
@@ -197,9 +201,10 @@ class DashboardView extends StatelessWidget {
                           : null,
                     ),
                     AttendanceButton(
+                      titles: formattedTime(model.currentDateTime),
                       title: "Check Out",
                       icon: MdiIcons.clockEnd,
-                      color: Colors.green,
+                      color: Colors.red,
                       onPressed: model.attendanceStatus.checkOut == 1
                           ? () {
                               model.onAttendanceButtonPressed('checkout');
@@ -207,6 +212,7 @@ class DashboardView extends StatelessWidget {
                           : null,
                     ),
                     AttendanceButton(
+                      titles: formattedTime(model.currentDateTime),
                       title: "Lunch In",
                       icon: MdiIcons.food,
                       color: AppColor.primary,
@@ -217,6 +223,7 @@ class DashboardView extends StatelessWidget {
                           : null,
                     ),
                     AttendanceButton(
+                      titles: formattedTime(model.currentDateTime),
                       title: "Lunch Out",
                       icon: MdiIcons.foodOff,
                       color: AppColor.primary,
@@ -294,5 +301,25 @@ class DashboardView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _buildCalander(DashboardModel model) {
+    return FYSection(
+        title: "Special Holidays",
+        child: model.isLoading
+            ? null
+            : SizedBox(
+                height: 100,
+                child: RefreshIndicator(
+                    onRefresh: HolidaysModel.holidaydata,
+                    child: ListView.builder(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final _holiday = HolidaysModel.holiday[index];
+                        return HolidayItem(holiday: _holiday);
+                      },
+                      itemCount: HolidaysModel.holiday.length,
+                    )),
+              ));
   }
 }

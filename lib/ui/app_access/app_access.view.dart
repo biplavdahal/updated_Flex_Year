@@ -64,6 +64,7 @@ class AppAccessView extends StatelessWidget {
                             height: 10,
                           ),
                           FYInputField(
+                            title: '',
                             label: "Enter app access",
                             controller: model.appAccessController,
                           ),

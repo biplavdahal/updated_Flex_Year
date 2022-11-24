@@ -1,8 +1,12 @@
+import 'package:bestfriend/di.dart';
 import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.model.dart';
+import 'package:flex_year_tablet/ui/personal/profile/widget/user_profile_header.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+import '../../../services/authentication.service.dart';
 
 class ProfileView extends StatelessWidget {
   static String tag = 'profile-view';
@@ -17,31 +21,32 @@ class ProfileView extends StatelessWidget {
           backgroundColor: AppColor.primary,
           appBar: AppBar(
             title: const Text('Profile'),
+            actions: [
+              PopupMenuButton<String>(
+                onSelected: model.moreOptionActions,
+                itemBuilder: (context) {
+                  return [
+                    const PopupMenuItem<String>(
+                      value: "update_profile",
+                      child: Text('Update Profile'),
+                    ),
+                    const PopupMenuItem<String>(
+                      value: "change_password",
+                      child: Text(
+                        'Change Password',
+                      ),
+                    ),
+                  ];
+                },
+              ),
+            ],
           ),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 14),
-              CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 42,
-                child: Text(
-                  model.user.staff.firstName[0],
-                  style: const TextStyle(
-                    fontSize: 42,
-                    color: AppColor.primary,
-                  ),
-                ),
-              ),
+              const UserProfileHeader(),
               const SizedBox(height: 14),
-              Text(
-                "[EMP - ${model.user.staff.empId}] ${model.user.staff.firstName} ${model.user.staff.lastName}",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-                textAlign: TextAlign.center,
-              ),
               const SizedBox(height: 14),
               Expanded(
                   child: Container(

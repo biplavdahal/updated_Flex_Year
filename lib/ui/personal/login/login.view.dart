@@ -8,6 +8,7 @@ import 'package:flex_year_tablet/widgets/fy_card.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_checkbox.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_input_field.widget.dart';
 import 'package:flutter/material.dart';
+import '../forget password/forget_password_view.dart';
 
 class LoginView extends StatelessWidget {
   static String tag = "login-view";
@@ -99,6 +100,7 @@ class LoginView extends StatelessWidget {
                   height: 16,
                 ),
                 FYInputField(
+                  title: '',
                   label: "Username",
                   controller: model.usernameController,
                   validator: FYValidator.isRequired,
@@ -107,18 +109,35 @@ class LoginView extends StatelessWidget {
                   height: 12,
                 ),
                 FYInputField(
+                  title: '',
                   label: "Password",
                   controller: model.passwordController,
                   obscureText: true,
                   validator: FYValidator.isRequired,
                 ),
-                const SizedBox(
-                  height: 12,
-                ),
-                FYCheckbox(
-                  value: model.rememberMe,
-                  onChanged: (value) => model.rememberMe = value!,
-                  label: "Remember me",
+                Row(
+                  children: [
+                    Expanded(
+                      child: FYCheckbox(
+                          value: model.rememberMe,
+                          onChanged: (value) => model.rememberMe = value!,
+                          label: "Remember me"),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () async {
+                          model.goto(ForgetPasswordFragment.tag);
+                        },
+                        child: const Text(
+                          'Forget Password?',
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 12,
@@ -145,6 +164,20 @@ class LoginView extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: TextButton.icon(
+                    style: TextButton.styleFrom(
+                      primary: Colors.black,
+                    ),
+                    onPressed: () async {},
+                    icon: const Icon(Icons.fingerprint_sharp),
+                    label: const Text('Tap to Login with Fingerprint'),
+                  ),
                 ),
               ],
             ),
@@ -186,14 +219,19 @@ class LoginView extends StatelessWidget {
                   height: 16,
                 ),
                 FYInputField(
+                  title: '',
                   label: "Your Pin",
                   controller: model.pinController,
                   keyboardType: TextInputType.number,
                   maxLength: 6,
                   validator: FYValidator.isRequired,
                 ),
-                const SizedBox(
-                  height: 12,
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () async {},
+                    child: const Text('Forgot Pin?'),
+                  ),
                 ),
                 Row(
                   children: [
@@ -221,6 +259,33 @@ class LoginView extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _forgetPassword(BuildContext context, LoginModel model) {
+    return FYCard(
+      elevation: 10,
+      child: Form(
+        key: model.forgotPasswordFormKey,
+        child: Column(
+          children: [
+            FYInputField(
+              title: '',
+              label: "Register Email",
+              controller: model.forgotPasswordEmailController,
+              keyboardType: TextInputType.emailAddress,
+              validator: Validators().validateEmail,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            FYPrimaryButton(
+              label: "Reset Password",
+              onPressed: () {},
+            )
+          ],
         ),
       ),
     );

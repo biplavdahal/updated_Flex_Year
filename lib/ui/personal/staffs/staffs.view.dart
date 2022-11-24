@@ -39,6 +39,7 @@ class StaffsView extends StatelessWidget {
                   child: Column(
                     children: [
                       FYInputField(
+                        title: '',
                         label: 'Search staff by name',
                         controller: model.searchController,
                       ),
