@@ -58,6 +58,7 @@ class ChatsView extends StatelessWidget {
                       child: Row(children: [
                         Expanded(
                           child: FYInputField(
+                            title: '',
                             label: 'Write message to ${model.receiverName}...',
                             controller: model.messageController,
                           ),

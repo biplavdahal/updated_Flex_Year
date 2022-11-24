@@ -10,7 +10,7 @@ class Validators {
   ];
 
   /// Method created for email validation
-  static String? validateEmail(String? value) {
+   String? validateEmail(String? value) {
     // Created pattern to match with emailid pattern
     // Using the regular expression https://www.codegrepper.com/code-examples/dart/dart+regex+for+email
 

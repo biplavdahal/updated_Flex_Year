@@ -17,11 +17,27 @@ abstract class AuthenticationService {
     required String pin,
   });
 
+  /// Returns the reponse of request.
+  Future<String> requestResetPassword(
+      {required String email, required int company_id});
+
   /// Get saved username
   Future<String?> getSavedUsername();
 
+  // Get saved password
+  Future<String?> getSavedPassword();
+
+  /// Update user
+  Future<void> updateUser(Map<String, dynamic> data);
+
+  /// Returns [true] if the logged in user is a normal user.
+  bool get isNormalUser;
+
   /// Save username on remember me
   Future<void> saveUsername(String username);
+
+  /// save password on remember me
+  Future<void> savePassword(String password);
 
   /// Logout user and clear all data
   Future<void> logout();

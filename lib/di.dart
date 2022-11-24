@@ -14,9 +14,11 @@ import 'package:flex_year_tablet/services/implementations/company.service.impl.d
 import 'package:flex_year_tablet/services/implementations/leave.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/notification.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/tablet.service.impl.dart';
+import 'package:flex_year_tablet/services/implementations/user_service_impl.dart';
 import 'package:flex_year_tablet/services/leave.service.dart';
 import 'package:flex_year_tablet/services/notification.service.dart';
 import 'package:flex_year_tablet/services/tablet.service.dart';
+import 'package:flex_year_tablet/services/user_service.dart';
 import 'package:flex_year_tablet/ui/frontdesk/attendance/attendance.model.dart';
 import 'package:flex_year_tablet/ui/frontdesk/enter_pin/enter_pin.model.dart';
 import 'package:flex_year_tablet/ui/personal/add_attendance/add_attendance.model.dart';
@@ -27,9 +29,13 @@ import 'package:flex_year_tablet/ui/personal/attendance_correction_review/attend
 import 'package:flex_year_tablet/ui/personal/attendance_report/attandance_report.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_summary/attendance_summary.model.dart';
+import 'package:flex_year_tablet/ui/personal/change_password/change_password_view_model.dart';
 import 'package:flex_year_tablet/ui/personal/chat_contacts/chat_contacts.model.dart';
 import 'package:flex_year_tablet/ui/personal/chats/chats.model.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
+import 'package:flex_year_tablet/ui/personal/edit_profile/edit_profile.viewmodel.dart';
+import 'package:flex_year_tablet/ui/personal/forget%20password/forget_password_view.dart';
+import 'package:flex_year_tablet/ui/personal/forget%20password/forget_password_view_model.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.model.dart';
@@ -86,6 +92,9 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => AttendanceModel());
   locator.registerFactory(() => ChatContactsModel());
   locator.registerFactory(() => ChatsModel());
+  locator.registerFactory(() => EditProfileViewModel());
+  locator.registerFactory(() => ChangePasswordViewModel());
+  locator.registerFactory(() => ForgetPasswordViewModel());
 
   // Unkillable models
   locator.registerLazySingleton(() => LeaveRequestModel());

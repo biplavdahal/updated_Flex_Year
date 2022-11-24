@@ -29,7 +29,7 @@ class LeaveRequestView extends StatelessWidget {
               }
             },
           ),
-          body: Container(
+          body: Container(           
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

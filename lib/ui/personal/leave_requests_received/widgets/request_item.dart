@@ -30,6 +30,7 @@ class RequestItem extends StatelessWidget {
         duration: const Duration(milliseconds: 500),
         opacity: isBusy ? 0.5 : 1,
         child: Card(
+          color: Colors.grey.shade300,
           margin: const EdgeInsets.only(bottom: 16),
           shape: RoundedRectangleBorder(
             side: BorderSide(

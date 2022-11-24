@@ -93,6 +93,7 @@ class WriteLeaveRequestView extends StatelessWidget {
                       height: 16,
                     ),
                     FYInputField(
+                      title: '',
                       label: "Leave description",
                       controller: model.leaveDescriptionController,
                     ),

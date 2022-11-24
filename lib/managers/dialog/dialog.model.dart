@@ -14,7 +14,7 @@ class DialogRequest<T> {
     required this.type,
     required this.title,
     this.payload,
-    this.dismissable = false,
+    this.dismissable = true
   });
 }
 

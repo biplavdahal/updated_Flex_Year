@@ -26,11 +26,13 @@ class HolidaysView extends StatelessWidget {
                     onRefresh: model.init,
                     child: ListView.builder(
                       physics: const AlwaysScrollableScrollPhysics(),
-                      itemCount: model.holidays.length,
-                      itemBuilder: (ctx, index) {
-                        final holiday = model.holidays[index];
-                        return HolidayItem(holiday);
+                      itemBuilder: (context, index) {
+                        final _holiday = HolidaysModel.holiday[index];
+                        return HolidayItem(
+                          holiday: _holiday,
+                        );
                       },
+                      itemCount: HolidaysModel.holiday.length,
                     ),
                   ),
                 ),

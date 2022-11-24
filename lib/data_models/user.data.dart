@@ -1,5 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 
+import 'dart:convert';
+
 import 'package:flex_year_tablet/data_models/designation.data.dart';
 import 'package:flex_year_tablet/data_models/staff_address.data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -16,7 +18,8 @@ class UserData with _$UserData {
     @JsonKey(name: 'role') String? role,
     @JsonKey(name: 'access_token') required String accessToken,
     @JsonKey(name: 'id') required int id,
-    @JsonKey(name: 'access_level') required int accessLevel,
+    @JsonKey(name: 'staff_photo') String? staffPhoto,
+    // @JsonKey(name: 'access_level') required int accessLevel,
     @JsonKey(name: 'staff') required StaffData staff,
     @JsonKey(name: 'staffaddressper')
         required List<StaffAddressData> staffAddresses,

@@ -35,6 +35,7 @@ class AppAccessClientCodeView extends StatelessWidget {
                           "Enter client code or the frontdesk code to acc ess the app"),
                       const SizedBox(height: 16),
                       FYInputField(
+                        title: '',
                         label: 'Enter client/frontdesk code',
                         controller: model.codeController,
                         validator: FYValidator.isRequired,

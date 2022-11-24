@@ -7,16 +7,20 @@ class FYInputField extends StatefulWidget {
   final TextEditingController? controller;
   final bool obscureText;
   final String? Function(String?)? validator;
+  final bool isPassword;
+  final String title;
 
-  const FYInputField({
-    Key? key,
-    this.controller,
-    required this.label,
-    this.maxLength,
-    this.keyboardType = TextInputType.text,
-    this.obscureText = false,
-    this.validator,
-  }) : super(key: key);
+  const FYInputField(
+      {Key? key,
+      this.controller,
+      required this.label,
+      this.maxLength,
+      this.keyboardType = TextInputType.text,
+      this.obscureText = false,
+      required this.title,
+      this.validator,
+      this.isPassword = false})
+      : super(key: key);
 
   @override
   State<FYInputField> createState() => _FYInputFieldState();
