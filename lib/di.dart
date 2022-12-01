@@ -36,7 +36,9 @@ import 'package:flex_year_tablet/ui/personal/forget%20password/forget_password_v
 import 'package:flex_year_tablet/ui/personal/forget%20password/forget_password_view_model.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.model.dart';
+import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.model.dart';
+import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
 import 'package:flex_year_tablet/ui/personal/login/login.model.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
@@ -92,7 +94,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => EditProfileViewModel());
   locator.registerFactory(() => ChangePasswordViewModel());
   locator.registerFactory(() => ForgetPasswordViewModel());
+  locator.registerFactory(() => LeaveRequestModel());
 
   // Unkillable models
-  locator.registerLazySingleton(() => LeaveRequestModel());
 }

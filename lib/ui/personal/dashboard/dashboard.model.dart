@@ -101,16 +101,19 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   Future<void> logout() async {
     try {
-      dialog.showDialog(
-        DialogRequest(
-          type: DialogType.progress,
-          title: "Logging you out...",
-        ),
-      );
-      await locator<AuthenticationService>().logout();
-      _currentDateTimeTimer?.cancel();
-      dialog.hideDialog();
-      gotoAndClear(LoginView.tag);
+      final isConfirm = await dialog.showDialog(DialogRequest(
+        type: DialogType.confirmation,
+        title: "Are you sure you want to logout?",
+        dismissable: true,
+      ));
+      if (isConfirm?.result != null) {
+        dialog.showDialog(DialogRequest(
+            type: DialogType.progress, title: "Logging you out..."));
+        await locator<AuthenticationService>().logout();
+        _currentDateTimeTimer?.cancel();
+        dialog.hideDialog();
+        gotoAndClear(LoginView.tag);
+      }
     } catch (e) {
       dialog.hideDialog();
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
