@@ -4,7 +4,7 @@ abstract class LeaveService {
   /// Create new leave
   Future<void> createLeaveRequest(Map<String, dynamic> leaveData);
 
-  /// Update leave request
+  /// Update leave request by cliet or Staff
   Future<void> updateLeaveRequest(Map<String, dynamic> leaveData);
 
   /// Get all leave requests

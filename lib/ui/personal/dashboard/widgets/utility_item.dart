@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
 class UtilityItem extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -34,7 +34,7 @@ class UtilityItem extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Text(title),
+              Text(title)
             ],
           ),
         ),
