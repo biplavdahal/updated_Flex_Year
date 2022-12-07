@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:bestfriend/bestfriend.dart';
+import 'package:flex_year_tablet/data_models/get_userstaff.data.dart';
 import 'package:flex_year_tablet/data_models/leave_type.data.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
@@ -18,6 +19,17 @@ class WriteLeaveRequestModel extends ViewModel with DialogMixin, SnackbarMixin {
   GlobalKey<FormState> get formKey => _formKey;
 
   // Data
+
+  // List<UserStaffData> get userStaffTypes =>
+  //     locator<CompanyService>().userStaffTypes!;
+  // List<String> get userStaffLabels =>
+  //     userStaffTypes.map((e) => e.firstName).toList();
+  late UserStaffData _selectedUserStaffType;
+  UserStaffData get selectedUserStaffType => _selectedUserStaffType;
+  String? _selectedUserStafflabel;
+  String? get selectedUserStaffLevel => _selectedUserStafflabel;
+
+
   List<LeaveTypeData> get leaveTypes => locator<CompanyService>().leaveTypes!;
   List<String> get leaveTypeLabels => leaveTypes.map((e) => e.title).toList();
 
@@ -108,6 +120,12 @@ class WriteLeaveRequestModel extends ViewModel with DialogMixin, SnackbarMixin {
     _selectedLeaveTypeLabel = label;
     setIdle();
   }
+
+  // void onUserTypeChanged(String? label) {
+  //   _selectedUserStaffType =
+  //       userStaffTypes.firstWhere((e) => e.firstName == label);
+  //   _selectedUserStafflabel = label;
+  // }
 
   Future<void> onSubmitRequestPressed() async {
     _validateFields();

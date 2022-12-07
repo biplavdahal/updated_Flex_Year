@@ -18,21 +18,71 @@ class AttendanceCorrectionView extends StatelessWidget {
           appBar: AppBar(
             title: const Text('Attendance Correction'),
           ),
-          body: model.isLoading
-              ? const FYLinearLoader()
-              : Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      final _correction = model.corrections[index];
-                      return CorrectionItem(
-                        correction: _correction,
-                        onDeletePressed: model.onDelete,
-                      );
-                    },
-                    itemCount: model.corrections.length,
-                  ),
+          body: Container(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Wrap(
+                  spacing: 8,
+                  children: List.generate(
+                      model.tabs.length,
+                      (index) => ChoiceChip(
+                            label: Text(model.tabs[index]),
+                            selected: model.selectedTab == index.toString(),
+                            onSelected: (_) =>
+                                model.selectedTab == index.toString(),
+                          )),
                 ),
+                if (model.isLoading) const FYLinearLoader(),
+                const SizedBox(
+                  height: 16,
+                ),
+                if (!model.isLoading)
+                  if (model.correctionsToShow.isNotEmpty)
+                    Expanded(
+                      child: RefreshIndicator(
+                        onRefresh: model.init,
+                        child: ListView.separated(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return CorrectionItem(
+                              correction: model.correctionsToShow[index],
+                              isBusy: model.isBusyWidget(
+                                  model.correctionsToShow[index].attendanceId),
+                              onDeletePressed: model.onDelete,
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(
+                              height: 16,
+                            );
+                          },
+                          itemCount: model.correctionsToShow.length,
+                        ),
+                      ),
+                    )
+              ],
+            ),
+          ),
+          // body: model.isLoading
+          //     ? const FYLinearLoader()
+          //     : RefreshIndicator(
+          //         onRefresh: model.init,
+          //         child: Padding(
+          //           padding: const EdgeInsets.all(16),
+          //           child: ListView.builder(
+          //             itemBuilder: (context, index) {
+          //               final _correction = model.corrections[index];
+          //               return CorrectionItem(
+          //                 correction: _correction,
+          //                 onDeletePressed: model.onDelete,
+          //               );
+          //             },
+          //             itemCount: model.corrections.length,
+          //           ),
+          //         ),
+          //       ),
         );
       },
     );

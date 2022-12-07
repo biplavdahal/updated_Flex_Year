@@ -1,5 +1,6 @@
 import 'package:bestfriend/di.dart';
 import 'package:bestfriend/ui/view.dart';
+import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/widgets/leave_request_item.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
@@ -51,6 +52,19 @@ class LeaveRequestView extends StatelessWidget {
                 ),
                 if (model.isLoading) const FYLinearLoader(),
                 const SizedBox(height: 16),
+                if (_user.role != 'staff')
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: Switch(
+                        activeColor: AppColor.primary,
+                        onChanged: (bool value) {
+                          model.light = value;
+                          {
+                            model.initsecond();
+                          }
+                        },
+                        value: model.light,
+                      )),
                 if (!model.isLoading)
                   if (model.requestsToShow.isNotEmpty)
                     Expanded(

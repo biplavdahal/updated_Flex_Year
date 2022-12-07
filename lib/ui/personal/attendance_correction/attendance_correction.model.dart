@@ -10,7 +10,20 @@ class AttendanceCorrectionModel extends ViewModel
   final AttendanceService _attendanceService = locator<AttendanceService>();
 
   // Data
+  List<String> get tabs => ['pending', 'Approved', 'Rejected', 'All'];
+
+  String _selectedTab = "0";
+  String get selectedTab => _selectedTab;
+
+  set selectedTab(String tab) {
+    _selectedTab = tab;
+    setIdle();
+  }
+
   List<AttendanceCorrectionData> _corrections = [];
+  List<AttendanceCorrectionData> get correctionsToShow => _corrections
+      .where((correction) => correction.correctionStatus == _selectedTab)
+      .toList();
   List<AttendanceCorrectionData> get corrections => _corrections;
 
   // Actions

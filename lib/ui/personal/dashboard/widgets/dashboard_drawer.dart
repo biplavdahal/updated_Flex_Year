@@ -94,85 +94,19 @@ class DashboardDrawer extends StatelessWidget {
                 color: AppColor.primary,
               ),
             ),
-            if (_user.role == 'staff')
-              ListTile(
-                title: const Text(
-                  'Leave Request ',
-                  style: TextStyle(color: AppColor.primary),
-                ),
-                onTap: () {
-                  locator<DashboardModel>().goto(LeaveRequestView.tag);
-                },
-                leading: const Icon(
-                  MdiIcons.shieldAirplaneOutline,
-                  color: Colors.orange,
-                ),
+            ListTile(
+              title: const Text(
+                'Leave Request ',
+                style: TextStyle(color: AppColor.primary),
               ),
-            if (_user.role != 'staff')
-              ListTile(
-                title: const Text(
-                  'Leave Request',
-                  style: TextStyle(color: Colors.orange),
-                ),
-                onTap: () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SizedBox(
-                          height: MediaQuery.of(context).size.height / 5,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.orange,
-                                    blurRadius: 10,
-                                    spreadRadius: 1,
-                                  )
-                                ]),
-                            alignment: Alignment.topCenter,
-                            padding: const EdgeInsets.all(3),
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  title: const Text(
-                                    'Create Leave Request',
-                                    style: TextStyle(color: AppColor.primary),
-                                  ),
-                                  onTap: () {
-                                    locator<DashboardModel>()
-                                        .goto(LeaveRequestView.tag);
-                                  },
-                                  leading: const Icon(
-                                    MdiIcons.planeCar,
-                                    color: Colors.orange,
-                                  ),
-                                ),
-                                ListTile(
-                                  title: const Text(
-                                    'Leave Request Received',
-                                    style: TextStyle(color: AppColor.primary),
-                                  ),
-                                  onTap: () {
-                                    locator<DashboardModel>()
-                                        .goto(LeaveRequestReceivedView.tag);
-                                  },
-                                  leading: const Icon(
-                                    MdiIcons.downloadBoxOutline,
-                                    color: Colors.orange,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      });
-                },
-                leading: const Icon(
-                  MdiIcons.shieldAirplaneOutline,
-                  color: Colors.orange,
-                ),
+              onTap: () {
+                locator<DashboardModel>().goto(LeaveRequestView.tag);
+              },
+              leading: const Icon(
+                MdiIcons.shieldAirplaneOutline,
+                color: Colors.orange,
               ),
+            ),
             ListTile(
               title: const Text(
                 'Reports',
