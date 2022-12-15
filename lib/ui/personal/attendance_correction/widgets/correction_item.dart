@@ -1,5 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
+import 'package:flex_year_tablet/data_models/attendance_correction_review.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_correction/attendance_correction.model.dart';
@@ -7,43 +7,48 @@ import 'package:flex_year_tablet/ui/personal/request_review/request_review.argum
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+import '../../dashboard/dashboard.model.dart';
 
 class CorrectionItem extends StatelessWidget {
-  final AttendanceCorrectionData correction;
-  final bool isBusy;
+  final AttendanceCorrectionReviewData correction;
   final ValueSetter<String> onDeletePressed;
+  final ValueSetter<AttendanceCorrectionReviewData>? onEditTap;
+  final ValueSetter<String>? onApprove;
+  final ValueSetter<String>? onDecline;
+  final bool isBusy;
 
   CorrectionItem({
     Key? key,
     required this.correction,
     this.isBusy = false,
+    this.onApprove,
+    this.onDecline,
+    this.onEditTap,
     required this.onDeletePressed,
   }) : super(key: key);
 
   final Map<String, Color> _statusColor = {
-    "0": Colors.yellow.shade300,
-    '1': Colors.green.shade300,
-    '2': Colors.red.shade200
+    "P": Colors.yellow.shade300,
+    'A': Colors.green.shade300,
+    'D': Colors.red.shade200
   };
 
   @override
   Widget build(BuildContext context) {
-    final _status = {
-      "0": "Pending",
-      "1": "Declined",
-      "2": "Approved",
-    };
-
+    final _status = {"P": "Pending", "A": "Approved", "D": "Declined"};
+    final _user = locator<DashboardModel>().user;
     return AbsorbPointer(
       absorbing: isBusy,
       child: AnimatedOpacity(
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(microseconds: 300),
         opacity: isBusy ? 0.5 : 1,
         child: Card(
           shape: RoundedRectangleBorder(
               side: BorderSide(
-                  color: _statusColor[correction.correctionStatus] ??
-                      Colors.red.shade300,
+                  color:
+                      _statusColor[correction.correctionStatus] ?? Colors.grey,
                   width: 1),
               borderRadius: BorderRadius.circular(10)),
           margin: const EdgeInsets.only(bottom: 16),
@@ -63,14 +68,50 @@ class CorrectionItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      correction.checkinDatetime != null
-                          ? formattedDate(correction.checkinDatetime!)
-                          : "",
+                      correction.firstName + " " + correction.lastName,
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    // Text(
+                    //   correction.checkinDatetime != null
+                    //       ? formattedDate(correction.checkinDatetime!)
+                    //       : "",
+                    //   style: const TextStyle(
+                    //     fontWeight: FontWeight.w700,
+                    //   ),
+                    // ),
+                    const SizedBox(width: 20),
+
+                    if (_user.role != 'staff')
+                      GestureDetector(
+                        onTap:
+                            _status[correction.correctionStatus] != "Approved"
+                                ? () {
+                                    onApprove?.call(correction.id);
+                                  }
+                                : null,
+                        child: Icon(MdiIcons.check,
+                            color: _status[correction.correctionStatus] !=
+                                    "Approved"
+                                ? Colors.green
+                                : Colors.grey),
+                      ),
+                    if (_user.role != 'staff')
+                      GestureDetector(
+                        onTap: _status[correction.correctionStatus] != "P" ||
+                                correction.checkinDatetime != 'A'
+                            ? () {
+                                onDecline?.call(correction.id);
+                              }
+                            : null,
+                        child: Icon(MdiIcons.close,
+                            color:
+                                _status[correction.correctionStatus] == "P" ||
+                                        correction.checkinDatetime != 'A'
+                                    ? Colors.red
+                                    : Colors.grey),
+                      ),
                     Row(
                       children: [
                         GestureDetector(
@@ -87,7 +128,7 @@ class CorrectionItem extends StatelessWidget {
                                       locator<AttendanceCorrectionModel>().goto(
                                         RequestReviewView.tag,
                                         arguments: RequestReviewArguments<
-                                            AttendanceCorrectionData>(
+                                            AttendanceCorrectionReviewData>(
                                           type: RequestReviewType.updateReview,
                                           payload: correction,
                                         ),
@@ -107,7 +148,7 @@ class CorrectionItem extends StatelessWidget {
                           onTap:
                               _status[correction.correctionStatus] == "Pending"
                                   ? () {
-                                      onDeletePressed(correction.attendanceId);
+                                      onDeletePressed(correction.id);
                                     }
                                   : null,
                         ),
@@ -127,7 +168,7 @@ class CorrectionItem extends StatelessWidget {
                   rows: [
                     DataRow(
                       cells: [
-                        const DataCell(Text("In Request Time")),
+                        const DataCell(Text("CheckIn Date Time")),
                         DataCell(
                           Text(
                             correction.checkinDatetime != null
@@ -139,7 +180,7 @@ class CorrectionItem extends StatelessWidget {
                     ),
                     DataRow(
                       cells: [
-                        const DataCell(Text("Out Request Time")),
+                        const DataCell(Text("CheckOut Date Time")),
                         DataCell(
                           Text(
                             correction.checkoutDatetime != null
@@ -151,7 +192,7 @@ class CorrectionItem extends StatelessWidget {
                     ),
                     DataRow(
                       cells: [
-                        const DataCell(Text("In Time")),
+                        const DataCell(Text("CheckIn Request")),
                         DataCell(
                           Text(
                             correction.checkinDatetimeRequest != null
@@ -164,7 +205,7 @@ class CorrectionItem extends StatelessWidget {
                     ),
                     DataRow(
                       cells: [
-                        const DataCell(Text("Out Time")),
+                        const DataCell(Text("CheckOut Request")),
                         DataCell(
                           Text(
                             correction.checkoutDatetimeRequest != null

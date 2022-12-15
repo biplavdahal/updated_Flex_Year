@@ -18,7 +18,7 @@ class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
 
   String _selectedTab = "0";
   String get selectedTab => _selectedTab;
-
+  
   set selectedTab(String tab) {
     _selectedTab = tab;
     setIdle();

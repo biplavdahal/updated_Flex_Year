@@ -13,6 +13,7 @@ class AttendanceCorrectionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return View<AttendanceCorrectionModel>(
       onModelReady: (model) => model.init(),
+      killViewOnClose: false,
       builder: (ctx, model, child) {
         return Scaffold(
           appBar: AppBar(
@@ -26,13 +27,13 @@ class AttendanceCorrectionView extends StatelessWidget {
                 Wrap(
                   spacing: 8,
                   children: List.generate(
-                      model.tabs.length,
-                      (index) => ChoiceChip(
-                            label: Text(model.tabs[index]),
-                            selected: model.selectedTab == index.toString(),
-                            onSelected: (_) =>
-                                model.selectedTab == index.toString(),
-                          )),
+                    model.tabs.length,
+                    (index) => ChoiceChip(
+                      label: Text(model.tabs[index]),
+                      selected: model.selectedTab == index.toString(),
+                      onSelected: (_) => model.selectedTab = index.toString(),
+                    ),
+                  ),
                 ),
                 if (model.isLoading) const FYLinearLoader(),
                 const SizedBox(
@@ -49,8 +50,10 @@ class AttendanceCorrectionView extends StatelessWidget {
                             return CorrectionItem(
                               correction: model.correctionsToShow[index],
                               isBusy: model.isBusyWidget(
-                                  model.correctionsToShow[index].attendanceId),
+                                  model.correctionsToShow[index].id),
                               onDeletePressed: model.onDelete,
+                              onApprove: model.onApprove,
+                              onDecline: model.onDecline,
                             );
                           },
                           separatorBuilder: (context, index) {
@@ -62,9 +65,15 @@ class AttendanceCorrectionView extends StatelessWidget {
                         ),
                       ),
                     )
+                  else
+                    const Expanded(
+                        child: Center(
+                      child: Text('No Attendance'),
+                    )),
               ],
             ),
           ),
+
           // body: model.isLoading
           //     ? const FYLinearLoader()
           //     : RefreshIndicator(

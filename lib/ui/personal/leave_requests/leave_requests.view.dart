@@ -41,7 +41,7 @@ class LeaveRequestView extends StatelessWidget {
               children: [
                 Wrap(
                   spacing: 8,
-                  children: List.generate(
+                  children: List.generate(  
                     model.tabs.length,
                     (index) => ChoiceChip(
                       label: Text(model.tabs[index]),
