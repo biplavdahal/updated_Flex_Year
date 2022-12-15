@@ -18,11 +18,13 @@ class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
 
   String _selectedTab = "0";
   String get selectedTab => _selectedTab;
-
+  
   set selectedTab(String tab) {
     _selectedTab = tab;
     setIdle();
   }
+
+  bool light = false;
 
   final _user = locator<DashboardModel>().user;
 
@@ -39,6 +41,18 @@ class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
       } else {
         _requests = await _leaveService.getAllLeaveRequests(false);
       }
+
+      setIdle();
+    } catch (e) {
+      setIdle();
+      snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
+    }
+  }
+
+  Future<void> initsecond() async {
+    try {
+      setLoading();
+      _requests = await _leaveService.getAllLeaveRequests();
       setIdle();
     } catch (e) {
       setIdle();
@@ -100,7 +114,7 @@ class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
 
           return request;
         }).toList();
-      } 
+      }
       init();
       unsetWidgetBusy('$requestId-request');
     } catch (e) {
@@ -129,7 +143,7 @@ class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
         }).toList();
       }
       unsetWidgetBusy('$requestId-request');
-      
+
       init();
     } catch (e) {
       unsetWidgetBusy('$requestId-request');

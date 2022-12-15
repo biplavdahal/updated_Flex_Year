@@ -1,4 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
+import 'package:flex_year_tablet/data_models/get_userstaff.data.dart';
 import 'package:flex_year_tablet/data_models/leave_type.data.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.model.dart';
@@ -9,6 +10,8 @@ import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_input_field.widget.dart';
 import 'package:flutter/material.dart';
 
+import '../dashboard/dashboard.model.dart';
+
 class WriteLeaveRequestView extends StatelessWidget {
   static String tag = 'write-leave-request-view';
 
@@ -18,6 +21,7 @@ class WriteLeaveRequestView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _user = locator<DashboardModel>().user;
     return View<WriteLeaveRequestModel>(
       onModelReady: (model) =>
           model.init(arguments as WriteLeaveRequestViewArguments?),
@@ -40,6 +44,10 @@ class WriteLeaveRequestView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    if (_user.role != 'staff')
+                      const SizedBox(
+                        height: 16,
+                      ),
                     FYDropdown<LeaveTypeData>(
                       title: "Select leave type",
                       onChanged: model.onLeaveTypeChanged,

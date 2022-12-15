@@ -123,7 +123,7 @@ class LeaveRequestItem extends StatelessWidget {
                             }
                           : null,
                       child: Icon(
-                        MdiIcons.pen,
+                        Icons.edit,
                         color: request.status == "0"
                             ? AppColor.primary
                             : Colors.grey,
@@ -229,15 +229,15 @@ class LeaveRequestItem extends StatelessWidget {
                           ),
                         ),
                         DataCell(
-                          Text(
-                            request.reason.isEmpty ? "Not Set" : request.reason,
-                            style: request.reason.isEmpty
-                                ? TextStyle(
-                                    color: Colors.grey.shade400,
-                                    fontStyle: FontStyle.italic,
-                                  )
-                                : null,
-                          ),
+                          Text(request.status
+                              // request.reason.isEmpty ? "Not Set" : request.reason,
+                              // style: request.reason.isEmpty
+                              //     ? TextStyle(
+                              //         color: Colors.grey.shade400,
+                              //         fontStyle: FontStyle.italic,
+                              //       )
+                              //     : null,
+                              ),
                         ),
                       ],
                     ),

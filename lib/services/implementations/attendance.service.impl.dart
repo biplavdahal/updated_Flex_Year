@@ -385,15 +385,23 @@ class AttendanceServiceImpl implements AttendanceService {
   }
 
   @override
-  Future<List<AttendanceCorrectionReviewData>>
-      getAttendanceCorrectionReviews() async {
+  Future<List<AttendanceCorrectionReviewData>> getAttendanceCorrectionReviews(
+      int id) async {
     try {
       final _response =
           await _apiService.post(auGetAttendanceCorrectionReviews, {
         'access_token': _authenticationService.user!.accessToken,
         'company_id': _appAccessService.appAccess!.company.companyId,
+        'sortnane': 'checkin_datetime',
+        'sortno': 2,
+        'limit': 10,
+        'page': 1,
         'search': {
           'correction_request': 1,
+          // FIXME:apiError
+          // 'user_id': 1924,
+          // if (_authenticationService.user!.role != 'staff') 'user_id': '',
+          // if (_authenticationService.user!.role == 'staff') 'user_id': 1924
         }
       });
 
