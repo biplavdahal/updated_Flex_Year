@@ -7,10 +7,6 @@ class ChangePasswordView extends StatelessWidget {
   const ChangePasswordView({Key? key}) : super(key: key);
 
   static String tag = "change-password-view";
-  
-
-
-
 
   @override
   Widget build(BuildContext context) {

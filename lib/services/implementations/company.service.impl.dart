@@ -1,7 +1,10 @@
+import 'dart:ffi';
+
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/data_models/company_staff.data.dart';
+import 'package:flex_year_tablet/data_models/get_userstaff.data.dart';
 import 'package:flex_year_tablet/data_models/holiday.data.dart';
 import 'package:flex_year_tablet/data_models/leave_type.data.dart';
 import 'package:flex_year_tablet/helper/api_error.helper.dart';
@@ -38,6 +41,7 @@ class CompanyServiceImpl implements CompanyService {
     try {
       await _fetchLeaveTypes();
       await _fetchClients();
+      // await _fetchUserStaffData();
 
       debugPrint(_leaveTypes.toString());
     } catch (e) {
@@ -66,6 +70,25 @@ class CompanyServiceImpl implements CompanyService {
       rethrow;
     }
   }
+
+  // Future<void> _fetchUserStaffData() async {
+  //   try {
+  //     final _response = await _apiService.get(auUserStaffDetail, params: {
+  //       'access_token': _authenticationService.user!..accessToken,
+  //       'company_id': _appAccessService.appAccess!.company.companyId
+  //     });
+  //     final data = constructResponse(_response.data);
+
+  //     if (data!.containsKey('status') && data['status'] == false) {
+  //       throw data['response'] ?? data['dats'] ?? data['detail'];
+  //     }
+  //     final _typesJson = data['data'] as List;
+  //     _userStaffTypes =
+  //         _typesJson.map((json) => UserStaffData.fromJson(json)).toList();
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
 
   @override
   Future<List<HolidayData>> getHolidays() async {

@@ -1,4 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
+import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/add_attendance/add_attendance.view.dart';
@@ -269,7 +270,15 @@ class DashboardDrawer extends StatelessWidget {
                 style: TextStyle(color: Colors.red),
               ),
               onTap: () {
-                locator<DashboardModel>().logout();
+                final isConfirm = DialogRequest(
+                  title: "Are you sure you want to exit app.",
+                  type: DialogType.confirmation,
+                  dismissable: true,
+                );
+                if (isConfirm == 0) {
+                } else {
+                  locator<DashboardModel>().logout();
+                }
               },
               leading: const Icon(
                 MdiIcons.logout,

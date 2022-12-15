@@ -17,7 +17,6 @@ import 'package:flex_year_tablet/ui/personal/edit_profile/edit_profile.view.dart
 import 'package:flex_year_tablet/ui/personal/forget%20password/forget_password_view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
-import 'package:flex_year_tablet/ui/personal/login/login.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.dart';
 import 'package:flex_year_tablet/ui/personal/staffs/staffs.view.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.view.dart';

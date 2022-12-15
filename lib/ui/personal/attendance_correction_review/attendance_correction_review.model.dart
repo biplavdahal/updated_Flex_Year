@@ -14,7 +14,7 @@ class AttendanceCorrectionReviewModel extends ViewModel with SnackbarMixin {
   Future<void> init() async {
     try {
       setLoading();
-      _reviews = await _attendanceService.getAttendanceCorrectionReviews();
+      _reviews = await _attendanceService.getAttendanceCorrectionReviews(1);
       setIdle();
     } catch (e) {
       setIdle();

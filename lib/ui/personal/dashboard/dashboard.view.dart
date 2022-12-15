@@ -2,6 +2,7 @@ import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
+import 'package:flex_year_tablet/data_models/user.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.arguments.dart';
@@ -15,6 +16,7 @@ import 'package:flex_year_tablet/ui/personal/dashboard/widgets/utility_item.dart
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/widgets/holiday_item.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
+import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.dart';
@@ -241,6 +243,7 @@ class DashboardView extends StatelessWidget {
   }
 
   Widget _buildUtilities(DashboardModel model) {
+    final _user = locator<DashboardModel>().user;
     return FYSection(
       title: "Utilities",
       child: GridView.count(
@@ -251,11 +254,15 @@ class DashboardView extends StatelessWidget {
         crossAxisSpacing: 8,
         children: [
           UtilityItem(
-            title: "Leave Request",
+            title: 'leave Request',
             icon: MdiIcons.shieldAirplaneOutline,
             iconColor: Colors.orange,
-            onPressed: () {
-              model.goto(LeaveRequestView.tag);
+            onPressed: () async {
+              if (_user.role == 'staff') {
+                model.goto(LeaveRequestView.tag);
+              } else {
+                model.goto(LeaveRequestReceivedView.tag);
+              }
             },
           ),
           UtilityItem(

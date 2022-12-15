@@ -1,5 +1,6 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
+import 'package:flex_year_tablet/data_models/attendance_correction_review.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
@@ -43,7 +44,7 @@ class RequestReviewModel extends ViewModel with SnackbarMixin, DialogMixin {
   late String _attendanceId;
   late AttendanceSummaryData _summary;
   late AttendanceForgotData _attendanceForgot;
-  late AttendanceCorrectionData _attendanceCorrection;
+  late AttendanceCorrectionReviewData _attendanceCorrection;
 
   // Action
   Future<void> init(RequestReviewArguments arguments) async {
@@ -56,13 +57,14 @@ class RequestReviewModel extends ViewModel with SnackbarMixin, DialogMixin {
       _outTime = stringTimeToTimeOfDay(_summary.checkoutDatetime!);
       _attendanceId = _summary.attendanceId;
     } else if (_requestReviewType == RequestReviewType.updateReview) {
-      _attendanceCorrection = arguments.payload as AttendanceCorrectionData;
+      _attendanceCorrection =
+          arguments.payload as AttendanceCorrectionReviewData;
 
       _inTime =
           stringTimeToTimeOfDay(_attendanceCorrection.checkinDatetimeRequest!);
       _outTime =
           stringTimeToTimeOfDay(_attendanceCorrection.checkoutDatetimeRequest!);
-      _attendanceId = _attendanceCorrection.attendanceId;
+      _attendanceId = _attendanceCorrection.id;
     } else if (_requestReviewType == RequestReviewType.checkoutReview) {
       _attendanceForgot = arguments.payload as AttendanceForgotData;
 

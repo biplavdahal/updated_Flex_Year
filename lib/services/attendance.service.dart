@@ -77,7 +77,7 @@ abstract class AttendanceService {
   });
 
   /// Get all attendance correction reviews
-  Future<List<AttendanceCorrectionReviewData>> getAttendanceCorrectionReviews();
+  Future<List<AttendanceCorrectionReviewData>> getAttendanceCorrectionReviews(int id);
 
   /// Approve or decline attendance review
   Future<void> actionOnAttendanceCorrectionReview({
@@ -92,6 +92,6 @@ abstract class AttendanceService {
     String lunchInDateTime = '',
     String lunchOutDateTime = '',
     required List<String> userIds,
-    String? clientId ,
+    String? clientId,
   });
 }

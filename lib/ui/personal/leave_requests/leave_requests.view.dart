@@ -1,9 +1,13 @@
+import 'package:bestfriend/di.dart';
 import 'package:bestfriend/ui/view.dart';
+import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/widgets/leave_request_item.dart';
+import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.view.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
+import '../dashboard/dashboard.model.dart';
 
 class LeaveRequestView extends StatelessWidget {
   static String tag = 'leave-request-view';
@@ -12,6 +16,7 @@ class LeaveRequestView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _user = locator<DashboardModel>().user;
     return View<LeaveRequestModel>(
       onModelReady: (model) => model.init(),
       killViewOnClose: false,
@@ -29,14 +34,14 @@ class LeaveRequestView extends StatelessWidget {
               }
             },
           ),
-          body: Container(           
+          body: Container(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Wrap(
                   spacing: 8,
-                  children: List.generate(
+                  children: List.generate(  
                     model.tabs.length,
                     (index) => ChoiceChip(
                       label: Text(model.tabs[index]),
@@ -47,6 +52,19 @@ class LeaveRequestView extends StatelessWidget {
                 ),
                 if (model.isLoading) const FYLinearLoader(),
                 const SizedBox(height: 16),
+                if (_user.role != 'staff')
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: Switch(
+                        activeColor: AppColor.primary,
+                        onChanged: (bool value) {
+                          model.light = value;
+                          {
+                            model.initsecond();
+                          }
+                        },
+                        value: model.light,
+                      )),
                 if (!model.isLoading)
                   if (model.requestsToShow.isNotEmpty)
                     Expanded(
@@ -61,6 +79,8 @@ class LeaveRequestView extends StatelessWidget {
                                   .isBusyWidget(model.requestsToShow[index].id),
                               onRemoveTap: model.removeLeave,
                               onEditTap: model.onUpdatePressed,
+                              onApprove: model.onApprove,
+                              onDecline: model.onDecline,
                             );
                           },
                           separatorBuilder: (context, index) {
