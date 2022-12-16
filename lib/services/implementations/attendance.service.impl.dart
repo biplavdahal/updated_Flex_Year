@@ -398,7 +398,7 @@ class AttendanceServiceImpl implements AttendanceService {
         'page': 1,
         'search': {
           'correction_request': 1,
-          // FIXME:apiError
+          // FIXME: unexpected error
           // 'user_id': 1924,
           // if (_authenticationService.user!.role != 'staff') 'user_id': '',
           // if (_authenticationService.user!.role == 'staff') 'user_id': 1924
