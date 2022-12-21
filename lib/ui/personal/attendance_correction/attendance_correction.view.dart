@@ -68,7 +68,7 @@ class AttendanceCorrectionView extends StatelessWidget {
                   else
                     const Expanded(
                         child: Center(
-                      child: Text('No Attendance'),
+                      child: Text('No attandance '),
                     )),
               ],
             ),

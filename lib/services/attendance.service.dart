@@ -77,7 +77,8 @@ abstract class AttendanceService {
   });
 
   /// Get all attendance correction reviews
-  Future<List<AttendanceCorrectionReviewData>> getAttendanceCorrectionReviews(int id);
+  Future<List<AttendanceCorrectionReviewData>> getAttendanceCorrectionReviews(
+      int id);
 
   /// Approve or decline attendance review
   Future<void> actionOnAttendanceCorrectionReview({

@@ -398,10 +398,8 @@ class AttendanceServiceImpl implements AttendanceService {
         'page': 1,
         'search': {
           'correction_request': 1,
-          // FIXME: unexpected error
-          // 'user_id': 1924,
-          // if (_authenticationService.user!.role != 'staff') 'user_id': '',
-          // if (_authenticationService.user!.role == 'staff') 'user_id': 1924
+          if (_authenticationService.user!.role != 'staff') 'user_id': "",
+          if (_authenticationService.user!.role == 'staff') 'user_id': id
         }
       });
 
@@ -410,14 +408,20 @@ class AttendanceServiceImpl implements AttendanceService {
       if (_data!.containsKey("status") && _data["status"] == false) {
         throw _data["response"] ?? _data["detail"] ?? _data["data"];
       }
-
-      return (_data['data'] as List<dynamic>)
-          .map<AttendanceCorrectionReviewData>(
-            (e) => AttendanceCorrectionReviewData.fromJson(e),
-          )
-          .where((review) =>
-              review.userId != _authenticationService.user!.id.toString())
-          .toList();
+      if (_authenticationService.user!.role == 'staff') {
+        return (_data['data'] as List<dynamic>)
+            .map<AttendanceCorrectionReviewData>(
+              (e) => AttendanceCorrectionReviewData.fromJson(e),
+            )
+            .where((review) =>
+                review.userId == _authenticationService.user!.id.toString())
+            .toList();
+      } else {
+        return (_data['data'] as List<dynamic>)
+            .map<AttendanceCorrectionReviewData>(
+                ((e) => AttendanceCorrectionReviewData.fromJson(e)))
+            .toList();
+      }
     } catch (e) {
       throw apiError(e);
     }

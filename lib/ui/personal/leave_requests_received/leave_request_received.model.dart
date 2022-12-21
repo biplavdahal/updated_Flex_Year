@@ -33,7 +33,7 @@ class LeaveRequestReceivedModel extends ViewModel
   Future<void> init() async {
     try {
       setLoading();
-      _requests = await _leaveService.getAllLeaveRequests(false);
+      _requests = await _leaveService.getAllLeaveRequests();
       setIdle();
     } catch (e) {
       setIdle();

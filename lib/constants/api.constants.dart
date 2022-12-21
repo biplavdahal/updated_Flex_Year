@@ -49,6 +49,9 @@ const auHolidays = "holiday/index";
 const auStaffsList = "staff/index";
 
 const auClients = "client/index";
+//payroll's api
+const auPayrollSearch = "payroll/search";
+const auPayrollHistory = "payroll/history";
 
 //update profile
 const auUpdateProfile = "staff/upload";

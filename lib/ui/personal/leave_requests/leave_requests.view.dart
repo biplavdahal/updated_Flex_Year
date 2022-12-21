@@ -41,7 +41,7 @@ class LeaveRequestView extends StatelessWidget {
               children: [
                 Wrap(
                   spacing: 8,
-                  children: List.generate(  
+                  children: List.generate(
                     model.tabs.length,
                     (index) => ChoiceChip(
                       label: Text(model.tabs[index]),
@@ -52,19 +52,6 @@ class LeaveRequestView extends StatelessWidget {
                 ),
                 if (model.isLoading) const FYLinearLoader(),
                 const SizedBox(height: 16),
-                if (_user.role != 'staff')
-                  Align(
-                      alignment: Alignment.centerRight,
-                      child: Switch(
-                        activeColor: AppColor.primary,
-                        onChanged: (bool value) {
-                          model.light = value;
-                          {
-                            model.initsecond();
-                          }
-                        },
-                        value: model.light,
-                      )),
                 if (!model.isLoading)
                   if (model.requestsToShow.isNotEmpty)
                     Expanded(
