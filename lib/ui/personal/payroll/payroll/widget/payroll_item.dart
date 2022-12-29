@@ -2,7 +2,6 @@ import 'package:flex_year_tablet/data_models/attendance_correction_review.data.d
 import 'package:flex_year_tablet/data_models/payroll.data.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class PayrollItem extends StatelessWidget {
   final PayrollData payroll;
@@ -58,11 +57,33 @@ class PayrollItem extends StatelessWidget {
                   'Salary: ${payroll.salary}',
                   style: TextStyle(color: _statusColor[payroll.status]),
                 ),
-                title: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    payroll.firstName + " " + payroll.lastName,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                title: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          payroll.firstName + " " + payroll.lastName,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: () async{
+                          
+                        
+                          },
+                          child: const Icon(
+                            Icons.file_download,
+                            color: Colors.green,
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 children: [
@@ -84,16 +105,16 @@ class PayrollItem extends StatelessWidget {
                   const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Addition'),
+                    children: const [
+                      Text('Addition'),
                       Text("Null"),
                     ],
                   ),
                   const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Deduction'),
+                    children: const [
+                      Text('Deduction'),
                       Text("Null"),
                     ],
                   ),

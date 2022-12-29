@@ -17,7 +17,8 @@ class PayrollServiceImpl implements PayrollService {
   final _user = locator<DashboardModel>().user;
 
   @override
-  Future<List<PayrollData>> getAllPayrolls() async {
+  Future<List<PayrollData>> getAllPayrolls(
+      { required String fromDate, required String toDate}) async {
     try {
       final _response = await _apiService.post(auPayrollHistory, {
         'access_token': _authenticationService.user!.accessToken,
@@ -26,11 +27,7 @@ class PayrollServiceImpl implements PayrollService {
         'page': 1,
         'sortnane': "start_date",
         'sortno': 1,
-        'search': {
-          "staff_id": 2004,
-          'date_from': "2022-04-14",
-          'date_to': "2023-01-14"
-        }
+        'search': {"staff_id": 2004, 'date_from': fromDate, 'date_to': toDate}
       });
       final _data = constructResponse(_response.data);
       if (_data!.containsKey("status") && _data["status"] == false) {

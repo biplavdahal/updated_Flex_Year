@@ -12,7 +12,8 @@ class FlexYearApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(428, 926),
-      builder: (Widget , c) => MaterialApp(
+      // ignore: avoid_types_as_parameter_names
+      builder: (Widget, c) => MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: getThemeDataTheme(context),
         onGenerateRoute: (settings) =>

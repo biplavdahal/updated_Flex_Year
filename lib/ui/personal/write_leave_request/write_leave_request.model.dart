@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/get_userstaff.data.dart';
 import 'package:flex_year_tablet/data_models/leave_type.data.dart';
@@ -20,15 +18,10 @@ class WriteLeaveRequestModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   // Data
 
-  // List<UserStaffData> get userStaffTypes =>
-  //     locator<CompanyService>().userStaffTypes!;
-  // List<String> get userStaffLabels =>
-  //     userStaffTypes.map((e) => e.firstName).toList();
   late UserStaffData _selectedUserStaffType;
   UserStaffData get selectedUserStaffType => _selectedUserStaffType;
   String? _selectedUserStafflabel;
   String? get selectedUserStaffLevel => _selectedUserStafflabel;
-
 
   List<LeaveTypeData> get leaveTypes => locator<CompanyService>().leaveTypes!;
   List<String> get leaveTypeLabels => leaveTypes.map((e) => e.title).toList();

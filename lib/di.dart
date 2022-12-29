@@ -45,6 +45,7 @@ import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_reque
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
 import 'package:flex_year_tablet/ui/personal/login/login.model.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.model.dart';
+import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.model.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
 import 'package:flex_year_tablet/ui/personal/staffs/staffs.model.dart';
@@ -75,6 +76,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<NotificationService>(
       () => NotificationServiceImplementation());
   locator.registerLazySingleton<PayrollService>(() => PayrollServiceImpl());
+  locator.registerLazySingleton<UserService>(() => UserServiceImplementation());
 
   // Killable models
   locator.registerFactory(() => StartUpModel());
@@ -98,11 +100,14 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => AttendanceModel());
   locator.registerFactory(() => ChatContactsModel());
   locator.registerFactory(() => ChatsModel());
-  locator.registerFactory(() => EditProfileViewModel());
+
   locator.registerFactory(() => ChangePasswordViewModel());
   locator.registerFactory(() => ForgetPasswordViewModel());
   locator.registerFactory(() => LeaveRequestModel());
   locator.registerFactory(() => PayrollModel());
+
+  locator.registerFactory(() => EditProfileViewModel());
+  locator.registerFactory(() => PayrollFilterModel());
 
   // Unkillable models
 }

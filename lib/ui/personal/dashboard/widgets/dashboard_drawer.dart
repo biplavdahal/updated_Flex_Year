@@ -114,7 +114,7 @@ class DashboardDrawer extends StatelessWidget {
                 style: TextStyle(color: AppColor.primary),
               ),
               onTap: () {
-                locator<DashboardModel>().goto(payrollView.tag);
+                locator<DashboardModel>().goto(PayrollView.tag);
               },
               leading: const Icon(
                 MdiIcons.cash,
