@@ -15,7 +15,6 @@ class AttendanceCorrectionModel extends ViewModel
 
   String _selectedTab = "1";
   String get selectedTab => _selectedTab;
-  
 
   int get id => _user.id;
 
@@ -30,7 +29,7 @@ class AttendanceCorrectionModel extends ViewModel
       .where(
           (correction) => _status[correction.correctionStatus] == _selectedTab)
       .toList();
-      
+
   List<AttendanceCorrectionReviewData> get corrections => _corrections;
 
   // Actions

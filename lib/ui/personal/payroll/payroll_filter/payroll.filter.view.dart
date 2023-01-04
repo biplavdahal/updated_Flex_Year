@@ -2,8 +2,12 @@ import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/widget/payroll_item.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.argument.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.model.dart';
+import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../widgets/fy_date_time_field.widget.dart';
+import '../../../../widgets/fy_dropdown.widget.dart';
 
 class PayrollFilterView extends StatelessWidget {
   static String tag = 'payroll-filter-view';
@@ -24,18 +28,31 @@ class PayrollFilterView extends StatelessWidget {
           appBar: AppBar(
             title: const Text('Payroll Search'),
           ),
-          body: Container(
+          body: Padding(
             padding: const EdgeInsets.all(16),
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildTopInfoBar(model),
-                const SizedBox(
-                  height: 16,
+            child: SingleChildScrollView(
+              child: Form(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    _buildFieldForMonthlyReportFilter(model),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    _buildFieldForWeeklyReportFilter(model),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    FYPrimaryButton(
+                      label: "View Payroll",
+                      onPressed: model.onViewPayrollPressed,
+                    )
+                  ],
                 ),
-                _buildData(model),
-              ],
+              ),
             ),
           ),
         );
@@ -43,37 +60,38 @@ class PayrollFilterView extends StatelessWidget {
     );
   }
 
-  Widget _buildTopInfoBar(PayrollFilterModel model) {
-    return const SizedBox(
-        child: Card(
-      color: Colors.white10,
-      child: Padding(
-        padding: EdgeInsets.all(5),
-        child: Text(
-          "from:  to: ",
-        ),
-      ),
-    ));
+  Widget _buildFieldForMonthlyReportFilter(PayrollFilterModel model) {
+    return FYDropdown<String>(
+      items: model.months,
+      labels: model.months,
+      value: model.selectedMonth,
+      title: 'Month',
+      onChanged: (value) => model.selectedMonth = value!,
+    );
   }
 
-  Widget _buildData(PayrollFilterModel model) {
-    if (model.isLoading) {
-      return const FYLinearLoader();
-    }
-    if (model.payroll.isEmpty) {
-      return const Expanded(
-          child: Center(
-        child: Text('No Payroll Found'),
-      ));
-    }
-    return Expanded(
-        child: ListView.builder(
-      physics: const AlwaysScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        final _payroll = model.payroll[index];
-        return PayrollItem(payroll: _payroll);
-      },
-      itemCount: model.payroll.length,
-    ));
+  Widget _buildFieldForWeeklyReportFilter(PayrollFilterModel model) {
+    return Row(
+      children: [
+        Expanded(
+          child: FYDateField(
+            title: "Date From",
+            onChanged: (value) => model.dateFrom = value!,
+            value: model.dateFrom,
+            firstDate: DateTime.now().subtract(
+              const Duration(days: 365 * 7),
+            ),
+            lastDate: DateTime.now(),
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: FYDateField(
+            title: "Date To",
+            value: model.dateTo,
+          ),
+        ),
+      ],
+    );
   }
 }

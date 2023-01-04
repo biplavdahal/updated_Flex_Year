@@ -5,5 +5,9 @@ abstract class UserService {
   Future<void> updateProfile(StaffData data);
 
   /// Change password
-  Future<void> changePassword(String password);
+  Future<void> changePassword({
+    required String oldPassword,
+    required String verifyPassword,
+    required String newPassword,
+  });
 }

@@ -8,10 +8,12 @@ class FYDateField extends StatelessWidget {
   final ValueSetter<DateTime?>? onChanged;
   final DateTime? firstDate;
   final DateTime? lastDate;
+  final Icon? icon;
 
   const FYDateField({
     Key? key,
     this.value,
+    this.icon,
     this.title,
     this.onChanged,
     this.firstDate,
@@ -39,23 +41,29 @@ class FYDateField extends StatelessWidget {
           child: InputDecorator(
             decoration: InputDecoration(
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(7.0),
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Text(
-                value != null
-                    ? formattedDate(value.toString())
-                    : "Select date...",
-                style: value == null
-                    ? const TextStyle(
-                        color: Colors.grey,
-                      )
-                    : null,
-              ),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    value != null
+                        ? formattedDate(value.toString())
+                        : "Select date...",
+                    style: value == null
+                        ? const TextStyle(
+                            color: Colors.grey,
+                          )
+                        : null,
+                  ),
+                ),
+              ],
             ),
+            
           ),
+          
         ),
       ],
     );

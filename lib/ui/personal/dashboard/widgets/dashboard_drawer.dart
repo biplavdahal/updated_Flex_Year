@@ -10,6 +10,8 @@ import 'package:flex_year_tablet/ui/personal/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.view.dart';
+import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.argument.dart';
+import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.view.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -114,7 +116,8 @@ class DashboardDrawer extends StatelessWidget {
                 style: TextStyle(color: AppColor.primary),
               ),
               onTap: () {
-                locator<DashboardModel>().goto(PayrollView.tag);
+                locator<DashboardModel>().goto(PayrollFilterView.tag,
+                    arguments: PayrollFilterArguments(returnBack: false));
               },
               leading: const Icon(
                 MdiIcons.cash,

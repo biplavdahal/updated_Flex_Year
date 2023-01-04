@@ -1,9 +1,7 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:flex_year_tablet/data_models/payroll.data.dart';
 
 class PayrollFilterArguments extends Arguments {
-  final String fromdate;
-  final String todate;
+final bool returnBack;
 
-  PayrollFilterArguments({required this.fromdate, required this.todate});
+  PayrollFilterArguments({ required this.returnBack });
 }

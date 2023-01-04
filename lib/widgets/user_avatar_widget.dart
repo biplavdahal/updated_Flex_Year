@@ -1,10 +1,7 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
 import '../data_models/staff.data.dart';
-import '../data_models/user.data.dart';
 import '../theme.dart';
 
 class UserAvatar extends StatelessWidget {

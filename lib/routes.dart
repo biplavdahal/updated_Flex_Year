@@ -60,6 +60,6 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
       AttendanceView.tag: const AttendanceView(),
       ChatContactsView.tag: const ChatContactsView(),
       ChatsView.tag: ChatsView(settings.arguments as Arguments?),
-      PayrollView.tag: const PayrollView(),
+      PayrollView.tag: PayrollView(settings.arguments as Arguments?),
       PayrollFilterView.tag: PayrollFilterView(settings.arguments as Arguments?)
     };

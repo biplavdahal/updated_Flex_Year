@@ -1,5 +1,7 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:bestfriend/ui/view.dart';
+import 'package:flex_year_tablet/theme.dart';
+import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.argument.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.model.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/widget/payroll_item.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
@@ -9,185 +11,80 @@ import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 
-class PayrollView extends StatefulWidget {
+class PayrollView extends StatelessWidget {
   static String tag = 'payroll-view';
 
-  const PayrollView({Key? key}) : super(key: key);
+  final Arguments? arguments;
 
-  @override
-  State<PayrollView> createState() => _PayrollViewState();
-}
-
-class _PayrollViewState extends State<PayrollView> {
-  String _data = "sd";
-  void _updateData(String newData) {
-    setState(() {
-      _data = newData;
-    });
-  }
+  const PayrollView(this.arguments, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return View<PayrollModel>(
-      onModelReady: (model) => model.init(),
-      killViewOnClose: false,
+      onModelReady: (model) => model.init(arguments as PayrollArgument),
       builder: (ctx, model, child) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Payroll'),
-          ),
-          floatingActionButton: FloatingActionButton(
-            child: const Icon(
-              MdiIcons.filter,
-              semanticLabel: "Filter",
+            appBar: AppBar(
+              title: const Text('Payroll Report'),
             ),
-            tooltip: "Filter",
-            onPressed: () async {
-              showModalBottomSheet(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+            floatingActionButton: model.isLoading
+                ? null
+                : FloatingActionButton(
+                    onPressed: model.onSubmitPressed,
+                    child: const Icon(Icons.search),
+                    backgroundColor: AppColor.accent,
                   ),
-                  context: context,
-                  builder: (BuildContext context) {
-                    return SizedBox(
-                        height: MediaQuery.of(context).size.height / 3,
-                        child: SingleChildScrollView(
-                          child: Form(
-                            key: model.formKey,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            // _buildFieldForPayrollMonth(model),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                  child: FYDateField(
-                                                    title: 'Date From',
-                                                    onChanged: (value) =>
-                                                        model.datefrom = value!,
-                                                    value: model.datefrom,
-                                                    firstDate: DateTime.now()
-                                                        .subtract(
-                                                            const Duration(
-                                                                days:
-                                                                    365 * 32)),
-                                                    lastDate: DateTime.now(),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 16,
-                                                ),
-                                                Expanded(
-                                                  child: FYDateField(
-                                                    title: "Date To",
-                                                    value: model.dateUpto,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              children: [
-                                                FYPrimaryButton(
-                                                  label: "  CANCEL  ",
-                                                  backgroundColor:
-                                                      Colors.grey.shade600,
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                ),
-                                                const SizedBox(
-                                                  width: 20,
-                                                ),
-                                                FYPrimaryButton(
-                                                    label: "  SEARCH  ",
-                                                    onPressed:
-                                                        model.onSubmitPressed),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ));
-                  });
-            },
-          ),
-          body: model.isLoading
-              ? const FYLinearLoader()
-              : Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Expanded(
-                    child: ListView.builder(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        final _payroll = model.payroll[index];
-
-                        return PayrollItem(
-                          payroll: _payroll,
-                        );
-                      },
-                      itemCount: model.payroll.length,
-                    ),
+            body: Container(
+              padding: const EdgeInsets.all(16),
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildTopInfoBar(model),
+                  const SizedBox(
+                    height: 16,
                   ),
-                ),
-        );
+                  _buildData(model)
+                ],
+              ),
+            ));
       },
     );
   }
 
-  Widget _buildFieldForPayrollMonth(PayrollModel model) {
-    return FYDropdown<String>(
-      items: model.months,
-      labels: model.months,
-      value: model.selectedMonth.toString(),
-      title: 'Month',
-      onChanged: (value) => model.selectedMonth = value!,
+  Widget _buildTopInfoBar(PayrollModel model) {
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          if (model.payroll.isNotEmpty)
+            Text(
+              'Payroll report of ${getMonthStringFromDateString(model.searchParams['date_from'])}.',
+              style: const TextStyle(color: AppColor.secondaryTextColor),
+            ),
+        ],
+      ),
     );
   }
 
-  Widget _buildFieldForPayrollDate(PayrollModel model) {
-    return Row(
-      children: [
-        Expanded(
-          child: FYDateField(
-            title: 'Date From',
-            onChanged: (value) => model.datefrom = value!,
-            value: model.datefrom,
-            firstDate: DateTime.now().subtract(const Duration(days: 365 * 32)),
-            lastDate: DateTime.now(),
-          ),
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        Expanded(
-          child: FYDateField(
-            title: "Date To",
-            value: model.dateUpto,
-          ),
-        )
-      ],
-    );
+  Widget _buildData(PayrollModel model) {
+    if (model.isLoading) {
+      return const FYLinearLoader();
+    } else if (model.payroll.isNotEmpty) {
+      return Expanded(
+          child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (context, index) {
+          final _payroll = model.payroll[index];
+          return PayrollItem(payroll: _payroll);
+        },
+        itemCount: model.payroll.length,
+      ));
+    } else {
+      return const Expanded(child: Center(child: Text("No payroll found! ")));
+    }
   }
 }
