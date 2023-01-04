@@ -17,6 +17,8 @@ import 'package:flex_year_tablet/ui/personal/edit_profile/edit_profile.view.dart
 import 'package:flex_year_tablet/ui/personal/forget%20password/forget_password_view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
+import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.view.dart';
+import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.dart';
 import 'package:flex_year_tablet/ui/personal/staffs/staffs.view.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.view.dart';
@@ -58,4 +60,6 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
       AttendanceView.tag: const AttendanceView(),
       ChatContactsView.tag: const ChatContactsView(),
       ChatsView.tag: ChatsView(settings.arguments as Arguments?),
+      PayrollView.tag: PayrollView(settings.arguments as Arguments?),
+      PayrollFilterView.tag: PayrollFilterView(settings.arguments as Arguments?)
     };

@@ -18,7 +18,7 @@ class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
 
   String _selectedTab = "0";
   String get selectedTab => _selectedTab;
-  
+
   set selectedTab(String tab) {
     _selectedTab = tab;
     setIdle();
@@ -36,11 +36,8 @@ class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
   Future<void> init() async {
     try {
       setLoading();
-      if (_user.role == 'staff') {
-        _requests = await _leaveService.getAllLeaveRequests();
-      } else {
-        _requests = await _leaveService.getAllLeaveRequests(false);
-      }
+
+      _requests = await _leaveService.getAllLeaveRequests();
 
       setIdle();
     } catch (e) {

@@ -258,11 +258,7 @@ class DashboardView extends StatelessWidget {
             icon: MdiIcons.shieldAirplaneOutline,
             iconColor: Colors.orange,
             onPressed: () async {
-              if (_user.role == 'staff') {
-                model.goto(LeaveRequestView.tag);
-              } else {
-                model.goto(LeaveRequestReceivedView.tag);
-              }
+              model.goto(LeaveRequestView.tag);
             },
           ),
           UtilityItem(

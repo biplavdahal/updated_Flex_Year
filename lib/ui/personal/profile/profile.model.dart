@@ -1,8 +1,8 @@
+
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/user.data.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/ui/personal/change_password/change_password_view.dart';
-
 import '../edit_profile/edit_profile.view.dart';
 
 class ProfileModel extends ViewModel {

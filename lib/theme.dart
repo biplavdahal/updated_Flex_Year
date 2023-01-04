@@ -55,7 +55,7 @@ getThemeDataTheme(BuildContext context) {
           fontSize: 14,
           fontWeight: FontWeight.bold,
         ),
-        side: const BorderSide(color: AppColor.primary, width: 1),
+        side: const BorderSide(color: Color.fromARGB(255, 3, 100, 142), width: 1),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(

@@ -61,7 +61,7 @@ class LeaveServiceImpl implements LeaveService {
                 json.containsKey('staffname') && json['staffname'] != null)
             .map<LeaveRequestData>((item) => LeaveRequestData.fromJson(item))
             .where((item) =>
-                item.staffId != _authenticationService.user!.id.toString())
+                item.staffId == _authenticationService.user!.id.toString())
             .toList();
       }
 

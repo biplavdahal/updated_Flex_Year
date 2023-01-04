@@ -91,6 +91,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     }).catchError((e) {
       // snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     });
+
     try {
       const FYLinearLoader();
       HolidaysModel.holidaydata();
@@ -185,6 +186,34 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
         Fluttertoast.showToast(
             msg: 'You have successfully lunchout',
             backgroundColor: Colors.green);
+      }
+    } catch (e) {
+      dialog.hideDialog();
+      snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
+    }
+  }
+
+  void moreActions(String action) {
+    switch (action) {
+      case "logout":
+        _logout();
+    }
+  }
+
+  Future<void> _logout() async {
+    try {
+      final isConfirm = await dialog.showDialog(DialogRequest(
+        type: DialogType.confirmation,
+        title: "Are you sure you want to logout?",
+        dismissable: true,
+      ));
+      if (isConfirm?.result != null) {
+        dialog.showDialog(DialogRequest(
+            type: DialogType.progress, title: "Logging you out..."));
+        await locator<AuthenticationService>().logout();
+        _currentDateTimeTimer?.cancel();
+        dialog.hideDialog();
+        gotoAndClear(LoginView.tag);
       }
     } catch (e) {
       dialog.hideDialog();

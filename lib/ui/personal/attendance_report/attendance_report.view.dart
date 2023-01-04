@@ -32,10 +32,10 @@ class AttendanceReportView extends StatelessWidget {
               model.filterType == AttendanceReportFilterType.daily ||
                       model.filterType ==
                           AttendanceReportFilterType.oneDayReport
-                  ? 'One Day Report'
+                  ? 'One Days Report'
                   : model.filterType == AttendanceReportFilterType.weekly
                       ? 'Weekly Report'
-                      : 'Monthly Report',
+                      : 'Monthlye Report',
             ),
             actions: [
               IconButton(

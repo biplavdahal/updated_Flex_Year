@@ -13,10 +13,12 @@ import 'package:flex_year_tablet/services/implementations/chat.service.impl.dart
 import 'package:flex_year_tablet/services/implementations/company.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/leave.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/notification.service.impl.dart';
+import 'package:flex_year_tablet/services/implementations/payroll.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/tablet.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/user_service_impl.dart';
 import 'package:flex_year_tablet/services/leave.service.dart';
 import 'package:flex_year_tablet/services/notification.service.dart';
+import 'package:flex_year_tablet/services/payroll.service.dart';
 import 'package:flex_year_tablet/services/tablet.service.dart';
 import 'package:flex_year_tablet/services/user_service.dart';
 import 'package:flex_year_tablet/ui/frontdesk/attendance/attendance.model.dart';
@@ -42,6 +44,8 @@ import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
 import 'package:flex_year_tablet/ui/personal/login/login.model.dart';
+import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.model.dart';
+import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.model.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
 import 'package:flex_year_tablet/ui/personal/staffs/staffs.model.dart';
@@ -71,6 +75,8 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<ChatService>(() => ChatServiceImpl());
   locator.registerLazySingleton<NotificationService>(
       () => NotificationServiceImplementation());
+  locator.registerLazySingleton<PayrollService>(() => PayrollServiceImpl());
+  locator.registerLazySingleton<UserService>(() => UserServiceImplementation());
 
   // Killable models
   locator.registerFactory(() => StartUpModel());
@@ -94,10 +100,14 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => AttendanceModel());
   locator.registerFactory(() => ChatContactsModel());
   locator.registerFactory(() => ChatsModel());
-  locator.registerFactory(() => EditProfileViewModel());
+
   locator.registerFactory(() => ChangePasswordViewModel());
   locator.registerFactory(() => ForgetPasswordViewModel());
   locator.registerFactory(() => LeaveRequestModel());
+  locator.registerFactory(() => PayrollModel());
+
+  locator.registerFactory(() => EditProfileViewModel());
+  locator.registerFactory(() => PayrollFilterModel());
 
   // Unkillable models
 }

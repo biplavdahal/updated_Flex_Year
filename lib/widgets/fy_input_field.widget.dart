@@ -9,6 +9,7 @@ class FYInputField extends StatefulWidget {
   final String? Function(String?)? validator;
   final bool isPassword;
   final String title;
+  final VoidCallback? onTap;
 
   const FYInputField(
       {Key? key,
@@ -19,6 +20,7 @@ class FYInputField extends StatefulWidget {
       this.obscureText = false,
       required this.title,
       this.validator,
+      this.onTap,
       this.isPassword = false})
       : super(key: key);
 
