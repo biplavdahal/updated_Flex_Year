@@ -6,6 +6,7 @@ import 'package:flex_year_tablet/config.dart';
 const auBaseURL = cpApiBaseURL;
 // const auBaseURL = "https://flexsaas.flexyear.com/";
 const auApiBaseUrl = "${auBaseURL}flexyear_api/api/web/v1/";
+const auImageBaseUrl = "$auBaseURL/public/images/";
 
 /// --------------------------------------------------
 /// ---------------  API Endpoints -------------------

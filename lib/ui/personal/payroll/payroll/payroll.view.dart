@@ -84,7 +84,13 @@ class PayrollView extends StatelessWidget {
         itemCount: model.payroll.length,
       ));
     } else {
-      return const Expanded(child: Center(child: Text("No payroll found! ")));
+      return Expanded(
+          child: Center(
+        child: Image.asset(
+          "assets/images/oops.png",
+          width: 300,
+        ),
+      ));
     }
   }
 }

@@ -7,7 +7,7 @@ import '../../../services/authentication.service.dart';
 import '../../../theme.dart';
 import '../../../widgets/fy_button.widget.dart';
 import '../../../widgets/fy_input_field.widget.dart';
-import '../../../widgets/user_avatar_widget.dart';
+import '../../../widgets/fy_user_avatar_widget.dart';
 import 'edit_profile.viewmodel.dart';
 
 class EditProfileView extends StatelessWidget {

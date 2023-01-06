@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
+import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/data_models/company.data.dart';
 import 'package:flex_year_tablet/data_models/company_logo.data.dart';
@@ -34,6 +35,9 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   late AttendanceStatusData _attendanceStatus;
   AttendanceStatusData get attendanceStatus => _attendanceStatus;
+
+   AttendanceSummaryData? _attendanceData;
+  AttendanceSummaryData? get attendanceData => _attendanceData;
 
   AttendanceForgotData? _attendanceForgot;
   AttendanceForgotData? get attendanceForgot => _attendanceForgot;
