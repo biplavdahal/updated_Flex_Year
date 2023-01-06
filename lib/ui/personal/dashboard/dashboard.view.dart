@@ -192,7 +192,7 @@ class DashboardView extends StatelessWidget {
                   crossAxisSpacing: 10,
                   children: [
                     AttendanceButton(
-                      titles: formattedTime(model.currentDateTime),
+                      titles: '',
                       title: "Check in",
                       icon: MdiIcons.clockStart,
                       color: Colors.green,
@@ -203,7 +203,7 @@ class DashboardView extends StatelessWidget {
                           : null,
                     ),
                     AttendanceButton(
-                      titles: formattedTime(model.currentDateTime),
+                      titles: "",
                       title: "Check Out",
                       icon: MdiIcons.clockEnd,
                       color: Colors.red,
@@ -214,7 +214,7 @@ class DashboardView extends StatelessWidget {
                           : null,
                     ),
                     AttendanceButton(
-                      titles: formattedTime(model.currentDateTime),
+                      titles: "",
                       title: "Lunch In",
                       icon: MdiIcons.food,
                       color: AppColor.primary,
@@ -225,7 +225,7 @@ class DashboardView extends StatelessWidget {
                           : null,
                     ),
                     AttendanceButton(
-                      titles: formattedTime(model.currentDateTime),
+                      titles: "",
                       title: "Lunch Out",
                       icon: MdiIcons.foodOff,
                       color: AppColor.primary,

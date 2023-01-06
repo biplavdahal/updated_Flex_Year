@@ -1,14 +1,13 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/staff.data.dart';
 import 'package:flutter/material.dart';
-import 'package:flex_year_tablet/data_models/user.data.dart';
 import '../../../../services/authentication.service.dart';
-import '../../../../widgets/user_avatar_widget.dart';
+import '../../../../widgets/fy_user_avatar_widget.dart';
 
 class UserProfileHeader extends StatelessWidget {
-  const UserProfileHeader({Key? key}) : super(key: key);
+   UserProfileHeader({Key? key}) : super(key: key);
 
-  StaffData get _user => locator<AuthenticationService>().user!.staff;
+ final StaffData  _user = locator<AuthenticationService>().user!.staff;
 
   @override
   Widget build(BuildContext context) {

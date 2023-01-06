@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flutter/material.dart';
 import '../data_models/staff.data.dart';
 import '../theme.dart';
@@ -47,14 +48,14 @@ class UserAvatar extends StatelessWidget {
     }
 
     return CachedNetworkImage(
-      imageUrl: user.staffPhoto!,
+      imageUrl: auImageBaseUrl + user.staffPhoto!,
       errorWidget: (context, url, error) => CircleAvatar(
         radius: size + borderWidth,
         backgroundColor: borderColor,
         child: CircleAvatar(
           radius: size,
           backgroundColor: AppColor.primary.withOpacity(0.5),
-          backgroundImage: const AssetImage("assets/images/logo.png"),
+          backgroundImage: const AssetImage("assets/images/avatar.png"),
         ),
       ),
       imageBuilder: (context, imageProvider) {

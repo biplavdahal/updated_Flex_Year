@@ -14,42 +14,15 @@ import 'package:flutter/material.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 
-  await AwesomeNotifications().createNotification(
-    content: NotificationContent(
-      id: 1,
-      channelKey: 'channel1',
-      title: message.notification?.title,
-      body: message.notification?.body,
-    ),
-  );
-  if (message.data.containsKey('access_token')) {
-    AwesomeNotifications()
-        .initialize('assets/images/flex_year_login_image.png', [
-      NotificationChannel(
-          channelKey: 'Notification',
-          channelName: 'notification',
-          channelDescription: "You have successfully login FlexYear",
-          playSound: true,
-          enableLights: true,
-          enableVibration: true)
-    ]);
-    await AwesomeNotifications().cancelAll();
-    await AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: 1,
-        channelKey: 'flex year',
-        title: "you have successfully login",
-        body: 'test',
-      ),
-    );
-  }
-  debugPrint("--------------haldling a backgroung message----------- ");
+  await AwesomeNotifications().createNotificationFromJsonData(message.data);
 }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await setupLocator();
   await locator<SharedPreferenceService>()();
