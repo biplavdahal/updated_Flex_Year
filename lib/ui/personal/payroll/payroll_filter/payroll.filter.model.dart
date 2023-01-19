@@ -20,6 +20,21 @@ class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
   List<PayrollData> _payrolls = [];
   List<PayrollData> get payroll => _payrolls;
 
+  List<String> get nepaliMonths => [
+        "बैशाख",
+        "जेष्ठ",
+        "आषाढ़",
+        "श्रावण",
+        "भाद्र",
+        "आश्विन",
+        "कार्तिक",
+        "मंसिर",
+        "पौष",
+        "माघ",
+        "फाल्गुन",
+        "चैत्र",
+      ];
+
   List<String> get months => [
         "January",
         "February",

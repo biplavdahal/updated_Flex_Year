@@ -1,28 +1,14 @@
-import 'dart:math';
 
 import 'package:bestfriend/bestfriend.dart';
-import 'package:dio/dio.dart';
-import 'package:flex_year_tablet/constants/prefs.constants.dart';
-import 'package:flex_year_tablet/helper/api_error.helper.dart';
-import 'package:flex_year_tablet/helper/api_response.helper.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
-import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/services/user_service.dart';
 import 'package:flutter/material.dart';
-
-import '../../../data_models/error_data.dart';
-import '../dashboard/dashboard.model.dart';
-import '../login/login.view.dart';
 
 class ChangePasswordViewModel extends ViewModel
     with DialogMixin, SnackbarMixin {
   //Services
   final UserService _userService = locator<UserService>();
-  final AuthenticationService _authenticationService =
-      locator<AuthenticationService>();
-  final SharedPreferenceService _sharedPreferenceService =
-      locator<SharedPreferenceService>();
 
   //UI components
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
