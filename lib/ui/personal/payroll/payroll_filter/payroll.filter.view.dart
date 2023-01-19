@@ -38,6 +38,8 @@ class PayrollFilterView extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
+                    const Align(
+                        alignment: Alignment.topRight, child: Text("Nepali")),
                     _buildFieldForMonthlyReportFilter(model),
                     const SizedBox(
                       height: 10,

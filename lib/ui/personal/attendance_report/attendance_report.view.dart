@@ -2,6 +2,7 @@ import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report/attandance_report.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report/attendance_report.arguments.dart';
+import 'package:flex_year_tablet/ui/personal/attendance_report/widgets/monthly_horizontal_report_item.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report/widgets/monthly_report_item.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report/widgets/one_day_report_item.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report/widgets/weekly_report_item.dart';
@@ -35,7 +36,7 @@ class AttendanceReportView extends StatelessWidget {
                   ? 'One Days Report'
                   : model.filterType == AttendanceReportFilterType.weekly
                       ? 'Weekly Report'
-                      : 'Monthlye Report',
+                      : 'Monthly Report',
             ),
             actions: [
               IconButton(
@@ -52,6 +53,8 @@ class AttendanceReportView extends StatelessWidget {
               children: [
                 _buildTopInfoBar(model),
                 const SizedBox(height: 16),
+                if (model.filterType == AttendanceReportFilterType.monthly)
+                  _buildHorizontalData(model),
                 _buildData(model),
               ],
             ),
@@ -134,11 +137,38 @@ class AttendanceReportView extends StatelessWidget {
     return Container();
   }
 
-  Widget _buildData(AttendanceReportModel model) {
+  Widget _buildHorizontalData(AttendanceReportModel model) {
     if (model.isLoading) {
       return const FYLinearLoader();
     }
+    if (model.filterType == AttendanceReportFilterType.monthly) {
+      return Expanded(
+        child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: model.monthlyReport.length,
+          itemBuilder: (context, index) {
+            final _report = model.monthlyReport[index];
 
+            return MonthlyHorizontalReportItem(
+              _report,
+              onTap: () => model.goto(
+                AttendanceSummaryView.tag,
+                arguments: AttendanceSummaryArguments(
+                  date: _report.date,
+                  clientId: model.searchParams['client_id'],
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    }
+
+    return const SizedBox();
+  }
+
+  Widget _buildData(AttendanceReportModel model) {
     if (model.filterType == AttendanceReportFilterType.monthly) {
       return Expanded(
         child: ListView.builder(
