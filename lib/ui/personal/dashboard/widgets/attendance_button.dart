@@ -1,9 +1,6 @@
-import 'dart:async';
-
-import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:intl/intl.dart';
 
 class AttendanceButton extends StatelessWidget {
   final IconData icon;
@@ -25,8 +22,6 @@ class AttendanceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var now = DateTime.now();
-    now = DateTime(now.hour, now.minute, now.second);
     return GestureDetector(
       child: Opacity(
         opacity: onPressed == null ? 0.3 : 1,

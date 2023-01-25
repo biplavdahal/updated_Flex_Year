@@ -12,6 +12,7 @@ class AppColor {
   static const Color primaryButtonTextColor = Color(0xFFFFFFFF);
 }
 
+
 getThemeDataTheme(BuildContext context) {
   return ThemeData(
     scaffoldBackgroundColor: AppColor.scaffold,

@@ -1,9 +1,7 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:flex_year_tablet/ui/personal/payroll/payroll/widget/payroll_item.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.argument.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.model.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
-import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../widgets/fy_date_time_field.widget.dart';
@@ -38,8 +36,6 @@ class PayrollFilterView extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Align(
-                        alignment: Alignment.topRight, child: Text("Nepali")),
                     _buildFieldForMonthlyReportFilter(model),
                     const SizedBox(
                       height: 10,
