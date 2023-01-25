@@ -14,6 +14,9 @@ import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../../widgets/fy_horizontal_list_view.widget.dart';
+import '../../../widgets/fy_section.widget.dart';
+
 class AttendanceReportView extends StatelessWidget {
   static String tag = 'attendance-report-view';
 
@@ -33,7 +36,7 @@ class AttendanceReportView extends StatelessWidget {
               model.filterType == AttendanceReportFilterType.daily ||
                       model.filterType ==
                           AttendanceReportFilterType.oneDayReport
-                  ? 'One Days Report'
+                  ? 'One Day Report'
                   : model.filterType == AttendanceReportFilterType.weekly
                       ? 'Weekly Report'
                       : 'Monthly Report',
@@ -52,7 +55,9 @@ class AttendanceReportView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildTopInfoBar(model),
-                const SizedBox(height: 16),
+                const SizedBox(
+                  height: 5,
+                ),
                 if (model.filterType == AttendanceReportFilterType.monthly)
                   _buildHorizontalData(model),
                 _buildData(model),
@@ -142,14 +147,15 @@ class AttendanceReportView extends StatelessWidget {
       return const FYLinearLoader();
     }
     if (model.filterType == AttendanceReportFilterType.monthly) {
-      return Expanded(
-        child: ListView.builder(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
+      return FYSection(
+        child: HorizontalListView(
+          fillerCount: 0,
           itemCount: model.monthlyReport.length,
+          seprator: (context, index) => const SizedBox(
+            width: 5,
+          ),
           itemBuilder: (context, index) {
             final _report = model.monthlyReport[index];
-
             return MonthlyHorizontalReportItem(
               _report,
               onTap: () => model.goto(
@@ -193,6 +199,9 @@ class AttendanceReportView extends StatelessWidget {
     }
 
     if (model.filterType == AttendanceReportFilterType.weekly) {
+      if (model.isLoading) {
+        return const FYLinearLoader();
+      }
       return Expanded(
         child: ListView.builder(
           itemBuilder: (context, index) {
@@ -206,6 +215,9 @@ class AttendanceReportView extends StatelessWidget {
     }
 
     if (model.filterType == AttendanceReportFilterType.daily) {
+      if (model.isLoading) {
+        return const FYLinearLoader();
+      }
       return Expanded(
         child: ListView.builder(
           physics: const BouncingScrollPhysics(),

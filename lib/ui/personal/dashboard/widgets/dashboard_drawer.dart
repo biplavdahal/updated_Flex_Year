@@ -393,6 +393,19 @@ class DashboardDrawer extends StatelessWidget {
                 MdiIcons.logout,
                 color: Colors.red,
               ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+
+            const ListTile(
+              title: Text(
+                '       © 2023, All Rights Reserved | Design by Bent Ray Technologies',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 10,
+                ),
+              ),
             )
           ],
         ),
