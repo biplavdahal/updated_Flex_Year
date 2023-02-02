@@ -50,9 +50,12 @@ const auHolidays = "holiday/index";
 const auStaffsList = "staff/index";
 
 const auClients = "client/index";
-//payroll's api
+//payroll's API
 const auPayrollSearch = "payroll/search";
 const auPayrollHistory = "payroll/history";
+
+//Notification's API
+const auStaffDashboard = "site/staffdashboard";
 
 //update profile
 const auUpdateProfile = "staff/upload";
