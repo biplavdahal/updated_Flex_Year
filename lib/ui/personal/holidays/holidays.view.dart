@@ -3,6 +3,7 @@ import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/widgets/holiday_item.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class HolidaysView extends StatelessWidget {
   static String tag = 'holidays-view';
@@ -27,12 +28,19 @@ class HolidaysView extends StatelessWidget {
                     child: ListView.builder(
                       physics: const AlwaysScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        final _holiday = HolidaysModel.holiday[index];
+                        final _holiday = HolidaysModel.filterHoliday[index];
+                        DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+                        DateTime date = dateFormat.parse(_holiday.date);
+
+                        if (date.compareTo(DateTime.now()) < 0) {
+                          return Container();
+                        }
+
                         return HolidayItem(
                           holiday: _holiday,
                         );
                       },
-                      itemCount: HolidaysModel.holiday.length,
+                      itemCount: HolidaysModel.filterHoliday.length,
                     ),
                   ),
                 ),

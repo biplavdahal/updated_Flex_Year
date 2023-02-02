@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
@@ -36,7 +37,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   late AttendanceStatusData _attendanceStatus;
   AttendanceStatusData get attendanceStatus => _attendanceStatus;
 
-   AttendanceSummaryData? _attendanceData;
+  AttendanceSummaryData? _attendanceData;
   AttendanceSummaryData? get attendanceData => _attendanceData;
 
   AttendanceForgotData? _attendanceForgot;
@@ -194,6 +195,20 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     } catch (e) {
       dialog.hideDialog();
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
+    }
+    if (attendanceForgot == null) {
+      AwesomeNotifications()
+          .initialize('resource://drawable/ic_notification_logo', [
+        NotificationChannel(
+          channelKey: ' flex message',
+          channelName: 'Forget Checkout??',
+          channelDescription:
+              "This channle contail all of the notification related to forget checkout.",
+          playSound: true,
+          enableLights: true,
+          enableVibration: true,
+        )
+      ]);
     }
   }
 

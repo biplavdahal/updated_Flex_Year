@@ -44,6 +44,7 @@ import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
 import 'package:flex_year_tablet/ui/personal/login/login.model.dart';
+import 'package:flex_year_tablet/ui/personal/notice/notice.viewmodel.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.model.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.model.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.model.dart';
@@ -78,6 +79,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<PayrollService>(() => PayrollServiceImpl());
   locator.registerLazySingleton<UserService>(() => UserServiceImplementation());
 
+
   // Killable models
   locator.registerFactory(() => StartUpModel());
   locator.registerFactory(() => LoginModel());
@@ -108,6 +110,8 @@ Future<void> setupLocator() async {
 
   locator.registerFactory(() => EditProfileViewModel());
   locator.registerFactory(() => PayrollFilterModel());
+
+  locator.registerFactory(() => NoticeModel());
 
   // Unkillable models
 }

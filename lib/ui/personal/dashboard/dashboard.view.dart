@@ -2,7 +2,6 @@ import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
-import 'package:flex_year_tablet/data_models/user.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.arguments.dart';
@@ -16,7 +15,7 @@ import 'package:flex_year_tablet/ui/personal/dashboard/widgets/utility_item.dart
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/widgets/holiday_item.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
-import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
+import 'package:flex_year_tablet/ui/personal/notice/notice.view.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.dart';
@@ -25,6 +24,7 @@ import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_section.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class DashboardView extends StatelessWidget {
@@ -92,6 +92,21 @@ class DashboardView extends StatelessWidget {
               ),
               preferredSize: const Size(double.infinity, 20),
             ),
+            actions: [
+              IconButton(
+                  tooltip: "notice",
+                  iconSize: 27,
+                  onPressed: () async {
+                    await locator<DashboardModel>().goto(NoticeView.tag);
+                  },
+                  icon: const Icon(MdiIcons.noteText)),
+              IconButton(
+                tooltip: "notification",
+                iconSize: 27,
+                onPressed: () {},
+                icon: const Icon(MdiIcons.bellOutline),
+              ),
+            ],
           ),
           body: Container(
             width: double.infinity,
@@ -243,7 +258,6 @@ class DashboardView extends StatelessWidget {
   }
 
   Widget _buildUtilities(DashboardModel model) {
-    final _user = locator<DashboardModel>().user;
     return FYSection(
       title: "Utilities",
       child: GridView.count(
@@ -262,7 +276,7 @@ class DashboardView extends StatelessWidget {
             },
           ),
           UtilityItem(
-            title: "Report",
+            title: " Monthly Report",
             iconColor: Colors.lightGreen,
             icon: MdiIcons.chartBoxOutline,
             onPressed: () {
@@ -308,7 +322,7 @@ class DashboardView extends StatelessWidget {
 
   Widget _buildCalander(DashboardModel model) {
     return FYSection(
-        title: "Special Holidays",
+        title: "Upcoming Holidays",
         child: model.isLoading
             ? null
             : SizedBox(
@@ -319,6 +333,12 @@ class DashboardView extends StatelessWidget {
                       physics: const AlwaysScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         final _holiday = HolidaysModel.holiday[index];
+                        DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+                        DateTime date = dateFormat.parse(_holiday.date);
+
+                        if (date.compareTo(DateTime.now()) < 0) {
+                          return Container();
+                        }
                         return HolidayItem(holiday: _holiday);
                       },
                       itemCount: HolidaysModel.holiday.length,

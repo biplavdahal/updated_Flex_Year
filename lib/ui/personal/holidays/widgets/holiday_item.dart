@@ -14,13 +14,12 @@ class HolidayItem extends StatelessWidget {
         DateTime.parse(holiday.date).difference(DateTime.now()).inDays;
 
     return Card(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 8),
       shape: RoundedRectangleBorder(
         side: BorderSide(
           color: Colors.grey.shade300,
-          width: 1,
+          width: 0,
         ),
-        borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,28 +32,22 @@ class HolidayItem extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text(
-                  '${DateTime.parse(holiday.date).year}, ${getMonthStringFromDateString(holiday.date, shortten: true)}',
-                  style: const TextStyle(
-                    fontSize: 12,
-                  ),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
                     vertical: 8,
                   ),
                   alignment: Alignment.center,
-                  height: 32,
+                  height: 35,
                   decoration: BoxDecoration(
                     color: Colors.blue.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    holiday.date.split("-")[2],
+                    holiday.date.split("-")[2] +
+                        "," +
+                        getMonthStringFromDateString(holiday.date,
+                            shortten: true),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: Colors.blue,
@@ -63,23 +56,14 @@ class HolidayItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  weekDayFromDateString(holiday.date),
-                  style: const TextStyle(
-                    fontSize: 12,
-                  ),
-                ),
               ],
             ),
           ),
           SizedBox(
-            height: 100,
+            height: 70,
             child: VerticalDivider(
               color: Colors.grey.shade300,
-              thickness: 0.75,
+              thickness: 1,
             ),
           ),
           Expanded(
@@ -104,6 +88,12 @@ class HolidayItem extends StatelessWidget {
                   ),
                   Text(
                       '$daysRemaining day${daysRemaining > 1 ? 's' : ''} remaining'),
+                  if (holiday.date == DateTime.now())
+                    const Text(
+                      "Today",
+                      style: TextStyle(
+                          color: AppColor.primary, fontWeight: FontWeight.bold),
+                    ),
                 ],
               ),
             ),

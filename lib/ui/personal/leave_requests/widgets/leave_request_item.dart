@@ -229,7 +229,7 @@ class LeaveRequestItem extends StatelessWidget {
                           ),
                         ),
                         DataCell(
-                          Text(request.status
+                          Text(request.reason
                               // request.reason.isEmpty ? "Not Set" : request.reason,
                               // style: request.reason.isEmpty
                               //     ? TextStyle(
