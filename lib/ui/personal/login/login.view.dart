@@ -210,7 +210,7 @@ class LoginView extends StatelessWidget {
                   height: 6,
                 ),
                 const Text(
-                  "Pin should contain atmost 6 characters",
+                  "Pin should contain atmost 9 characters",
                   style: TextStyle(
                     fontSize: 12,
                   ),
@@ -223,7 +223,7 @@ class LoginView extends StatelessWidget {
                   label: "Your Pin",
                   controller: model.pinController,
                   keyboardType: TextInputType.number,
-                  maxLength: 6,
+                  maxLength: 9,
                   validator: FYValidator.isRequired,
                 ),
                 Align(

@@ -1,10 +1,11 @@
 import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
+import 'package:flex_year_tablet/data_models/attendance_report_detail.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
 
 class MonthlyHorizontalReportItem extends StatelessWidget {
-  final AttendanceReportData report;
+  final AttendanceReportDetailData report;
   final VoidCallback? onTap;
 
   const MonthlyHorizontalReportItem(
@@ -15,103 +16,85 @@ class MonthlyHorizontalReportItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int value = 0;
-
-    increment() {
-      return value += 1;
-    }
-
-    return GestureDetector(
-      onTap: onTap,
-      child: Card(
-        color: report.weekend.isNotEmpty
-            ? const Color.fromARGB(255, 139, 213, 245)
-            : report.holiday != null
-                ? Colors.amber.shade100
-                : report.totalWorkingHours == '0.00' ||
-                        report.totalWorkingHours == '00:00'
-                    ? Colors.red.shade100
-                    : Colors.green.shade100,
-        margin: const EdgeInsets.only(bottom: 25),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Text(
-                    weekDayFromDateString(report.date) +
-                        "-" +
-                        increment().toString(),
-                    style: const TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
+    return ExpansionTile(
+      iconColor: AppColor.primary,
+      textColor: AppColor.primary,
+      childrenPadding: const EdgeInsets.only(left: 16, right: 16),
+      tilePadding: const EdgeInsets.only(
+        left: 16,
+        right: 16,
+      ),
+      subtitle: Text("Total Working Hours : ${report.totalWorkingHours}"),
+      title: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                report.totalWorkingHours.toString(),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  Text(
-                    '${DateTime.parse(report.date).year}, ${getMonthStringFromDateString(report.date, shortten: true)}',
-                    style: const TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  Text(
-                    report.checkInTime == '00:00' ? '-' : report.checkInTime,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  Text(
-                    report.checkOutTime == '00:00' ? '-' : report.checkOutTime,
-                  ),
-                ],
-              ),
-              const Divider(),
-              Row(
-                children: [
-                  Text(
-                    report.weekend.isNotEmpty
-                        ? "Weekend"
-                        : report.holiday != null
-                            ? "Holiday"
-                            : report.totalWorkingHours == '0.00' ||
-                                    report.totalWorkingHours == '00:00'
-                                ? 'Absent'
-                                : report.totalWorkingHours,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: report.weekend.isNotEmpty
-                          ? AppColor.primary
-                          : report.holiday != null
-                              ? AppColor.primary
-                              : report.totalWorkingHours == '0.00' ||
-                                      report.totalWorkingHours == '00:00'
-                                  ? Colors.red
-                                  : Colors.green,
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Total no. of days:"),
+            Text(report.totalDays.toString())
+          ],
+        ),
+        const Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Total no. of holidays:'),
+            Text('report.attData!.totalOffDays.toString()'),
+          ],
+        ),
+        const Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Total no. of working days:'),
+            Text('report.attData!.totalWorkingDays.toString()'),
+          ],
+        ),
+        const Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Total no. of present days:'),
+            Text('report.attData!.totalPresentDays.toString()'),
+          ],
+        ),
+        const Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Total no. of absent days:'),
+            Text('report.attData!.totalAbsentDays.toString()'),
+          ],
+        ),
+        const Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Total no. of requested leave days:'),
+            Text('report.attData!.totalLeaveDays.toString()'),
+          ],
+        ),
+        const Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Total no. of working hours:'),
+            Text('report.attData!.totalWorkingHours.toString()')
+          ],
+        )
+      ],
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
+import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report/attandance_report.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report/attendance_report.arguments.dart';
@@ -13,9 +14,6 @@ import 'package:flex_year_tablet/ui/personal/attendance_summary/widgets/summary_
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
-
-import '../../../widgets/fy_horizontal_list_view.widget.dart';
-import '../../../widgets/fy_section.widget.dart';
 
 class AttendanceReportView extends StatelessWidget {
   static String tag = 'attendance-report-view';
@@ -147,27 +145,8 @@ class AttendanceReportView extends StatelessWidget {
       return const FYLinearLoader();
     }
     if (model.filterType == AttendanceReportFilterType.monthly) {
-      return FYSection(
-        child: HorizontalListView(
-          fillerCount: 0,
-          itemCount: model.monthlyReport.length,
-          seprator: (context, index) => const SizedBox(
-            width: 5,
-          ),
-          itemBuilder: (context, index) {
-            final _report = model.monthlyReport[index];
-            return MonthlyHorizontalReportItem(
-              _report,
-              onTap: () => model.goto(
-                AttendanceSummaryView.tag,
-                arguments: AttendanceSummaryArguments(
-                  date: _report.date,
-                  clientId: model.searchParams['client_id'],
-                ),
-              ),
-            );
-          },
-        ),
+      return Container(
+        height: 100,
       );
     }
 

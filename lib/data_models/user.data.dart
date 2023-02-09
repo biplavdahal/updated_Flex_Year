@@ -1,7 +1,5 @@
 // ignore_for_file: invalid_annotation_target
 
-import 'dart:convert';
-
 import 'package:flex_year_tablet/data_models/designation.data.dart';
 import 'package:flex_year_tablet/data_models/staff_address.data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

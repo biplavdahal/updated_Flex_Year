@@ -86,6 +86,22 @@ class AttendanceReportFilterModel extends ViewModel {
     setIdle();
   }
 
+  // for Monthly report
+  DateTime? _dateFrom;
+  DateTime? get dateFrom => _dateFrom;
+  DateTime? _dateTo;
+  DateTime? get dateTo => _dateTo;
+  set dateFrom(DateTime? value) {
+    _dateFrom = value;
+    _dateTo = _dateFrom?.add(const Duration(days: 31));
+    setIdle();
+  }
+
+  set dateTo(DateTime? value) {
+    _dateTo = value;
+    setIdle();
+  }
+
   bool _returnBack = false;
 
   Set<CompanyStaffData> _selectedStaffs = {};

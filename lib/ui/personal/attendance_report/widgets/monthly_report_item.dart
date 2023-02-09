@@ -19,8 +19,15 @@ class MonthlyReportItem extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       shape: RoundedRectangleBorder(
         side: BorderSide(
-          color: Colors.grey.shade300,
-          width: 1,
+          color: report.weekend.isNotEmpty
+              ? const Color.fromARGB(255, 139, 213, 245)
+              : report.holiday != null
+                  ? Colors.amber.shade100
+                  : report.totalWorkingHours == '0.00' ||
+                          report.totalWorkingHours == '00:00'
+                      ? Colors.red.shade100
+                      : Colors.green.shade100,
+          width: 1.8,
         ),
         borderRadius: BorderRadius.circular(10),
       ),

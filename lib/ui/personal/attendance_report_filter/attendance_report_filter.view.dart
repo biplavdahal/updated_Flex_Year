@@ -104,6 +104,11 @@ class AttendanceReportFilterView extends StatelessWidget {
                       _buildFieldForWeeklyReportFilter(model),
                     if (model.filterType == AttendanceReportFilterType.monthly)
                       _buildFieldForMonthlyReportFilter(model),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    if (model.filterType == AttendanceReportFilterType.monthly)
+                      _buildFieldForDateMonthlyReportFilter(model),
                     const SizedBox(height: 16),
                     FYPrimaryButton(
                       label: "View Report",
@@ -180,6 +185,38 @@ class AttendanceReportFilterView extends StatelessWidget {
       value: model.selectedMonth,
       title: 'Month',
       onChanged: (value) => model.selectedMonth = value!,
+    );
+  }
+
+  Widget _buildFieldForDateMonthlyReportFilter(
+      AttendanceReportFilterModel model) {
+    return Row(
+      children: [
+        Expanded(
+          child: FYDateField(
+            title: "Date From",
+            onChanged: (value) => model.dateFrom = value!,
+            value: model.dateFrom,
+            firstDate: DateTime.now().subtract(
+              const Duration(days: 365 * 7),
+            ),
+            lastDate: DateTime.now(),
+          ),
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        Expanded(
+            child: FYDateField(
+          title: "Date To",
+          onChanged: (value) => model.dateTo = value!,
+          value: model.dateTo,
+          firstDate: DateTime.now().subtract(
+            const Duration(days: 365 * 7),
+          ),
+          lastDate: DateTime.now(),
+        ))
+      ],
     );
   }
 }
