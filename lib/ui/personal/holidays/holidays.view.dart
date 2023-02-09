@@ -17,7 +17,7 @@ class HolidaysView extends StatelessWidget {
       builder: (ctx, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Holidays'),
+            title: const Text('Upcoming Holidays'),
           ),
           body: model.isLoading
               ? const FYLinearLoader()

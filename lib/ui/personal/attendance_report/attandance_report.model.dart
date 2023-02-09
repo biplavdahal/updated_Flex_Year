@@ -1,6 +1,7 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/attendance_one_day_report.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
+import 'package:flex_year_tablet/data_models/attendance_report_detail.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_weekly_report.data.dart';
 import 'package:flex_year_tablet/services/attendance.service.dart';
@@ -31,6 +32,9 @@ class AttendanceReportModel extends ViewModel with SnackbarMixin {
 
   List<AttendanceOneDayReportData> _oneDayReports = [];
   List<AttendanceOneDayReportData> get oneDayReports => _oneDayReports;
+
+  List<AttendanceReportDetailData> _attendanceDetail = [];
+  List<AttendanceReportDetailData> get attendanceDetail => _attendanceDetail;
 
   // Actions
   Future<void> init(AttendanceReportArguments arguments) async {

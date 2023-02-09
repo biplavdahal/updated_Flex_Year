@@ -11,35 +11,33 @@ class FlexYearApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(428, 926),
-      // ignore: avoid_types_as_parameter_names
-      builder: (Widget, c) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: getThemeDataTheme(context),
-        onGenerateRoute: (settings) =>
-            locator<NavigationService>().generateRoute(
-          settings,
-          routesAndViews(settings),
-        ),
-        builder: (context, child) {
-          return Navigator(
-            onGenerateRoute: (settings) => MaterialPageRoute(
-                builder: (context) => DialogManager(
-                      child: SnackbarManager(
-                        behavior: SnackBarBehavior.floating,
-                        elevation: 0,
-                        infoColor: AppColor.primary,
-                        errorColor: Colors.red,
-                        successColor: Colors.green,
-                        warningColor: AppColor.accent,
-                        body: child!,
-                      ),
-                    )),
-          );
-        },
-        navigatorKey: locator<NavigationService>().navigationKey,
-        home: const StartUpView(),
-      ),
-    );
+        designSize: const Size(428, 926),
+        builder: (Widget, c) => MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: getThemeDataTheme(context),
+              onGenerateRoute: (settings) =>
+                  locator<NavigationService>().generateRoute(
+                settings,
+                routesAndViews(settings),
+              ),
+              builder: (context, child) {
+                return Navigator(
+                  onGenerateRoute: (settings) => MaterialPageRoute(
+                      builder: (context) => DialogManager(
+                            child: SnackbarManager(
+                              behavior: SnackBarBehavior.floating,
+                              elevation: 0,
+                              infoColor: AppColor.primary,
+                              errorColor: Colors.red,
+                              successColor: Colors.green,
+                              warningColor: AppColor.accent,
+                              body: child!,
+                            ),
+                          )),
+                );
+              },
+              navigatorKey: locator<NavigationService>().navigationKey,
+              home: const StartUpView(),
+            ));
   }
 }
