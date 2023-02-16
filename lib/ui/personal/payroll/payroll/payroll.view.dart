@@ -74,15 +74,14 @@ class PayrollView extends StatelessWidget {
     if (model.isLoading) {
       return const FYLinearLoader();
     } else if (model.payroll.isNotEmpty) {
-      return Expanded(
-          child: ListView.builder(
+      return ListView.builder(
         physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           final _payroll = model.payroll[index];
           return PayrollItem(payroll: _payroll);
         },
         itemCount: model.payroll.length,
-      ));
+      );
     } else {
       return Expanded(
           child: Center(
