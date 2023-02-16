@@ -1,5 +1,4 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report/attandance_report.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report/attendance_report.arguments.dart';
@@ -58,6 +57,7 @@ class AttendanceReportView extends StatelessWidget {
                 ),
                 if (model.filterType == AttendanceReportFilterType.monthly)
                   _buildHorizontalData(model),
+                _buildMiddleInfoData(model),
                 _buildData(model),
               ],
             ),
@@ -65,6 +65,26 @@ class AttendanceReportView extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget _buildMiddleInfoData(AttendanceReportModel model) {
+    if (model.filterType == AttendanceReportFilterType.monthly) {
+      return SizedBox(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Showing 1- ${model.monthlyReport.length.toString()} of ${model.monthlyReport.length} items.',
+              style: const TextStyle(
+                  fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
+      );
+    }
+
+    return const SizedBox();
   }
 
   Widget _buildTopInfoBar(AttendanceReportModel model) {
@@ -145,8 +165,15 @@ class AttendanceReportView extends StatelessWidget {
       return const FYLinearLoader();
     }
     if (model.filterType == AttendanceReportFilterType.monthly) {
-      return Container(
-        height: 100,
+      return Expanded(
+        child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          itemBuilder: (context, index) {
+            final _item = model.reportSummary[index];
+            return MonthlyHorizontalReportItem(_item);
+          },
+          itemCount: model.reportSummary.length,
+        ),
       );
     }
 

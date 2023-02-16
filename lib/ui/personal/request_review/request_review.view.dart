@@ -33,43 +33,45 @@ class RequestReviewView extends StatelessWidget {
   }
 
   Widget _buildForm(RequestReviewModel model) {
-    return Form(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (model.requestReviewType == RequestReviewType.updateReview ||
-              model.requestReviewType == RequestReviewType.attendanceReview)
+    return SingleChildScrollView(
+      child: Form(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (model.requestReviewType == RequestReviewType.updateReview ||
+                model.requestReviewType == RequestReviewType.attendanceReview)
+              FYTimeField(
+                title:
+                    '${model.requestReviewType == RequestReviewType.updateReview ? "Request" : "Check"} In Time',
+                value: model.inTime,
+                onChanged: (value) => model.inTime = value,
+              ),
+            if (model.requestReviewType == RequestReviewType.updateReview ||
+                model.requestReviewType == RequestReviewType.attendanceReview)
+              const SizedBox(height: 16),
             FYTimeField(
               title:
-                  '${model.requestReviewType == RequestReviewType.updateReview ? "Request" : "Check"} In Time',
-              value: model.inTime,
-              onChanged: (value) => model.inTime = value,
+                  '${model.requestReviewType == RequestReviewType.updateReview ? "Request" : "Check"} Out Time',
+              value: model.outTime,
+              onChanged: (value) => model.outTime = value,
             ),
-          if (model.requestReviewType == RequestReviewType.updateReview ||
-              model.requestReviewType == RequestReviewType.attendanceReview)
-            const SizedBox(height: 16),
-          FYTimeField(
-            title:
-                '${model.requestReviewType == RequestReviewType.updateReview ? "Request" : "Check"} Out Time',
-            value: model.outTime,
-            onChanged: (value) => model.outTime = value,
-          ),
-          if (model.requestReviewType == RequestReviewType.checkoutReview ||
-              model.requestReviewType == RequestReviewType.attendanceReview)
-            const SizedBox(height: 16),
-          if (model.requestReviewType == RequestReviewType.checkoutReview ||
-              model.requestReviewType == RequestReviewType.attendanceReview)
-            FYInputField(
-              title: '',
-              label: "Message",
-              controller: model.messageController,
-            ),
-          const SizedBox(height: 24),
-          FYPrimaryButton(
-            label: "Submit Request",
-            onPressed: model.onSubmit,
-          )
-        ],
+            if (model.requestReviewType == RequestReviewType.checkoutReview ||
+                model.requestReviewType == RequestReviewType.attendanceReview)
+              const SizedBox(height: 16),
+            if (model.requestReviewType == RequestReviewType.checkoutReview ||
+                model.requestReviewType == RequestReviewType.attendanceReview)
+              FYInputField(
+                title: '',
+                label: "Message",
+                controller: model.messageController,
+              ),
+            const SizedBox(height: 24),
+            FYPrimaryButton(
+              label: "Submit Request",
+              onPressed: model.onSubmit,
+            )
+          ],
+        ),
       ),
     );
   }

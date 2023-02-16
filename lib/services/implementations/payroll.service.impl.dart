@@ -36,7 +36,7 @@ class PayrollServiceImpl implements PayrollService {
       }
       {
         return (_data['data'] as List<dynamic>)
-            .map<PayrollData>(((e) => PayrollData.fromJson(e)))
+            .map<PayrollData>((e) => PayrollData.fromJson(e))
             .toList();
       }
     } catch (e) {

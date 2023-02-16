@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
@@ -7,7 +8,7 @@ import 'package:flex_year_tablet/data_models/attendance_correction_review.data.d
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_one_day_report.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
-import 'package:flex_year_tablet/data_models/attendance_report_detail.data.dart';
+import 'package:flex_year_tablet/data_models/attendance_report_summary.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_weekly_report.data.dart';
@@ -131,25 +132,18 @@ class AttendanceServiceImpl implements AttendanceService {
       if (_data!.containsKey("status") && _data["status"] == false) {
         throw _data["response"] ?? _data["data"] ?? _data["detail"];
       }
-      {
-        // //  _data['data']['att_data'][0]['attendance']
-        // //     .map<AttendanceReportData>(
-        // //       (e) => AttendanceReportData.fromJson(e),
-        // //     )
-        // //     .toList();
 
-        // return _data['data']['att_data'][0]['summary']
-        //     .map<AttendanceReportDetailData>(
-        //       (e) => AttendanceReportDetailData.fromJson(e),
-        //     )
-        //     .toList();
+      // return (_data['data']['att_data']['summary'][0])
+      //     .map<AttendanceReportSummary>(
+      //       (e) => AttendanceReportSummary.fromJson(e),
+      //     )
+      //     .toList();
 
-        return _data['data']['att_data'][0]['attendance']
-            .map<AttendanceReportData>(
-              (e) => AttendanceReportData.fromJson(e),
-            )
-            .toList();
-      }
+      return _data['data']['att_data'][0]['attendance']
+          .map<AttendanceReportData>(
+            (e) => AttendanceReportData.fromJson(e),
+          )
+          .toList();
     } catch (e) {
       throw apiError(e);
     }
