@@ -1,5 +1,6 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
+import 'package:flex_year_tablet/helper/fy_validator.helper.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.model.dart';
@@ -192,30 +193,36 @@ class AttendanceReportFilterView extends StatelessWidget {
       AttendanceReportFilterModel model) {
     return Row(
       children: [
-        Expanded(
-          child: FYDateField(
-            title: "Date From",
-            onChanged: (value) => model.dateFrom = value!,
-            value: model.dateFrom,
-            firstDate: DateTime.now().subtract(
-              const Duration(days: 365 * 7),
+        Form(
+          key: model.formKey,
+          child: Expanded(
+            child: FYDateField(
+              title: "Date From",
+              onChanged: (value) => model.dateFrom = value!,
+              value: model.dateFrom,
+              firstDate: DateTime.now().subtract(
+                const Duration(days: 365 * 7),
+              ),
+              lastDate: DateTime.now(),
+              validator: FYValidator.isRequired,
             ),
-            lastDate: DateTime.now(),
           ),
         ),
         const SizedBox(
           width: 16,
         ),
-        Expanded(
-            child: FYDateField(
-          title: "Date To",
-          onChanged: (value) => model.dateTo = value!,
-          value: model.dateTo,
-          firstDate: DateTime.now().subtract(
-            const Duration(days: 365 * 7),
-          ),
-          lastDate: DateTime.now(),
-        ))
+        Form(
+          child: Expanded(
+              child: FYDateField(
+            title: "Date To",
+            onChanged: (value) => model.dateTo = value!,
+            value: model.dateTo,
+            firstDate: DateTime.now().subtract(
+              const Duration(days: 365 * 7),
+            ),
+            lastDate: DateTime.now(),
+          )),
+        )
       ],
     );
   }

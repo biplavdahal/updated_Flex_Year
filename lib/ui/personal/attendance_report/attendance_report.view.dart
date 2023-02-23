@@ -57,7 +57,7 @@ class AttendanceReportView extends StatelessWidget {
                 ),
                 if (model.filterType == AttendanceReportFilterType.monthly)
                   _buildHorizontalData(model),
-                _buildMiddleInfoData(model),
+                // _buildMiddleInfoData(model),
                 _buildData(model),
               ],
             ),
@@ -76,8 +76,7 @@ class AttendanceReportView extends StatelessWidget {
           children: [
             Text(
               'Showing 1- ${model.monthlyReport.length.toString()} of ${model.monthlyReport.length} items.',
-              style: const TextStyle(
-                  fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontStyle: FontStyle.italic),
             )
           ],
         ),

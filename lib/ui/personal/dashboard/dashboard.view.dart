@@ -268,7 +268,7 @@ class DashboardView extends StatelessWidget {
         crossAxisSpacing: 8,
         children: [
           UtilityItem(
-            title: 'leave Request',
+            title: 'Leave Request',
             icon: MdiIcons.shieldAirplaneOutline,
             iconColor: Colors.orange,
             onPressed: () async {

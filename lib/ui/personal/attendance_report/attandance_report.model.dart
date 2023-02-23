@@ -24,8 +24,8 @@ class AttendanceReportModel extends ViewModel with SnackbarMixin {
   List<AttendanceReportData> _monthlyReport = [];
   List<AttendanceReportData> get monthlyReport => _monthlyReport;
 
-  List<AttendanceReportSummary> _reportSummary = [];
-  List<AttendanceReportSummary> get reportSummary => _reportSummary;
+  List<AttendanceReportSummaryData> _reportSummary = [];
+  List<AttendanceReportSummaryData> get reportSummary => _reportSummary;
 
   List<AttendanceSummaryData> _summary = [];
   List<AttendanceSummaryData> get summary => _summary;
@@ -49,6 +49,8 @@ class AttendanceReportModel extends ViewModel with SnackbarMixin {
         _monthlyReport = await _attendanceService.getMonthlyReport(
           data: _searchParams,
         );
+        _reportSummary =
+            await _attendanceService.getMonthlySummary(data: _searchParams);
       } else if (_filterType == AttendanceReportFilterType.daily) {
         _summary = await _attendanceService.getAttendanceSummary(
           date: _searchParams['date'],

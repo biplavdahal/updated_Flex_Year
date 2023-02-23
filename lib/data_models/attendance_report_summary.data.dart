@@ -6,19 +6,19 @@ part 'attendance_report_summary.data.freezed.dart';
 part 'attendance_report_summary.data.g.dart';
 
 @freezed
-class AttendanceReportSummary with _$AttendanceReportSummary {
-  const factory AttendanceReportSummary({
-    @JsonKey(name: 'full_name') required String fullName,
-    @JsonKey(name: 'total') required String Total,
-    @JsonKey(name: 'leavetot')  required String totalLeaveDays,
-    @JsonKey(name: 'present') required String totalPresentDays,
-    @JsonKey(name: 'offday') required String totalOffDays,
-    @JsonKey(name: 'totaldays') required String totalDays,
-    @JsonKey(name: 'absent') required String totalAbsentDays,
-    @JsonKey(name: 'workinghr') required String totalWorkingHours,
-    @JsonKey(name: 'workingdays') required String totalWorkingDays,
-  }) = _AttendanceReportSummary;
+class AttendanceReportSummaryData with _$AttendanceReportSummaryData {
+  const factory AttendanceReportSummaryData({
+    @JsonKey(name: 'full_name')  String? fullName,
+    @JsonKey(name: 'total')  String? total,
+    @JsonKey(name: 'leavetot') int? leaveTotal,
+    @JsonKey(name: 'present')  int? present,
+    @JsonKey(name: 'offday')  int? offDay,
+    @JsonKey(name: 'totaldays')  int? totalDays,
+    @JsonKey(name: 'absent')  int? absent,
+    @JsonKey(name: 'workinghr') String? workingHours,
+    @JsonKey(name: 'workingdays')  int? workingdays,
+  }) = _AttendanceReportSummaryData;
 
-  factory AttendanceReportSummary.fromJson(Map<String, dynamic> json) =>
-      _$AttendanceReportSummaryFromJson(json);
+  factory AttendanceReportSummaryData.fromJson(Map<String, dynamic> json) =>
+      _$AttendanceReportSummaryDataFromJson(json);
 }

@@ -125,25 +125,23 @@ class AttendanceServiceImpl implements AttendanceService {
         },
       );
 
-      debugPrint(jsonEncode(_response.data));
-
       final _data = constructResponse(_response.data);
+
+      debugPrint(jsonEncode(_response.data));
 
       if (_data!.containsKey("status") && _data["status"] == false) {
         throw _data["response"] ?? _data["data"] ?? _data["detail"];
       }
 
-      // return (_data['data']['att_data']['summary'][0])
-      //     .map<AttendanceReportSummary>(
-      //       (e) => AttendanceReportSummary.fromJson(e),
+      return _data['data']['att_data'][0]['attendance']
+          .map<AttendanceReportData>((e) => AttendanceReportData.fromJson(e))
+          .toList();
+
+      // return _data['data']['att_data'][0]['attendance']
+      //     .map<AttendanceReportData>(
+      //       (e) => AttendanceReportData.fromJson(e),
       //     )
       //     .toList();
-
-      return _data['data']['att_data'][0]['attendance']
-          .map<AttendanceReportData>(
-            (e) => AttendanceReportData.fromJson(e),
-          )
-          .toList();
     } catch (e) {
       throw apiError(e);
     }
@@ -492,6 +490,45 @@ class AttendanceServiceImpl implements AttendanceService {
       if (_data!.containsKey("status") && _data["status"] == false) {
         throw _data["response"] ?? _data["detail"] ?? _data["data"];
       }
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<List<AttendanceReportSummaryData>> getMonthlySummary(
+      {required Map<String, dynamic> data}) async {
+    try {
+      final _response = await _apiService.post(
+        auMonthlyAttendanceReport,
+        {
+          'user': [_authenticationService.user!.id],
+          'company_id': _appAccessService.appAccess!.company.companyId,
+          ...data,
+        },
+        params: {
+          'access_token': _authenticationService.user!.accessToken,
+        },
+      );
+
+      final _data = constructResponse(_response.data);
+
+      debugPrint(jsonEncode(_response.data));
+
+      if (_data!.containsKey("status") && _data["status"] == false) {
+        throw _data["response"] ?? _data["data"] ?? _data["detail"];
+      }
+
+      return [
+        AttendanceReportSummaryData.fromJson(
+            _data['data']['att_data'][0]['summary'])
+      ];
+
+      // return _data['data']['att_data'][0]['attendance']
+      //     .map<AttendanceReportData>(
+      //       (e) => AttendanceReportData.fromJson(e),
+      //     )
+      //     .toList();
     } catch (e) {
       throw apiError(e);
     }

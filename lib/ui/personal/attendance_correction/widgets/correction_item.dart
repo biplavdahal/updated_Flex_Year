@@ -168,7 +168,12 @@ class CorrectionItem extends StatelessWidget {
                   rows: [
                     DataRow(
                       cells: [
-                        const DataCell(Text("CheckIn Date Time")),
+                        const DataCell(Text(
+                          "CheckIn Date Time :",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )),
                         DataCell(
                           Text(
                             correction.checkinDatetime != null
@@ -180,7 +185,12 @@ class CorrectionItem extends StatelessWidget {
                     ),
                     DataRow(
                       cells: [
-                        const DataCell(Text("CheckOut Date Time")),
+                        const DataCell(Text(
+                          "CheckOut Date Time :",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )),
                         DataCell(
                           Text(
                             correction.checkoutDatetime != null
@@ -192,7 +202,12 @@ class CorrectionItem extends StatelessWidget {
                     ),
                     DataRow(
                       cells: [
-                        const DataCell(Text("CheckIn Request")),
+                        const DataCell(Text(
+                          "CheckIn Request :",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )),
                         DataCell(
                           Text(
                             correction.checkinDatetimeRequest != null
@@ -205,7 +220,12 @@ class CorrectionItem extends StatelessWidget {
                     ),
                     DataRow(
                       cells: [
-                        const DataCell(Text("CheckOut Request")),
+                        const DataCell(Text(
+                          "CheckOut Request :",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )),
                         DataCell(
                           Text(
                             correction.checkoutDatetimeRequest != null
@@ -218,7 +238,12 @@ class CorrectionItem extends StatelessWidget {
                     ),
                     DataRow(
                       cells: [
-                        const DataCell(Text("Status")),
+                        const DataCell(Text(
+                          "Status :",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )),
                         DataCell(
                           Text(
                             _status[correction.correctionStatus]!,

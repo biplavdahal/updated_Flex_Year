@@ -46,6 +46,10 @@ class WriteLeaveRequestModel extends ViewModel with DialogMixin, SnackbarMixin {
     setIdle();
   }
 
+
+  String _currentDateTime = DateTime.now().toString();
+  String get currentDateTime => _currentDateTime;
+
   bool _isHalfDayLeave = false;
   bool get isHalfDayLeave => _isHalfDayLeave;
   set isHalfDayLeave(bool value) {
