@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:bestfriend/bestfriend.dart';
+import 'package:dio/dio.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/data_models/company_staff.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
+import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/services/company.service.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report/attendance_report.arguments.dart';
@@ -18,7 +22,8 @@ enum AttendanceReportFilterType {
   oneDayReport,
 }
 
-class AttendanceReportFilterModel extends ViewModel {
+class AttendanceReportFilterModel extends ViewModel
+    with DialogMixin, SnackbarMixin {
   // Data
   late AttendanceReportFilterType _filterType;
   AttendanceReportFilterType? get filterType => _filterType;
@@ -47,6 +52,16 @@ class AttendanceReportFilterModel extends ViewModel {
     _selectedAttendanceType = value;
     setIdle();
   }
+
+  ///Manually select from_date and to_date of UI components
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> get formKey => _formKey;
+
+  final TextEditingController _fromDateController = TextEditingController();
+  TextEditingController get fromDateController => _fromDateController;
+
+  final TextEditingController _toDateController = TextEditingController();
+  TextEditingController get toDateController => _toDateController;
 
   List<String> get months => [
         "January",
@@ -166,62 +181,80 @@ class AttendanceReportFilterModel extends ViewModel {
   }
 
   void onViewReportPressed() {
-    Map<String, dynamic> _searchParams = {};
+    if (formKey.currentState!.validate()) {
+      Map<String, dynamic> _searchParams = {};
 
-    if (_filterType == AttendanceReportFilterType.monthly) {
-      _searchParams['date_from'] =
-          "${DateTime.now().year}-${(months.indexOf(_selectedMonth) + 1).toString().length == 1 ? '0${months.indexOf(_selectedMonth) + 1}' : months.indexOf(_selectedMonth) + 1}-01";
-      _searchParams['date_to'] =
-          lastDateOfMonth(months.indexOf(_selectedMonth) + 1);
-    } else if (_filterType == AttendanceReportFilterType.daily ||
-        _filterType == AttendanceReportFilterType.oneDayReport) {
-      _searchParams['date'] =
-          '${_attendanceDate!.year}-${_attendanceDate!.month < 10 ? '0${_attendanceDate!.month}' : _attendanceDate!.month}-${_attendanceDate!.day < 10 ? '0${_attendanceDate!.day}' : _attendanceDate!.day}';
-    } else {
-      _searchParams['begDate'] =
-          '${_weekFrom!.year}-${_weekFrom!.month < 10 ? '0${_weekFrom!.month}' : _weekFrom!.month}-${_weekFrom!.day < 10 ? '0${_weekFrom!.day}' : _weekFrom!.day}';
-      _searchParams['endDate'] =
-          '${_weekTo!.year}-${_weekTo!.month < 10 ? '0${_weekTo!.month}' : _weekTo!.month}-${_weekTo!.day < 10 ? '0${_weekTo!.day}' : _weekTo!.day}';
-    }
+      if (_filterType == AttendanceReportFilterType.monthly) {
+        if (dateFrom.toString() == "null") {
+          _searchParams['date_from'] =
+              "${DateTime.now().year}-${(months.indexOf(_selectedMonth) + 1).toString().length == 1 ? '0${months.indexOf(_selectedMonth) + 1}' : months.indexOf(_selectedMonth) + 1}-01";
+        } else {
+          _searchParams['date_from'] = dateFrom.toString();
+        }
+        //"${DateTime.now().year}-${(months.indexOf(_selectedMonth) + 1).toString().length == 1 ? '0${months.indexOf(_selectedMonth) + 1}' : months.indexOf(_selectedMonth) + 1}-01";
+        if (dateTo.toString() == "null") {
+          _searchParams['date_to'] =
+              lastDateOfMonth(months.indexOf(_selectedMonth) + 1);
+        } else {
+          _searchParams['date_to'] = dateTo.toString();
+        }
+        //lastDateOfMonth(months.indexOf(_selectedMonth) + 1);
 
-    if (clients != null && clients!.isNotEmpty) {
-      _searchParams['client_id'] = _selectedClient!.clientId;
-      _searchParams['client_name'] = _selectedClientLabel;
-    }
-
-    _searchParams['type'] = _selectedAttendanceType;
-
-    if (_selectedStaffs.isNotEmpty) {
-      if (_filterType == AttendanceReportFilterType.daily &&
-          _selectedStaffs.isNotEmpty) {
-        _searchParams['user'] = _selectedStaffs.map((e) => e.staffId).toList();
+      } else if (_filterType == AttendanceReportFilterType.daily ||
+          _filterType == AttendanceReportFilterType.oneDayReport) {
+        _searchParams['date'] =
+            '${_attendanceDate!.year}-${_attendanceDate!.month < 10 ? '0${_attendanceDate!.month}' : _attendanceDate!.month}-${_attendanceDate!.day < 10 ? '0${_attendanceDate!.day}' : _attendanceDate!.day}';
       } else {
-        _searchParams['user'] = _selectedStaffs.map((e) => e.userId).toList();
+        _searchParams['begDate'] =
+            '${_weekFrom!.year}-${_weekFrom!.month < 10 ? '0${_weekFrom!.month}' : _weekFrom!.month}-${_weekFrom!.day < 10 ? '0${_weekFrom!.day}' : _weekFrom!.day}';
+        _searchParams['endDate'] =
+            '${_weekTo!.year}-${_weekTo!.month < 10 ? '0${_weekTo!.month}' : _weekTo!.month}-${_weekTo!.day < 10 ? '0${_weekTo!.day}' : _weekTo!.day}';
       }
-    }
 
-    if (_returnBack) {
-      goBack(
-        result: AttendanceReportArguments(
-          type: _filterType == AttendanceReportFilterType.daily &&
-                  _selectedStaffs.isNotEmpty
-              ? AttendanceReportFilterType.oneDayReport
-              : _filterType,
-          searchParams: _searchParams,
-        ),
-      );
+      if (clients != null && clients!.isNotEmpty) {
+        _searchParams['client_id'] = _selectedClient!.clientId;
+        _searchParams['client_name'] = _selectedClientLabel;
+      }
+
+      _searchParams['type'] = _selectedAttendanceType;
+
+      if (_selectedStaffs.isNotEmpty) {
+        if (_filterType == AttendanceReportFilterType.daily &&
+            _selectedStaffs.isNotEmpty) {
+          _searchParams['user'] =
+              _selectedStaffs.map((e) => e.staffId).toList();
+        } else {
+          _searchParams['user'] = _selectedStaffs.map((e) => e.userId).toList();
+        }
+      }
+
+      if (_returnBack) {
+        goBack(
+          result: AttendanceReportArguments(
+            type: _filterType == AttendanceReportFilterType.daily &&
+                    _selectedStaffs.isNotEmpty
+                ? AttendanceReportFilterType.oneDayReport
+                : _filterType,
+            searchParams: _searchParams,
+          ),
+        );
+      } else {
+        gotoAndPop(
+          AttendanceReportView.tag,
+          arguments: AttendanceReportArguments(
+            type: _filterType == AttendanceReportFilterType.daily &&
+                    _selectedStaffs.isNotEmpty
+                ? AttendanceReportFilterType.oneDayReport
+                : _filterType,
+            searchParams: _searchParams,
+          ),
+        );
+      }
     } else {
-      gotoAndPop(
-        AttendanceReportView.tag,
-        arguments: AttendanceReportArguments(
-          type: _filterType == AttendanceReportFilterType.daily &&
-                  _selectedStaffs.isNotEmpty
-              ? AttendanceReportFilterType.oneDayReport
-              : _filterType,
-          searchParams: _searchParams,
-        ),
-      );
+      snackbar.displaySnackbar(SnackbarRequest.of(
+          message: "invalid field", type: ESnackbarType.warning));
     }
+    setIdle();
   }
 
   Future<void> onSelectStaffPressed() async {

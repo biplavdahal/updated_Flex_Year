@@ -80,13 +80,14 @@ class AttendanceButton extends StatelessWidget {
                                 fontSize: 9,
                               ),
                             ),
-                          ] else if (onPressed == null) ...[
-                            Text(
-                              getCurrentTime(),
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 12),
-                            )
                           ]
+                          //  else if (onPressed == null) ...[
+                          //   Text(
+                          //     getCurrentTime(),
+                          //     style: const TextStyle(
+                          //         color: Colors.white, fontSize: 12),
+                          //   )
+                          // ]
                         ],
                       ),
                     ],

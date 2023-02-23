@@ -6,12 +6,16 @@ class FYDateField extends StatelessWidget {
   final DateTime? value;
   final String? title;
   final ValueSetter<DateTime?>? onChanged;
+  final TextEditingController? controller;
   final DateTime? firstDate;
+   final String? Function(String?)? validator;
   final DateTime? lastDate;
   final Icon? icon;
 
   const FYDateField({
     Key? key,
+     this.controller,
+     this.validator,
     this.value,
     this.icon,
     this.title,

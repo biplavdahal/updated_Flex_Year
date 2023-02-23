@@ -21,7 +21,7 @@ class NoticeView extends StatelessWidget {
       builder: (ctx, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Notice'),
+            title: const Text('Upcoming Notice'),
           ),
           body: model.isLoading
               ? const FYLinearLoader()

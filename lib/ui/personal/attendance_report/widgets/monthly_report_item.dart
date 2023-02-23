@@ -65,7 +65,9 @@ class MonthlyReportItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(
-                      report.date.split("-")[2],
+                      report.date.substring(8, 10),
+                      //OR
+                      //report.date.split("-")[2];
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.blue,
@@ -105,7 +107,12 @@ class MonthlyReportItem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Check-in'),
+                        const Text(
+                          'Check-in',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                         Text(
                           report.checkInTime == '00:00'
                               ? '-'
@@ -119,7 +126,12 @@ class MonthlyReportItem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Check-out'),
+                        const Text(
+                          'Check-out',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                         Text(
                           report.checkOutTime == '00:00'
                               ? '-'

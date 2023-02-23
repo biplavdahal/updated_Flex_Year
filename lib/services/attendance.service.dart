@@ -3,6 +3,7 @@ import 'package:flex_year_tablet/data_models/attendance_correction_review.data.d
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_one_day_report.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
+import 'package:flex_year_tablet/data_models/attendance_report_summary.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_weekly_report.data.dart';
@@ -29,6 +30,10 @@ abstract class AttendanceService {
   Future<List<AttendanceReportData>> getMonthlyReport({
     required Map<String, dynamic> data,
   });
+
+  Future<List<AttendanceReportSummaryData>> getMonthlySummary({
+        required Map<String, dynamic> data,
+        });
 
   /// Get attendance summary
   Future<List<AttendanceSummaryData>> getAttendanceSummary({

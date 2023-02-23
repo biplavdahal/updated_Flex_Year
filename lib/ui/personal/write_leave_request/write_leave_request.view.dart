@@ -10,6 +10,7 @@ import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_input_field.widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../../helper/date_time_formatter.helper.dart';
 import '../dashboard/dashboard.model.dart';
 
 class WriteLeaveRequestView extends StatelessWidget {
@@ -49,7 +50,7 @@ class WriteLeaveRequestView extends StatelessWidget {
                         height: 16,
                       ),
                     FYDropdown<LeaveTypeData>(
-                      title: "Select leave type",
+                      title: "Select Leave Type",
                       onChanged: model.onLeaveTypeChanged,
                       items: model.leaveTypes,
                       labels: model.leaveTypeLabels,
@@ -59,7 +60,7 @@ class WriteLeaveRequestView extends StatelessWidget {
                       height: 16,
                     ),
                     FYDateField(
-                      title: 'Leave date from',
+                      title: 'Leave Date From',
                       value: model.leaveDateFrom,
                       onChanged: (value) => model.leaveDateFrom = value,
                     ),
@@ -67,7 +68,7 @@ class WriteLeaveRequestView extends StatelessWidget {
                       height: 16,
                     ),
                     FYDateField(
-                      title: 'Leave date upto',
+                      title: 'Leave Date Upto',
                       value: model.leaveDateUpto,
                       onChanged: (value) => model.leaveDateUpto = value,
                     ),
@@ -77,7 +78,7 @@ class WriteLeaveRequestView extends StatelessWidget {
                     FYCheckbox(
                       value: model.isHalfDayLeave,
                       onChanged: (value) => model.isHalfDayLeave = value!,
-                      label: "Do you need half leave?",
+                      label: "Do you need half leave ?",
                     ),
                     if (model.isHalfDayLeave) ...[
                       const SizedBox(

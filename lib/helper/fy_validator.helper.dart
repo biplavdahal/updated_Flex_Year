@@ -8,5 +8,4 @@ class FYValidator extends Validators {
 
     return null;
   }
-  
 }
