@@ -15,7 +15,7 @@ class NoticeItem extends StatelessWidget {
     int daysRemaining =
         DateTime.parse(notice.date).difference(DateTime.now()).inDays;
     return FYSection(
-      title: "Holiday",
+      title: "Upcoming Holiday:",
       child: Container(
         decoration: const BoxDecoration(
           color: Colors.white10,

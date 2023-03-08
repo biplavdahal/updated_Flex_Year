@@ -9,6 +9,7 @@ import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.view.dart';
 
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.argument.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
+import 'package:nepali_date_picker/nepali_date_picker.dart';
 
 import '../../../../data_models/payroll.data.dart';
 
@@ -19,6 +20,13 @@ class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
   //Data
   List<PayrollData> _payrolls = [];
   List<PayrollData> get payroll => _payrolls;
+
+  bool _isNepaliDate = false;
+  bool get isNepaliDate => _isNepaliDate;
+  set isNepaliDate(bool value) {
+    _isNepaliDate = value;
+    setIdle();
+  }
 
   List<String> get nepaliMonths => [
         "बैशाख",
@@ -34,6 +42,15 @@ class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
         "फाल्गुन",
         "चैत्र",
       ];
+  late String _selectedNepaliMonth;
+  String get selectedNepaliMonth => _selectedNepaliMonth;
+  set selectedNepaliMonth(String value) {
+    _selectedNepaliMonth = value;
+    if (_selectedNepaliMonth == "बैशाख") {
+      _dateFrom = NepaliDateTime(NepaliDateTime.now().year, 1);
+      _dateTo = _dateFrom?.add(const Duration(days: 30));
+    }
+  }
 
   List<String> get months => [
         "January",
@@ -96,6 +113,7 @@ class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
 
   bool _returnBack = false;
 
+  //English action
   DateTime? _dateFrom;
   DateTime? get dateFrom => _dateFrom;
   DateTime? _dateTo;
@@ -106,10 +124,22 @@ class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
     setIdle();
   }
 
+  //Nepali action
+  NepaliDateTime? _nepaliDateFrom;
+  NepaliDateTime? get nepaliDateFrom => _nepaliDateFrom;
+  NepaliDateTime? _nepaliDateTo;
+  NepaliDateTime? get nepaliDateTo => _nepaliDateTo;
+  set nepaliDateFrom(NepaliDateTime? value) {
+    _nepaliDateFrom = value;
+    _nepaliDateTo = _nepaliDateFrom?.add(const Duration(days: 31));
+    setIdle();
+  }
+
   //Action
   Future<void> init(PayrollFilterArguments arguments) async {
     _returnBack = arguments.returnBack;
     _selectedMonth = months[DateTime.now().month - 1];
+    _selectedNepaliMonth = nepaliMonths[DateTime.now().month - 1];
     setIdle();
   }
 

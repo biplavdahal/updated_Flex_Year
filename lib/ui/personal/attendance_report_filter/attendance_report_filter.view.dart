@@ -204,7 +204,6 @@ class AttendanceReportFilterView extends StatelessWidget {
                 const Duration(days: 365 * 7),
               ),
               lastDate: DateTime.now(),
-              validator: FYValidator.isRequired,
             ),
           ),
         ),

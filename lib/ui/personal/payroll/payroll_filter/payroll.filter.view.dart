@@ -2,7 +2,10 @@ import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.argument.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.model.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
+import 'package:flex_year_tablet/widgets/fy_checkbox.widget.dart';
+import 'package:flex_year_tablet/widgets/fy_nepali_date_time_field.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:nepali_date_picker/nepali_date_picker.dart';
 
 import '../../../../widgets/fy_date_time_field.widget.dart';
 import '../../../../widgets/fy_dropdown.widget.dart';
@@ -36,11 +39,17 @@ class PayrollFilterView extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    _buildFieldForMonthlyReportFilter(model),
+                    if (model.isNepaliDate == false)
+                      _buildFieldForMonthlyReportFilter(model),
+                    if (model.isNepaliDate == true)
+                      _buildFieldForMonthlyNepaliReportFilter(model),
                     const SizedBox(
                       height: 10,
                     ),
-                    _buildFieldForWeeklyReportFilter(model),
+                    if (model.isNepaliDate == false)
+                      _buildFieldForWeeklyReportFilter(model),
+                    if (model.isNepaliDate == true)
+                      _buildFieldForNepaliWeekelyReportFilter(model),
                     const SizedBox(
                       height: 10,
                     ),
@@ -59,12 +68,43 @@ class PayrollFilterView extends StatelessWidget {
   }
 
   Widget _buildFieldForMonthlyReportFilter(PayrollFilterModel model) {
-    return FYDropdown<String>(
-      items: model.months,
-      labels: model.months,
-      value: model.selectedMonth,
-      title: 'Month',
-      onChanged: (value) => model.selectedMonth = value!,
+    return Row(
+      children: [
+        Expanded(
+            child: FYDropdown<String>(
+          items: model.months,
+          labels: model.months,
+          value: model.selectedMonth,
+          title: 'Month',
+          onChanged: (value) => model.selectedMonth = value!,
+        )),
+        Expanded(
+          child: FYCheckbox(
+              value: model.isNepaliDate,
+              onChanged: (value) => model.isNepaliDate = value!,
+              label: "नेपाली"),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFieldForMonthlyNepaliReportFilter(PayrollFilterModel model) {
+    return Row(
+      children: [
+        Expanded(
+            child: FYDropdown<String>(
+          items: model.nepaliMonths,
+          labels: model.nepaliMonths,
+          value: model.selectedNepaliMonth,
+          title: "महिना",
+          onChanged: (value) => model.selectedNepaliMonth = value!,
+        )),
+        Expanded(
+            child: FYCheckbox(
+                value: model.isNepaliDate,
+                onChanged: (value) => model.isNepaliDate = value!,
+                label: "नेपाली"))
+      ],
     );
   }
 
@@ -89,6 +129,33 @@ class PayrollFilterView extends StatelessWidget {
             value: model.dateTo,
           ),
         ),
+      ],
+    );
+  }
+
+  Widget _buildFieldForNepaliWeekelyReportFilter(PayrollFilterModel model) {
+    return Row(
+      children: [
+        Expanded(
+          child: FYNepaliDateField(
+            title: "मिति देखि :",
+            onNepaliChanged: (value) => model.nepaliDateFrom = value!,
+            nepaliValue: model.nepaliDateFrom,
+            nepaliFirstDate: NepaliDateTime.now().subtract(
+              const Duration(days: 365 * 7),
+            ),
+            nepaliLastDate: NepaliDateTime.now(),
+          ),
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        Expanded(
+          child: FYNepaliDateField(
+            title: "मिति सम्म :",
+            nepaliValue: model.nepaliDateTo,
+          ),
+        )
       ],
     );
   }

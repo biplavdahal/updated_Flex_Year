@@ -14,6 +14,10 @@ class FlexYearApp extends StatelessWidget {
       designSize: const Size(428, 926),
       builder: (Widget, c) => SafeArea(
         child: MaterialApp(
+          supportedLocales: const [
+            Locale('en', ''), //English
+            Locale('ne', ''), //Nepali
+          ],
           debugShowCheckedModeBanner: false,
           theme: getThemeDataTheme(context),
           onGenerateRoute: (settings) =>
