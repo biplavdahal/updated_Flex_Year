@@ -34,6 +34,7 @@ dependencies:
   local_auth:  ^1.1.10
   flutter_slidable: ^2.0.0
   pdf: ^3.8.4
+  nepali_date_picker: ^5.0.0
 
 
 

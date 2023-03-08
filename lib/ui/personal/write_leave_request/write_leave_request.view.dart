@@ -75,11 +75,12 @@ class WriteLeaveRequestView extends StatelessWidget {
                     const SizedBox(
                       height: 16,
                     ),
-                    FYCheckbox(
-                      value: model.isHalfDayLeave,
-                      onChanged: (value) => model.isHalfDayLeave = value!,
-                      label: "Do you need half leave ?",
-                    ),
+                    if (model.leaveDateFrom == model.leaveDateUpto)
+                      FYCheckbox(
+                        value: model.isHalfDayLeave,
+                        onChanged: (value) => model.isHalfDayLeave = value!,
+                        label: "Do you need half leave ?",
+                      ),
                     if (model.isHalfDayLeave) ...[
                       const SizedBox(
                         height: 16,
