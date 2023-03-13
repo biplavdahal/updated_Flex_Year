@@ -12,38 +12,36 @@ class FlexYearApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(428, 926),
-      builder: (Widget, c) => SafeArea(
-        child: MaterialApp(
-          supportedLocales: const [
-            Locale('en', ''), //English
-            Locale('ne', ''), //Nepali
-          ],
-          debugShowCheckedModeBanner: false,
-          theme: getThemeDataTheme(context),
-          onGenerateRoute: (settings) =>
-              locator<NavigationService>().generateRoute(
-            settings,
-            routesAndViews(settings),
-          ),
-          builder: (context, child) {
-            return Navigator(
-              onGenerateRoute: (settings) => MaterialPageRoute(
-                  builder: (context) => DialogManager(
-                        child: SnackbarManager(
-                          behavior: SnackBarBehavior.floating,
-                          elevation: 0,
-                          infoColor: AppColor.primary,
-                          errorColor: Colors.red,
-                          successColor: Colors.green,
-                          warningColor: AppColor.accent,
-                          body: child!,
-                        ),
-                      )),
-            );
-          },
-          navigatorKey: locator<NavigationService>().navigationKey,
-          home: const StartUpView(),
+      builder: (Widget, c) => MaterialApp(
+        supportedLocales: const [
+          Locale('en', ''), //English
+          Locale('ne', ''), //Nepali
+        ],
+        debugShowCheckedModeBanner: false,
+        theme: getThemeDataTheme(context),
+        onGenerateRoute: (settings) =>
+            locator<NavigationService>().generateRoute(
+          settings,
+          routesAndViews(settings),   
         ),
+        builder: (context, child) {
+          return Navigator(
+            onGenerateRoute: (settings) => MaterialPageRoute(
+                builder: (context) => DialogManager(
+                      child: SnackbarManager(
+                        behavior: SnackBarBehavior.floating,
+                        elevation: 0,
+                        infoColor: AppColor.primary,
+                        errorColor: Colors.red,
+                        successColor: Colors.green,
+                        warningColor: AppColor.accent,
+                        body: child!,
+                      ),
+                    )),
+          );
+        },
+        navigatorKey: locator<NavigationService>().navigationKey,
+        home: const StartUpView(),
       ),
     );
   }

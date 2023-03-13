@@ -88,7 +88,8 @@ class PayrollFilterView extends StatelessWidget {
     );
   }
 
-  Widget _buildFieldForMonthlyNepaliReportFilter(PayrollFilterModel model) {
+  Widget _buildFieldForMonthlyNepaliReportFilter(
+    PayrollFilterModel model) {
     return Row(
       children: [
         Expanded(

@@ -1,16 +1,11 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/services/payroll.service.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.argument.dart';
-import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.model.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.view.dart';
-
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.argument.dart';
-import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
-
 import '../../../../data_models/payroll.data.dart';
 
 class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
@@ -47,7 +42,7 @@ class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
   set selectedNepaliMonth(String value) {
     _selectedNepaliMonth = value;
     if (_selectedNepaliMonth == "बैशाख") {
-      _dateFrom = NepaliDateTime(NepaliDateTime.now().year, 1);
+      _dateFrom = DateTime.utc(DateTime.now().year, 1);
       _dateTo = _dateFrom?.add(const Duration(days: 30));
     }
   }
@@ -150,6 +145,10 @@ class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
         "${DateTime.now().year}-${(months.indexOf(_selectedMonth) + 1).toString().length == 1 ? '0${months.indexOf(_selectedMonth) + 1}' : months.indexOf(_selectedMonth) + 1}-01";
     _searchParams['date_to'] =
         lastDateOfMonth(months.indexOf(_selectedMonth) + 1);
+
+    // if(isNepaliDate ==true){
+    //   _searchParams['date_from'] =
+    // }
 
     if (_returnBack) {
       goBack(result: PayrollArgument(searchParams: _searchParams));

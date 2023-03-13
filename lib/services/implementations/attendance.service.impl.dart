@@ -136,12 +136,6 @@ class AttendanceServiceImpl implements AttendanceService {
       return _data['data']['att_data'][0]['attendance']
           .map<AttendanceReportData>((e) => AttendanceReportData.fromJson(e))
           .toList();
-
-      // return _data['data']['att_data'][0]['attendance']
-      //     .map<AttendanceReportData>(
-      //       (e) => AttendanceReportData.fromJson(e),
-      //     )
-      //     .toList();
     } catch (e) {
       throw apiError(e);
     }
@@ -523,12 +517,6 @@ class AttendanceServiceImpl implements AttendanceService {
         AttendanceReportSummaryData.fromJson(
             _data['data']['att_data'][0]['summary'])
       ];
-
-      // return _data['data']['att_data'][0]['attendance']
-      //     .map<AttendanceReportData>(
-      //       (e) => AttendanceReportData.fromJson(e),
-      //     )
-      //     .toList();
     } catch (e) {
       throw apiError(e);
     }

@@ -8,6 +8,10 @@ import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_date_time_field.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:nepali_date_picker/nepali_date_picker.dart';
+
+import '../../../widgets/fy_checkbox.widget.dart';
+import '../../../widgets/fy_nepali_date_time_field.widget.dart';
 
 class AttendanceReportFilterView extends StatelessWidget {
   static String tag = 'attendance-report-filter-view';
@@ -104,12 +108,18 @@ class AttendanceReportFilterView extends StatelessWidget {
                     if (model.filterType == AttendanceReportFilterType.weekly)
                       _buildFieldForWeeklyReportFilter(model),
                     if (model.filterType == AttendanceReportFilterType.monthly)
-                      _buildFieldForMonthlyReportFilter(model),
+                      if (model.isNepaliDate == false)
+                        _buildFieldForMonthlyReportFilter(model),
+                    if (model.isNepaliDate == true)
+                      _buildFieldForMonthlyNepaliReportFilter(model),
                     const SizedBox(
                       height: 10,
                     ),
                     if (model.filterType == AttendanceReportFilterType.monthly)
-                      _buildFieldForDateMonthlyReportFilter(model),
+                      if (model.isNepaliDate == false)
+                        _buildFieldForDateMonthlyReportFilter(model),
+                    if (model.isNepaliDate == true)
+                      _buildFieldForNepaliWeekelyReportFilter(model),
                     const SizedBox(height: 16),
                     FYPrimaryButton(
                       label: "View Report",
@@ -180,12 +190,44 @@ class AttendanceReportFilterView extends StatelessWidget {
   }
 
   Widget _buildFieldForMonthlyReportFilter(AttendanceReportFilterModel model) {
-    return FYDropdown<String>(
-      items: model.months,
-      labels: model.months,
-      value: model.selectedMonth,
-      title: 'Month',
-      onChanged: (value) => model.selectedMonth = value!,
+    return Row(
+      children: [
+        Expanded(
+            child: FYDropdown<String>(
+          items: model.months,
+          labels: model.months,
+          value: model.selectedMonth,
+          title: 'Month',
+          onChanged: (value) => model.selectedMonth = value!,
+        )),
+        Expanded(
+          child: FYCheckbox(
+              value: model.isNepaliDate,
+              onChanged: (value) => model.isNepaliDate = value!,
+              label: "नेपाली"),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFieldForMonthlyNepaliReportFilter(
+      AttendanceReportFilterModel model) {
+    return Row(
+      children: [
+        Expanded(
+            child: FYDropdown<String>(
+          items: model.nepaliMonths,
+          labels: model.nepaliMonths,
+          value: model.selectedNepaliMonth,
+          title: "महिना",
+          onChanged: (value) => model.selectedNepaliMonth = value!,
+        )),
+        Expanded(
+            child: FYCheckbox(
+                value: model.isNepaliDate,
+                onChanged: (value) => model.isNepaliDate = value!,
+                label: "नेपाली"))
+      ],
     );
   }
 
@@ -221,6 +263,34 @@ class AttendanceReportFilterView extends StatelessWidget {
             ),
             lastDate: DateTime.now(),
           )),
+        )
+      ],
+    );
+  }
+
+  Widget _buildFieldForNepaliWeekelyReportFilter(
+      AttendanceReportFilterModel model) {
+    return Row(
+      children: [
+        Expanded(
+          child: FYNepaliDateField(
+            title: "मिति देखि :",
+            onNepaliChanged: (value) => model.nepaliDateFrom = value!,
+            nepaliValue: model.nepaliDateFrom,
+            nepaliFirstDate: NepaliDateTime.now().subtract(
+              const Duration(days: 365 * 7),
+            ),
+            nepaliLastDate: NepaliDateTime.now(),
+          ),
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        Expanded(
+          child: FYNepaliDateField(
+            title: "मिति सम्म :",
+            nepaliValue: model.nepaliDateTo,
+          ),
         )
       ],
     );
