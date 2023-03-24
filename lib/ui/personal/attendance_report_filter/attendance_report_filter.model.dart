@@ -80,7 +80,7 @@ class AttendanceReportFilterModel extends ViewModel
   set selectedNepaliMonth(String value) {
     _selectedNepaliMonth = value;
     if (_selectedNepaliMonth == "बैशाख") {
-      _dateFrom = NepaliDateTime(NepaliDateTime.now().year, 1);
+      _dateFrom = NepaliDateTime(NepaliDateTime.now().year, 1) as DateTime?;
       _dateTo = _dateFrom?.add(const Duration(days: 30));
     }
   }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bestfriend/bestfriend.dart';
+import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
@@ -52,8 +53,20 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   String? _selectedClientLabel;
   String? get selectedClientLabel => _selectedClientLabel;
 
+  // late AttendanceCorrectionData _attendanceCorrectionData;
+
+  // UI Controllers
+  int _currentFragment = 0;
+  int get currentFragment => _currentFragment;
+  set currentFragment(int value) {
+    _currentFragment = value;
+    setIdle();
+  }
+
   // Actions
   Future<void> init() async {
+    // _attendanceCorrectionData = await _attendanceService
+    //     .getAttendanceCorrections(dateTime: formattedDate(currentDateTime));
     _attendanceForgot = null;
 
     _currentDateTimeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -172,6 +185,8 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
             ? getCurrentDateTime()
             : _attendanceForgot!.forgottonDate,
       );
+      // _attendanceCorrectionData = await _attendanceService
+      //     .getAttendanceCorrections(dateTime: formattedDate(currentDateTime));
 
       dialog.hideDialog();
       setIdle();

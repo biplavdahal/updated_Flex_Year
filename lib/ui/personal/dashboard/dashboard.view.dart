@@ -1,4 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
@@ -40,6 +41,24 @@ class DashboardView extends StatelessWidget {
         return Scaffold(
           backgroundColor: AppColor.primary,
           drawer: const DashboardDrawer(),
+          bottomNavigationBar: CurvedNavigationBar(
+            backgroundColor: AppColor.primary,
+            color: Colors.white,
+            height: 50,
+            index: model.currentFragment,
+            onTap: (value) => model.currentFragment = value,
+            items: const [
+              Icon(
+                MdiIcons.appleFinder,
+                size: 25,
+              ),
+              Icon(MdiIcons.accountGroupOutline, size: 25),
+              Icon(MdiIcons.home, size: 30),
+              Icon(MdiIcons.semanticWeb, size: 25),
+              Icon(MdiIcons.more, size: 25),
+            ],
+            animationCurve: Curves.fastLinearToSlowEaseIn,
+          ),
           floatingActionButton: model.isLoading
               ? null
               : FloatingActionButton(
@@ -58,51 +77,92 @@ class DashboardView extends StatelessWidget {
             ),
             bottom: PreferredSize(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        formattedDate(model.currentDateTime),
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  formattedDate(model.currentDateTime),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                SizedBox(
+                                  height: 20,
+                                  child: VerticalDivider(
+                                    color: Colors.white,
+                                    thickness: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  formattedTime(model.currentDateTime),
+                                  style: const TextStyle(color: Colors.white),
+                                  textAlign: TextAlign.center,
+                                )
+                              ],
+                            ),
+                          )
+                        ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                      child: VerticalDivider(
-                        color: Colors.white,
-                        thickness: 1,
+                      const SizedBox(
+                        height: 10,
                       ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        formattedTime(model.currentDateTime),
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              preferredSize: const Size(double.infinity, 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Welcome ! " +
+                                    model.user.staff.firstName +
+                                    model.user.staff.middleName +
+                                    " " +
+                                    model.user.staff.lastName,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  )),
+              preferredSize: const Size(double.infinity, 50),
             ),
             actions: [
               IconButton(
                   tooltip: "notice",
-                  iconSize: 27,
+                  iconSize: 25,
                   onPressed: () async {
                     await locator<DashboardModel>().goto(NoticeView.tag);
                   },
                   icon: const Icon(MdiIcons.noteText)),
               IconButton(
                 tooltip: "notification",
-                iconSize: 27,
+                iconSize: 25,
                 onPressed: () {},
                 icon: const Icon(MdiIcons.bellOutline),
               ),
@@ -111,7 +171,7 @@ class DashboardView extends StatelessWidget {
           body: Container(
             width: double.infinity,
             height: MediaQuery.of(context).size.height,
-            margin: const EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 30),
             padding: const EdgeInsets.all(16),
             decoration: const BoxDecoration(
               color: Color(0xFFF1F1F1),
@@ -127,6 +187,8 @@ class DashboardView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    _buildValidAttendance(model),
+                    _buildAttendanceActivities(model),
                     _buildForgotToCheckout(model),
                     _buildTodaysAttendance(model),
                     _buildUtilities(model),
@@ -138,6 +200,107 @@ class DashboardView extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildValidAttendance(DashboardModel model) {
+    return model.company.companyId != 1
+        ? Container()
+        : const Text(
+            "Your attendance data valid from : 09:00:00 to 18:00:00",
+            style: TextStyle(
+              color: Colors.deepOrange,
+              fontWeight: FontWeight.w700,
+            ),
+          );
+  }
+
+  Widget _buildAttendanceActivities(DashboardModel model) {
+    return ExpansionTile(
+      iconColor: AppColor.primary,
+      childrenPadding: const EdgeInsets.only(left: 16, right: 16),
+      tilePadding: const EdgeInsets.only(left: 0, right: 16),
+      title: const Text(
+        "Today's Attendance Activities",
+        style: TextStyle(
+          color: AppColor.primary,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      children: [
+        Scrollbar(
+          scrollbarOrientation: ScrollbarOrientation.bottom,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Text(
+                  "Check In DateTime :  ${formattedDate(model.currentDateTime)} "
+                  "${formattedTime(model.currentDateTime)} ",
+                ),
+                SizedBox(
+                    height: 20,
+                    width: 60,
+                    child: FYPrimaryButton(label: "Request review")),
+              ],
+            ),
+          ),
+        ),
+        const Divider(),
+        Scrollbar(
+          scrollbarOrientation: ScrollbarOrientation.bottom,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Text(
+                    "Break In DateTime :  ${formattedDate(model.currentDateTime)} "
+                    "${formattedTime(model.currentDateTime)}"),
+                const SizedBox(
+                    height: 20,
+                    width: 60,
+                    child: FYPrimaryButton(label: "Request review")),
+              ],
+            ),
+          ),
+        ),
+        const Divider(),
+        Scrollbar(
+          scrollbarOrientation: ScrollbarOrientation.bottom,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Text(
+                    "Break Out DateTime :  ${formattedDate(model.currentDateTime)} "
+                    "${formattedTime(model.currentDateTime)}"),
+                const SizedBox(
+                    height: 20,
+                    width: 60,
+                    child: FYPrimaryButton(label: "Request review")),
+              ],
+            ),
+          ),
+        ),
+        const Divider(),
+        Scrollbar(
+          scrollbarOrientation: ScrollbarOrientation.bottom,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Text(
+                    "Check Out DateTime :  ${formattedDate(model.currentDateTime)} "
+                    "${formattedTime(model.currentDateTime)}"),
+                const SizedBox(
+                    height: 20,
+                    width: 60,
+                    child: FYPrimaryButton(label: "Request review")),
+              ],
+            ),
+          ),
+        )
+      ],
     );
   }
 

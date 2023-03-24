@@ -32,8 +32,8 @@ abstract class AttendanceService {
   });
 
   Future<List<AttendanceReportSummaryData>> getMonthlySummary({
-        required Map<String, dynamic> data,
-        });
+    required Map<String, dynamic> data,
+  });
 
   /// Get attendance summary
   Future<List<AttendanceSummaryData>> getAttendanceSummary({
@@ -48,7 +48,8 @@ abstract class AttendanceService {
   });
 
   /// Get list of attendance corrections
-  Future<List<AttendanceCorrectionData>> getAttendanceCorrections();
+  Future<AttendanceCorrectionData> getAttendanceCorrections(
+      {required String dateTime});
 
   /// Post forget checkout review
   Future<void> postForgetCheckoutReview({

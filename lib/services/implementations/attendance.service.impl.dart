@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
@@ -229,12 +228,13 @@ class AttendanceServiceImpl implements AttendanceService {
   }
 
   @override
-  Future<List<AttendanceCorrectionData>> getAttendanceCorrections() async {
+  Future<AttendanceCorrectionData> getAttendanceCorrections(
+      {required String dateTime}) async {
     try {
-      final _response = await _apiService.get(auGetCorrectionRequest, params: {
+      final _response = await _apiService.get(auGetRequest, params: {
         'access_token': _authenticationService.user!.accessToken,
         'id': _authenticationService.user!.id,
-        'status': 1,
+        'date': dateTime
       });
 
       final _data = constructResponse(_response.data);
@@ -243,11 +243,7 @@ class AttendanceServiceImpl implements AttendanceService {
         throw _data["response"] ?? _data["detail"] ?? _data["data"];
       }
 
-      return (_data['data'] as List<dynamic>)
-          .map<AttendanceCorrectionData>(
-            (e) => AttendanceCorrectionData.fromJson(e),
-          )
-          .toList();
+      return AttendanceCorrectionData.fromJson(_data);
     } catch (e) {
       throw apiError(e);
     }

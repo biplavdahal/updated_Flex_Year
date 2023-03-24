@@ -17,7 +17,7 @@ class FYPrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      child: Text(label),
+      child: FittedBox(alignment: Alignment.center, child: Text(label)),
       style: ElevatedButton.styleFrom(
         primary: backgroundColor ?? AppColor.primary,
         side: BorderSide(
