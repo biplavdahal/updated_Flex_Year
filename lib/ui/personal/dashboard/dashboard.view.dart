@@ -5,13 +5,19 @@ import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
+import 'package:flex_year_tablet/ui/personal/attendance_report/attandance_report.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.view.dart';
+import 'package:flex_year_tablet/ui/personal/attendance_summary/attendance_summary.arguments.dart';
+import 'package:flex_year_tablet/ui/personal/attendance_summary/attendance_summary.view.dart';
 import 'package:flex_year_tablet/ui/personal/chat_contacts/chat_contacts.view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/attendance_button.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/dashboard_drawer.dart';
+import 'package:flex_year_tablet/ui/personal/dashboard/widgets/dashboard_todays_attendance_activities.dart';
+import 'package:flex_year_tablet/ui/personal/dashboard/widgets/lastcard.dart';
+import 'package:flex_year_tablet/ui/personal/dashboard/widgets/report_item.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/utility_item.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/widgets/holiday_item.dart';
@@ -27,6 +33,8 @@ import 'package:flex_year_tablet/widgets/fy_section.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+import '../../../data_models/attendance_report_summary.data.dart';
 
 class DashboardView extends StatelessWidget {
   static String tag = "dashboard-view";
@@ -44,18 +52,17 @@ class DashboardView extends StatelessWidget {
           bottomNavigationBar: CurvedNavigationBar(
             backgroundColor: AppColor.primary,
             color: Colors.white,
-            height: 50,
+            height: 52,
             index: model.currentFragment,
             onTap: (value) => model.currentFragment = value,
             items: const [
               Icon(
-                MdiIcons.appleFinder,
-                size: 25,
+                MdiIcons.checkboxOutline,
               ),
-              Icon(MdiIcons.accountGroupOutline, size: 25),
+              Icon(MdiIcons.shieldAirplaneOutline, size: 25),
               Icon(MdiIcons.home, size: 30),
-              Icon(MdiIcons.semanticWeb, size: 25),
-              Icon(MdiIcons.more, size: 25),
+              Icon(MdiIcons.calendarMonth, size: 25),
+              Icon(MdiIcons.accountGroupOutline, size: 25),
             ],
             animationCurve: Curves.fastLinearToSlowEaseIn,
           ),
@@ -73,7 +80,7 @@ class DashboardView extends StatelessWidget {
             title: Image.network(
               auBaseURL + model.logo.logoPath,
               width: 150,
-              height: 35,
+              height: MediaQuery.of(context).size.height,
             ),
             bottom: PreferredSize(
               child: Padding(
@@ -171,7 +178,7 @@ class DashboardView extends StatelessWidget {
           body: Container(
             width: double.infinity,
             height: MediaQuery.of(context).size.height,
-            margin: const EdgeInsets.only(top: 30),
+            margin: const EdgeInsets.only(top: 10),
             padding: const EdgeInsets.all(16),
             decoration: const BoxDecoration(
               color: Color(0xFFF1F1F1),
@@ -192,6 +199,7 @@ class DashboardView extends StatelessWidget {
                     _buildForgotToCheckout(model),
                     _buildTodaysAttendance(model),
                     _buildUtilities(model),
+                    _buildCurrentReport(model),
                     _buildCalander(model)
                   ],
                 ),
@@ -216,92 +224,51 @@ class DashboardView extends StatelessWidget {
   }
 
   Widget _buildAttendanceActivities(DashboardModel model) {
-    return ExpansionTile(
-      iconColor: AppColor.primary,
-      childrenPadding: const EdgeInsets.only(left: 16, right: 16),
-      tilePadding: const EdgeInsets.only(left: 0, right: 16),
-      title: const Text(
-        "Today's Attendance Activities",
-        style: TextStyle(
-          color: AppColor.primary,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-      children: [
-        Scrollbar(
-          scrollbarOrientation: ScrollbarOrientation.bottom,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                Text(
-                  "Check In DateTime :  ${formattedDate(model.currentDateTime)} "
-                  "${formattedTime(model.currentDateTime)} ",
+    return model.attendanceCorrectionData.isNotEmpty
+        ? FYSection(
+            title: "Today's Attendance Activities",
+            child: SizedBox(
+              height: 68,
+              child: ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 11,
                 ),
-                SizedBox(
-                    height: 20,
-                    width: 60,
-                    child: FYPrimaryButton(label: "Request review")),
-              ],
+                itemBuilder: (context, index) {
+                  final _correction = model.attendanceCorrectionData[index];
+
+                  return TodaysAttendanceActivities(_correction);
+                },
+                itemCount: model.attendanceCorrectionData.length,
+              ),
             ),
-          ),
-        ),
-        const Divider(),
-        Scrollbar(
-          scrollbarOrientation: ScrollbarOrientation.bottom,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                Text(
-                    "Break In DateTime :  ${formattedDate(model.currentDateTime)} "
-                    "${formattedTime(model.currentDateTime)}"),
-                const SizedBox(
-                    height: 20,
-                    width: 60,
-                    child: FYPrimaryButton(label: "Request review")),
-              ],
-            ),
-          ),
-        ),
-        const Divider(),
-        Scrollbar(
-          scrollbarOrientation: ScrollbarOrientation.bottom,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                Text(
-                    "Break Out DateTime :  ${formattedDate(model.currentDateTime)} "
-                    "${formattedTime(model.currentDateTime)}"),
-                const SizedBox(
-                    height: 20,
-                    width: 60,
-                    child: FYPrimaryButton(label: "Request review")),
-              ],
-            ),
-          ),
-        ),
-        const Divider(),
-        Scrollbar(
-          scrollbarOrientation: ScrollbarOrientation.bottom,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                Text(
-                    "Check Out DateTime :  ${formattedDate(model.currentDateTime)} "
-                    "${formattedTime(model.currentDateTime)}"),
-                const SizedBox(
-                    height: 20,
-                    width: 60,
-                    child: FYPrimaryButton(label: "Request review")),
-              ],
-            ),
-          ),
-        )
-      ],
-    );
+          )
+        : Container();
+
+    //     ExpansionTile(
+    //   iconColor: AppColor.primary,
+    //   childrenPadding: const EdgeInsets.only(left: 16, right: 16),
+    //   tilePadding: const EdgeInsets.only(left: 0, right: 16),
+    //   title: const Text(
+    //     "Today's Attendance Activities",
+    //     style: TextStyle(
+    //       color: AppColor.primary,
+    //       fontWeight: FontWeight.w700,
+    //     ),
+    //   ),
+    //   children: [
+    //     ListView.separated(
+    //       separatorBuilder: (context, index) => const SizedBox(
+    //         height: 7,
+    //       ),
+    //       itemBuilder: (context, index) {
+    //         final _correction = model.attendanceCorrectionData[index];
+
+    //         return TodaysAttendanceActivities(_correction);
+    //       },
+    //       itemCount: model.attendanceCorrectionData.length,
+    //     ),
+    //   ],
+    // );
   }
 
   Widget _buildForgotToCheckout(DashboardModel model) {
@@ -483,9 +450,90 @@ class DashboardView extends StatelessWidget {
     );
   }
 
-  Widget _buildCalander(DashboardModel model) {
+  Widget _buildCurrentReport(DashboardModel model) {
+    final today = DateTime.now();
+    int todayIndex = -1;
+    for (int i = 0; i < model.monthlyReport.length; i++) {
+      final report = model.monthlyReport[i];
+      final date = DateTime.parse(report.date);
+
+      if (date.day == today.day &&
+          date.month == today.month &&
+          date.year == today.year) {
+        todayIndex = i;
+        break;
+      }
+    }
+    final scrollController = ScrollController();
+    final itemWidth = 100.0;
+
+    scrollController.animateTo(todayIndex * itemWidth,
+        duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+
+    final AttendanceReportSummaryData report;
+
     return FYSection(
-        title: "Upcoming Holidays",
+        title: "Current Month Attendance Report : ",
+        child: model.isLoading
+            ? const FYLinearLoader()
+            : SizedBox(
+                height: 230,
+                child: ListView.separated(
+                    controller: scrollController,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: model.monthlyReport.length,
+                    separatorBuilder: (context, index) => const SizedBox(
+                          width: 5,
+                        ),
+                    itemBuilder: (context, index) {
+                      if (index == model.monthlyReport.length) {
+                        return Card(
+                          margin: const EdgeInsets.only(bottom: 100),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: const [
+                                    Text(
+                                      "Total(Hrs)",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                Center(
+                                    child: Row(
+                                  children: [],
+                                ))
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                      final _report = model.monthlyReport[index];
+                      return MonthlyHorizontalReportItems(_report, index,
+                          onTap: () async {
+                        await locator<DashboardModel>().goto(
+                            AttendanceSummaryView.tag,
+                            arguments:
+                                AttendanceSummaryArguments(date: _report.date));
+                        // model.goto(AttendanceSummaryView.tag,
+                        //     arguments: AttendanceSummaryArguments(
+                        //       date: _report.date,
+                        //     ));
+                      });
+                    }),
+              ));
+  }
+
+  Widget _buildCalander(DashboardModel model) {
+    return 
+    FYSection(
+        title: "Upcoming Holidays ",
         child: model.isLoading
             ? null
             : SizedBox(

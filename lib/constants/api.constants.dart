@@ -26,9 +26,15 @@ const auAttendanceSummary = "userstaff/staff-attendance";
 const auUserStaffDetail = "userstaff/index";
 const auWeeklyReport = "attendance/weekly-report";
 const auGetRequest = "userstaff/attendance";
+
+///
 const auForgotCheckoutReviewRequest = "attendance/checkoutreview";
 const auDeleteAttendanceCorrection = "attendance/remove";
 const auPostAttendanceCorrection = "attendance/correction-review";
+
+///today attendance correction review
+const auPostAttendanceRequestReview = "attendance/correction";
+
 const auAttendanceCorrectionEdit = "attendance/edit";
 const auOneDayReport = "attendance/oneday-report";
 const auGetAttendanceCorrectionReviews = "attendance/search";

@@ -67,24 +67,24 @@ class AttendanceReportView extends StatelessWidget {
     );
   }
 
-  Widget _buildMiddleInfoData(AttendanceReportModel model) {
-    if (model.filterType == AttendanceReportFilterType.monthly) {
-      return SizedBox(
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Showing 1- ${model.monthlyReport.length.toString()} of ${model.monthlyReport.length} items.',
-              style: const TextStyle(fontStyle: FontStyle.italic),
-            )
-          ],
-        ),
-      );
-    }
+  // Widget _buildMiddleInfoData(AttendanceReportModel model) {
+  //   if (model.filterType == AttendanceReportFilterType.monthly) {
+  //     return SizedBox(
+  //       width: double.infinity,
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           Text(
+  //             'Showing 1- ${model.monthlyReport.length.toString()} of ${model.monthlyReport.length} items.',
+  //             style: const TextStyle(fontStyle: FontStyle.italic),
+  //           )
+  //         ],
+  //       ),
+  //     );
+  //   }
 
-    return const SizedBox();
-  }
+  //   return const SizedBox();
+  // }
 
   Widget _buildTopInfoBar(AttendanceReportModel model) {
     if (model.filterType == AttendanceReportFilterType.monthly) {

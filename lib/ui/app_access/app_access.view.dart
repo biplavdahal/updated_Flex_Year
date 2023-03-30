@@ -48,34 +48,36 @@ class AppAccessView extends StatelessWidget {
                     width: double.infinity,
                     color: Colors.white,
                     padding: const EdgeInsets.all(16),
-                    child: Form(
-                      key: model.appAccessFormKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const Text(
-                            "Enter the assigned access key",
-                            style: TextStyle(
-                              color: AppColor.primary,
-                              fontWeight: FontWeight.bold,
+                    child: SingleChildScrollView(
+                      child: Form(
+                        key: model.appAccessFormKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const Text(
+                              "Enter the assigned access key",
+                              style: TextStyle(
+                                color: AppColor.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          FYInputField(
-                            title: '',
-                            label: "Enter app access",
-                            controller: model.appAccessController,
-                          ),
-                          const SizedBox(height: 20),
-                          FYPrimaryButton(
-                            label: "Verify Key",
-                            onPressed: model.isLoading
-                                ? null
-                                : model.onVerifyKeyPressed,
-                          ),
-                        ],
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            FYInputField(
+                              title: '',
+                              label: "Enter app access",
+                              controller: model.appAccessController,
+                            ),
+                            const SizedBox(height: 20),
+                            FYPrimaryButton(
+                              label: "Verify Key",
+                              onPressed: model.isLoading
+                                  ? null
+                                  : model.onVerifyKeyPressed,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

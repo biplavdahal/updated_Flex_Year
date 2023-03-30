@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
@@ -48,6 +49,31 @@ class AttendanceServiceImpl implements AttendanceService {
       }
 
       return AttendanceStatusData.fromJson(data);
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<List<AttendanceCorrectionData>> getAttendanceCorrections(
+      {required String dateTime}) async {
+    try {
+      final _response = await _apiService.get(auGetRequest, params: {
+        'access_token': _authenticationService.user!.accessToken,
+        'id': _authenticationService.user!.id,
+        'date': dateTime
+      });
+
+      final _data = constructResponse(_response.data);
+
+      if (_data!.containsKey("status") && _data["status"] == false) {
+        throw _data["response"] ?? _data["detail"] ?? _data["data"];
+      }
+
+      return _data['data']
+          .map<AttendanceCorrectionData>(
+              (e) => AttendanceCorrectionData.fromJson(e))
+          .toList();
     } catch (e) {
       throw apiError(e);
     }
@@ -228,28 +254,6 @@ class AttendanceServiceImpl implements AttendanceService {
   }
 
   @override
-  Future<AttendanceCorrectionData> getAttendanceCorrections(
-      {required String dateTime}) async {
-    try {
-      final _response = await _apiService.get(auGetRequest, params: {
-        'access_token': _authenticationService.user!.accessToken,
-        'id': _authenticationService.user!.id,
-        'date': dateTime
-      });
-
-      final _data = constructResponse(_response.data);
-
-      if (_data!.containsKey("status") && _data["status"] == false) {
-        throw _data["response"] ?? _data["detail"] ?? _data["data"];
-      }
-
-      return AttendanceCorrectionData.fromJson(_data);
-    } catch (e) {
-      throw apiError(e);
-    }
-  }
-
-  @override
   Future<void> postForgetCheckoutReview({
     required String attendanceId,
     required String dateTime,
@@ -268,6 +272,30 @@ class AttendanceServiceImpl implements AttendanceService {
 
       debugPrint(_data.toString());
 
+      if (_data!.containsKey("status") && _data["status"] == false) {
+        throw _data["response"] ?? _data["detail"] ?? _data["data"];
+      }
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<void> postTodayAttendanceRequestReview(
+      {required String dateTime,
+      required String requiredDate,
+      String? message,
+      required String attendanceId}) async {
+    try {
+      final _response =
+          await _apiService.post(auPostAttendanceRequestReview, {}, params: {
+        '  attendance_id': attendanceId,
+        'datetime': dateTime,
+        'message': message,
+        'req_date': requiredDate
+      });
+      final _data = constructResponse(_response.data);
+      debugPrint(_data.toString());
       if (_data!.containsKey("status") && _data["status"] == false) {
         throw _data["response"] ?? _data["detail"] ?? _data["data"];
       }

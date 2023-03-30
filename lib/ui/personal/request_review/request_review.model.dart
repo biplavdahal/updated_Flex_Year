@@ -14,6 +14,7 @@ enum RequestReviewType {
   updateReview,
   attendanceReview,
   checkoutReview,
+  todayReview
 }
 
 class RequestReviewModel extends ViewModel with SnackbarMixin, DialogMixin {

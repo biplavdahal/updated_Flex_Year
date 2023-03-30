@@ -61,7 +61,7 @@ class RequestReviewView extends StatelessWidget {
             if (model.requestReviewType == RequestReviewType.checkoutReview ||
                 model.requestReviewType == RequestReviewType.attendanceReview)
               FYInputField(
-                title: '',
+                title: 'message',
                 label: "Message",
                 controller: model.messageController,
               ),

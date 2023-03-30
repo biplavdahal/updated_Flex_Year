@@ -1,34 +1,86 @@
 {
   "project_info": {
-    "project_number": "687048864507",
-    "project_id": "flex-year",
-    "storage_bucket": "flex-year.appspot.com"
+    "project_number": "830101525264",
+    "firebase_url": "https://flexyear-7500d.firebaseio.com",
+    "project_id": "flexyear-7500d",
+    "storage_bucket": "flexyear-7500d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:687048864507:android:f8c44cbf0a964a0acaf65e",
+        "mobilesdk_app_id": "1:830101525264:android:fa6f9eb7c00420b2cccb95",
         "android_client_info": {
-          "package_name": "work.flexyear.flex_year_tablet"
+          "package_name": "bentraytech.flexyear"
         }
       },
       "oauth_client": [
         {
-          "client_id": "687048864507-it35nplq4la00r13fpjhpdmn23ccjnar.apps.googleusercontent.com",
+          "client_id": "830101525264-1i41oevsv31vvphgep9ajde18ql6agpo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "bentraytech.flexyear",
+            "certificate_hash": "4ae1c754edf4033306f22234d4bcd46fd2da31c0"
+          }
+        },
+        {
+          "client_id": "830101525264-6jq9a3r12taredf0ldfubnemdus003an.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDbCVLigp5kPYCaa4gWZNAhzQuFvANBcS8"
+          "current_key": "AIzaSyCTe2qHir7-qjSX56msWzOyE_fUOFUuHHg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "687048864507-it35nplq4la00r13fpjhpdmn23ccjnar.apps.googleusercontent.com",
+              "client_id": "830101525264-6jq9a3r12taredf0ldfubnemdus003an.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "830101525264-e9vmjm9hbvuvtc80b35dc0v9gq60jj53.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "Bentray-Technologies.Flex-SAAS"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:830101525264:android:3f7d72bcf8bd5574cccb95",
+        "android_client_info": {
+          "package_name": "work.flexyear.flex_year_tablet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "830101525264-6jq9a3r12taredf0ldfubnemdus003an.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTe2qHir7-qjSX56msWzOyE_fUOFUuHHg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "830101525264-6jq9a3r12taredf0ldfubnemdus003an.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "830101525264-e9vmjm9hbvuvtc80b35dc0v9gq60jj53.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "Bentray-Technologies.Flex-SAAS"
+              }
             }
           ]
         }

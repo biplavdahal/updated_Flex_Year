@@ -48,7 +48,7 @@ abstract class AttendanceService {
   });
 
   /// Get list of attendance corrections
-  Future<AttendanceCorrectionData> getAttendanceCorrections(
+  Future<List<AttendanceCorrectionData>> getAttendanceCorrections(
       {required String dateTime});
 
   /// Post forget checkout review
@@ -57,6 +57,13 @@ abstract class AttendanceService {
     required String dateTime,
     String? message,
   });
+
+  ///post Today's attendance request review
+  Future<void> postTodayAttendanceRequestReview(
+      {required String dateTime,
+      required String requiredDate,
+      String? message,
+      required String attendanceId});
 
   /// Remove attendance correction
   Future<void> removeAttendanceCorrection(String attendanceId);

@@ -16,10 +16,24 @@ import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/attendance.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
+import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
+import 'package:flex_year_tablet/ui/personal/holidays/holidays.view.dart';
+import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/login/login.view.dart';
+import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.view.dart';
+import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
+import 'package:flex_year_tablet/ui/personal/profile/profile.view.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:nepali_date_picker/nepali_date_picker.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
+import '../../../data_models/attendance_report.data.dart';
+import '../../../data_models/attendance_report_summary.data.dart';
+import '../attendance_correction/attendance_correction.view.dart';
+import 'data_model/view_info.data.dart';
 
 class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   // Services
@@ -38,6 +52,16 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   late AttendanceStatusData _attendanceStatus;
   AttendanceStatusData get attendanceStatus => _attendanceStatus;
 
+  List<AttendanceCorrectionData> _attendanceCorrectionData = [];
+  List<AttendanceCorrectionData> get attendanceCorrectionData =>
+      _attendanceCorrectionData;
+
+  List<AttendanceReportData> _monthlyReport = [];
+  List<AttendanceReportData> get monthlyReport => _monthlyReport;
+
+  List<AttendanceReportSummaryData> _reportSummary = [];
+  List<AttendanceReportSummaryData> get reportSummary => _reportSummary;
+
   AttendanceSummaryData? _attendanceData;
   AttendanceSummaryData? get attendanceData => _attendanceData;
 
@@ -53,20 +77,45 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   String? _selectedClientLabel;
   String? get selectedClientLabel => _selectedClientLabel;
 
-  // late AttendanceCorrectionData _attendanceCorrectionData;
-
   // UI Controllers
-  int _currentFragment = 0;
+  int _currentFragment = 2;
   int get currentFragment => _currentFragment;
   set currentFragment(int value) {
     _currentFragment = value;
     setIdle();
+
+    if (value == 0) {
+      locator<DashboardModel>().goto(AttendanceCorrectionView.tag);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        currentFragment = 2;
+      });
+    }
+    if (value == 1) {
+      locator<DashboardModel>().goto(LeaveRequestView.tag);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        currentFragment = 2;
+      });
+    }
+    if (value == 2) {
+      locator<DashboardModel>().goto(DashboardView.tag);
+      goBack();
+    }
+    if (value == 3) {
+      locator<DashboardModel>().goto(HolidaysView.tag);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        currentFragment = 2;
+      });
+    }
+    if (value == 4) {
+      locator<DashboardModel>().goto(ProfileView.tag);
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        currentFragment = 2;
+      });
+    }
   }
 
   // Actions
   Future<void> init() async {
-    // _attendanceCorrectionData = await _attendanceService
-    //     .getAttendanceCorrections(dateTime: formattedDate(currentDateTime));
     _attendanceForgot = null;
 
     _currentDateTimeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -113,6 +162,19 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     try {
       const FYLinearLoader();
       HolidaysModel.holidaydata();
+      _attendanceCorrectionData =
+          (await _attendanceService.getAttendanceCorrections(
+              dateTime: formattedDate =
+                  DateFormat('yyyy-MM-dd ').format(DateTime.now())));
+      Map<String, dynamic> _searchParams = {};
+      _searchParams['date_from'] = formattedStartOfMonths;
+      _searchParams['date_to'] = formattedDate;
+
+      _monthlyReport = await _attendanceService.getMonthlyReport(
+        data: _searchParams,
+      );
+      _reportSummary =
+          await _attendanceService.getMonthlySummary(data: _searchParams);
     } catch (e) {
       rethrow;
     }
@@ -169,6 +231,18 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     }
   }
 
+  String formattedDate =
+      DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
+
+  String formattedStartOfMonth = DateFormat('yyyy-MM-dd')
+      .format(DateTime(DateTime.now().year, DateTime.now().month, 1));
+
+  static NepaliDateTime nepaliStartOfMonth =
+      NepaliDateTime(NepaliDateTime.now().year, NepaliDateTime.now().month, 1);
+  static DateTime dateTimeStartOfMonth = nepaliStartOfMonth.toDateTime();
+  String formattedStartOfMonths =
+      DateFormat('yyyy-MM-dd').format(dateTimeStartOfMonth);
+
   Future<void> onAttendanceButtonPressed(String status) async {
     try {
       dialog.showDialog(
@@ -185,8 +259,10 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
             ? getCurrentDateTime()
             : _attendanceForgot!.forgottonDate,
       );
-      // _attendanceCorrectionData = await _attendanceService
-      //     .getAttendanceCorrections(dateTime: formattedDate(currentDateTime));
+      _attendanceCorrectionData =
+          (await _attendanceService.getAttendanceCorrections(
+              dateTime: formattedDate =
+                  DateFormat('yyyy-MM-dd ').format(DateTime.now())));
 
       dialog.hideDialog();
       setIdle();
