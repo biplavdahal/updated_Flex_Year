@@ -68,12 +68,12 @@ class FYNepaliDateField extends StatelessWidget {
   Future<void> _showNepaliDatePicker(BuildContext context) async {
     final _pickedNepaiDate = await showMaterialDatePicker(
         context: context,
-        // locale: const Locale('ne'),
+        helpText: title,
         initialDate: nepaliValue ?? NepaliDateTime.now(),
         firstDate: nepaliFirstDate ?? NepaliDateTime.now(),
         lastDate: nepaliLastDate ??
             NepaliDateTime.now().add(
-              const Duration(),
+              const Duration(days: 365),
             ),
         builder: (context, child) {
           return Theme(

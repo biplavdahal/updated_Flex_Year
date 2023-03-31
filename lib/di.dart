@@ -35,6 +35,7 @@ import 'package:flex_year_tablet/ui/personal/change_password/change_password_vie
 import 'package:flex_year_tablet/ui/personal/chat_contacts/chat_contacts.model.dart';
 import 'package:flex_year_tablet/ui/personal/chats/chats.model.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
+import 'package:flex_year_tablet/ui/personal/date_converter/date_converter.viewmodel.dart';
 import 'package:flex_year_tablet/ui/personal/edit_profile/edit_profile.viewmodel.dart';
 import 'package:flex_year_tablet/ui/personal/forget%20password/forget_password_view.dart';
 import 'package:flex_year_tablet/ui/personal/forget%20password/forget_password_view_model.dart';
@@ -79,7 +80,6 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<PayrollService>(() => PayrollServiceImpl());
   locator.registerLazySingleton<UserService>(() => UserServiceImplementation());
 
-
   // Killable models
   locator.registerFactory(() => StartUpModel());
   locator.registerFactory(() => LoginModel());
@@ -112,6 +112,8 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => PayrollFilterModel());
 
   locator.registerFactory(() => NoticeModel());
+
+  locator.registerFactory(() => DateConverterViewModel());
 
   // Unkillable models
 }

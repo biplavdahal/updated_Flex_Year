@@ -481,7 +481,7 @@ class DashboardView extends StatelessWidget {
                 child: ListView.separated(
                     controller: scrollController,
                     scrollDirection: Axis.horizontal,
-                    itemCount: model.monthlyReport.length,
+                    itemCount: model.monthlyReport.length + 1,
                     separatorBuilder: (context, index) => const SizedBox(
                           width: 5,
                         ),
@@ -521,18 +521,17 @@ class DashboardView extends StatelessWidget {
                             AttendanceSummaryView.tag,
                             arguments:
                                 AttendanceSummaryArguments(date: _report.date));
-                        // model.goto(AttendanceSummaryView.tag,
-                        //     arguments: AttendanceSummaryArguments(
-                        //       date: _report.date,
-                        //     ));
+                        model.goto(AttendanceSummaryView.tag,
+                            arguments: AttendanceSummaryArguments(
+                              date: _report.date,
+                            ));
                       });
                     }),
               ));
   }
 
   Widget _buildCalander(DashboardModel model) {
-    return 
-    FYSection(
+    return FYSection(
         title: "Upcoming Holidays ",
         child: model.isLoading
             ? null

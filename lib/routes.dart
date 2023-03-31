@@ -13,6 +13,7 @@ import 'package:flex_year_tablet/ui/personal/attendance_summary/attendance_summa
 import 'package:flex_year_tablet/ui/personal/change_password/change_password_view.dart';
 import 'package:flex_year_tablet/ui/personal/chat_contacts/chat_contacts.view.dart';
 import 'package:flex_year_tablet/ui/personal/chats/chats.view.dart';
+import 'package:flex_year_tablet/ui/personal/date_converter/date_converter.view.dart';
 import 'package:flex_year_tablet/ui/personal/edit_profile/edit_profile.view.dart';
 import 'package:flex_year_tablet/ui/personal/forget%20password/forget_password_view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.view.dart';
@@ -65,4 +66,5 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
       PayrollFilterView.tag:
           PayrollFilterView(settings.arguments as Arguments?),
       NoticeView.tag: const NoticeView(),
+      DateConverterView.tag : const DateConverterView(),
     };

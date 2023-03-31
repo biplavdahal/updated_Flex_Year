@@ -17,6 +17,7 @@ import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/attendance.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.view.dart';
+import 'package:flex_year_tablet/ui/personal/date_converter/date_converter.view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
@@ -101,7 +102,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       goBack();
     }
     if (value == 3) {
-      locator<DashboardModel>().goto(HolidaysView.tag);
+      locator<DashboardModel>().goto(DateConverterView.tag);
       WidgetsBinding.instance?.addPostFrameCallback((_) {
         currentFragment = 2;
       });
@@ -240,7 +241,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   static NepaliDateTime nepaliStartOfMonth =
       NepaliDateTime(NepaliDateTime.now().year, NepaliDateTime.now().month, 1);
   static DateTime dateTimeStartOfMonth = nepaliStartOfMonth.toDateTime();
-  String formattedStartOfMonths =
+  static String formattedStartOfMonths =
       DateFormat('yyyy-MM-dd').format(dateTimeStartOfMonth);
 
   Future<void> onAttendanceButtonPressed(String status) async {
