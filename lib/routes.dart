@@ -66,5 +66,5 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
       PayrollFilterView.tag:
           PayrollFilterView(settings.arguments as Arguments?),
       NoticeView.tag: const NoticeView(),
-      DateConverterView.tag : const DateConverterView(),
+      DateConverterView.tag: const DateConverterView(),
     };

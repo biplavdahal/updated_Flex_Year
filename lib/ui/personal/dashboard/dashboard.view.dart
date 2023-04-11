@@ -236,7 +236,9 @@ class DashboardView extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final _correction = model.attendanceCorrectionData[index];
 
-                  return TodaysAttendanceActivities(_correction);
+                  return TodaysAttendanceActivities(
+                    _correction,
+                  );
                 },
                 itemCount: model.attendanceCorrectionData.length,
               ),
@@ -470,14 +472,12 @@ class DashboardView extends StatelessWidget {
     scrollController.animateTo(todayIndex * itemWidth,
         duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
 
-    final AttendanceReportSummaryData report;
-
     return FYSection(
         title: "Current Month Attendance Report : ",
         child: model.isLoading
             ? const FYLinearLoader()
             : SizedBox(
-                height: 230,
+                height: 140,
                 child: ListView.separated(
                     controller: scrollController,
                     scrollDirection: Axis.horizontal,
@@ -488,7 +488,7 @@ class DashboardView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       if (index == model.monthlyReport.length) {
                         return Card(
-                          margin: const EdgeInsets.only(bottom: 100),
+                          margin: const EdgeInsets.only(bottom: 5),
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
@@ -507,7 +507,7 @@ class DashboardView extends StatelessWidget {
                                 ),
                                 Center(
                                     child: Row(
-                                  children: [],
+                                  children: [Text("56.54")],
                                 ))
                               ],
                             ),

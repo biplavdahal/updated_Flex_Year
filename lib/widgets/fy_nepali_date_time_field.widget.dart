@@ -1,10 +1,7 @@
-import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
 
-import '../theme.dart';
-
-class FYNepaliDateField extends StatelessWidget {
+class FYNepaliDateField extends StatefulWidget {
   final NepaliDateTime? nepaliValue;
   final String? title;
   final ValueSetter<NepaliDateTime?>? onNepaliChanged;
@@ -12,79 +9,69 @@ class FYNepaliDateField extends StatelessWidget {
   final NepaliDateTime? nepaliLastDate;
   final Icon? icon;
 
-  const FYNepaliDateField(
-      {Key? key,
-      this.nepaliValue,
-      this.title,
-      this.onNepaliChanged,
-      this.nepaliFirstDate,
-      this.nepaliLastDate,
-      this.icon})
-      : super(key: key);
+  const FYNepaliDateField({
+    Key? key,
+    this.nepaliValue,
+    this.title,
+    this.onNepaliChanged,
+    this.nepaliFirstDate,
+    this.nepaliLastDate,
+    this.icon,
+  }) : super(key: key);
+
+  @override
+  _NepaliDateFieldState createState() => _NepaliDateFieldState();
+}
+
+class _NepaliDateFieldState extends State<FYNepaliDateField> {
+  NepaliDateTime? _nepaliDate;
+
+  @override
+  void initState() {
+    super.initState();
+    _nepaliDate = widget.nepaliValue;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (title != null)
-          Text(
-            title!,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-          ),
-        if (title != null)
-          const SizedBox(
-            height: 8,
-          ),
-        GestureDetector(
-          onTap: () {
-            _showNepaliDatePicker(context);
-          },
-          child: InputDecorator(
-            decoration: InputDecoration(
-                border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(7.0),
-            )),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text(
-                      nepaliValue != null
-                          ? formattedDate(nepaliValue.toString())
-                          : "Select date...",
-                      style: nepaliValue == null
-                          ? const TextStyle(color: Colors.grey)
-                          : null),
-                )
-              ],
-            ),
-          ),
-        )
-      ],
+    return InkWell(
+      onTap: _selectNepaliDate,
+      child: InputDecorator(
+        decoration: InputDecoration(
+          icon: widget.icon,
+          labelText: widget.title,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(_nepaliDate != null
+                ? NepaliDateFormat("y-MM-dd").format(_nepaliDate!)
+                : ""),
+            const Icon(Icons.calendar_today),
+          ],
+        ),
+      ),
     );
   }
 
-  Future<void> _showNepaliDatePicker(BuildContext context) async {
-    final _pickedNepaiDate = await showMaterialDatePicker(
-        context: context,
-        helpText: title,
-        initialDate: nepaliValue ?? NepaliDateTime.now(),
-        firstDate: nepaliFirstDate ?? NepaliDateTime.now(),
-        lastDate: nepaliLastDate ??
-            NepaliDateTime.now().add(
-              const Duration(days: 365),
-            ),
-        builder: (context, child) {
-          return Theme(
-              data: ThemeData.dark().copyWith(
-                  colorScheme:
-                      const ColorScheme.light(primary: AppColor.primary),
-                  dialogBackgroundColor: AppColor.scaffold),
-              child: child!);
-        });
-    if (_pickedNepaiDate != null) {
-      onNepaliChanged?.call(_pickedNepaiDate);
+  Future<void> _selectNepaliDate() async {
+    final NepaliDateTime? picked = await showMaterialDatePicker(
+      context: context,
+      firstDate: widget.nepaliFirstDate ??
+          NepaliDateTime.now().subtract(Duration(days: 365)),
+      lastDate: widget.nepaliLastDate ??
+          NepaliDateTime.now().add(Duration(days: 365)),
+      initialDate: _nepaliDate ?? NepaliDateTime.now(),
+      textDirection: TextDirection.ltr,
+      initialDatePickerMode: DatePickerMode.day,
+    );
+
+    if (picked != null && picked != _nepaliDate) {
+      setState(() {
+        _nepaliDate = picked;
+      });
+      widget.onNepaliChanged?.call(_nepaliDate);
     }
   }
 }

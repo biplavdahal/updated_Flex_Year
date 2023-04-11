@@ -12,7 +12,6 @@ class AppColor {
   static const Color primaryButtonTextColor = Color(0xFFFFFFFF);
 }
 
-
 getThemeDataTheme(BuildContext context) {
   return ThemeData(
     scaffoldBackgroundColor: AppColor.scaffold,
@@ -56,7 +55,8 @@ getThemeDataTheme(BuildContext context) {
           fontSize: 14,
           fontWeight: FontWeight.bold,
         ),
-        side: const BorderSide(color: Color.fromARGB(255, 3, 100, 142), width: 1),
+        side:
+            const BorderSide(color: Color.fromARGB(255, 3, 100, 142), width: 1),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(

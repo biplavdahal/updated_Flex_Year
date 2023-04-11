@@ -60,8 +60,8 @@ abstract class AttendanceService {
 
   ///post Today's attendance request review
   Future<void> postTodayAttendanceRequestReview(
-      {required String dateTime,
-      required String requiredDate,
+      {required String reqDate,
+        required String dateTime,
       String? message,
       required String attendanceId});
 

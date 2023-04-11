@@ -58,7 +58,7 @@ class LoginView extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: SafeArea(
-        child: model.showLoginWithPin
+        child: model.showLoginWithPin 
             ? _loginWithPinView(context, model)
             : _loginWithUsernameAndPasswordView(context, model),
       ),

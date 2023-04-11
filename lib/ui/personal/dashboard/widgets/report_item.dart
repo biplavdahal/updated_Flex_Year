@@ -27,7 +27,7 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
                       report.totalWorkingHours == '00:00'
                   ? Colors.red.shade100
                   : Colors.green.shade100,
-      margin: const EdgeInsets.only(bottom: 100),
+      margin: const EdgeInsets.only(bottom: 5),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

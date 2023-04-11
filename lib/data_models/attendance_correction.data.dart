@@ -14,6 +14,7 @@ class AttendanceCorrectionData with _$AttendanceCorrectionData {
     @JsonKey(name: 'checkout_datetime') String? checkoutDatetime,
     @JsonKey(name: 'status') String? Status,
     @JsonKey(name: 'status_out') String? statusOut,
+    @JsonKey(name: 'attendance_id')String? attendanceId
 
  
   }) = _AttendanceCorrectionData;

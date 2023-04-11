@@ -282,20 +282,21 @@ class AttendanceServiceImpl implements AttendanceService {
 
   @override
   Future<void> postTodayAttendanceRequestReview(
-      {required String dateTime,
-      required String requiredDate,
+      {required String reqDate,
+      required String dateTime,
       String? message,
       required String attendanceId}) async {
     try {
-      final _response =
-          await _apiService.post(auPostAttendanceRequestReview, {}, params: {
-        '  attendance_id': attendanceId,
+      final _response = await _apiService.post(auPostAttendanceRequestReview, {
+        'access_token': _authenticationService.user!.accessToken,
+        'attendance_id': attendanceId,
         'datetime': dateTime,
         'message': message,
-        'req_date': requiredDate
+        'req_date': reqDate
       });
+
       final _data = constructResponse(_response.data);
-      debugPrint(_data.toString());
+
       if (_data!.containsKey("status") && _data["status"] == false) {
         throw _data["response"] ?? _data["detail"] ?? _data["data"];
       }

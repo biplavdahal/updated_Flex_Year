@@ -115,6 +115,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     }
   }
 
+
   // Actions
   Future<void> init() async {
     _attendanceForgot = null;
@@ -233,7 +234,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   }
 
   String formattedDate =
-      DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
+      DateFormat('yyyy-MM-dd').format(DateTime.now());
 
   String formattedStartOfMonth = DateFormat('yyyy-MM-dd')
       .format(DateTime(DateTime.now().year, DateTime.now().month, 1));

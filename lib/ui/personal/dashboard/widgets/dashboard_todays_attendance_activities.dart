@@ -1,16 +1,37 @@
+import 'package:bestfriend/di.dart';
+import 'package:bestfriend/mixins/snack_bar.mixin.dart';
 import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
-import 'package:flex_year_tablet/widgets/fy_date_time_field.widget.dart';
+import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
+import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
+import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/widgets/fy_input_field.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../../../../data_models/attendance_correction.data.dart';
+import '../../../../services/attendance.service.dart';
 
-class TodaysAttendanceActivities extends StatelessWidget {
+class TodaysAttendanceActivities extends StatefulWidget
+    with SnackbarMixin, DialogMixin {
   final AttendanceCorrectionData correctionData;
 
-  const TodaysAttendanceActivities(
+  TodaysAttendanceActivities(
     this.correctionData, {
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<TodaysAttendanceActivities> createState() =>
+      _TodaysAttendanceActivitiesState();
+}
+
+class _TodaysAttendanceActivitiesState
+    extends State<TodaysAttendanceActivities> {
+  //Request Review
+  TimeOfDay _selectedTime = TimeOfDay.now();
+  final TextEditingController _messageController = TextEditingController();
+  TextEditingController get messageController => _messageController;
+  final AttendanceService _attendanceService = locator<AttendanceService>();
+  String currentDateTime = DateTime.now().toString();
 
   @override
   Widget build(BuildContext context) {
@@ -22,27 +43,27 @@ class TodaysAttendanceActivities extends StatelessWidget {
           children: [
             Row(
               children: [
-                if (correctionData.Status == "Lunch In")
+                if (widget.correctionData.Status == "Lunch In")
                   const Text(
                     "Lunch In :- ",
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                if (correctionData.Status != "Lunch In")
+                if (widget.correctionData.Status != "Lunch In")
                   const Text(
                     "Check In :- ",
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                Text(correctionData.checkinDatetime == null
+                Text(widget.correctionData.checkinDatetime == null
                     ? '-'
-                    : correctionData.checkinDatetime.toString())
+                    : widget.correctionData.checkinDatetime.toString())
               ],
             ),
-            if (correctionData.checkinDatetime != null)
-              if (correctionData.Status != "Lunch In")
+            if (widget.correctionData.checkinDatetime != null)
+              if (widget.correctionData.Status != "Lunch In")
                 SizedBox(
                     height: 29,
                     width: 110,
@@ -53,23 +74,58 @@ class TodaysAttendanceActivities extends StatelessWidget {
                               builder: (BuildContext context) {
                                 return AlertDialog(
                                   scrollable: true,
-                                  title: Text("Request Review"),
+                                  title: Text(
+                                    "Request Review " +
+                                        "(" "${widget.correctionData.Status.toString()}" +
+                                        ")",
+                                    style: const TextStyle(
+                                        color: AppColor.primary),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                        onPressed: () {
+                                          onSubmit(
+                                              "${widget.correctionData.attendanceId}");
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text(
+                                          "Submit",
+                                          style: TextStyle(
+                                              color: AppColor.primary),
+                                        ))
+                                  ],
                                   content: Padding(
-                                    padding: EdgeInsets.all(20),
+                                    padding: const EdgeInsets.all(10),
                                     child: Form(
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.stretch,
                                         children: [
-                                          FYTimeField(
-                                            title: "Request Time",
+                                          Card(
+                                            child: ListTile(
+                                              leading: const Icon(
+                                                  Icons.calendar_today),
+                                              title: const Text('Select Date'),
+                                              subtitle: Text(
+                                                '${DateFormat.jm().format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, _selectedTime.hour, _selectedTime.minute))}',
+                                              ),
+                                              trailing: const Icon(
+                                                  Icons.keyboard_arrow_down),
+                                              onTap: _pickTime,
+                                            ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 16,
                                           ),
                                           FYInputField(
-                                              label: 'Message',
-                                              title: 'message ')
+                                            label: 'Message',
+                                            title: 'message ',
+                                            controller: messageController,
+                                          )
                                         ],
                                       ),
                                     ),
@@ -93,28 +149,90 @@ class TodaysAttendanceActivities extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (correctionData.checkoutDatetime != null)
-                  if (correctionData.statusOut == "Lunch Out")
+                if (widget.correctionData.checkoutDatetime != null)
+                  if (widget.correctionData.statusOut == "Lunch Out")
                     const Text("Lunch Out :- ",
                         style: TextStyle(fontWeight: FontWeight.w600)),
-                if (correctionData.checkoutDatetime != null)
-                  if (correctionData.statusOut != "Lunch Out")
+                if (widget.correctionData.checkoutDatetime != null)
+                  if (widget.correctionData.statusOut != "Lunch Out")
                     const Text(
                       "Check Out :- ",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
-                Text(correctionData.checkoutDatetime == null
+                Text(widget.correctionData.checkoutDatetime == null
                     ? ''
-                    : correctionData.checkoutDatetime.toString())
+                    : widget.correctionData.checkoutDatetime.toString()),
               ],
             ),
-            if (correctionData.checkoutDatetime != null)
-              if (correctionData.Status != "Lunch In")
+            if (widget.correctionData.checkoutDatetime != null)
+              if (widget.correctionData.Status != "Lunch In")
                 SizedBox(
                     height: 29,
                     width: 110,
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  scrollable: true,
+                                  title: Text(
+                                    "Request Review " + "(" "Check Out" + ")",
+                                    style: const TextStyle(
+                                        color: AppColor.primary),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                        onPressed: () {
+                                          onSubmit(
+                                              "${widget.correctionData.attendanceId}");
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text(
+                                          "Submit",
+                                          style: TextStyle(
+                                              color: AppColor.primary),
+                                        ))
+                                  ],
+                                  content: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Form(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          Card(
+                                            child: ListTile(
+                                              leading: const Icon(
+                                                  Icons.calendar_today),
+                                              title: const Text('Select Date'),
+                                              subtitle: Text(
+                                                '${DateFormat.jm().format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, _selectedTime.hour, _selectedTime.minute))}',
+                                              ),
+                                              trailing: const Icon(
+                                                  Icons.keyboard_arrow_down),
+                                              onTap: _pickTime,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 16,
+                                          ),
+                                          FYInputField(
+                                            label: 'Message',
+                                            title: 'message ',
+                                            controller: messageController,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              });
+                        },
                         child: const Padding(
                           padding: EdgeInsets.only(left: 30, right: 30),
                           child: FittedBox(
@@ -129,5 +247,27 @@ class TodaysAttendanceActivities extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _pickTime() async {
+    final newTime = await showTimePicker(
+      context: context,
+      initialTime: _selectedTime,
+    );
+    if (newTime != null) {
+      setState(() {
+        _selectedTime = newTime;
+      });
+    }
+  }
+
+  Future<void> onSubmit(String attendanceID) async {
+    await _attendanceService.postTodayAttendanceRequestReview(
+        reqDate:
+            '${DateFormat('yyyy-MM-dd').format(DateTime.now())} ${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}',
+        dateTime:
+            '${DateFormat('yyyy-MM-dd').format(DateTime.now())} ${_selectedTime.hour}:${_selectedTime.minute}:00',
+        attendanceId: attendanceID,
+        message: _messageController.text);
   }
 }

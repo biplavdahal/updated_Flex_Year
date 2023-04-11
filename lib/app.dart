@@ -12,7 +12,7 @@ class FlexYearApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(428, 926),
-      builder: (Widget, c) => MaterialApp(
+      builder: (context, child) => MaterialApp(
         supportedLocales: const [
           Locale('en', ''), //English
           Locale('ne', ''), //Nepali
@@ -22,7 +22,7 @@ class FlexYearApp extends StatelessWidget {
         onGenerateRoute: (settings) =>
             locator<NavigationService>().generateRoute(
           settings,
-          routesAndViews(settings),   
+          routesAndViews(settings),
         ),
         builder: (context, child) {
           return Navigator(

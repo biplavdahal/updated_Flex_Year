@@ -4,10 +4,7 @@ import 'package:flex_year_tablet/ui/personal/date_converter/date_converter.viewm
 import 'package:flex_year_tablet/widgets/fy_date_time_field.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_nepali_date_time_field.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_section.widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:nepali_date_picker/nepali_date_picker.dart';
 
 class DateConverterView extends StatelessWidget {
   static String tag = 'date-converter-view';
@@ -26,20 +23,22 @@ class DateConverterView extends StatelessWidget {
               ),
               body: Padding(
                 padding: const EdgeInsets.all(16),
-                child: Form(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _buildValidAttendance(model),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      _buildEnglish(model),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      _buildNepali(model)
-                    ],
+                child: SingleChildScrollView(
+                  child: Form(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _buildValidAttendance(model),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        _buildEnglish(model),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        _buildNepali(model)
+                      ],
+                    ),
                   ),
                 ),
               ));
@@ -68,12 +67,9 @@ class DateConverterView extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                NeumorphicButton(
-                  onPressed: () {},
-                  child: Text(
-                    model.dateTo.toString(),
-                    style: const TextStyle(fontWeight: FontWeight.w600),
-                  ),
+                Text(
+                  model.dateTo.toString(),
+                  style: const TextStyle(fontWeight: FontWeight.w600),
                 )
               ],
             ),

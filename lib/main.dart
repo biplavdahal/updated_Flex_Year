@@ -6,7 +6,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flex_year_tablet/app.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/di.dart';
-import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -26,8 +25,8 @@ Future<void> main() async {
   await locator<SharedPreferenceService>()();
 
   locator<ApiService>()(
-    baseUrl: auApiBaseUrl,
-  );
+      baseUrl: auApiBaseUrl,
+      );
 
   await locator<SharedPreferenceService>()();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
