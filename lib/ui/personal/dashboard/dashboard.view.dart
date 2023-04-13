@@ -17,6 +17,7 @@ import 'package:flex_year_tablet/ui/personal/dashboard/widgets/attendance_button
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/dashboard_drawer.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/dashboard_todays_attendance_activities.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/lastcard.dart';
+import 'package:flex_year_tablet/ui/personal/dashboard/widgets/progress.item.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/report_item.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/utility_item.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
@@ -31,7 +32,9 @@ import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_section.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../../data_models/attendance_report_summary.data.dart';
@@ -154,10 +157,14 @@ class DashboardView extends StatelessWidget {
                             ],
                           )
                         ],
-                      )
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      _buildProgressIndicator(model),
                     ],
                   )),
-              preferredSize: const Size(double.infinity, 50),
+              preferredSize: const Size(double.infinity, 60),
             ),
             actions: [
               IconButton(
@@ -221,6 +228,11 @@ class DashboardView extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           );
+  }
+
+  @override
+  Widget _buildProgressIndicator(DashboardModel model) {
+    return ProgressItem();
   }
 
   Widget _buildAttendanceActivities(DashboardModel model) {

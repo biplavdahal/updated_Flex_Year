@@ -115,7 +115,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     }
   }
 
-
   // Actions
   Future<void> init() async {
     _attendanceForgot = null;
@@ -126,6 +125,18 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     });
 
     _clientLabels = [];
+    _attendanceCorrectionData =
+        (await _attendanceService.getAttendanceCorrections(
+            dateTime: formattedDate =
+                DateFormat('yyyy-MM-dd ').format(DateTime.now())));
+    Map<String, dynamic> _searchParams = {};
+    _searchParams['date_from'] = formattedStartOfMonths;
+    _searchParams['date_to'] = formattedDate;
+    _monthlyReport = await _attendanceService.getMonthlyReport(
+      data: _searchParams,
+    );
+    _reportSummary =
+        await _attendanceService.getMonthlySummary(data: _searchParams);
 
     for (var client in user.clients) {
       _clientLabels?.add(client.name);
@@ -164,19 +175,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     try {
       const FYLinearLoader();
       HolidaysModel.holidaydata();
-      _attendanceCorrectionData =
-          (await _attendanceService.getAttendanceCorrections(
-              dateTime: formattedDate =
-                  DateFormat('yyyy-MM-dd ').format(DateTime.now())));
-      Map<String, dynamic> _searchParams = {};
-      _searchParams['date_from'] = formattedStartOfMonths;
-      _searchParams['date_to'] = formattedDate;
-
-      _monthlyReport = await _attendanceService.getMonthlyReport(
-        data: _searchParams,
-      );
-      _reportSummary =
-          await _attendanceService.getMonthlySummary(data: _searchParams);
     } catch (e) {
       rethrow;
     }
@@ -233,8 +231,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     }
   }
 
-  String formattedDate =
-      DateFormat('yyyy-MM-dd').format(DateTime.now());
+  String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
   String formattedStartOfMonth = DateFormat('yyyy-MM-dd')
       .format(DateTime(DateTime.now().year, DateTime.now().month, 1));
