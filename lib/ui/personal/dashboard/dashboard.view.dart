@@ -158,10 +158,6 @@ class DashboardView extends StatelessWidget {
                           )
                         ],
                       ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      _buildProgressIndicator(model),
                     ],
                   )),
               preferredSize: const Size(double.infinity, 60),
@@ -228,11 +224,6 @@ class DashboardView extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           );
-  }
-
-  @override
-  Widget _buildProgressIndicator(DashboardModel model) {
-    return ProgressItem();
   }
 
   Widget _buildAttendanceActivities(DashboardModel model) {
@@ -355,7 +346,7 @@ class DashboardView extends StatelessWidget {
                       title: "Check in",
                       icon: MdiIcons.clockStart,
                       color: Colors.green,
-                      onPressed: model.attendanceStatus.checkIn == 1
+                      onPressed: model.attendanceStatus?.checkIn == 1
                           ? () {
                               model.onAttendanceButtonPressed('checkin');
                             }
@@ -366,7 +357,7 @@ class DashboardView extends StatelessWidget {
                       title: "Check Out",
                       icon: MdiIcons.clockEnd,
                       color: Colors.red,
-                      onPressed: model.attendanceStatus.checkOut == 1
+                      onPressed: model.attendanceStatus?.checkOut == 1
                           ? () {
                               model.onAttendanceButtonPressed('checkout');
                             }
@@ -377,7 +368,7 @@ class DashboardView extends StatelessWidget {
                       title: "Lunch In",
                       icon: MdiIcons.food,
                       color: AppColor.primary,
-                      onPressed: model.attendanceStatus.lunchIn == 1
+                      onPressed: model.attendanceStatus?.lunchIn == 1
                           ? () {
                               model.onAttendanceButtonPressed('lunchin');
                             }
@@ -388,7 +379,7 @@ class DashboardView extends StatelessWidget {
                       title: "Lunch Out",
                       icon: MdiIcons.foodOff,
                       color: AppColor.primary,
-                      onPressed: model.attendanceStatus.lunchOut == 1
+                      onPressed: model.attendanceStatus?.lunchOut == 1
                           ? () {
                               model.onAttendanceButtonPressed('lunchout');
                             }
@@ -412,7 +403,7 @@ class DashboardView extends StatelessWidget {
         crossAxisSpacing: 8,
         children: [
           UtilityItem(
-            title: 'Leave Request',
+            title: 'Leave Request ',
             icon: MdiIcons.shieldAirplaneOutline,
             iconColor: Colors.orange,
             onPressed: () async {
@@ -465,25 +456,6 @@ class DashboardView extends StatelessWidget {
   }
 
   Widget _buildCurrentReport(DashboardModel model) {
-    final today = DateTime.now();
-    int todayIndex = -1;
-    for (int i = 0; i < model.monthlyReport.length; i++) {
-      final report = model.monthlyReport[i];
-      final date = DateTime.parse(report.date);
-
-      if (date.day == today.day &&
-          date.month == today.month &&
-          date.year == today.year) {
-        todayIndex = i;
-        break;
-      }
-    }
-    final scrollController = ScrollController();
-    final itemWidth = 100.0;
-
-    scrollController.animateTo(todayIndex * itemWidth,
-        duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
-
     return FYSection(
         title: "Current Month Attendance Report : ",
         child: model.isLoading
@@ -491,7 +463,6 @@ class DashboardView extends StatelessWidget {
             : SizedBox(
                 height: 140,
                 child: ListView.separated(
-                    controller: scrollController,
                     scrollDirection: Axis.horizontal,
                     itemCount: model.monthlyReport.length + 1,
                     separatorBuilder: (context, index) => const SizedBox(

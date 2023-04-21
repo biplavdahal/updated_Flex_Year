@@ -50,8 +50,8 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   Timer? _currentDateTimeTimer;
 
-  late AttendanceStatusData _attendanceStatus;
-  AttendanceStatusData get attendanceStatus => _attendanceStatus;
+  AttendanceStatusData? _attendanceStatus;
+  AttendanceStatusData? get attendanceStatus => _attendanceStatus;
 
   List<AttendanceCorrectionData> _attendanceCorrectionData = [];
   List<AttendanceCorrectionData> get attendanceCorrectionData =>

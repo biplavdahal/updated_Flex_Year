@@ -81,3 +81,6 @@ const auSendTextMessage = "message/post";
 
 // ----- Reset password ----
 const auRequestResetPassword = "user/request-password-reset";
+
+//-------Staff api---------
+const auStaffDetail = "staff/details";

@@ -10,6 +10,7 @@ import 'package:flex_year_tablet/helper/api_error.helper.dart';
 import 'package:flex_year_tablet/helper/api_response.helper.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
+import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.model.dart';
 import 'package:flutter/material.dart';
 
@@ -148,10 +149,13 @@ class AuthenticationServiceImpl implements AuthenticationService {
         'access_token': _user!.accessToken,
       });
 
-      _sharedPreferenceService.remove(pfLoggedInUser);
+      await _sharedPreferenceService.remove(pfLoggedInUser);
 
       if (locator<LeaveRequestModel>().onModelReadyCalled) {
         locator<LeaveRequestModel>().setOnModelReadyCalled(status: false);
+      }
+      if (locator<DashboardModel>().onModelReadyCalled) {
+        locator<DashboardModel>().setOnModelReadyCalled(status: false);
       }
     } catch (e) {
       throw apiError(e);

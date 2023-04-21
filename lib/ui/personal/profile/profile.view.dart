@@ -51,40 +51,110 @@ class ProfileView extends StatelessWidget {
               const SizedBox(height: 14),
               Expanded(
                   child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    children: [
-                      _buildProfileField(
-                        label: "Mobile",
-                        value: model.user.staff.mobile,
-                        icon: MdiIcons.cellphone,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 10),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
                       ),
-                      _buildProfileField(
-                        label: "E-mail",
-                        value: model.user.staff.email,
-                        icon: MdiIcons.emailOutline,
-                      ),
-                      _buildProfileField(
-                        label: "Address",
-                        value: model.user.staffAddresses.isEmpty
-                            ? "N/A"
-                            : model.user.staffAddresses[0].addressLine1,
-                        icon: MdiIcons.mapMarkerOutline,
-                      ),
-                    ],
-                  ),
-                ),
-              )),
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Wrap(
+                              spacing: 8,
+                              children: List.generate(
+                                  model.tabs.length,
+                                  (index) => ChoiceChip(
+                                        label: Text(model.tabs[index]),
+                                        selected: model.selectedTab ==
+                                            index.toString(),
+                                        onSelected: (_) => model.selectedTab =
+                                            index.toString(),
+                                      )),
+                            ),
+                            if (model.selectedTab == "0")
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: Column(
+                                    children: [
+                                      _buildProfileField(
+                                        label: "Mobile",
+                                        value: model.user.staff.mobile,
+                                        icon: MdiIcons.cellphone,
+                                      ),
+                                      _buildProfileField(
+                                        label: "E-mail",
+                                        value: model.user.staff.email,
+                                        icon: MdiIcons.emailOutline,
+                                      ),
+                                      _buildProfileField(
+                                        label: "Address",
+                                        value: model.user.staffAddresses.isEmpty
+                                            ? "N/A"
+                                            : model.user.staffAddresses[0]
+                                                .addressLine1,
+                                        icon: MdiIcons.mapMarkerOutline,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            if (model.selectedTab == "1")
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: Column(
+                                    children: [
+                                      _buildProfileField(
+                                          label: "Hire Date",
+                                          value: model.user.staff.hireDate
+                                              .toString(),
+                                          icon: Icons.date_range),
+                                      _buildProfileField(
+                                          label: "Employee type",
+                                          value: model.user.staff.employeeType,
+                                          icon: Icons.people),
+                                      _buildProfileField(
+                                          label: "Remaining Leave Days",
+                                          value: model
+                                              .user.staff.remainingLeaveDays
+                                              .toString(),
+                                          icon: MdiIcons.shieldAirplaneOutline),
+                                      _buildProfileField(
+                                          label: "Normal Salary Rate",
+                                          value: model
+                                              .user.staff.normalSalaryRate
+                                              .toString(),
+                                          icon: MdiIcons.cashCheck),
+                                      _buildProfileField(
+                                          label: "Over Time Salary Rate",
+                                          value: model
+                                              .user.staff.overtimeSalaryRate
+                                              .toString(),
+                                          icon: MdiIcons.cashCheck),
+                                      _buildProfileField(
+                                          label: "Sick Leave",
+                                          value: model.user.staff.sickLeave
+                                              .toString(),
+                                          icon: MdiIcons.cashCheck),
+                                      _buildProfileField(
+                                          label: "Salary Period",
+                                          value: model.user.staff.salaryPeriod
+                                              .toString(),
+                                          icon: MdiIcons.cashCheck)
+                                    ],
+                                  ),
+                                ),
+                              )
+                          ],
+                        ),
+                      ))),
             ],
           ),
         );

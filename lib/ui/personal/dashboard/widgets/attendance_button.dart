@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class AttendanceButton extends StatelessWidget {
