@@ -27,10 +27,10 @@ class ProfileView extends StatelessWidget {
                 onSelected: model.moreOptionActions,
                 itemBuilder: (context) {
                   return [
-                    const PopupMenuItem<String>(
-                      value: "update_profile",
-                      child: Text('Update Profile'),
-                    ),
+                    // const PopupMenuItem<String>(
+                    //   value: "update_profile",
+                    //   child: Text('Update Profile'),
+                    // ),
                     const PopupMenuItem<String>(
                       value: "change_password",
                       child: Text(
@@ -117,37 +117,21 @@ class ProfileView extends StatelessWidget {
                                               .toString(),
                                           icon: Icons.date_range),
                                       _buildProfileField(
-                                          label: "Employee type",
-                                          value: model.user.staff.employeeType,
-                                          icon: Icons.people),
-                                      _buildProfileField(
                                           label: "Remaining Leave Days",
-                                          value: model
-                                              .user.staff.remainingLeaveDays
+                                          value: model.user.staff.remainingLeave
                                               .toString(),
                                           icon: MdiIcons.shieldAirplaneOutline),
-                                      _buildProfileField(
-                                          label: "Normal Salary Rate",
-                                          value: model
-                                              .user.staff.normalSalaryRate
-                                              .toString(),
-                                          icon: MdiIcons.cashCheck),
-                                      _buildProfileField(
-                                          label: "Over Time Salary Rate",
-                                          value: model
-                                              .user.staff.overtimeSalaryRate
-                                              .toString(),
-                                          icon: MdiIcons.cashCheck),
+                                      // _buildProfileField(
+                                      //     label: "Normal Salary Rate",
+                                      //     value: model
+                                      //         .user.staff.normalSalaryRate
+                                      //         .toString(),
+                                      //     icon: MdiIcons.cashCheck),
                                       _buildProfileField(
                                           label: "Sick Leave",
                                           value: model.user.staff.sickLeave
                                               .toString(),
                                           icon: MdiIcons.cashCheck),
-                                      _buildProfileField(
-                                          label: "Salary Period",
-                                          value: model.user.staff.salaryPeriod
-                                              .toString(),
-                                          icon: MdiIcons.cashCheck)
                                     ],
                                   ),
                                 ),

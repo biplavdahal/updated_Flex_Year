@@ -14,7 +14,7 @@ class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
   final LeaveService _leaveService = locator<LeaveService>();
 
   // Data
-  List<String> get tabs => ['Pending', 'Approved', 'Rejected', 'All'];
+  List<String> get tabs => ['Pending', 'Approved', 'Declined'];
 
   String _selectedTab = "0";
   String get selectedTab => _selectedTab;

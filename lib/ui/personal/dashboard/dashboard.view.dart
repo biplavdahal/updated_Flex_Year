@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bestfriend/bestfriend.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
@@ -19,6 +21,7 @@ import 'package:flex_year_tablet/ui/personal/dashboard/widgets/dashboard_todays_
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/lastcard.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/progress.item.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/report_item.dart';
+import 'package:flex_year_tablet/ui/personal/dashboard/widgets/summary.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/utility_item.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/widgets/holiday_item.dart';
@@ -202,7 +205,8 @@ class DashboardView extends StatelessWidget {
                     _buildForgotToCheckout(model),
                     _buildTodaysAttendance(model),
                     _buildUtilities(model),
-                    _buildCurrentReport(model),
+                    if (model.monthlyReport.isNotEmpty)
+                      _buildCurrentReport(model),
                     _buildCalander(model)
                   ],
                 ),
@@ -248,32 +252,6 @@ class DashboardView extends StatelessWidget {
             ),
           )
         : Container();
-
-    //     ExpansionTile(
-    //   iconColor: AppColor.primary,
-    //   childrenPadding: const EdgeInsets.only(left: 16, right: 16),
-    //   tilePadding: const EdgeInsets.only(left: 0, right: 16),
-    //   title: const Text(
-    //     "Today's Attendance Activities",
-    //     style: TextStyle(
-    //       color: AppColor.primary,
-    //       fontWeight: FontWeight.w700,
-    //     ),
-    //   ),
-    //   children: [
-    //     ListView.separated(
-    //       separatorBuilder: (context, index) => const SizedBox(
-    //         height: 7,
-    //       ),
-    //       itemBuilder: (context, index) {
-    //         final _correction = model.attendanceCorrectionData[index];
-
-    //         return TodaysAttendanceActivities(_correction);
-    //       },
-    //       itemCount: model.attendanceCorrectionData.length,
-    //     ),
-    //   ],
-    // );
   }
 
   Widget _buildForgotToCheckout(DashboardModel model) {
@@ -346,7 +324,8 @@ class DashboardView extends StatelessWidget {
                       title: "Check in",
                       icon: MdiIcons.clockStart,
                       color: Colors.green,
-                      onPressed: model.attendanceStatus?.checkIn == 1
+                      onPressed: model.attendanceStatus?.checkIn == null ||
+                              model.attendanceStatus?.checkIn == 1
                           ? () {
                               model.onAttendanceButtonPressed('checkin');
                             }
@@ -403,7 +382,10 @@ class DashboardView extends StatelessWidget {
         crossAxisSpacing: 8,
         children: [
           UtilityItem(
-            title: 'Leave Request ',
+            declined: 'D=',
+            approved: 'A=',
+            pending: "P=",
+            title: 'Leave Request  ',
             icon: MdiIcons.shieldAirplaneOutline,
             iconColor: Colors.orange,
             onPressed: () async {
@@ -411,6 +393,9 @@ class DashboardView extends StatelessWidget {
             },
           ),
           UtilityItem(
+            declined: '',
+            approved: '',
+            pending: '',
             title: " Monthly Report",
             iconColor: Colors.lightGreen,
             icon: MdiIcons.chartBoxOutline,
@@ -424,6 +409,7 @@ class DashboardView extends StatelessWidget {
             },
           ),
           UtilityItem(
+            pending: '',
             title: "One-day Report",
             iconColor: Colors.lightGreen,
             icon: MdiIcons.chartBoxOutline,
@@ -435,9 +421,14 @@ class DashboardView extends StatelessWidget {
                 ),
               );
             },
+            approved: '',
+            declined: '',
           ),
           // if (model.clientLabels != null && model.clientLabels!.isNotEmpty)
           UtilityItem(
+            declined: '',
+            approved: '',
+            pending: '',
             title: "Weekly Report",
             iconColor: Colors.lightGreen,
             icon: MdiIcons.chartBoxOutline,
@@ -486,12 +477,38 @@ class DashboardView extends StatelessWidget {
                                   ],
                                 ),
                                 const SizedBox(
-                                  height: 8,
+                                  height: 1,
                                 ),
                                 Center(
-                                    child: Row(
-                                  children: [Text("56.54")],
-                                ))
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        model.WorkingHours as String,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Text(
+                                  "Leave : ${model.Leave}",
+                                  style: const TextStyle(
+                                      color: Colors.orange,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  "Holiday : ${model.holidays}",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Text('Present : ${model.present}',
+                                    style: const TextStyle(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.w600)),
+                                Text('Absent : ${model.absent}',
+                                    style: const TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.w600))
                               ],
                             ),
                           ),

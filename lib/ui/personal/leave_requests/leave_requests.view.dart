@@ -37,6 +37,18 @@ class LeaveRequestView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Remaining Leave Days = ",
+                    ),
+                    Text(
+                      "${_user.staff.remainingLeave}",
+                      style: const TextStyle(color: Colors.orange),
+                    ),
+                  ],
+                ),
                 Wrap(
                   spacing: 8,
                   children: List.generate(

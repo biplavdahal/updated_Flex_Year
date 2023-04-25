@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
@@ -9,6 +8,7 @@ import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/data_models/company.data.dart';
 import 'package:flex_year_tablet/data_models/company_logo.data.dart';
+import 'package:flex_year_tablet/data_models/notice.data.dart';
 import 'package:flex_year_tablet/data_models/user.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
@@ -16,34 +16,31 @@ import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/attendance.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
+import 'package:flex_year_tablet/services/notification.service.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.view.dart';
 import 'package:flex_year_tablet/ui/personal/date_converter/date_converter.view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
-import 'package:flex_year_tablet/ui/personal/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/login/login.view.dart';
-import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.view.dart';
-import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.view.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-
 import '../../../data_models/attendance_report.data.dart';
 import '../../../data_models/attendance_report_summary.data.dart';
 import '../attendance_correction/attendance_correction.view.dart';
-import 'data_model/view_info.data.dart';
 
 class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   // Services
   final AttendanceService _attendanceService = locator<AttendanceService>();
-
+  final NotificationService _notificationService =
+      locator<NotificationService>();
   // Data
   CompanyData get company => locator<AppAccessService>().appAccess!.company;
   CompanyLogoData get logo => locator<AppAccessService>().appAccess!.logo;
   UserData get user => locator<AuthenticationService>().user!;
+  NoticeData get notice => locator<NotificationService>().notice!;
 
   String _currentDateTime = DateTime.now().toString();
   String get currentDateTime => _currentDateTime;
@@ -62,6 +59,29 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   List<AttendanceReportSummaryData> _reportSummary = [];
   List<AttendanceReportSummaryData> get reportSummary => _reportSummary;
+
+  late String? WorkingHours =
+      _reportSummary.isNotEmpty ? _reportSummary[0].workingHours : '';
+  late int? Leave =
+      (_reportSummary.isNotEmpty ? _reportSummary[0].leaveTotal : '') as int;
+  late int? holidays =
+      _reportSummary.isNotEmpty ? _reportSummary[0].offDay : '' as int;
+  late int? present =
+      _reportSummary.isNotEmpty ? _reportSummary[0].present : '' as int;
+      late int? absent =
+      _reportSummary.isNotEmpty ? _reportSummary[0].absent : '' as int;
+
+  MyClass() {
+    WorkingHours =
+        _reportSummary.isNotEmpty ? _reportSummary[0].workingHours : '';
+    Leave = (_reportSummary.isNotEmpty ? _reportSummary[0].absent : '') as int?;
+    holidays =
+        _reportSummary.isNotEmpty ? _reportSummary[0].offDay : '' as int?;
+    present =
+        _reportSummary.isNotEmpty ? _reportSummary[0].present : '' as int?;
+         absent =
+        _reportSummary.isNotEmpty ? _reportSummary[0].absent : '' as int?;
+  }
 
   AttendanceSummaryData? _attendanceData;
   AttendanceSummaryData? get attendanceData => _attendanceData;
@@ -175,6 +195,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     try {
       const FYLinearLoader();
       HolidaysModel.holidaydata();
+      _notificationService.fetchNotices();
     } catch (e) {
       rethrow;
     }

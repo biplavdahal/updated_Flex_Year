@@ -49,7 +49,7 @@ class UserServiceImplementation implements UserService {
       final response = await _apiService.post(auUpdateProfile, {
         "access_token": _authenticationService.user!.accessToken,
         "id": _authenticationService.user!.id,
-        "staff_photo": _authenticationService.user!.staffPhoto,
+        "staff_photo": _authenticationService.user?.staff.staffPhoto,
         ...data.toJson(),
       });
 

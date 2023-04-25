@@ -26,12 +26,10 @@ abstract class NotificationService {
   Future<void> cancelNotification([String? key]);
 
   /// --------- The notice API model is also implemented inside this class ----------
-  //Getter for all Notice list
-  List<NoticeData> get notices;
 
-  //Returns [true] it there are more notice to load.
-  bool get hasMore;
+  // Fetch notice from /site/staffdashboard API
 
-  // Fetch notice
+  NoticeData? get notice;
+
   Future<void> fetchNotices();
 }

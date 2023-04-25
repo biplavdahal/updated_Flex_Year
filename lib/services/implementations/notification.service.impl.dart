@@ -11,10 +11,16 @@ import 'package:flex_year_tablet/helper/api_error.helper.dart';
 import 'package:flex_year_tablet/helper/dio_helper.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/notification.service.dart';
+import 'package:flutter/material.dart';
 
 import '../authentication.service.dart';
 
 class NotificationServiceImplementation implements NotificationService {
+  //Properties
+  NoticeData? _notice;
+  @override
+  NoticeData? get notice => _notice;
+
   // External depedencies
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final ApiService _apiService = locator<ApiService>();
@@ -101,41 +107,23 @@ class NotificationServiceImplementation implements NotificationService {
     await AwesomeNotifications().cancelAll();
   }
 
-  bool _hasMore = true;
-  @override
-  bool get hasMore => _hasMore;
-
-  final List<NoticeData> _notices = [];
-  @override
-  List<NoticeData> get notices => _notices;
-
-  final int maxLimit = 4;
-  int _currentPage = 0;
-
   @override
   Future<void> fetchNotices() async {
-    if (_hasMore) {
-      try {
-        _currentPage++;
+    try {
+      final _response = await _apiService.get(auStaffDashboard, params: {
+        'access_token': _authenticationService.user!.accessToken,
+        'company_id': _appAccessService.appAccess!.company.companyId
+      });
+      final data = constructResponse(_response.data);
 
-        final response = await _apiService.get(auStaffDashboard, params: {
-          'access_token': _authenticationService.user!.accessToken,
-          'company_id': _appAccessService.appAccess!.company.companyId
-        });
-        final data = constructResponse(response.data);
+      debugPrint(data.toString());
 
-        if (data!["status"] == "failure") {
-          throw apiError(e);
-        }
-        final noticesJson = data["data"] as List;
-
-        for (final noticeJson in noticesJson) {
-          _notices.add(NoticeData.fromJson(noticeJson));
-        }
-        _hasMore = maxLimit * _currentPage < data["count"];
-      } on DioError catch (e) {
-        throw dioError(e);
+      if (data!.containsKey("status") && data["status"] == false) {
+        throw data["response"];
       }
+      _notice = NoticeData.fromJson(data);
+    } catch (e) {
+      throw apiError(e);
     }
   }
 }

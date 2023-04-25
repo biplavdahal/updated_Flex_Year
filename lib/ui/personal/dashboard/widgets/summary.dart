@@ -28,30 +28,12 @@ class Summary extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 8,
+            Text(
+              report.workingHours.toString(),
+              style: TextStyle(
+                fontSize: 12,
+              ),
             ),
-            Row(
-              children: [
-                Text(
-                  report.total.toString(),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Row(
-              children: [
-                Text(
-                  "A = " + report.absent.toString(),
-                ),
-              ],
-            ),
-            const Divider(),
-            Row(
-              children: [Text("P = " + report.present.toString())],
-            )
           ],
         ),
       ),

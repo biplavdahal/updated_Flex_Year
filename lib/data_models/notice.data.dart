@@ -7,9 +7,12 @@ part 'notice.data.g.dart';
 @freezed
 class NoticeData with _$NoticeData {
   const factory NoticeData({
-    @JsonKey(name: "title") required String title,
-    @JsonKey(name: "date") required String date,
-    @JsonKey(name: "company_id") required int id,
+    @JsonKey(name: "att_correction_pending") String? attendencePending,
+    @JsonKey(name: "att_correction_approve") String? attendenceApprove,
+    @JsonKey(name: "att_correction_decline") String? attendenceDecline,
+    @JsonKey(name: "approve_leave") String? approveLeave,
+    @JsonKey(name: "decline_leave") String? declineLeave,
+    @JsonKey(name: "pending_leave") String? pendingLeave,
   }) = _NoticeData;
 
   factory NoticeData.fromJson(Map<String, dynamic> json) =>
