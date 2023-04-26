@@ -5,6 +5,8 @@ import 'package:flex_year_tablet/widgets/fy_date_time_field.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_nepali_date_time_field.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_section.widget.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:intl/intl.dart';
+import 'package:nepali_date_picker/nepali_date_picker.dart';
 
 class DateConverterView extends StatelessWidget {
   static String tag = 'date-converter-view';
@@ -53,7 +55,6 @@ class DateConverterView extends StatelessWidget {
         children: [
           Expanded(
             child: FYDateField(
-              title: "Select Date : ",
               onChanged: (value) => model.dateFrom = value!,
               value: model.dateFrom,
               firstDate: DateTime.now().subtract(
@@ -68,7 +69,9 @@ class DateConverterView extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  model.dateTo.toString(),
+                  model.dateTo != null
+                      ? DateFormat('yyyy-MM-dd').format(model.dateTo!)
+                      : '',
                   style: const TextStyle(fontWeight: FontWeight.w600),
                 )
               ],
@@ -95,9 +98,10 @@ class DateConverterView extends StatelessWidget {
       infoBox: true,
       child: Row(
         children: [
-          const Expanded(
+          Expanded(
             child: FYNepaliDateField(
-              title: "मिति चयन गर्नुहोस् : ",
+              onNepaliChanged: (value) => model.nepaliDateFrom = value!,
+              nepaliValue: model.nepaliDateFrom,
             ),
           ),
           const SizedBox(
@@ -107,7 +111,9 @@ class DateConverterView extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  model.nepaliDateTo.toString(),
+                  model.nepaliDateTo != null
+                      ? DateFormat('yyyy-MM-dd').format(model.nepaliDateTo!)
+                      : '',
                   style: const TextStyle(fontWeight: FontWeight.w600),
                 )
               ],

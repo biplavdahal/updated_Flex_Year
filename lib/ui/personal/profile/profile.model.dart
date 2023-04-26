@@ -7,7 +7,7 @@ import '../edit_profile/edit_profile.view.dart';
 class ProfileModel extends ViewModel {
   // Data
   UserData get user => locator<AuthenticationService>().user!;
-  List<String> get tabs => ['General Information', 'Official Information'];
+  List<String> get tabs => ['General', 'Official'];
   String _selectedTab = '0';
   String get selectedTab => _selectedTab;
 
@@ -15,6 +15,7 @@ class ProfileModel extends ViewModel {
     _selectedTab = tab;
     setIdle();
   }
+ 
 
   Future<void> moreOptionActions(String action) async {
     switch (action) {

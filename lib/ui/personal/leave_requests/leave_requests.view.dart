@@ -5,6 +5,7 @@ import 'package:flex_year_tablet/ui/personal/leave_requests/widgets/leave_reques
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.view.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
+import '../../../theme.dart';
 import '../dashboard/dashboard.model.dart';
 
 class LeaveRequestView extends StatelessWidget {
@@ -41,7 +42,8 @@ class LeaveRequestView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Remaining Leave Days = ",
+                      "Remaining Leave Days : ",
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "${_user.staff.remainingLeave}",
@@ -57,6 +59,11 @@ class LeaveRequestView extends StatelessWidget {
                       label: Text(model.tabs[index]),
                       selected: model.selectedTab == index.toString(),
                       onSelected: (_) => model.selectedTab = index.toString(),
+                      labelStyle: TextStyle(
+                        color: model.selectedTab == "1"
+                            ? AppColor.primary
+                            : Colors.black,
+                      ),
                     ),
                   ),
                 ),

@@ -25,8 +25,8 @@ Future<void> main() async {
   await locator<SharedPreferenceService>()();
 
   locator<ApiService>()(
-      baseUrl: auApiBaseUrl,
-      );
+    baseUrl: auApiBaseUrl,
+  );
 
   await locator<SharedPreferenceService>()();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);

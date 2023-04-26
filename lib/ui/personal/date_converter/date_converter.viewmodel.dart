@@ -13,8 +13,8 @@ class DateConverterViewModel extends ViewModel with DialogMixin, SnackbarMixin {
   set dateFrom(DateTime? value) {
     _dateFrom = value;
     if (_dateFrom != null) {
-      NepaliDateTime nepaliDateTimeTo = NepaliDateTime.fromDateTime(_dateFrom!);
-      _dateTo = nepaliDateTimeTo;
+      NepaliDateTime nepaliDateTimeT = NepaliDateTime.fromDateTime(_dateFrom!);
+      _dateTo = nepaliDateTimeT;
     }
     if (_dateFrom == null) {
       _dateTo = "" as DateTime?;
@@ -24,6 +24,7 @@ class DateConverterViewModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   NepaliDateTime? _nepaliDateFrom;
   NepaliDateTime? get nepaliDateFrom => _nepaliDateFrom;
+
   DateTime? _nepaliDateTo;
   DateTime? get nepaliDateTo => _nepaliDateTo;
   set nepaliDateFrom(NepaliDateTime? value) {

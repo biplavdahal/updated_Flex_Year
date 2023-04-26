@@ -68,7 +68,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       _reportSummary.isNotEmpty ? _reportSummary[0].offDay : '' as int;
   late int? present =
       _reportSummary.isNotEmpty ? _reportSummary[0].present : '' as int;
-      late int? absent =
+  late int? absent =
       _reportSummary.isNotEmpty ? _reportSummary[0].absent : '' as int;
 
   MyClass() {
@@ -79,8 +79,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
         _reportSummary.isNotEmpty ? _reportSummary[0].offDay : '' as int?;
     present =
         _reportSummary.isNotEmpty ? _reportSummary[0].present : '' as int?;
-         absent =
-        _reportSummary.isNotEmpty ? _reportSummary[0].absent : '' as int?;
+    absent = _reportSummary.isNotEmpty ? _reportSummary[0].absent : '' as int?;
   }
 
   AttendanceSummaryData? _attendanceData;
@@ -137,6 +136,19 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   // Actions
   Future<void> init() async {
+    _attendanceService.getAttendanceForgot().then((status) {
+      if (status != null) {
+        _attendanceForgot = status;
+        setIdle();
+      }
+    }).catchError((e) {
+      // snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
+    });
+    _attendanceCorrectionData =
+        (await _attendanceService.getAttendanceCorrections(
+            dateTime: formattedDate =
+                DateFormat('yyyy-MM-dd ').format(DateTime.now())));
+    HolidaysModel.holidaydata();
     _attendanceForgot = null;
 
     _currentDateTimeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -181,15 +193,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       unsetWidgetBusy("todays-attendance");
       unsetWidgetBusy('dashboard');
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
-    });
-
-    _attendanceService.getAttendanceForgot().then((status) {
-      if (status != null) {
-        _attendanceForgot = status;
-        setIdle();
-      }
-    }).catchError((e) {
-      // snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     });
 
     try {
@@ -264,6 +267,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       DateFormat('yyyy-MM-dd').format(dateTimeStartOfMonth);
 
   Future<void> onAttendanceButtonPressed(String status) async {
+    init();
     try {
       dialog.showDialog(
         DialogRequest(
@@ -279,10 +283,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
             ? getCurrentDateTime()
             : _attendanceForgot!.forgottonDate,
       );
-      _attendanceCorrectionData =
-          (await _attendanceService.getAttendanceCorrections(
-              dateTime: formattedDate =
-                  DateFormat('yyyy-MM-dd ').format(DateTime.now())));
 
       dialog.hideDialog();
       setIdle();

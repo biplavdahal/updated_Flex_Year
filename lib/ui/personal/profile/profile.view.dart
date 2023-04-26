@@ -65,17 +65,35 @@ class ProfileView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Wrap(
-                              spacing: 8,
-                              children: List.generate(
-                                  model.tabs.length,
-                                  (index) => ChoiceChip(
-                                        label: Text(model.tabs[index]),
-                                        selected: model.selectedTab ==
-                                            index.toString(),
-                                        onSelected: (_) => model.selectedTab =
-                                            index.toString(),
-                                      )),
+                            const Center(
+                                child: Text(
+                              "Information",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                ChoiceChip(
+                                  label: Text(model.tabs[0]),
+                                  selected: model.selectedTab == '0',
+                                  labelStyle: TextStyle(
+                                    color: model.selectedTab == '0'
+                                        ? AppColor.primary
+                                        : Colors.black,
+                                  ),
+                                  onSelected: (_) => model.selectedTab = '0',
+                                ),
+                                ChoiceChip(
+                                  label: Text(model.tabs[1]),
+                                  selected: model.selectedTab == '1',
+                                  onSelected: (_) => model.selectedTab = '1',
+                                  labelStyle: TextStyle(
+                                    color: model.selectedTab == '1'
+                                        ? AppColor.primary
+                                        : Colors.black,
+                                  ),
+                                ),
+                              ],
                             ),
                             if (model.selectedTab == "0")
                               Expanded(

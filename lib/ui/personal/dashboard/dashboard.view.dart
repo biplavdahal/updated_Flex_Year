@@ -382,9 +382,9 @@ class DashboardView extends StatelessWidget {
         crossAxisSpacing: 8,
         children: [
           UtilityItem(
-            declined: 'D=',
-            approved: 'A=',
-            pending: "P=",
+            declined: '',
+            approved: '',
+            pending: "",
             title: 'Leave Request  ',
             icon: MdiIcons.shieldAirplaneOutline,
             iconColor: Colors.orange,
@@ -452,7 +452,7 @@ class DashboardView extends StatelessWidget {
         child: model.isLoading
             ? const FYLinearLoader()
             : SizedBox(
-                height: 140,
+                height: 150,
                 child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemCount: model.monthlyReport.length + 1,
@@ -461,55 +461,58 @@ class DashboardView extends StatelessWidget {
                         ),
                     itemBuilder: (context, index) {
                       if (index == model.monthlyReport.length) {
-                        return Card(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: const [
-                                    Text(
-                                      "Total(Hrs)",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 1,
-                                ),
-                                Center(
-                                  child: Row(
-                                    children: [
+                        return SizedBox(
+                          height: 150,
+                          child: Card(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: const [
                                       Text(
-                                        model.WorkingHours as String,
-                                        style: const TextStyle(
+                                        "Total(Hrs)",
+                                        style: TextStyle(
                                             fontWeight: FontWeight.w600),
                                       )
                                     ],
                                   ),
-                                ),
-                                Text(
-                                  "Leave : ${model.Leave}",
-                                  style: const TextStyle(
-                                      color: Colors.orange,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                Text(
-                                  "Holiday : ${model.holidays}",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                Text('Present : ${model.present}',
+                                  const SizedBox(
+                                    height: 1,
+                                  ),
+                                  Center(
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          model.WorkingHours as String,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w600),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Text(
+                                    "Leave : ${model.Leave}",
                                     style: const TextStyle(
-                                        color: Colors.green,
-                                        fontWeight: FontWeight.w600)),
-                                Text('Absent : ${model.absent}',
+                                        color: Colors.orange,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Text(
+                                    "Holiday : ${model.holidays}",
                                     style: const TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.w600))
-                              ],
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Text('Present : ${model.present}',
+                                      style: const TextStyle(
+                                          color: Colors.green,
+                                          fontWeight: FontWeight.w600)),
+                                  Text('Absent : ${model.absent}',
+                                      style: const TextStyle(
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.w600))
+                                ],
+                              ),
                             ),
                           ),
                         );

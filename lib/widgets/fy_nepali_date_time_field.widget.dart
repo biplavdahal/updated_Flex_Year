@@ -38,17 +38,23 @@ class _NepaliDateFieldState extends State<FYNepaliDateField> {
       onTap: _selectNepaliDate,
       child: InputDecorator(
         decoration: InputDecoration(
-          icon: widget.icon,
-          labelText: widget.title,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(_nepaliDate != null
-                ? NepaliDateFormat("y-MM-dd").format(_nepaliDate!)
-                : ""),
-            const Icon(Icons.calendar_today),
+            border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(7.0),
+        )),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Text(
+                  _nepaliDate != null
+                      ? NepaliDateFormat("y-MM-dd").format(_nepaliDate!)
+                      : "मिति चयन गर्नुहोस्",
+                  style: _nepaliDate == null
+                      ? const TextStyle(
+                          color: Colors.grey,
+                        )
+                      : null),
+            )
           ],
         ),
       ),
