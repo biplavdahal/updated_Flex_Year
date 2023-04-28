@@ -16,6 +16,12 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
     this.onTap,
   }) : super(key: key);
 
+  // : report.leaveType == "Unpaid"
+  //                   ? Colors.amber.shade700
+  //                   : report.leaveType == "paid"
+  //                       ? Colors.yellow
+  //                       : Colors.green.shade100,
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -23,10 +29,9 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
           ? const Color.fromARGB(255, 139, 213, 245)
           : report.holiday != null
               ? Colors.amber.shade100
-              : report.totalWorkingHours == '0.00' ||
-                      report.totalWorkingHours == '00:00'
-                  ? Colors.red.shade100
-                  : Colors.green.shade100,
+              : report.checkInTime == "00:00" && report.checkOutTime == "00:00"
+                  ? Colors.white70
+                  : _getCardColor(report.totalWorkingHours),
       margin: const EdgeInsets.only(bottom: 5),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -71,22 +76,18 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
                   report.weekend.isNotEmpty
                       ? "Weekend"
                       : report.holiday != null
-                          ? "Holiday"
+                          ? report.holiday.toString()
                           : report.totalWorkingHours == '0.00' ||
                                   report.totalWorkingHours == '00:00'
                               ? 'Absent'
                               : report.totalWorkingHours,
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: report.weekend.isNotEmpty
-                        ? AppColor.primary
-                        : report.holiday != null
-                            ? AppColor.primary
-                            : report.totalWorkingHours == '0.00' ||
-                                    report.totalWorkingHours == '00:00'
-                                ? Colors.red
-                                : Colors.green,
-                  ),
+                      fontWeight: FontWeight.bold,
+                      color: report.weekend.isNotEmpty
+                          ? AppColor.primary
+                          : report.holiday != null
+                              ? AppColor.primary
+                              : _getTextColor(report.totalWorkingHours)),
                 ),
               ],
             )
@@ -96,3 +97,19 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
     );
   }
 }
+
+Color _getCardColor(String totalWorkingHours) {
+  double hours = double.tryParse(totalWorkingHours ?? '') ?? 0.0;
+  return hours < 8.5 ? Colors.red.shade100 : Colors.green.shade100;
+}
+
+Color _getTextColor(String totalWorkingHours) {
+  double hours = double.tryParse(totalWorkingHours ?? '') ?? 0.0;
+  return hours > 8.5 ? Colors.green : Colors.red;
+}
+
+  // : report.leaveType == "Unpaid"
+  //                     ? Colors.amber.shade700
+  //                     : report.leaveType == "paid"
+  //                         ? Colors.yellow
+  //                         : Colors.green.shade100,

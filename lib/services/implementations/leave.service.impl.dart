@@ -14,6 +14,9 @@ class LeaveServiceImpl implements LeaveService {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
 
+  bool _hasMoreData = false;
+  @override
+  bool get hasMoreData => _hasMoreData;
   @override
   Future<void> createLeaveRequest(Map<String, dynamic> leaveData) async {
     try {

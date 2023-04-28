@@ -1,5 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 
+import 'dart:convert';
+
 import 'package:flex_year_tablet/data_models/attendance_report_summary.data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -14,6 +16,8 @@ class AttendanceReportData with _$AttendanceReportData {
     @JsonKey(name: 'out') required String checkOutTime,
     @JsonKey(name: 'holiday') String? holiday,
     @JsonKey(name: 'weekend') required String weekend,
+    @JsonKey(name: 'leave_type') String? leaveType,
+    @JsonKey(name: 'leave_time') String? leaveTime,
     @JsonKey(name: 'lunch_in') required String lunchIn,
     @JsonKey(name: 'lunch_out') required String lunchOut,
     @JsonKey(name: 'total_lunch') required String lunchDuration,
