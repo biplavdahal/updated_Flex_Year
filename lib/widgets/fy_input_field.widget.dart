@@ -39,6 +39,7 @@ class _FYInputFieldState extends State<FYInputField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofocus: true,
       controller: widget.controller,
       decoration: InputDecoration(
         labelText: widget.label,

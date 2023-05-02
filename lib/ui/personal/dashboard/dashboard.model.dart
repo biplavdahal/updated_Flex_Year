@@ -136,6 +136,15 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   // Actions
   Future<void> init() async {
+    Map<String, dynamic> _searchParams = {};
+    _searchParams['date_from'] = formattedStartOfMonths;
+    _searchParams['date_to'] = formattedDate;
+    _monthlyReport = await _attendanceService.getMonthlyReport(
+      data: _searchParams,
+    );
+    _reportSummary =
+        await _attendanceService.getMonthlySummary(data: _searchParams);
+
     _attendanceService.getAttendanceForgot().then((status) {
       if (status != null) {
         _attendanceForgot = status;
@@ -161,14 +170,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
         (await _attendanceService.getAttendanceCorrections(
             dateTime: formattedDate =
                 DateFormat('yyyy-MM-dd ').format(DateTime.now())));
-    Map<String, dynamic> _searchParams = {};
-    _searchParams['date_from'] = formattedStartOfMonths;
-    _searchParams['date_to'] = formattedDate;
-    _monthlyReport = await _attendanceService.getMonthlyReport(
-      data: _searchParams,
-    );
-    _reportSummary =
-        await _attendanceService.getMonthlySummary(data: _searchParams);
 
     for (var client in user.clients) {
       _clientLabels?.add(client.name);
@@ -198,6 +199,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     try {
       const FYLinearLoader();
       HolidaysModel.holidaydata();
+
       _notificationService.fetchNotices();
     } catch (e) {
       rethrow;
@@ -267,7 +269,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       DateFormat('yyyy-MM-dd').format(dateTimeStartOfMonth);
 
   Future<void> onAttendanceButtonPressed(String status) async {
-    init();
     try {
       dialog.showDialog(
         DialogRequest(
@@ -285,6 +286,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       );
 
       dialog.hideDialog();
+      init();
       setIdle();
       if (status == 'checkin') {
         Fluttertoast.showToast(

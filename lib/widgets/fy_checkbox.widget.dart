@@ -29,7 +29,7 @@ class FYCheckbox extends StatelessWidget {
             borderRadius: BorderRadius.circular(100),
           ),
         ),
-        Text(label),
+        Expanded(child: Text(label)),
       ]),
     );
   }

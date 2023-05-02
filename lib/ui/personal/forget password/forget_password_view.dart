@@ -18,6 +18,7 @@ class ForgetPasswordFragment extends StatelessWidget {
       enableTouchRepeal: true,
       builder: (ctx, model, child) {
         return Scaffold(
+          appBar: AppBar(),
           resizeToAvoidBottomInset: false,
           body: Stack(
             children: [

@@ -58,7 +58,7 @@ class LoginView extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: SafeArea(
-        child: model.showLoginWithPin 
+        child: model.showLoginWithPin
             ? _loginWithPinView(context, model)
             : _loginWithUsernameAndPasswordView(context, model),
       ),
@@ -123,16 +123,18 @@ class LoginView extends StatelessWidget {
                           onChanged: (value) => model.rememberMe = value!,
                           label: "Remember me"),
                     ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () async {
-                          model.goto(ForgetPasswordFragment.tag);
-                        },
-                        child: const Text(
-                          'Forget Password?',
-                          style: TextStyle(
-                            fontSize: 12,
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () async {
+                            model.goto(ForgetPasswordFragment.tag);
+                          },
+                          child: const Text(
+                            'Forget Password?',
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
                           ),
                         ),
                       ),
@@ -176,7 +178,7 @@ class LoginView extends StatelessWidget {
                     ),
                     onPressed: () async {},
                     icon: const Icon(Icons.fingerprint_sharp),
-                    label: const Text('Tap to Login with Fingerprint'),
+                    label: const Text('Login with Fingerprint'),
                   ),
                 ),
               ],

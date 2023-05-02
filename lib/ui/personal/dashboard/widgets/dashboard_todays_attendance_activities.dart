@@ -109,7 +109,9 @@ class _TodaysAttendanceActivitiesState
                                             child: ListTile(
                                               leading: const Icon(
                                                   Icons.calendar_today),
-                                              title: const Text('Select Date'),
+                                              title: const Expanded(
+                                                  child:
+                                                      Text('Select date...')),
                                               subtitle: Text(
                                                 '${DateFormat.jm().format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, _selectedTime.hour, _selectedTime.minute))}',
                                               ),

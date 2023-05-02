@@ -48,28 +48,28 @@ class StartUpModel extends ViewModel with SnackbarMixin {
 
               _notificationService.initializeLocalNotification();
 
-              final initialMessage =
-                  await _notificationService.getInitialMessage();
+              // final initialMessage =
+              //     await _notificationService.getInitialMessage();
 
-              _notificationService
-                  .onNotificationArrive()
-                  .listen((message) async {
-                debugPrint(message.notification?.body);
-                debugPrint(message.notification?.title);
+              // _notificationService
+              //     .onNotificationArrive()
+              //     .listen((message) async {
+              //   debugPrint(message.notification?.body);
+              //   debugPrint(message.notification?.title);
 
-                _notificationService.showNotification(
-                  title: message.notification?.title,
-                  body: message.notification?.body,
-                );
-              });
+              //   _notificationService.showNotification(
+              //     title: message.notification?.title,
+              //     body: message.notification?.body,
+              //   );
+              // });
 
-              _notificationService.onMessageOpenedApp().listen((message) {
-                debugPrint(message.data.toString());
-              });
+              // _notificationService.onMessageOpenedApp().listen((message) {
+              //   debugPrint(message.data.toString());
+              // });
 
-              if (initialMessage != null) {
-                debugPrint(initialMessage.data.toString());
-              }
+              // if (initialMessage != null) {
+              //   debugPrint(initialMessage.data.toString());
+              // }
 
               await locator<CompanyService>().init();
               gotoAndClear(DashboardView.tag);

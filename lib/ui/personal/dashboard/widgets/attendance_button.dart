@@ -35,7 +35,7 @@ class AttendanceButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
                   color: color,
-                  width: 2,
+                  width: 0,
                 ),
               ),
               child: Column(
@@ -64,54 +64,27 @@ class AttendanceButton extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          if (onPressed != null) ...[
-                            Text(
-                              titles,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 9,
-                              ),
-                            ),
-                          ]
-                          //  else if (onPressed == null) ...[
-                          //   Text(
-                          //     getCurrentTime(),
-                          //     style: const TextStyle(
-                          //         color: Colors.white, fontSize: 12),
-                          //   )
-                          // ]
-                        ],
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   children: [
+                  //     Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.center,
+                  //       children: [
+                  //         if (onPressed != null) ...[
+                  //           Text(
+                  //             titles,
+                  //             style: const TextStyle(
+                  //               color: Colors.white,
+                  //               fontSize: 9,
+                  //             ),
+                  //           ),
+                  //         ]
+                  //       ],
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
-              // child: Row(
-
-              //   children: [
-              //     Icon(
-              //       icon,
-              //       color: Colors.white,
-              //       size: isTablet ? 64 : null,
-              //     ),
-              //     Expanded(
-              //       child: Text(
-              //         title,
-              //         textAlign: TextAlign.center,
-              //         style: TextStyle(
-              //           color: Colors.white,
-              //           fontSize: isTablet ? 32 : null,
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
             ),
           ),
         ),

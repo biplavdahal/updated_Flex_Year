@@ -321,7 +321,7 @@ class DashboardView extends StatelessWidget {
                   children: [
                     AttendanceButton(
                       titles: '',
-                      title: "Check in",
+                      title: "Check In",
                       icon: MdiIcons.clockStart,
                       color: Colors.green,
                       onPressed: model.attendanceStatus?.checkIn == null ||
@@ -382,9 +382,6 @@ class DashboardView extends StatelessWidget {
         crossAxisSpacing: 8,
         children: [
           UtilityItem(
-            declined: '',
-            approved: '',
-            pending: "",
             title: 'Leave Request  ',
             icon: MdiIcons.shieldAirplaneOutline,
             iconColor: Colors.orange,
@@ -393,9 +390,6 @@ class DashboardView extends StatelessWidget {
             },
           ),
           UtilityItem(
-            declined: '',
-            approved: '',
-            pending: '',
             title: " Monthly Report",
             iconColor: Colors.lightGreen,
             icon: MdiIcons.chartBoxOutline,
@@ -409,7 +403,6 @@ class DashboardView extends StatelessWidget {
             },
           ),
           UtilityItem(
-            pending: '',
             title: "One-day Report",
             iconColor: Colors.lightGreen,
             icon: MdiIcons.chartBoxOutline,
@@ -421,14 +414,9 @@ class DashboardView extends StatelessWidget {
                 ),
               );
             },
-            approved: '',
-            declined: '',
           ),
           // if (model.clientLabels != null && model.clientLabels!.isNotEmpty)
           UtilityItem(
-            declined: '',
-            approved: '',
-            pending: '',
             title: "Weekly Report",
             iconColor: Colors.lightGreen,
             icon: MdiIcons.chartBoxOutline,

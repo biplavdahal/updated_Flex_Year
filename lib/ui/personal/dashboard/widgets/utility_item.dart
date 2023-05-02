@@ -5,17 +5,11 @@ class UtilityItem extends StatelessWidget {
   final String title;
   final VoidCallback? onPressed;
   final Color? iconColor;
-  final String pending;
-  final String approved;
-  final String declined;
 
   const UtilityItem({
     Key? key,
     required this.icon,
     required this.title,
-    required this.pending,
-    required this.approved,
-    required this.declined,
     this.onPressed,
     this.iconColor,
   }) : super(key: key);
@@ -30,32 +24,6 @@ class UtilityItem extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           child: Column(
             children: [
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        pending,
-                        style: const TextStyle(color: Colors.orange),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        approved,
-                        style: const TextStyle(color: Colors.green),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        declined,
-                        style: const TextStyle(color: Colors.red),
-                      )
-                    ],
-                  )
-                ],
-              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,

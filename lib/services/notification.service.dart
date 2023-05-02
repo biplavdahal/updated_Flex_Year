@@ -1,6 +1,4 @@
-import 'dart:ffi';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flex_year_tablet/data_models/notice.data.dart';
 
 abstract class NotificationService {
@@ -10,14 +8,14 @@ abstract class NotificationService {
   /// Get permission [Apple/Web]
   Future<bool> getPermission();
 
-  /// Listen to foreground notification
-  Stream<RemoteMessage> onNotificationArrive();
+  // /// Listen to foreground notification
+  // Stream<RemoteMessage> onNotificationArrive();
 
-  /// Listens to notification that was clicked to open app
-  Stream<RemoteMessage> onMessageOpenedApp();
+  // /// Listens to notification that was clicked to open app
+  // Stream<RemoteMessage> onMessageOpenedApp();
 
-  /// Gets initial notification
-  Future<RemoteMessage?> getInitialMessage();
+  // /// Gets initial notification
+  // Future<RemoteMessage?> getInitialMessage();
 
   /// Notify locally
   Future<void> showNotification({String? title, String? body, String? payload});

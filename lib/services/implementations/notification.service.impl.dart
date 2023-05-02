@@ -1,10 +1,8 @@
-import 'dart:io';
-import 'dart:math';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bestfriend/di.dart';
 import 'package:bestfriend/services/api.service.dart';
 import 'package:dio/dio.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/data_models/notice.data.dart';
 import 'package:flex_year_tablet/helper/api_error.helper.dart';
@@ -22,44 +20,44 @@ class NotificationServiceImplementation implements NotificationService {
   NoticeData? get notice => _notice;
 
   // External depedencies
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final ApiService _apiService = locator<ApiService>();
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final AppAccessService _appAccessService = locator<AppAccessService>();
-  @override
-  Future<bool> getPermission() async {
-    if (Platform.isIOS) {
-      NotificationSettings settings =
-          await _firebaseMessaging.requestPermission(
-        alert: true,
-        announcement: false,
-        badge: true,
-        carPlay: false,
-        criticalAlert: false,
-        provisional: false,
-        sound: true,
-      );
+  // @override
+  // Future<bool> getPermission() async {
+  //   if (Platform.isIOS) {
+  //     NotificationSettings settings =
+  //         await _firebaseMessaging.requestPermission(
+  //       alert: true,
+  //       announcement: false,
+  //       badge: true,
+  //       carPlay: false,
+  //       criticalAlert: false,
+  //       provisional: false,
+  //       sound: true,
+  //     );
 
-      return (settings.authorizationStatus == AuthorizationStatus.authorized ||
-          settings.authorizationStatus == AuthorizationStatus.provisional);
-    }
+  //     return (settings.authorizationStatus == AuthorizationStatus.authorized ||
+  //         settings.authorizationStatus == AuthorizationStatus.provisional);
+  //   }
 
-    bool localNotificationAllowed =
-        await AwesomeNotifications().isNotificationAllowed();
+  //   bool localNotificationAllowed =
+  //       await AwesomeNotifications().isNotificationAllowed();
 
-    if (!localNotificationAllowed) {
-      localNotificationAllowed =
-          await AwesomeNotifications().requestPermissionToSendNotifications();
-    }
+  //   if (!localNotificationAllowed) {
+  //     localNotificationAllowed =
+  //         await AwesomeNotifications().requestPermissionToSendNotifications();
+  //   }
 
-    return localNotificationAllowed;
-  }
+  //   return localNotificationAllowed;
+  // }
 
-  @override
-  Future<RemoteMessage?> getInitialMessage() {
-    return _firebaseMessaging.getInitialMessage();
-  }
+  // @override
+  // Future<RemoteMessage?> getInitialMessage() {
+  //   return _firebaseMessaging.getInitialMessage();
+  // }
 
   @override
   void initializeLocalNotification() async {
@@ -79,15 +77,15 @@ class NotificationServiceImplementation implements NotificationService {
     );
   }
 
-  @override
-  Stream<RemoteMessage> onMessageOpenedApp() {
-    return FirebaseMessaging.onMessageOpenedApp;
-  }
+  // @override
+  // Stream<RemoteMessage> onMessageOpenedApp() {
+  //   return FirebaseMessaging.onMessageOpenedApp;
+  // }
 
-  @override
-  Stream<RemoteMessage> onNotificationArrive() {
-    return FirebaseMessaging.onMessage;
-  }
+  // @override
+  // Stream<RemoteMessage> onNotificationArrive() {
+  //   return FirebaseMessaging.onMessage;
+  // }
 
   @override
   Future<void> showNotification(
@@ -125,5 +123,11 @@ class NotificationServiceImplementation implements NotificationService {
     } catch (e) {
       throw apiError(e);
     }
+  }
+
+  @override
+  Future<bool> getPermission() {
+    // TODO: implement getPermission
+    throw UnimplementedError();
   }
 }
