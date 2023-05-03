@@ -2,6 +2,7 @@ import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_correction/attendance_correction.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_correction/widgets/correction_item.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
+import 'package:flex_year_tablet/widgets/fy_shimmer.widget.dart';
 import 'package:flutter/material.dart';
 
 class AttendanceCorrectionView extends StatelessWidget {
@@ -31,11 +32,20 @@ class AttendanceCorrectionView extends StatelessWidget {
                     (index) => ChoiceChip(
                       label: Text(model.tabs[index]),
                       selected: model.selectedTab == index.toString(),
+                      selectedColor: Colors.black38,
                       onSelected: (_) => model.selectedTab = index.toString(),
                     ),
                   ),
                 ),
-                if (model.isLoading) const FYLinearLoader(),
+                if (model.isLoading)
+                  Expanded(
+                    child: ListView.separated(
+                        itemBuilder: (context, index) => getShimmerLoading(),
+                        separatorBuilder: (context, index) => const SizedBox(
+                              height: 30,
+                            ),
+                        itemCount: 9),
+                  ),
                 const SizedBox(
                   height: 16,
                 ),

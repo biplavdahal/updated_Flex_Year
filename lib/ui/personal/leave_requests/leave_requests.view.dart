@@ -4,7 +4,9 @@ import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.model
 import 'package:flex_year_tablet/ui/personal/leave_requests/widgets/leave_request_item.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.view.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
+import 'package:flex_year_tablet/widgets/fy_shimmer.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../../theme.dart';
 import '../dashboard/dashboard.model.dart';
 
@@ -25,9 +27,7 @@ class LeaveRequestView extends StatelessWidget {
         await model.init();
         _scrollController.addListener(() {
           if (_scrollController.position.pixels ==
-              _scrollController.position.maxScrollExtent) {
-               
-              }
+              _scrollController.position.maxScrollExtent) {}
         });
       },
       killViewOnClose: false,
@@ -71,15 +71,19 @@ class LeaveRequestView extends StatelessWidget {
                       label: Text(model.tabs[index]),
                       selected: model.selectedTab == index.toString(),
                       onSelected: (_) => model.selectedTab = index.toString(),
-                      labelStyle: TextStyle(
-                        color: model.selectedTab == "1"
-                            ? AppColor.primary
-                            : Colors.black,
-                      ),
+                      selectedColor: Colors.black38,
                     ),
                   ),
                 ),
-                if (model.isLoading) const FYLinearLoader(),
+                if (model.isLoading)
+                  Expanded(
+                    child: ListView.separated(
+                        itemBuilder: (context, index) => getShimmerLoading(),
+                        separatorBuilder: (context, index) => const SizedBox(
+                              height: 30,
+                            ),
+                        itemCount: 9),
+                  ),
                 const SizedBox(height: 16),
                 if (!model.isLoading)
                   if (model.requestsToShow.isNotEmpty)

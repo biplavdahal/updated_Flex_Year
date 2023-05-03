@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:bestfriend/bestfriend.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';

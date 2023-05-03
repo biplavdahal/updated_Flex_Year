@@ -226,7 +226,7 @@ class DashboardDrawer extends StatelessWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return SizedBox(
-                        height: MediaQuery.of(context).size.height / 4,
+                        height: MediaQuery.of(context).size.height / 3,
                         child: Container(
                           decoration: const BoxDecoration(
                               color: Colors.white,
