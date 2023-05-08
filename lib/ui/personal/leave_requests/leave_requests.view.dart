@@ -112,12 +112,35 @@ class LeaveRequestView extends StatelessWidget {
                         ),
                       ),
                     )
+                  else if (model.selectedTab == '0')
+                    Expanded(
+                        child: RefreshIndicator(
+                      onRefresh: model.init,
+                      child: ListView.separated(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return LeaveRequestItem(
+                              request: model.request[index],
+                              isBusy:
+                                  model.isBusyWidget(model.request[index].id),
+                              onRemoveTap: model.removeLeave,
+                              onEditTap: model.onUpdatePressed,
+                              onApprove: model.onApprove,
+                              onDecline: model.onDecline,
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(
+                              height: 16,
+                            );
+                          },
+                          itemCount: model.request.length),
+                    ))
                   else
                     const Expanded(
-                      child: Center(
-                        child: Text('No leave requests'),
-                      ),
-                    ),
+                        child: Center(
+                      child: Text("No leave request..."),
+                    ))
               ],
             ),
           ),

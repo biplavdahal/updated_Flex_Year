@@ -30,7 +30,7 @@ class AttendanceButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             onTap: onPressed,
             child: Container(
-              padding: const EdgeInsets.all(4),
+              padding: const EdgeInsets.all(7),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
@@ -39,6 +39,8 @@ class AttendanceButton extends StatelessWidget {
                 ),
               ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
                     children: [
@@ -64,25 +66,6 @@ class AttendanceButton extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //   children: [
-                  //     Column(
-                  //       crossAxisAlignment: CrossAxisAlignment.center,
-                  //       children: [
-                  //         if (onPressed != null) ...[
-                  //           Text(
-                  //             titles,
-                  //             style: const TextStyle(
-                  //               color: Colors.white,
-                  //               fontSize: 9,
-                  //             ),
-                  //           ),
-                  //         ]
-                  //       ],
-                  //     ),
-                  //   ],
-                  // ),
                 ],
               ),
             ),

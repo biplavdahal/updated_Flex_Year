@@ -38,11 +38,6 @@ class NoticeView extends StatelessWidget {
                           if (date.compareTo(DateTime.now()) < 0) {
                             return Container();
                           }
-                          if (HolidaysModel.upcomingHoliday == null) {
-                            return const Center(
-                              child: Text("No newer notice..... "),
-                            );
-                          }
 
                           return NoticeItem(
                             _holiday,

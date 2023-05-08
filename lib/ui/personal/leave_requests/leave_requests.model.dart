@@ -14,9 +14,9 @@ class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
   final LeaveService _leaveService = locator<LeaveService>();
 
   // Data
-  List<String> get tabs => ['Pending', 'Approved', 'Declined'];
+  List<String> get tabs => ['All', 'Pending', 'Approved', 'Declined'];
 
-  String _selectedTab = "0";
+  String _selectedTab = "1";
   String get selectedTab => _selectedTab;
 
   set selectedTab(String tab) {
@@ -29,8 +29,11 @@ class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
   final _user = locator<DashboardModel>().user;
 
   List<LeaveRequestData> _requests = [];
-  List<LeaveRequestData> get requestsToShow =>
-      _requests.where((request) => request.status == _selectedTab).toList();
+  final _status = {"0": "1", "1": "2", "2": "3", "": "0"};
+  List<LeaveRequestData> get requestsToShow => _requests
+      .where((request) => _status[request.status] == _selectedTab)
+      .toList();
+  List<LeaveRequestData> get request => _requests;
 
   // Action
   Future<void> init() async {

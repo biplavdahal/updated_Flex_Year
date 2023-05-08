@@ -22,7 +22,10 @@ class UtilityItem extends StatelessWidget {
         onTap: onPressed,
         child: Container(
           padding: const EdgeInsets.all(8),
+          alignment: Alignment.center,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -36,23 +39,13 @@ class UtilityItem extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(title)
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                  )
                 ],
               )
             ],
-
-            // mainAxisAlignment: MainAxisAlignment.center,
-            // children: <Widget>[
-            //   Icon(
-            //     icon,
-            //     size: 32,
-            //     color: iconColor,
-            //   ),
-            //   const SizedBox(
-            //     height: 10,
-            //   ),
-            //   Text(title)
-            // ],
           ),
         ),
       ),

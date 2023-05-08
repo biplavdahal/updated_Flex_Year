@@ -1,4 +1,3 @@
-
 import 'package:bestfriend/bestfriend.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
@@ -6,7 +5,6 @@ import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
-import 'package:flex_year_tablet/ui/personal/attendance_report/attandance_report.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.view.dart';
@@ -167,17 +165,17 @@ class DashboardView extends StatelessWidget {
             actions: [
               IconButton(
                   tooltip: "notice",
-                  iconSize: 25,
+                  iconSize: 24.1,
                   onPressed: () async {
                     await locator<DashboardModel>().goto(NoticeView.tag);
                   },
                   icon: const Icon(MdiIcons.noteText)),
-              IconButton(
-                tooltip: "notification",
-                iconSize: 25,
-                onPressed: () {},
-                icon: const Icon(MdiIcons.bellOutline),
-              ),
+              // IconButton(
+              //   tooltip: "notification",
+              //   iconSize: 25,
+              //   onPressed: () {},
+              //   icon: const Icon(MdiIcons.bellOutline),
+              // ),
             ],
           ),
           body: Container(

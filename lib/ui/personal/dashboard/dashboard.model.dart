@@ -136,6 +136,8 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   // Actions
   Future<void> init() async {
+    const FYLinearLoader();
+    HolidaysModel.holidaydata();
     Map<String, dynamic> _searchParams = {};
     _searchParams['date_from'] = formattedStartOfMonths;
     _searchParams['date_to'] = formattedDate;
@@ -195,9 +197,13 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       unsetWidgetBusy('dashboard');
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     });
+    _searchParams['date_from'] = formattedStartOfMonths;
+    _searchParams['date_to'] = formattedDate;
+    _monthlyReport = await _attendanceService.getMonthlyReport(
+      data: _searchParams,
+    );
 
     try {
-      const FYLinearLoader();
       HolidaysModel.holidaydata();
 
       _notificationService.fetchNotices();

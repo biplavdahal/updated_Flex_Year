@@ -8,14 +8,6 @@ Shimmer getShimmerLoading() {
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 100,
-          width: 100,
-          color: Colors.white,
-        ),
-        const SizedBox(
-          width: 10,
-        ),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,7 +17,7 @@ Shimmer getShimmerLoading() {
               ),
               Container(
                 width: double.infinity,
-                height: 18.0,
+                height: 22.0,
                 color: Colors.white,
               ),
               const SizedBox(

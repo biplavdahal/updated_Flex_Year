@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/widgets/holiday_item.dart';
@@ -23,27 +25,28 @@ class HolidaysView extends StatelessWidget {
               ? const FYLinearLoader()
               : Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: RefreshIndicator(
-                    onRefresh: model.init,
-                    child: ListView.builder(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        final _holiday = HolidaysModel.filterHoliday[index];
-                        DateFormat dateFormat = DateFormat('yyyy-MM-dd');
-                        DateTime date = dateFormat.parse(_holiday.date);
+                  child: Expanded(
+                    child: RefreshIndicator(
+                      onRefresh: model.init,
+                      child: ListView.builder(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          final _holiday = HolidaysModel.filterHoliday[index];
+                          DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+                          DateTime date = dateFormat.parse(_holiday.date);
 
-                        if (date.compareTo(DateTime.now()) < 0) {
-                          return Container();
-                        }
+                          if (date.compareTo(DateTime.now()) < 0) {
+                            return Container();
+                          }
 
-                        return HolidayItem(
-                          holiday: _holiday,
-                        );
-                      },
-                      itemCount: HolidaysModel.filterHoliday.length,
+                          return HolidayItem(
+                            holiday: _holiday,
+                          );
+                        },
+                        itemCount: HolidaysModel.filterHoliday.length,
+                      ),
                     ),
-                  ),
-                ),
+                  )),
         );
       },
     );

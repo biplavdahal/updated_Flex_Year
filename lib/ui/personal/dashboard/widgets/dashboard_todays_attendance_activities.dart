@@ -1,8 +1,6 @@
-import 'package:bestfriend/di.dart';
-import 'package:bestfriend/mixins/snack_bar.mixin.dart';
+import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
-import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/widgets/fy_input_field.widget.dart';
 import 'package:flutter/material.dart';
@@ -70,6 +68,7 @@ class _TodaysAttendanceActivitiesState
                     child: ElevatedButton(
                         onPressed: () async {
                           showDialog(
+                              useSafeArea: false,
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
@@ -87,16 +86,20 @@ class _TodaysAttendanceActivitiesState
                                       child: const Text('Cancel'),
                                     ),
                                     TextButton(
-                                        onPressed: () {
-                                          onSubmit(
-                                              "${widget.correctionData.attendanceId}");
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text(
-                                          "Submit",
-                                          style: TextStyle(
-                                              color: AppColor.primary),
-                                        ))
+                                      onPressed: () {
+                                        onSubmit(
+                                            "${widget.correctionData.attendanceId}");
+                                        Navigator.pop(context);
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Request submitted successfully!");
+                                      },
+                                      child: const Text(
+                                        "Submit",
+                                        style:
+                                            TextStyle(color: AppColor.primary),
+                                      ),
+                                    )
                                   ],
                                   content: Padding(
                                     padding: const EdgeInsets.all(10),
@@ -110,8 +113,7 @@ class _TodaysAttendanceActivitiesState
                                               leading: const Icon(
                                                   Icons.calendar_today),
                                               title: const Expanded(
-                                                  child:
-                                                      Text('Select date...')),
+                                                  child: Text('Select date')),
                                               subtitle: Text(
                                                 '${DateFormat.jm().format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, _selectedTime.hour, _selectedTime.minute))}',
                                               ),
@@ -193,6 +195,9 @@ class _TodaysAttendanceActivitiesState
                                           onSubmit(
                                               "${widget.correctionData.attendanceId}");
                                           Navigator.pop(context);
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Request submitted successfully!");
                                         },
                                         child: const Text(
                                           "Submit",

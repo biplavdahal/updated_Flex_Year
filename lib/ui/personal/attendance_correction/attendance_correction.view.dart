@@ -75,33 +75,39 @@ class AttendanceCorrectionView extends StatelessWidget {
                         ),
                       ),
                     )
+                  else if (model.selectedTab == '0')
+                    Expanded(
+                      child: RefreshIndicator(
+                        onRefresh: model.init,
+                        child: ListView.separated(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return CorrectionItem(
+                                correction: model.corrections[index],
+                                isBusy: model.isBusyWidget(
+                                  model.corrections[index].id,
+                                ),
+                                onDeletePressed: model.onDelete,
+                                onApprove: model.onApprove,
+                                onDecline: model.onDecline,
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(
+                                height: 16,
+                              );
+                            },
+                            itemCount: model.corrections.length),
+                      ),
+                    )
                   else
                     const Expanded(
                         child: Center(
-                      child: Text('No attandance '),
-                    )),
+                      child: Text("No attendance..."),
+                    ))
               ],
             ),
           ),
-
-          // body: model.isLoading
-          //     ? const FYLinearLoader()
-          //     : RefreshIndicator(
-          //         onRefresh: model.init,
-          //         child: Padding(
-          //           padding: const EdgeInsets.all(16),
-          //           child: ListView.builder(
-          //             itemBuilder: (context, index) {
-          //               final _correction = model.corrections[index];
-          //               return CorrectionItem(
-          //                 correction: _correction,
-          //                 onDeletePressed: model.onDelete,
-          //               );
-          //             },
-          //             itemCount: model.corrections.length,
-          //           ),
-          //         ),
-          //       ),
         );
       },
     );

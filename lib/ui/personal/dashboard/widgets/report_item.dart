@@ -16,12 +16,6 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
     this.onTap,
   }) : super(key: key);
 
-  // : report.leaveType == "Unpaid"
-  //                   ? Colors.amber.shade700
-  //                   : report.leaveType == "paid"
-  //                       ? Colors.yellow
-  //                       : Colors.green.shade100,
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -100,16 +94,10 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
 
 Color _getCardColor(String totalWorkingHours) {
   double hours = double.tryParse(totalWorkingHours ?? '') ?? 0.0;
-  return hours < 8.5 ? Colors.red.shade100 : Colors.green.shade100;
+  return hours < 8 ? Colors.red.shade100 : Colors.green.shade100;
 }
 
 Color _getTextColor(String totalWorkingHours) {
   double hours = double.tryParse(totalWorkingHours ?? '') ?? 0.0;
-  return hours > 8.5 ? Colors.green : Colors.red;
+  return hours > 8 ? Colors.green : Colors.red;
 }
-
-  // : report.leaveType == "Unpaid"
-  //                     ? Colors.amber.shade700
-  //                     : report.leaveType == "paid"
-  //                         ? Colors.yellow
-  //                         : Colors.green.shade100,
