@@ -40,12 +40,14 @@ class LeaveServiceImpl implements LeaveService {
   }
 
   @override
-  Future<List<LeaveRequestData>> getAllLeaveRequests([bool self = true]) async {
+  Future<List<LeaveRequestData>> getAllLeaveRequests(
+      {required int limit, bool self = true}) async {
     try {
       final _response = await _apiService.post(auLeaveSearch, {
         'access_token': _authenticationService.user!.accessToken,
         'company_id': _appAccessService.appAccess!.company.companyId,
         'sortnane': 'date_to',
+        'limit': limit,
         'sortno': 2,
         'search': {
           if (self) 'staff_id': _authenticationService.user!.id,

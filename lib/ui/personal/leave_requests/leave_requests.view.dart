@@ -27,7 +27,17 @@ class LeaveRequestView extends StatelessWidget {
         await model.init();
         _scrollController.addListener(() {
           if (_scrollController.position.pixels ==
-              _scrollController.position.maxScrollExtent) {}
+              _scrollController.position.maxScrollExtent) {
+            model.loadMore();
+          }
+        });
+      },
+      initState: (model) {
+        _scrollController.addListener(() {
+          if (_scrollController.position.maxScrollExtent ==
+              _scrollController.offset) {
+            model.loadMore();
+          }
         });
       },
       killViewOnClose: false,
@@ -91,6 +101,7 @@ class LeaveRequestView extends StatelessWidget {
                       child: RefreshIndicator(
                         onRefresh: model.init,
                         child: ListView.separated(
+                          controller: _scrollController,
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             return LeaveRequestItem(
@@ -108,7 +119,9 @@ class LeaveRequestView extends StatelessWidget {
                               height: 16,
                             );
                           },
-                          itemCount: model.requestsToShow.length,
+                          itemCount: model.requestsToShow.length > 0
+                              ? model.requestsToShow.length
+                              : 1,
                         ),
                       ),
                     )
@@ -117,6 +130,7 @@ class LeaveRequestView extends StatelessWidget {
                         child: RefreshIndicator(
                       onRefresh: model.init,
                       child: ListView.separated(
+                          controller: _scrollController,
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             return LeaveRequestItem(
@@ -137,10 +151,7 @@ class LeaveRequestView extends StatelessWidget {
                           itemCount: model.request.length),
                     ))
                   else
-                    const Expanded(
-                        child: Center(
-                      child: Text("No leave request..."),
-                    ))
+                    const Center(child: Text("No leave Requests"))
               ],
             ),
           ),

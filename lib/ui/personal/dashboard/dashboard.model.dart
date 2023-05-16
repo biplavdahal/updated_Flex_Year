@@ -23,7 +23,6 @@ import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/login/login.view.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.view.dart';
-import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
@@ -136,8 +135,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   // Actions
   Future<void> init() async {
-    const FYLinearLoader();
-    HolidaysModel.holidaydata();
     Map<String, dynamic> _searchParams = {};
     _searchParams['date_from'] = formattedStartOfMonths;
     _searchParams['date_to'] = formattedDate;
@@ -146,19 +143,11 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     );
     _reportSummary =
         await _attendanceService.getMonthlySummary(data: _searchParams);
-
-    _attendanceService.getAttendanceForgot().then((status) {
-      if (status != null) {
-        _attendanceForgot = status;
-        setIdle();
-      }
-    }).catchError((e) {
-      // snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
-    });
-    _attendanceCorrectionData =
-        (await _attendanceService.getAttendanceCorrections(
-            dateTime: formattedDate =
-                DateFormat('yyyy-MM-dd ').format(DateTime.now())));
+    _searchParams['date_from'] = formattedStartOfMonths;
+    _searchParams['date_to'] = formattedDate;
+    _monthlyReport = await _attendanceService.getMonthlyReport(
+      data: _searchParams,
+    );
     HolidaysModel.holidaydata();
     _attendanceForgot = null;
 
@@ -197,11 +186,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       unsetWidgetBusy('dashboard');
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     });
-    _searchParams['date_from'] = formattedStartOfMonths;
-    _searchParams['date_to'] = formattedDate;
-    _monthlyReport = await _attendanceService.getMonthlyReport(
-      data: _searchParams,
-    );
 
     try {
       HolidaysModel.holidaydata();

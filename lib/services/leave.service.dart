@@ -7,11 +7,12 @@ abstract class LeaveService {
   /// Update leave request by cliet or Staff
   Future<void> updateLeaveRequest(Map<String, dynamic> leaveData);
 
-   /// Getter for boolean value to indicate if there is more data to be loaded
+  /// Getter for boolean value to indicate if there is more data to be loaded
   bool get hasMoreData;
 
   /// Get all leave requests
-  Future<List<LeaveRequestData>> getAllLeaveRequests([bool self = true]);
+  Future<List<LeaveRequestData>> getAllLeaveRequests(
+      {required int limit, bool self = true});
 
   /// Delete leave request
   Future<void> deleteLeaveRequest(

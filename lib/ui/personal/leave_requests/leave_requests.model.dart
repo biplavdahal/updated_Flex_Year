@@ -12,6 +12,7 @@ import '../dashboard/dashboard.model.dart';
 class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
   // Service
   final LeaveService _leaveService = locator<LeaveService>();
+  int _limit = 5;
 
   // Data
   List<String> get tabs => ['All', 'Pending', 'Approved', 'Declined'];
@@ -40,7 +41,7 @@ class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
     try {
       setLoading();
 
-      _requests = await _leaveService.getAllLeaveRequests();
+      _requests = await _leaveService.getAllLeaveRequests(limit: _limit);
 
       setIdle();
     } catch (e) {
@@ -49,10 +50,14 @@ class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
     }
   }
 
-  Future<void> initsecond() async {
+  Future<void> loadMore() async {
+    if (_leaveService.hasMoreData) {
+      setWidgetBusy('load-more');
+    }
+    _limit = _limit + 5;
     try {
       setLoading();
-      _requests = await _leaveService.getAllLeaveRequests();
+      _requests = await _leaveService.getAllLeaveRequests(limit: _limit);
       setIdle();
     } catch (e) {
       setIdle();

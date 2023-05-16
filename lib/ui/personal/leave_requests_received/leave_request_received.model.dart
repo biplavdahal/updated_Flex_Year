@@ -1,5 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:dio/dio.dart';
+
 import 'package:flex_year_tablet/data_models/leave_request.data.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/leave.service.dart';
@@ -33,7 +33,7 @@ class LeaveRequestReceivedModel extends ViewModel
   Future<void> init() async {
     try {
       setLoading();
-      _requests = await _leaveService.getAllLeaveRequests();
+      // _requests = await _leaveService.getAllLeaveRequests();
       setIdle();
     } catch (e) {
       setIdle();
