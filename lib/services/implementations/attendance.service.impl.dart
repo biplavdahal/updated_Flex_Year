@@ -28,6 +28,9 @@ class AttendanceServiceImpl implements AttendanceService {
   @override
   AttendanceReportData? get report => _report;
 
+  bool _hasMoreData = false;
+  @override
+  bool get hasMoreData => _hasMoreData;
   @override
   Future<AttendanceStatusData> getAttendanceStatus({
     String? clientId,
@@ -414,7 +417,7 @@ class AttendanceServiceImpl implements AttendanceService {
 
   @override
   Future<List<AttendanceCorrectionReviewData>> getAttendanceCorrectionReviews(
-      int id) async {
+      {required int limit, required int id}) async {
     try {
       final _response =
           await _apiService.post(auGetAttendanceCorrectionReviews, {

@@ -3,7 +3,6 @@ import 'package:flex_year_tablet/data_models/leave_request.data.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/leave.service.dart';
-import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.view.dart';
 
@@ -50,17 +49,18 @@ class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
     }
   }
 
+  bool isDataFinishedScrolling = false;
+
   Future<void> loadMore() async {
     if (_leaveService.hasMoreData) {
       setWidgetBusy('load-more');
     }
     _limit = _limit + 5;
     try {
-      setLoading();
       _requests = await _leaveService.getAllLeaveRequests(limit: _limit);
+
       setIdle();
     } catch (e) {
-      setIdle();
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     }
   }

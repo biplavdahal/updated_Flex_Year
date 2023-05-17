@@ -61,7 +61,7 @@ abstract class AttendanceService {
   ///post Today's attendance request review
   Future<void> postTodayAttendanceRequestReview(
       {required String reqDate,
-        required String dateTime,
+      required String dateTime,
       String? message,
       required String attendanceId});
 
@@ -89,9 +89,12 @@ abstract class AttendanceService {
     required Map<String, dynamic> data,
   });
 
+  /// Getter for boolean value to indicate if there is more data to be loaded
+  bool get hasMoreData;
+
   /// Get all attendance correction reviews
   Future<List<AttendanceCorrectionReviewData>> getAttendanceCorrectionReviews(
-      int id);
+      {required int limit, required int id});
 
   /// Approve or decline attendance review
   Future<void> actionOnAttendanceCorrectionReview({

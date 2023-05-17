@@ -5,6 +5,8 @@ import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_shimmer.widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../../theme.dart';
+
 class AttendanceCorrectionView extends StatelessWidget {
   static String tag = 'attendance-correction-view';
 
@@ -99,12 +101,25 @@ class AttendanceCorrectionView extends StatelessWidget {
                             },
                             itemCount: model.corrections.length),
                       ),
-                    )
-                  else
-                    const Expanded(
+                    ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: InkWell(
+                      onTap: model.loadMore,
+                      child: const SizedBox(
+                        height: 30,
                         child: Center(
-                      child: Text("No attendance..."),
-                    ))
+                            child: Text(
+                          "Tap to loadMore ...",
+                          style: TextStyle(color: AppColor.primary),
+                        )),
+                      )),
+                ),
+                if (model.selectedTab != '0')
+                  if (model.correctionsToShow.isEmpty)
+                    const Center(child: Text("No Attendance Corrections..."))
               ],
             ),
           ),

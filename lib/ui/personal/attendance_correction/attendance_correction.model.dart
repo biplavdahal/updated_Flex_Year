@@ -16,6 +16,8 @@ class AttendanceCorrectionModel extends ViewModel
   String _selectedTab = "1";
   String get selectedTab => _selectedTab;
 
+  int _limit = 10;
+
   int get id => _user.id;
 
   set selectedTab(String tab) {
@@ -37,11 +39,25 @@ class AttendanceCorrectionModel extends ViewModel
     try {
       setLoading();
 
-      _corrections =
-          await _attendanceService.getAttendanceCorrectionReviews(id);
+      _corrections = await _attendanceService.getAttendanceCorrectionReviews(
+          limit: _limit, id: id);
       setIdle();
     } catch (e) {
       setIdle();
+      snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
+    }
+  }
+
+  Future<void> loadMore() async {
+    if (_attendanceService.hasMoreData) {
+      setWidgetBusy('load-more');
+    }
+    _limit = _limit + 7;
+    try {
+      _corrections = await _attendanceService.getAttendanceCorrectionReviews(
+          limit: _limit, id: id);
+      setIdle();
+    } catch (e) {
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     }
   }
