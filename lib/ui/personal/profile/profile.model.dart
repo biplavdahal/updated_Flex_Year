@@ -15,7 +15,6 @@ class ProfileModel extends ViewModel {
     _selectedTab = tab;
     setIdle();
   }
- 
 
   Future<void> moreOptionActions(String action) async {
     switch (action) {

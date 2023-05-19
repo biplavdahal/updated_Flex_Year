@@ -68,11 +68,12 @@ class _TodaysAttendanceActivitiesState
                     child: ElevatedButton(
                         onPressed: () async {
                           showDialog(
-                              useSafeArea: false,
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  scrollable: true,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
                                   title: Text(
                                     "Request Review " +
                                         "(" "${widget.correctionData.Status.toString()}" +
@@ -101,36 +102,38 @@ class _TodaysAttendanceActivitiesState
                                       ),
                                     )
                                   ],
-                                  content: Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Form(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Card(
-                                            child: ListTile(
-                                              leading: const Icon(
-                                                  Icons.calendar_today),
-                                              title: const Expanded(
-                                                  child: Text('Select date')),
-                                              subtitle: Text(
-                                                '${DateFormat.jm().format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, _selectedTime.hour, _selectedTime.minute))}',
+                                  content: SingleChildScrollView(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Form(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                            Card(
+                                              child: ListTile(
+                                                leading: const Icon(
+                                                    Icons.calendar_today),
+                                                title: const Expanded(
+                                                    child: Text('Select date')),
+                                                subtitle: Text(
+                                                  '${DateFormat.jm().format(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, _selectedTime.hour, _selectedTime.minute))}',
+                                                ),
+                                                trailing: const Icon(
+                                                    Icons.keyboard_arrow_down),
+                                                onTap: _pickTime,
                                               ),
-                                              trailing: const Icon(
-                                                  Icons.keyboard_arrow_down),
-                                              onTap: _pickTime,
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            height: 16,
-                                          ),
-                                          FYInputField(
-                                            label: 'Message',
-                                            title: 'message ',
-                                            controller: messageController,
-                                          )
-                                        ],
+                                            const SizedBox(
+                                              height: 16,
+                                            ),
+                                            FYInputField(
+                                              label: 'Message',
+                                              title: 'message ',
+                                              controller: messageController,
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),

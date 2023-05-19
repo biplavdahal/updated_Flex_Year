@@ -129,7 +129,7 @@ class LoginModel extends ViewModel with DialogMixin, SnackbarMixin {
     }
   }
 
-     // FIXME: API ERROR
+  // FIXME: API ERROR
   Future<void> onForgotPasswordPressed() async {
     if (_forgotPasswordFormKey.currentState!.validate()) {
       dialog.showDialog(
@@ -146,7 +146,7 @@ class LoginModel extends ViewModel with DialogMixin, SnackbarMixin {
             company_id: _appAccessService.appAccess!.company.companyId);
         snackbar.displaySnackbar(
           SnackbarRequest.of(
-            message: response,   
+            message: response,
             type: ESnackbarType.success,
             duration: ESnackbarDuration.long,
           ),

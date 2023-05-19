@@ -22,6 +22,27 @@ class AttendanceCorrectionView extends StatelessWidget {
           appBar: AppBar(
             title: const Text('Attendance Correction'),
           ),
+          floatingActionButton: Stack(
+            children: [
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      primary: Colors.grey[300],
+                      padding: const EdgeInsets.all(2),
+                    ),
+                    onPressed: () async {
+                      model.loadMore();
+                    },
+                    child: const Text('Tap to loadMore...'),
+                  ),
+                ),
+              )
+            ],
+          ),
           body: Container(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -101,25 +122,11 @@ class AttendanceCorrectionView extends StatelessWidget {
                             },
                             itemCount: model.corrections.length),
                       ),
-                    ),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: InkWell(
-                      onTap: model.loadMore,
-                      child: const SizedBox(
-                        height: 30,
-                        child: Center(
-                            child: Text(
-                          "Tap to loadMore ...",
-                          style: TextStyle(color: AppColor.primary),
-                        )),
-                      )),
-                ),
-                if (model.selectedTab != '0')
-                  if (model.correctionsToShow.isEmpty)
-                    const Center(child: Text("No Attendance Corrections..."))
+                    )
+                  else
+                    const Expanded(
+                        child:
+                            Center(child: Text("No Attendance Correncion...")))
               ],
             ),
           ),

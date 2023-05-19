@@ -18,36 +18,43 @@ class HolidaysView extends StatelessWidget {
       onModelReady: (model) => model.init(),
       builder: (ctx, model, child) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Upcoming Holidays'),
-          ),
-          body: model.isLoading
-              ? const FYLinearLoader()
-              : Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Expanded(
-                    child: RefreshIndicator(
-                      onRefresh: model.init,
-                      child: ListView.builder(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          final _holiday = HolidaysModel.filterHoliday[index];
-                          DateFormat dateFormat = DateFormat('yyyy-MM-dd');
-                          DateTime date = dateFormat.parse(_holiday.date);
+            appBar: AppBar(
+              title: const Text('Upcoming Holidays'),
+            ),
+            body: Container(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (model.isLoading) const FYLinearLoader(),
+                  if (!model.isLoading)
+                    if (HolidaysModel.filterHoliday.isNotEmpty)
+                      Expanded(
+                        child: RefreshIndicator(
+                          onRefresh: model.init,
+                          child: ListView.builder(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final _holiday =
+                                  HolidaysModel.filterHoliday[index];
+                              DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+                              DateTime date = dateFormat.parse(_holiday.date);
 
-                          if (date.compareTo(DateTime.now()) < 0) {
-                            return Container();
-                          }
+                              if (date.compareTo(DateTime.now()) < 0) {
+                                return Container();
+                              }
 
-                          return HolidayItem(
-                            holiday: _holiday,
-                          );
-                        },
-                        itemCount: HolidaysModel.filterHoliday.length,
-                      ),
-                    ),
-                  )),
-        );
+                              return HolidayItem(
+                                holiday: _holiday,
+                              );
+                            },
+                            itemCount: HolidaysModel.filterHoliday.length,
+                          ),
+                        ),
+                      )
+                ],
+              ),
+            ));
       },
     );
   }

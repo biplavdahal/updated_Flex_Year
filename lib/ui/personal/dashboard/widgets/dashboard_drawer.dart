@@ -49,7 +49,7 @@ class DashboardDrawer extends StatelessWidget {
                             const AssetImage("assets/images/avatar.png"),
                       ),
                     ),
-                    accountEmail: Text(_user.role != null
+                    accountEmail: Text(_user.role != null 
                         ? _user.role!.toUpperCase()
                         : 'Staff'),
                     accountName: Text(

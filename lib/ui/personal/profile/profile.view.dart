@@ -19,7 +19,9 @@ class ProfileView extends StatelessWidget {
     return View<ProfileModel>(
       builder: (ctx, model, child) {
         return Scaffold(
+          
           backgroundColor: AppColor.primary,
+          
           appBar: AppBar(
             title: const Text('Profile'),
             actions: [

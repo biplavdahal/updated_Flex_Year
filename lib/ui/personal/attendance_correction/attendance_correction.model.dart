@@ -13,7 +13,7 @@ class AttendanceCorrectionModel extends ViewModel
   // Data
   List<String> get tabs => ['All', 'Pending', 'Approved', 'Declined'];
 
-  String _selectedTab = "1";
+  String _selectedTab = "0";
   String get selectedTab => _selectedTab;
 
   int _limit = 10;

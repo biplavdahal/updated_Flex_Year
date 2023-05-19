@@ -48,7 +48,7 @@ class UserAvatar extends StatelessWidget {
     }
 
     return CachedNetworkImage(
-      imageUrl: auImageBaseUrl + user.staffPhoto!,
+      imageUrl: auBaseURL + user.staffPhoto!,
       errorWidget: (context, url, error) => CircleAvatar(
         radius: size + borderWidth,
         backgroundColor: borderColor,

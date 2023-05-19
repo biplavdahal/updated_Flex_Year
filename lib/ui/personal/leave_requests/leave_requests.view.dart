@@ -6,6 +6,7 @@ import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_req
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_shimmer.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../theme.dart';
 import '../dashboard/dashboard.model.dart';
@@ -46,15 +47,50 @@ class LeaveRequestView extends StatelessWidget {
           appBar: AppBar(
             title: const Text('Leave Requests'),
           ),
-          floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.add),
-            onPressed: () async {
-              final response = await model.goto(WriteLeaveRequestView.tag);
-              if (response != null) {
-                model.init();
-              }
-            },
+          floatingActionButton: Stack(
+            children: [
+              Positioned(
+                bottom: 16,
+                right: 16,
+                child: FloatingActionButton(
+                  child: const Icon(Icons.add),
+                  onPressed: () async {
+                    final response =
+                        await model.goto(WriteLeaveRequestView.tag);
+                    if (response != null) {
+                      model.init();
+                    }
+                  },
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      primary: Colors.grey[300],
+                      padding: const EdgeInsets.all(2),
+                    ),
+                    onPressed: () async {
+                      model.loadMore();
+                    },
+                    child: const Text('Tap to loadMore...'),
+                  ),
+                ),
+              )
+            ],
           ),
+          // floatingActionButton: FloatingActionButton(
+          //   child: const Icon(Icons.add),
+          //   onPressed: () async {
+          //     final response = await model.goto(WriteLeaveRequestView.tag);
+          //     if (response != null) {
+          //       model.init();
+          //     }
+          //   },
+          // ),
           body: Container(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -146,25 +182,10 @@ class LeaveRequestView extends StatelessWidget {
                             );
                           },
                           itemCount: model.request.length),
-                    )),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: InkWell(
-                      onTap: model.loadMore,
-                      child: const SizedBox(
-                        height: 30,
-                        child: Center(
-                            child: Text(
-                          "Tap to loadMore ...",
-                          style: TextStyle(color: AppColor.primary),
-                        )),
-                      )),
-                ),
-                if (model.selectedTab != '0')
-                  if (model.requestsToShow.isEmpty)
-                    const Center(child: Text("No leave Requests..."))
+                    ))
+                  else
+                    const Expanded(
+                        child: Center(child: Text("No Leave Request ...")))
               ],
             ),
           ),
