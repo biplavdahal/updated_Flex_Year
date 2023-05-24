@@ -21,6 +21,7 @@ import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_reque
 import 'package:flex_year_tablet/ui/personal/notice/notice.view.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.view.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
+import 'package:flex_year_tablet/ui/personal/performance/performance_view.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.dart';
 import 'package:flex_year_tablet/ui/personal/staffs/staffs.view.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.view.dart';
@@ -67,4 +68,5 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
           PayrollFilterView(settings.arguments as Arguments?),
       NoticeView.tag: const NoticeView(),
       DateConverterView.tag: const DateConverterView(),
+      PerformanceView.tag: const PerformanceView(),
     };

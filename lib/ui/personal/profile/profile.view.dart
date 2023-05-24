@@ -1,6 +1,7 @@
 import 'package:bestfriend/di.dart';
 import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/theme.dart';
+import 'package:flex_year_tablet/ui/personal/performance/performance_view.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.model.dart';
 import 'package:flex_year_tablet/ui/personal/profile/widget/user_profile_header.dart';
 import 'package:flex_year_tablet/widgets/fy_user_avatar_widget.dart';
@@ -19,9 +20,7 @@ class ProfileView extends StatelessWidget {
     return View<ProfileModel>(
       builder: (ctx, model, child) {
         return Scaffold(
-          
           backgroundColor: AppColor.primary,
-          
           appBar: AppBar(
             title: const Text('Profile'),
             actions: [
@@ -155,7 +154,64 @@ class ProfileView extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                              )
+                              ),
+                            if (model.selectedTab == "0" ||
+                                model.selectedTab == "1")
+                              Positioned(
+                                  child: Center(
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: const [
+                                        Text(
+                                          "Performance Report : ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColor.primary),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 60,
+                                      child: ListView.separated(
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder: (context, index) {
+                                            return SizedBox(
+                                              height: 100,
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  model.goto(
+                                                      PerformanceView.tag);
+                                                },
+                                                child: Card(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            16),
+                                                    child: Column(
+                                                      children: [
+                                                        Row(
+                                                          children: const [
+                                                            Text(
+                                                                "2080-Baishakh")
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          separatorBuilder: (context, index) =>
+                                              const SizedBox(
+                                                width: 0,
+                                              ),
+                                          itemCount: 5),
+                                    )
+                                  ],
+                                ),
+                              ))
                           ],
                         ),
                       ))),
