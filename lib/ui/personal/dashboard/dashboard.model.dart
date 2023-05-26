@@ -137,6 +137,15 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   // Actions
   Future<void> init() async {
+    _attendanceForgot = null;
+    _attendanceService.getAttendanceForgot().then((status) {
+      if (status != null) {
+        _attendanceForgot = status;
+        setIdle();
+      }
+    }).catchError((e) {
+      // snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
+    });
     Map<String, dynamic> _searchParams = {};
     _searchParams['date_from'] = formattedStartOfMonths;
     _searchParams['date_to'] = formattedDate;
@@ -151,7 +160,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       data: _searchParams,
     );
     HolidaysModel.holidaydata();
-    _attendanceForgot = null;
 
     _currentDateTimeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _currentDateTime = DateTime.now().toString();
@@ -346,6 +354,5 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   }
 
   ///ADMIN STUFFS
-  
 
 }

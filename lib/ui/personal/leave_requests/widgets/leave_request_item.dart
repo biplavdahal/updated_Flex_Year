@@ -40,7 +40,8 @@ class LeaveRequestItem extends StatelessWidget {
       child: AnimatedOpacity(
         duration: const Duration(milliseconds: 300),
         opacity: isBusy ? 0.5 : 1,
-        child: Card(
+        child: 
+        Card(
           shape: RoundedRectangleBorder(
             side: BorderSide(
               color: _statusColor[request.status] ?? Colors.red.shade300,

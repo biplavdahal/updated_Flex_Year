@@ -9,7 +9,6 @@ import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
-import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.view.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.argument.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.view.dart';
@@ -49,7 +48,7 @@ class DashboardDrawer extends StatelessWidget {
                             const AssetImage("assets/images/avatar.png"),
                       ),
                     ),
-                    accountEmail: Text(_user.role != null 
+                    accountEmail: Text(_user.role != null
                         ? _user.role!.toUpperCase()
                         : 'Staff'),
                     accountName: Text(

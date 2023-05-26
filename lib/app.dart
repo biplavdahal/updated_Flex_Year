@@ -1,4 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.manager.dart';
 import 'package:flex_year_tablet/routes.dart';
 import 'package:flex_year_tablet/theme.dart';
@@ -19,6 +20,11 @@ class FlexYearApp extends StatelessWidget {
         ],
         debugShowCheckedModeBanner: false,
         theme: getThemeDataTheme(context),
+        // darkTheme: FlexThemeData.dark(scheme: FlexScheme.bahamaBlue).copyWith(
+        //     appBarTheme: FlexThemeData.dark(scheme: FlexScheme.bahamaBlue)
+        //         .appBarTheme
+        //         .copyWith(centerTitle: true)),
+        // themeMode: ThemeMode.dark,
         onGenerateRoute: (settings) =>
             locator<NavigationService>().generateRoute(
           settings,
