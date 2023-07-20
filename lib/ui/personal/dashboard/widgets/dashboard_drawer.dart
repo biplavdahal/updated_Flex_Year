@@ -123,98 +123,98 @@ class DashboardDrawer extends StatelessWidget {
                 color: AppColor.primary,
               ),
             ),
-            if (_user.role != 'staff')
-              ListTile(
-                title: const Text(
-                  'Payroll',
-                  style: TextStyle(color: AppColor.primary),
-                ),
-                onTap: () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SizedBox(
-                          height: MediaQuery.of(context).size.height / 4,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColor.primary,
-                                    blurRadius: 10,
-                                    spreadRadius: 1,
-                                  )
-                                ]),
-                            alignment: Alignment.topCenter,
-                            width: MediaQuery.of(context).size.width,
-                            padding: const EdgeInsets.all(3),
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  title: const Text(
-                                    'Payroll',
-                                    style: TextStyle(color: AppColor.primary),
-                                  ),
-                                  onTap: () {
-                                    // locator<DashboardModel>().goto(
-                                    //   payrollView.tag,
-                                    // );
-                                  },
-                                  leading: const Icon(
-                                    MdiIcons.cash,
-                                    color: AppColor.primary,
-                                  ),
-                                ),
-                                ListTile(
-                                  title: const Text(
-                                    'Payroll Periods',
-                                    style: TextStyle(color: AppColor.primary),
-                                  ),
-                                  onTap: () {
-                                    locator<DashboardModel>().goto(
-                                      AttendanceReportFilterView.tag,
-                                      arguments:
-                                          AttendanceReportFilterArguments(
-                                        type:
-                                            AttendanceReportFilterType.monthly,
-                                      ),
-                                    );
-                                  },
-                                  leading: const Icon(
-                                    MdiIcons.clockOutline,
-                                    color: AppColor.primary,
-                                  ),
-                                ),
-                                ListTile(
-                                  title: const Text(
-                                    'Payroll Parameters',
-                                    style: TextStyle(color: AppColor.primary),
-                                  ),
-                                  onTap: () {
-                                    locator<DashboardModel>().goto(
-                                      AttendanceReportFilterView.tag,
-                                      arguments:
-                                          AttendanceReportFilterArguments(
-                                        type: AttendanceReportFilterType.weekly,
-                                      ),
-                                    );
-                                  },
-                                  leading: const Icon(
-                                    MdiIcons.arrowUpBold,
-                                    color: AppColor.primary,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      });
-                },
-                leading: const Icon(
-                  MdiIcons.cash,
-                  color: AppColor.primary,
-                ),
-              ),
+            // if (_user.role != 'staff')
+            //   ListTile(
+            //     title: const Text(
+            //       'Payroll',
+            //       style: TextStyle(color: AppColor.primary),
+            //     ),
+            //     onTap: () {
+            //       showModalBottomSheet(
+            //           context: context,
+            //           builder: (BuildContext context) {
+            //             return SizedBox(
+            //               height: MediaQuery.of(context).size.height / 4,
+            //               child: Container(
+            //                 decoration: const BoxDecoration(
+            //                     color: Colors.white,
+            //                     boxShadow: [
+            //                       BoxShadow(
+            //                         color: AppColor.primary,
+            //                         blurRadius: 10,
+            //                         spreadRadius: 1,
+            //                       )
+            //                     ]),
+            //                 alignment: Alignment.topCenter,
+            //                 width: MediaQuery.of(context).size.width,
+            //                 padding: const EdgeInsets.all(3),
+            //                 child: Column(
+            //                   children: [
+            //                     ListTile(
+            //                       title: const Text(
+            //                         'Payroll',
+            //                         style: TextStyle(color: AppColor.primary),
+            //                       ),
+            //                       onTap: () {
+            //                         // locator<DashboardModel>().goto(
+            //                         //   payrollView.tag,
+            //                         // );
+            //                       },
+            //                       leading: const Icon(
+            //                         MdiIcons.cash,
+            //                         color: AppColor.primary,
+            //                       ),
+            //                     ),
+            //                     ListTile(
+            //                       title: const Text(
+            //                         'Payroll Periods',
+            //                         style: TextStyle(color: AppColor.primary),
+            //                       ),
+            //                       onTap: () {
+            //                         locator<DashboardModel>().goto(
+            //                           AttendanceReportFilterView.tag,
+            //                           arguments:
+            //                               AttendanceReportFilterArguments(
+            //                             type:
+            //                                 AttendanceReportFilterType.monthly,
+            //                           ),
+            //                         );
+            //                       },
+            //                       leading: const Icon(
+            //                         MdiIcons.clockOutline,
+            //                         color: AppColor.primary,
+            //                       ),
+            //                     ),
+            //                     ListTile(
+            //                       title: const Text(
+            //                         'Payroll Parameters',
+            //                         style: TextStyle(color: AppColor.primary),
+            //                       ),
+            //                       onTap: () {
+            //                         locator<DashboardModel>().goto(
+            //                           AttendanceReportFilterView.tag,
+            //                           arguments:
+            //                               AttendanceReportFilterArguments(
+            //                             type: AttendanceReportFilterType.weekly,
+            //                           ),
+            //                         );
+            //                       },
+            //                       leading: const Icon(
+            //                         MdiIcons.arrowUpBold,
+            //                         color: AppColor.primary,
+            //                       ),
+            //                     )
+            //                   ],
+            //                 ),
+            //               ),
+            //             );
+            //           });
+            //     },
+            //     leading: const Icon(
+            //       MdiIcons.cash,
+            //       color: AppColor.primary,
+            //     ),
+            //   ),
             ListTile(
               title: const Text(
                 'Reports',

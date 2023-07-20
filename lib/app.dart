@@ -1,5 +1,4 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.manager.dart';
 import 'package:flex_year_tablet/routes.dart';
 import 'package:flex_year_tablet/theme.dart';

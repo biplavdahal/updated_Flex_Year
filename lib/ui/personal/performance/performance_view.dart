@@ -127,8 +127,8 @@ class PerformanceView extends StatelessWidget {
                           const Divider(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
+                            children: const [
+                              Text(
                                 'Perf.Date',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -140,8 +140,8 @@ class PerformanceView extends StatelessWidget {
                           const Divider(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
+                            children: const [
+                              Text(
                                 'Emp Type',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -273,16 +273,16 @@ class PerformanceView extends StatelessWidget {
                                     DataCell(
                                       Text(
                                         "",
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           height: 1.5,
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
-                                DataRow(
+                                const DataRow(
                                   cells: [
-                                    const DataCell(
+                                    DataCell(
                                       Text(
                                         "Work Quality",
                                         style: TextStyle(
@@ -297,9 +297,9 @@ class PerformanceView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                DataRow(
+                                const DataRow(
                                   cells: [
-                                    const DataCell(
+                                    DataCell(
                                       Text(
                                         "Comments",
                                         style: TextStyle(
@@ -312,9 +312,9 @@ class PerformanceView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                DataRow(
+                                const DataRow(
                                   cells: [
-                                    const DataCell(
+                                    DataCell(
                                       Text(
                                         "Attendance/Punctuality",
                                         style: TextStyle(
@@ -329,9 +329,9 @@ class PerformanceView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                DataRow(
+                                const DataRow(
                                   cells: [
-                                    const DataCell(
+                                    DataCell(
                                       Text(
                                         "Comments",
                                         style: TextStyle(
@@ -346,9 +346,9 @@ class PerformanceView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                DataRow(
+                                const DataRow(
                                   cells: [
-                                    const DataCell(
+                                    DataCell(
                                       Text(
                                         "Productivity",
                                         style: TextStyle(
@@ -363,9 +363,9 @@ class PerformanceView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                DataRow(
+                                const DataRow(
                                   cells: [
-                                    const DataCell(
+                                    DataCell(
                                       Text(
                                         "Comments",
                                         style: TextStyle(
@@ -380,9 +380,9 @@ class PerformanceView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                DataRow(
+                                const DataRow(
                                   cells: [
-                                    const DataCell(
+                                    DataCell(
                                       Text(
                                         "Comm./Listening Skills",
                                         style: TextStyle(
@@ -397,9 +397,9 @@ class PerformanceView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                DataRow(
+                                const DataRow(
                                   cells: [
-                                    const DataCell(
+                                    DataCell(
                                       Text(
                                         "Comments",
                                         style: TextStyle(
@@ -414,9 +414,9 @@ class PerformanceView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                DataRow(
+                                const DataRow(
                                   cells: [
-                                    const DataCell(
+                                    DataCell(
                                       Text(
                                         "Dependability",
                                         style: TextStyle(
@@ -431,9 +431,9 @@ class PerformanceView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                DataRow(
+                                const DataRow(
                                   cells: [
-                                    const DataCell(
+                                    DataCell(
                                       Text(
                                         "Comments",
                                         style: TextStyle(
@@ -454,7 +454,7 @@ class PerformanceView extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Card(
@@ -584,7 +584,7 @@ class PerformanceView extends StatelessWidget {
                                     DataCell(
                                       Text(
                                         "2023-05-15",
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           height: 1.5,
                                         ),
                                       ),

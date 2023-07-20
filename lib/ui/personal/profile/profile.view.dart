@@ -1,14 +1,10 @@
-import 'package:bestfriend/di.dart';
 import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/performance/performance_view.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.model.dart';
 import 'package:flex_year_tablet/ui/personal/profile/widget/user_profile_header.dart';
-import 'package:flex_year_tablet/widgets/fy_user_avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
-import '../../../services/authentication.service.dart';
 
 class ProfileView extends StatelessWidget {
   static String tag = 'profile-view';
@@ -138,18 +134,20 @@ class ProfileView extends StatelessWidget {
                                       _buildProfileField(
                                           label: "Remaining Leave Days",
                                           value: model.user.staff.remainingLeave
-                                              .toString(),
+                                                  .toString() +
+                                              " day(s)",
                                           icon: MdiIcons.shieldAirplaneOutline),
                                       // _buildProfileField(
                                       //     label: "Normal Salary Rate",
                                       //     value: model
-                                      //         .user.staff.normalSalaryRate
+                                      //         .user.staff.email
                                       //         .toString(),
                                       //     icon: MdiIcons.cashCheck),
                                       _buildProfileField(
                                           label: "Sick Leave",
                                           value: model.user.staff.sickLeave
-                                              .toString(),
+                                                  .toString() +
+                                              " day(s)",
                                           icon: MdiIcons.cashCheck),
                                     ],
                                   ),
@@ -172,12 +170,12 @@ class ProfileView extends StatelessWidget {
                                       ],
                                     ),
                                     SizedBox(
-                                      height: 60,
+                                      height: 58,
                                       child: ListView.separated(
                                           scrollDirection: Axis.horizontal,
                                           itemBuilder: (context, index) {
                                             return SizedBox(
-                                              height: 100,
+                                              height: 150,
                                               child: GestureDetector(
                                                 onTap: () {
                                                   model.goto(

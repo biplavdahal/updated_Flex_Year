@@ -31,6 +31,7 @@ import 'package:flex_year_tablet/widgets/fy_section.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class DashboardView extends StatelessWidget {
@@ -191,6 +192,7 @@ class DashboardView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    _buildProgressIndicator(model),
                     _buildValidAttendance(model),
                     _buildAttendanceActivities(model),
                     _buildForgotToCheckout(model),
@@ -536,5 +538,13 @@ class DashboardView extends StatelessWidget {
                       itemCount: HolidaysModel.holiday.length,
                     )),
               ));
+  }
+
+  Widget _buildProgressIndicator(DashboardModel model) {
+    return SizedBox(
+        height: 60,
+        child: FYSection(
+            title: 'Progress Indicator :',
+            child: LiquidLinearProgressIndicator()));
   }
 }

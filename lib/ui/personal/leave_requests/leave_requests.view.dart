@@ -46,7 +46,9 @@ class LeaveRequestView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text('Leave Requests'),
+            
           ),
+          
           floatingActionButton: Stack(
             children: [
               Positioned(
