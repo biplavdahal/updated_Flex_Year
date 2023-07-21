@@ -67,8 +67,8 @@ class DashboardView extends StatelessWidget {
           floatingActionButton: model.isLoading
               ? null
               : FloatingActionButton(
-                  onPressed: () {
-                    model.goto(ChatContactsView.tag);
+                  onPressed: () async {
+                    await model.goto(ChatContactsView.tag);
                   },
                   child: const Icon(Icons.chat_bubble),
                   backgroundColor: AppColor.accent,
@@ -192,7 +192,7 @@ class DashboardView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildProgressIndicator(model),
+                    // _buildProgressIndicator(model),
                     _buildValidAttendance(model),
                     _buildAttendanceActivities(model),
                     _buildForgotToCheckout(model),
@@ -376,6 +376,7 @@ class DashboardView extends StatelessWidget {
         children: [
           UtilityItem(
             title: 'Leave Request  ',
+            labelText: model.user.staff.remainingLeave,
             icon: MdiIcons.shieldAirplaneOutline,
             iconColor: Colors.orange,
             onPressed: () async {

@@ -227,6 +227,7 @@ class LoginView extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   maxLength: 9,
                   validator: FYValidator.isRequired,
+                  
                 ),
                 Align(
                   alignment: Alignment.centerRight,

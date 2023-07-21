@@ -10,6 +10,7 @@ class FYInputField extends StatefulWidget {
   final bool isPassword;
   final String title;
   final VoidCallback? onTap;
+  final VoidCallback? onChanged;
 
   const FYInputField(
       {Key? key,
@@ -21,6 +22,7 @@ class FYInputField extends StatefulWidget {
       required this.title,
       this.validator,
       this.onTap,
+      this.onChanged,
       this.isPassword = false})
       : super(key: key);
 
@@ -41,6 +43,11 @@ class _FYInputFieldState extends State<FYInputField> {
     return TextFormField(
       autofocus: true,
       controller: widget.controller,
+      onChanged: (text) {
+        if (widget.maxLength != null && text.length >= widget.maxLength!) {
+          FocusScope.of(context).unfocus();
+        }
+      },
       decoration: InputDecoration(
         labelText: widget.label,
         suffixIcon: widget.obscureText

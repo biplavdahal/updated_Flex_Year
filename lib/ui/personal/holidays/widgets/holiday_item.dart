@@ -1,5 +1,4 @@
 import 'package:flex_year_tablet/data_models/holiday.data.dart';
-import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -44,16 +43,11 @@ class HolidayItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    holiday.date.split("-")[2] +
-                        "," +
-                        getMonthStringFromDateString(holiday.date,
-                            shortten: true),
-                    textAlign: TextAlign.center,
+                    holiday.date,
                     style: const TextStyle(
-                      color: Colors.blue,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        color: Colors.blue,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ],

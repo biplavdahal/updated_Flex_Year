@@ -38,7 +38,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   final NotificationService _notificationService =
       locator<NotificationService>();
 
-
   // Data
   CompanyData get company => locator<AppAccessService>().appAccess!.company;
   CompanyLogoData get logo => locator<AppAccessService>().appAccess!.logo;

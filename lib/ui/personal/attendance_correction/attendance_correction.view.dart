@@ -1,4 +1,5 @@
 import 'package:bestfriend/ui/view.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_correction/attendance_correction.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_correction/widgets/correction_item.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
@@ -80,13 +81,15 @@ class AttendanceCorrectionView extends StatelessWidget {
                         child: ListView.separated(
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            return CorrectionItem(
-                              correction: model.correctionsToShow[index],
-                              isBusy: model.isBusyWidget(
-                                  model.correctionsToShow[index].id),
-                              onDeletePressed: model.onDelete,
-                              onApprove: model.onApprove,
-                              onDecline: model.onDecline,
+                            return DelayedDisplay(
+                              child: CorrectionItem(
+                                correction: model.correctionsToShow[index],
+                                isBusy: model.isBusyWidget(
+                                    model.correctionsToShow[index].id),
+                                onDeletePressed: model.onDelete,
+                                onApprove: model.onApprove,
+                                onDecline: model.onDecline,
+                              ),
                             );
                           },
                           separatorBuilder: (context, index) {
@@ -105,14 +108,16 @@ class AttendanceCorrectionView extends StatelessWidget {
                         child: ListView.separated(
                             physics: const AlwaysScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              return CorrectionItem(
-                                correction: model.corrections[index],
-                                isBusy: model.isBusyWidget(
-                                  model.corrections[index].id,
+                              return DelayedDisplay(
+                                child: CorrectionItem(
+                                  correction: model.corrections[index],
+                                  isBusy: model.isBusyWidget(
+                                    model.corrections[index].id,
+                                  ),
+                                  onDeletePressed: model.onDelete,
+                                  onApprove: model.onApprove,
+                                  onDecline: model.onDecline,
                                 ),
-                                onDeletePressed: model.onDelete,
-                                onApprove: model.onApprove,
-                                onDecline: model.onDecline,
                               );
                             },
                             separatorBuilder: (context, index) {
