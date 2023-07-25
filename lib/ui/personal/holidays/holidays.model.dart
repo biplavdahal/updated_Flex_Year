@@ -19,7 +19,7 @@ class HolidaysModel extends ViewModel with SnackbarMixin {
   static final List<HolidayData> filteredHoliday = holiday
       .where((element) => DateTime.parse(element.date).isAfter(DateTime.now()))
       .toList();
- static final upcomingHoliday = filteredHoliday.first;
+  static final upcomingHoliday = filteredHoliday.first;
 
   List<HolidayData> get holidays => _holidays;
 

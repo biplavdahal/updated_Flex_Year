@@ -6,6 +6,7 @@ import 'package:flex_year_tablet/ui/personal/add_attendance/add_attendance.view.
 import 'package:flex_year_tablet/ui/personal/attendance_correction/attendance_correction.view.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_correction_review/attendance_correction_review.view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
+import 'package:flex_year_tablet/ui/personal/dashboard/setting/setting.view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
@@ -14,7 +15,6 @@ import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filt
 import 'package:flex_year_tablet/ui/personal/profile/profile.view.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 import '../../attendance_report_filter/attendance_report_filter.arguments.dart';
 import '../../attendance_report_filter/attendance_report_filter.model.dart';
 import '../../attendance_report_filter/attendance_report_filter.view.dart';
@@ -320,11 +320,24 @@ class DashboardDrawer extends StatelessWidget {
                 color: AppColor.primary,
               ),
             ),
+            ListTile(
+              title: const Text(
+                'Settings',
+                style: TextStyle(color: AppColor.primary),
+              ),
+              onTap: () {
+                locator<DashboardModel>().goto(SettingView.tag);
+              },
+              leading: const Icon(
+                Icons.settings,
+                color: AppColor.primary,
+              ),
+            ),
+            const Divider(),
             if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
-                'manager')
-              const Divider(),
-            if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
-                'manager')
+                    'manager' ||
+                locator<AuthenticationService>().user!.role?.toLowerCase() ==
+                    'admin')
               ListTile(
                 title: const Text(
                   'Attendance Correction Requests',
@@ -340,7 +353,9 @@ class DashboardDrawer extends StatelessWidget {
                 ),
               ),
             if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
-                'manager')
+                    'manager' ||
+                locator<AuthenticationService>().user!.role?.toLowerCase() ==
+                    'admin')
               ListTile(
                 title: const Text(
                   'Add Attendance',
@@ -355,7 +370,9 @@ class DashboardDrawer extends StatelessWidget {
                 ),
               ),
             if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
-                'manager')
+                    'manager' ||
+                locator<AuthenticationService>().user!.role?.toLowerCase() ==
+                    'admin')
               ListTile(
                 title: const Text(
                   'Leave Request Received',

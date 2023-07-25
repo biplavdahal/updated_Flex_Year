@@ -25,11 +25,10 @@ String getCurrentDateTime() {
   return "${now.year}-${now.month}-${now.day} ${now.hour}:${now.minute}";
 }
 
- getCurrentTime() {
-   DateTime now = DateTime.now();
-   return "${now.hour}: ${now.minute}: ${now.second}";
+getCurrentTime() {
+  DateTime now = DateTime.now();
+  return "${now.hour}: ${now.minute}: ${now.second}";
 }
-
 
 String hourFormatter(String unformattedHour) {
   final _token = unformattedHour.split(":");

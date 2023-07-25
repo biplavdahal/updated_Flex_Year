@@ -93,7 +93,7 @@ class DashboardView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
-                                  formattedDate(model.currentDateTime),
+                                  formattedDate(model.currentDateTime, ),
                                   style: const TextStyle(
                                     color: Colors.white,
                                   ),

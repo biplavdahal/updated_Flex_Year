@@ -108,13 +108,13 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
     if (value == 0) {
       locator<DashboardModel>().goto(AttendanceCorrectionView.tag);
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         currentFragment = 2;
       });
     }
     if (value == 1) {
       locator<DashboardModel>().goto(LeaveRequestView.tag);
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         currentFragment = 2;
       });
     }
@@ -124,13 +124,13 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     }
     if (value == 3) {
       locator<DashboardModel>().goto(DateConverterView.tag);
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         currentFragment = 2;
       });
     }
     if (value == 4) {
       locator<DashboardModel>().goto(ProfileView.tag);
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         currentFragment = 2;
       });
     }

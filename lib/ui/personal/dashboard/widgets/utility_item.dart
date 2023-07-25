@@ -82,7 +82,7 @@ class _AnimatedTotalLeaveCountState extends State<_AnimatedTotalLeaveCount>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: const Duration(seconds: 2),
     );
     _animation = Tween<double>(
             begin: 0, end: double.parse(user.staff.remainingLeave.toString()))

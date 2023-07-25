@@ -41,6 +41,7 @@ dependencies:
   shimmer: ^2.0.0
   provider: ^5.0.0
   delayed_display: ^2.0.0
+  flutter_localization: ^0.1.9
  
 
 

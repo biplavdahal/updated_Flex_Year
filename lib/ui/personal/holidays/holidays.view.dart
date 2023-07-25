@@ -28,7 +28,7 @@ class HolidaysView extends StatelessWidget {
                 children: [
                   if (model.isLoading) const FYLinearLoader(),
                   if (!model.isLoading)
-                    if (HolidaysModel.filterHoliday.isNotEmpty)
+                    if (HolidaysModel.filterHoliday.isEmpty)
                       Expanded(
                         child: RefreshIndicator(
                           onRefresh: model.init,
@@ -52,6 +52,11 @@ class HolidaysView extends StatelessWidget {
                           ),
                         ),
                       )
+                    else
+                      const Expanded(
+                          child: Center(
+                        child: Text('No Upcomming holidays!'),
+                      ))
                 ],
               ),
             ));

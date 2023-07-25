@@ -18,7 +18,7 @@ class NoticeModel extends ViewModel with SnackbarMixin {
 
       setIdle();
     } catch (e) {
-      // setIdle();
+      setIdle();
       snackbar.displaySnackbar(
         SnackbarRequest.of(
           message: e.toString(),

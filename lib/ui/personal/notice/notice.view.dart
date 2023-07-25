@@ -1,13 +1,9 @@
 import 'package:bestfriend/ui/view.dart';
-import 'package:flex_year_tablet/data_models/holiday.data.dart';
-import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
-import 'package:flex_year_tablet/ui/personal/holidays/widgets/holiday_item.dart';
 import 'package:flex_year_tablet/ui/personal/notice/notice.viewmodel.dart';
 import 'package:flex_year_tablet/ui/personal/notice/widget/notice_item.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class NoticeView extends StatelessWidget {
   static String tag = 'notice-view';
@@ -23,34 +19,40 @@ class NoticeView extends StatelessWidget {
           appBar: AppBar(
             title: const Text('Upcoming Notice'),
           ),
-          body: model.isLoading
-              ? const FYLinearLoader()
-              : Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: RefreshIndicator(
-                      onRefresh: model.init,
-                      child: ListView.separated(
-                        itemBuilder: (context, index) {
-                          final _holiday = HolidaysModel.upcomingHoliday;
-                          DateFormat dateFormat = DateFormat('yyyy-MM-dd');
-                          DateTime date = dateFormat.parse(_holiday.date);
-
-                          if (date.compareTo(DateTime.now()) < 0) {
-                            return Container();
-                          }
-
-                          return NoticeItem(
-                            _holiday,
-                          );
-                        },
-                        separatorBuilder: (context, index) => const SizedBox(
-                          height: 0,
-                        ),
-                        itemCount: 1,
-                      )),
-                ),
+          body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // if (HolidaysModel.upcomingHoliday.date.isNotEmpty)
+                  //   Expanded(
+                  //     child: ListView.separated(
+                  //       itemBuilder: (context, index) {
+                  //         return NoticeItem(
+                  //           HolidaysModel.upcomingHoliday,
+                  //         );
+                  //       },
+                  //       separatorBuilder: (context, index) => const SizedBox(
+                  //         height: 0,
+                  //       ),
+                  //       itemCount: 1,
+                  //     ),
+                  //   )
+                  // else
+                  const Expanded(
+                      child: Center(child: Text('No upcomming notice!!')))
+                ],
+              )),
         );
       },
     );
   }
 }
+
+
+//  DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+//                           DateTime date = dateFormat.parse(_holiday.date);
+
+//                           if (date.compareTo(DateTime.now()) < 0) {
+//                             return Container();
+//                           }

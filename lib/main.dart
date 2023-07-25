@@ -6,7 +6,9 @@ import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/app.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/di.dart';
+import 'package:flex_year_tablet/ui/personal/dashboard/setting/setting.model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 //   await Firebase.initializeApp();
@@ -17,10 +19,6 @@ import 'package:flutter/material.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // await Firebase.initializeApp();
-
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
   await setupLocator();
   await locator<SharedPreferenceService>()();
 
@@ -29,12 +27,30 @@ Future<void> main() async {
   );
 
   await locator<SharedPreferenceService>()();
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  runApp(const FlexYearApp()
-      // DevicePreview(
-      //   enabled: !kReleaseMode,
-      //   builder: (context) => const FlexYearApp(),
-      // ),
-      );
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<SettingModel>(create: (_) => SettingModel()),
+      ],
+      child: FlexYearApp(
+        navigatorKey: navigatorKey,
+        changeLocale: _changeLocale,
+      ),
+    ),
+  );
 }
+
+class LocaleProvider extends ChangeNotifier {
+  Locale _locale = const Locale('en');
+
+  Locale get locale => _locale;
+
+  void setLocale(Locale newLocale) {
+    _locale = newLocale;
+    notifyListeners();
+  }
+}
+
+_changeLocale(Locale p1) {}

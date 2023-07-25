@@ -1,6 +1,8 @@
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
+import 'package:flex_year_tablet/main.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FYDateField extends StatelessWidget {
   final DateTime? value;
@@ -24,6 +26,7 @@ class FYDateField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeProvider = Provider.of<LocaleProvider>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

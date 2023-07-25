@@ -59,7 +59,7 @@ class DateConverterView extends StatelessWidget {
               firstDate: DateTime.now().subtract(
                 const Duration(days: 365 * 140),
               ),
-              lastDate: DateTime.now().add(Duration(days: 365 * 100)),
+              lastDate: DateTime.now().add(const Duration(days: 365 * 100)),
             ),
           ),
           const SizedBox(
@@ -103,9 +103,9 @@ class DateConverterView extends StatelessWidget {
               onNepaliChanged: (value) => model.nepaliDateFrom = value!,
               nepaliValue: model.nepaliDateFrom,
               nepaliFirstDate:
-                  NepaliDateTime.now().subtract(Duration(days: 365 * 140)),
+                  NepaliDateTime.now().subtract(const Duration(days: 365 * 140)),
               nepaliLastDate:
-                  NepaliDateTime.now().add(Duration(days: 365 * 20)),
+                  NepaliDateTime.now().add(const Duration(days: 365 * 20)),
             ),
           ),
           const SizedBox(
