@@ -10,9 +10,8 @@ import 'package:provider/provider.dart';
 import 'main.dart';
 
 class FlexYearApp extends StatelessWidget {
-  final GlobalKey<NavigatorState> navigatorKey;
-  final Function(Locale) changeLocale;
-  const FlexYearApp({Key? key, required this.changeLocale, required this.navigatorKey}) : super(key: key);
+  
+  const FlexYearApp({Key? key,  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +73,11 @@ class FlexYearApp extends StatelessWidget {
       ),
     );
   }
-  void _changeLocale(Locale newLocale) {
+  // void _changeLocale(Locale newLocale) {
     
-    final localeProvider = Provider.of<LocaleProvider>(
-        navigatorKey.currentContext!,
-        listen: false);
-    localeProvider.setLocale(newLocale);
-  }
+  //   final localeProvider = Provider.of<LocaleProvider>(
+  //       navigatorKey.currentContext!,
+  //       listen: false);
+  //   localeProvider.setLocale(newLocale);
+  // }
 }

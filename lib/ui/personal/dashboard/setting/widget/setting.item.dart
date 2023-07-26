@@ -25,21 +25,20 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
               ? Colors.amber.shade100
               : report.checkInTime == "00:00" && report.checkOutTime == "00:00"
                   ? Colors.white70
-                  : _getCardColor(report.totalWorkingHours
-                  ),
+                  : _getCardColor(report.totalWorkingHours),
       margin: const EdgeInsets.only(bottom: 5),
       child: Padding(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Row(
               children: [
                 Text(
                   weekDayFromDateString(report.date) +
-                      "-" +
+                      " - " +
                       (index + 1).toString(),
                   style: const TextStyle(
-                    fontSize: 10,
+                    fontSize: 12,
                   ),
                 ),
               ],
@@ -51,7 +50,6 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
               children: [
                 Text(
                   report.checkInTime == '00:00' ? '-' : report.checkInTime,
-                  style: TextStyle(fontSize: 10),
                 ),
               ],
             ),
@@ -62,7 +60,6 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
               children: [
                 Text(
                   report.checkOutTime == '00:00' ? '-' : report.checkOutTime,
-                  style: TextStyle(fontSize: 10),
                 ),
               ],
             ),
@@ -71,15 +68,14 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
               children: [
                 Text(
                   report.weekend.isNotEmpty
-                      ? "We"
+                      ? "Weekend"
                       : report.holiday != null
                           ? report.holiday.toString()
                           : report.totalWorkingHours == '0.00' ||
                                   report.totalWorkingHours == '00:00'
-                              ? 'Ab'
+                              ? 'Absent'
                               : report.totalWorkingHours,
                   style: TextStyle(
-                      fontSize: 10,
                       fontWeight: FontWeight.bold,
                       color: report.weekend.isNotEmpty
                           ? AppColor.primary

@@ -429,7 +429,8 @@ class DashboardView extends StatelessWidget {
   }
 
   Widget _buildCurrentReport(DashboardModel model) {
-    return FYSection(
+    return 
+    FYSection(
         title: "Current Month Attendance Report : ",
         child: model.isLoading
             ? const FYLinearLoader()
@@ -438,6 +439,7 @@ class DashboardView extends StatelessWidget {
                 child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemCount: model.monthlyReport.length + 1,
+
                     separatorBuilder: (context, index) => const SizedBox(
                           width: 5,
                         ),

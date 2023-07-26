@@ -29,17 +29,16 @@ Future<void> main() async {
   await locator<SharedPreferenceService>()();
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider<SettingModel>(create: (_) => SettingModel()),
-      ],
-      child: FlexYearApp(
-        navigatorKey: navigatorKey,
-        changeLocale: _changeLocale,
-      ),
-    ),
-  );
+  runApp(const FlexYearApp()
+      // MultiProvider(
+      //   providers: [
+      //     ChangeNotifierProvider<SettingModel>(create: (_) => SettingModel()),
+      //   ],
+      //   child: FlexYearApp(
+
+      //   ),
+      // ),
+      );
 }
 
 class LocaleProvider extends ChangeNotifier {
