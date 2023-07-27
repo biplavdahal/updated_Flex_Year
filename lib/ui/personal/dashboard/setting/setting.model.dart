@@ -64,7 +64,27 @@ class SettingModel extends ViewModel with DialogMixin, SnackbarMixin {
     _monthlyReport = await _attendanceService.getMonthlyReport(
       data: _searchParams,
     );
+  }
 
-    print('agsdasfgcdvadas ===' + monthlyReport.length.toString());
+  DateTime _selectedDay = DateTime.now();
+  DateTime get selectedDay => _selectedDay;
+  set selectedday(DateTime value) {
+    _selectedDay = value;
+    setIdle();
+  }
+
+  DateTime? _focusedDay;
+  DateTime get focusedDay => _focusedDay ?? DateTime.now();
+  set focusedday(DateTime value) {
+    _focusedDay = value;
+    setIdle();
+  }
+
+  void onDateSelected(DateTime day, DateTime focusedday) {
+    _selectedDay = day;
+    _focusedDay = day;
+
+    setIdle();
+    notifyListeners();
   }
 }

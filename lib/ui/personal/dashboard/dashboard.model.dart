@@ -29,8 +29,6 @@ import 'package:nepali_date_picker/nepali_date_picker.dart';
 import '../../../data_models/attendance_report.data.dart';
 import '../../../data_models/attendance_report_summary.data.dart';
 import '../attendance_correction/attendance_correction.view.dart';
-import '../change_password/change_password_view.dart';
-import '../edit_profile/edit_profile.view.dart';
 
 class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   // Services

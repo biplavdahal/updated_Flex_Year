@@ -25,8 +25,7 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
               ? Colors.amber.shade100
               : report.checkInTime == "00:00" && report.checkOutTime == "00:00"
                   ? Colors.white70
-                  : _getCardColor(report.totalWorkingHours
-                  ),
+                  : _getCardColor(report.totalWorkingHours),
       margin: const EdgeInsets.only(bottom: 5),
       child: Padding(
         padding: const EdgeInsets.all(5.0),
@@ -51,7 +50,6 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
               children: [
                 Text(
                   report.checkInTime == '00:00' ? '-' : report.checkInTime,
-                  style: TextStyle(fontSize: 10),
                 ),
               ],
             ),
@@ -62,7 +60,6 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
               children: [
                 Text(
                   report.checkOutTime == '00:00' ? '-' : report.checkOutTime,
-                  style: TextStyle(fontSize: 10),
                 ),
               ],
             ),

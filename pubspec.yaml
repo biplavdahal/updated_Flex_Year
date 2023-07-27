@@ -43,8 +43,9 @@ dependencies:
   delayed_display: ^2.0.0
   flutter_localization: ^0.1.9
   table_calendar: ^3.0.8
-
+  clean_nepali_calendar: ^2.0.1
  
+
 
 
  

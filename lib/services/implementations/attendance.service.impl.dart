@@ -153,8 +153,6 @@ class AttendanceServiceImpl implements AttendanceService {
 
       final _data = constructResponse(_response.data);
 
-      debugPrint(jsonEncode(_response.data));
-
       if (_data!.containsKey("status") && _data["status"] == false) {
         throw _data["response"] ?? _data["data"] ?? _data["detail"];
       }
