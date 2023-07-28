@@ -64,15 +64,26 @@ class DashboardView extends StatelessWidget {
             ],
             animationCurve: Curves.fastLinearToSlowEaseIn,
           ),
-          floatingActionButton: model.isLoading
-              ? null
-              : FloatingActionButton(
-                  onPressed: () async {
-                    await model.goto(ChatContactsView.tag);
-                  },
-                  child: const Icon(Icons.chat_bubble),
-                  backgroundColor: AppColor.accent,
-                ),
+          floatingActionButton: Wrap(
+            direction: Axis.vertical,
+            children: [
+              FloatingActionButton(
+                onPressed: () async {},
+                child: const Icon(Icons.people),
+                backgroundColor: AppColor.accent,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              FloatingActionButton(
+                onPressed: () async {
+                  await model.goto(ChatContactsView.tag);
+                },
+                child: const Icon(Icons.chat_bubble),
+                backgroundColor: AppColor.accent,
+              ),
+            ],
+          ),
           appBar: AppBar(
             centerTitle: true,
             title: Image.network(
@@ -93,7 +104,9 @@ class DashboardView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
-                                  formattedDate(model.currentDateTime, ),
+                                  formattedDate(
+                                    model.currentDateTime,
+                                  ),
                                   style: const TextStyle(
                                     color: Colors.white,
                                   ),
@@ -429,8 +442,7 @@ class DashboardView extends StatelessWidget {
   }
 
   Widget _buildCurrentReport(DashboardModel model) {
-    return 
-    FYSection(
+    return FYSection(
         title: "Current Month Attendance Report : ",
         child: model.isLoading
             ? const FYLinearLoader()
@@ -439,7 +451,6 @@ class DashboardView extends StatelessWidget {
                 child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemCount: model.monthlyReport.length + 1,
-
                     separatorBuilder: (context, index) => const SizedBox(
                           width: 5,
                         ),

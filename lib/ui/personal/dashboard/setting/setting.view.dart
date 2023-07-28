@@ -1,7 +1,10 @@
 import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/setting/setting.model.dart';
+import 'package:flex_year_tablet/ui/personal/dashboard/setting/utils/utils.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/setting/widget/setting.item.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../data_models/attendance_report.data.dart';
 
 class SettingView extends StatefulWidget {
   static String tag = 'setting-view';
@@ -31,9 +34,7 @@ class _SettingViewState extends State<SettingView> {
   }
 
   Widget _buildCalendarEnglish(SettingModel model) {
-    DateTime today = DateTime.now();
-    DateTime selectedDay = DateTime.now();
-    DateTime focusedDay = DateTime.now();
+    final _calanderData = model.monthlyReport;
 
     return CalanderItems();
   }

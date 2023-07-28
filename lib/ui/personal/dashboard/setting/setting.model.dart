@@ -2,6 +2,7 @@ import 'package:bestfriend/di.dart';
 import 'package:bestfriend/mixins/snack_bar.mixin.dart';
 import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
+import 'package:flex_year_tablet/ui/personal/dashboard/setting/utils/utils.dart';
 import 'package:intl/intl.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
 import '../../../../data_models/attendance_report.data.dart';
@@ -27,6 +28,9 @@ class SettingModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   List<AttendanceReportSummaryData> _reportSummary = [];
   List<AttendanceReportSummaryData> get reportSummary => _reportSummary;
+  bool isSameDay(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
 
   late String? WorkingHours =
       _reportSummary.isNotEmpty ? _reportSummary[0].workingHours : '';

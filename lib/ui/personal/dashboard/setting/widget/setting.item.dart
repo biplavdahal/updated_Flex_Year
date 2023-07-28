@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/setting/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -62,17 +63,32 @@ class _CalanderItemsState extends State<CalanderItems> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TableCalendar<Event>(
-          rowHeight: MediaQuery.of(context).size.height / 23,
+          rowHeight: 38,
           firstDay: DateTime.utc(1990, 10, 16),
           lastDay: DateTime.utc(2080, 3, 14),
           focusedDay: _focusedDay,
           calendarFormat: _calendarFormat,
+          calendarStyle: CalendarStyle(
+              isTodayHighlighted: true,
+              selectedDecoration: BoxDecoration(
+                  color: Colors.grey,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(0)),
+              selectedTextStyle: const TextStyle(color: Colors.white),
+              todayDecoration: BoxDecoration(
+                  color: AppColor.primary,
+                  borderRadius: BorderRadius.circular(5)),
+              defaultDecoration: BoxDecoration(
+                  color: AppColor.accent,
+                  borderRadius: BorderRadius.circular(5))),
           eventLoader: _getEventsForDay,
-          startingDayOfWeek: StartingDayOfWeek.monday,
-          headerStyle: const HeaderStyle(
-            titleCentered: true,
-            formatButtonVisible: false,
-          ),
+          headerStyle: HeaderStyle(
+              titleCentered: true,
+              formatButtonVisible: false,
+              formatButtonShowsNext: false,
+              formatButtonDecoration: BoxDecoration(
+                  color: Colors.blue, borderRadius: BorderRadius.circular(5)),
+              formatButtonTextStyle: const TextStyle(color: Colors.white)),
           selectedDayPredicate: (day) {
             return _selectedDays.contains(day);
           },
@@ -92,7 +108,7 @@ class _CalanderItemsState extends State<CalanderItems> {
           height: 12,
         ),
         ElevatedButton(
-          child: const Text('Clear selection'),
+          child: const Text('Clear'),
           onPressed: () {
             setState(() {
               _selectedDays.clear();
@@ -102,7 +118,7 @@ class _CalanderItemsState extends State<CalanderItems> {
         ),
         const SizedBox(height: 8.0),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 3,
+          height: MediaQuery.of(context).size.height / 3.5,
           child: Expanded(
             child: ValueListenableBuilder<List<Event>>(
               valueListenable: _selectedEvents,
@@ -112,8 +128,8 @@ class _CalanderItemsState extends State<CalanderItems> {
                   itemBuilder: (context, index) {
                     return Container(
                       margin: const EdgeInsets.symmetric(
-                        horizontal: 12.0,
-                        vertical: 4.0,
+                        horizontal: 20.0,
+                        vertical: 2.0,
                       ),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.orange),

@@ -14,6 +14,17 @@ class Event {
   @override
   String toString() => title;
 }
+class Events {
+  final DateTime date;
+  final DateTime checkInTime;
+  final DateTime checkOutTime;
+
+  Events({
+    required this.date,
+    required this.checkInTime,
+    required this.checkOutTime,
+  });
+}
 
 final kEvents = LinkedHashMap<DateTime, List<Event>>(
   equals: isSameDay,
