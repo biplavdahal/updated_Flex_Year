@@ -10,6 +10,7 @@ import 'package:flex_year_tablet/data_models/attendance_report_summary.data.dart
 import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_weekly_report.data.dart';
+import 'package:flex_year_tablet/data_models/present_staff.data.dart';
 import 'package:flex_year_tablet/helper/api_error.helper.dart';
 import 'package:flex_year_tablet/helper/api_response.helper.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
@@ -541,6 +542,37 @@ class AttendanceServiceImpl implements AttendanceService {
         AttendanceReportSummaryData.fromJson(
             _data['data']['att_data'][0]['summary'])
       ];
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  //present staffs
+
+  List<PresentStaffModelData> _presentStaff = [];
+  @override
+  List<PresentStaffModelData> get presentStaff => _presentStaff;
+  @override
+  set presentStaff(List<PresentStaffModelData> value) {
+    _presentStaff = value;
+  }
+
+  @override
+  Future<List<PresentStaffModelData>> getPresentstaffs() async {
+    try {
+      final _response = await _apiService.get(auGetPresentStaff, params: {
+        'access_token': _authenticationService.user!.accessToken,
+        'company_id': _appAccessService.appAccess!.company.companyId
+      });
+
+      final data = constructResponse(_response.data);
+      if (data!.containsKey("status") && data["status"] == false) {
+        throw data["response"] ?? data["data"] ?? data["detail"];
+      }
+      return data["data"]
+          .map<PresentStaffModelData>(
+              (item) => PresentStaffModelData.fromJson(item))
+          .toList();
     } catch (e) {
       throw apiError(e);
     }

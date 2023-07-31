@@ -12,6 +12,7 @@ import 'package:flex_year_tablet/ui/personal/attendance_summary/attendance_summa
 import 'package:flex_year_tablet/ui/personal/attendance_summary/attendance_summary.view.dart';
 import 'package:flex_year_tablet/ui/personal/chat_contacts/chat_contacts.view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
+import 'package:flex_year_tablet/ui/personal/dashboard/presentStaff/presentstaff.view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/attendance_button.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/dashboard_drawer.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/dashboard_todays_attendance_activities.dart';
@@ -68,7 +69,17 @@ class DashboardView extends StatelessWidget {
             direction: Axis.vertical,
             children: [
               FloatingActionButton(
-                onPressed: () async {},
+                onPressed: () async {
+                  await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: const PresentStaffView(),
+                        );
+                      });
+                },
                 child: const Icon(Icons.people),
                 backgroundColor: AppColor.accent,
               ),

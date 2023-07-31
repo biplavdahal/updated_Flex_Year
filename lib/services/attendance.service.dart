@@ -8,6 +8,8 @@ import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_weekly_report.data.dart';
 
+import '../data_models/present_staff.data.dart';
+
 abstract class AttendanceService {
   /// Get attendance status for dashboard
   Future<AttendanceStatusData> getAttendanceStatus({
@@ -111,4 +113,14 @@ abstract class AttendanceService {
     required List<String> userIds,
     String? clientId,
   });
+
+  // Present staff attandance
+  //Getter for all staffs
+  List<PresentStaffModelData> get presentStaff;
+
+  //set for all staff
+  set presentStaff(List<PresentStaffModelData> value);
+
+  //fetch all present staff
+  Future<List<PresentStaffModelData>> getPresentstaffs();
 }

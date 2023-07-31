@@ -26,6 +26,7 @@ const auAttendanceSummary = "userstaff/staff-attendance";
 const auUserStaffDetail = "userstaff/index";
 const auWeeklyReport = "attendance/weekly-report";
 const auGetRequest = "userstaff/attendance";
+const auGetPresentStaff = 'attendance/presentstaff';
 
 ///
 const auForgotCheckoutReviewRequest = "attendance/checkoutreview";

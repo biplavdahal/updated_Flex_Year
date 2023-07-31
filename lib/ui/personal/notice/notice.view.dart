@@ -24,23 +24,23 @@ class NoticeView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // if (HolidaysModel.upcomingHoliday.date.isNotEmpty)
-                  //   Expanded(
-                  //     child: ListView.separated(
-                  //       itemBuilder: (context, index) {
-                  //         return NoticeItem(
-                  //           HolidaysModel.upcomingHoliday,
-                  //         );
-                  //       },
-                  //       separatorBuilder: (context, index) => const SizedBox(
-                  //         height: 0,
-                  //       ),
-                  //       itemCount: 1,
-                  //     ),
-                  //   )
+                  if (HolidaysModel.upcomingHoliday.date.isNotEmpty)
+                    Expanded(
+                      child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          return NoticeItem(
+                            HolidaysModel.upcomingHoliday,
+                          );
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 0,
+                        ),
+                        itemCount: 1,
+                      ),
+                    )
                   // else
-                  const Expanded(
-                      child: Center(child: Text('No upcomming notice!!')))
+                  // const Expanded(
+                  //     child: Center(child: Text('No upcomming notice!!')))
                 ],
               )),
         );
