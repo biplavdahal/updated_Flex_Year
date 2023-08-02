@@ -6,7 +6,7 @@ import 'package:flex_year_tablet/ui/personal/add_attendance/add_attendance.view.
 import 'package:flex_year_tablet/ui/personal/attendance_correction/attendance_correction.view.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_correction_review/attendance_correction_review.view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
-import 'package:flex_year_tablet/ui/personal/dashboard/setting/setting.view.dart';
+import 'package:flex_year_tablet/ui/personal/dashboard/flex_calander/calander.view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
@@ -316,20 +316,20 @@ class DashboardDrawer extends StatelessWidget {
                 locator<DashboardModel>().goto(HolidaysView.tag);
               },
               leading: const Icon(
-                MdiIcons.calendarMonth,
+                MdiIcons.calendarStar,
                 color: AppColor.primary,
               ),
             ),
             ListTile(
               title: const Text(
-                'Settings',
+                'Calander',
                 style: TextStyle(color: AppColor.primary),
               ),
               onTap: () {
-                locator<DashboardModel>().goto(SettingView.tag);
+                locator<DashboardModel>().goto(CalanderView.tag);
               },
               leading: const Icon(
-                Icons.settings,
+                MdiIcons.calendarRangeOutline,
                 color: AppColor.primary,
               ),
             ),
@@ -337,15 +337,16 @@ class DashboardDrawer extends StatelessWidget {
             if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
                     'manager' ||
                 locator<AuthenticationService>().user!.role?.toLowerCase() ==
-                    'admin')
+                    'admin' ||
+                locator<AuthenticationService>().user!.role?.toLowerCase() ==
+                    'super admin')
               ListTile(
                 title: const Text(
                   'Attendance Correction Requests',
                   style: TextStyle(color: Colors.blue),
                 ),
                 onTap: () {
-                  locator<DashboardModel>()
-                      .goto(AttendanceCorrectionReviewView.tag);
+                  locator<DashboardModel>().goto(AttendanceCorrectionView.tag);
                 },
                 leading: const Icon(
                   MdiIcons.checkboxMultipleMarked,
@@ -355,7 +356,9 @@ class DashboardDrawer extends StatelessWidget {
             if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
                     'manager' ||
                 locator<AuthenticationService>().user!.role?.toLowerCase() ==
-                    'admin')
+                    'admin' ||
+                locator<AuthenticationService>().user!.role?.toLowerCase() ==
+                    'super admin')
               ListTile(
                 title: const Text(
                   'Add Attendance',
@@ -372,7 +375,9 @@ class DashboardDrawer extends StatelessWidget {
             if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
                     'manager' ||
                 locator<AuthenticationService>().user!.role?.toLowerCase() ==
-                    'admin')
+                    'admin' ||
+                locator<AuthenticationService>().user!.role?.toLowerCase() ==
+                    'super admin')
               ListTile(
                 title: const Text(
                   'Leave Request Received',

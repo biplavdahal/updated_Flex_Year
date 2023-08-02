@@ -19,7 +19,12 @@ class LeaveRequestReceivedModel extends ViewModel
   List<LeaveRequestData> get requests => _requests;
   List<LeaveRequestData> get requestsToShow =>
       _requests.where((request) => request.status == _selectedTab).toList();
-  List<String> get tabs => ['Pending', 'Approved', 'Rejected', 'All'];
+  List<String> get tabs => [
+        'All',
+        'Pending',
+        'Approved',
+        'Rejected',
+      ];
 
   String _selectedTab = "0";
   String get selectedTab => _selectedTab;

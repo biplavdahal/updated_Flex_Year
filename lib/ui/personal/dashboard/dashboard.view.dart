@@ -468,7 +468,7 @@ class DashboardView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       if (index == model.monthlyReport.length) {
                         return SizedBox(
-                          height: 150,
+                          height: 140,
                           child: Card(
                             margin: const EdgeInsets.only(bottom: 5),
                             child: Padding(
@@ -480,7 +480,9 @@ class DashboardView extends StatelessWidget {
                                       Text(
                                         "Total(Hrs)",
                                         style: TextStyle(
-                                            fontWeight: FontWeight.w600),
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                        ),
                                       )
                                     ],
                                   ),
@@ -493,7 +495,9 @@ class DashboardView extends StatelessWidget {
                                         Text(
                                           model.WorkingHours as String,
                                           style: const TextStyle(
-                                              fontWeight: FontWeight.w600),
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 10,
+                                          ),
                                         )
                                       ],
                                     ),
@@ -501,22 +505,30 @@ class DashboardView extends StatelessWidget {
                                   Text(
                                     "Leave : ${model.Leave}",
                                     style: const TextStyle(
-                                        color: Colors.orange,
-                                        fontWeight: FontWeight.w600),
+                                      color: Colors.orange,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                    ),
                                   ),
                                   Text(
                                     "Holiday : ${model.holidays}",
                                     style: const TextStyle(
-                                        fontWeight: FontWeight.w600),
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                    ),
                                   ),
                                   Text('Present : ${model.present}',
                                       style: const TextStyle(
-                                          color: Colors.green,
-                                          fontWeight: FontWeight.w600)),
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      )),
                                   Text('Absent : ${model.absent}',
                                       style: const TextStyle(
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.w600))
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ))
                                 ],
                               ),
                             ),

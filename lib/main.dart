@@ -6,7 +6,6 @@ import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/app.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/di.dart';
-import 'package:flex_year_tablet/ui/personal/dashboard/setting/setting.model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

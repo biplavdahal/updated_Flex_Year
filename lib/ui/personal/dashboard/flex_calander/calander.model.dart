@@ -2,14 +2,14 @@ import 'package:bestfriend/di.dart';
 import 'package:bestfriend/mixins/snack_bar.mixin.dart';
 import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
-import 'package:flex_year_tablet/ui/personal/dashboard/setting/utils/utils.dart';
+
 import 'package:intl/intl.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
 import '../../../../data_models/attendance_report.data.dart';
 import '../../../../data_models/attendance_report_summary.data.dart';
 import '../../../../services/attendance.service.dart';
 
-class SettingModel extends ViewModel with DialogMixin, SnackbarMixin {
+class CalanderModel extends ViewModel with DialogMixin, SnackbarMixin {
   final AttendanceService _attendanceService = locator<AttendanceService>();
 
   String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -54,17 +54,16 @@ class SettingModel extends ViewModel with DialogMixin, SnackbarMixin {
     absent = _reportSummary.isNotEmpty ? _reportSummary[0].absent : '' as int?;
   }
 
+// Get the first day of the current year
+  DateTime firstDayOfYear = DateTime(DateTime.now().year, 1, 1);
+
+// Get the last day of the current year
+  DateTime lastDayOfYear = DateTime(DateTime.now().year, 12, 31);
+
   Future<void> init() async {
     Map<String, dynamic> _searchParams = {};
-    _searchParams['date_from'] = formattedStartOfMonths;
-    _searchParams['date_to'] = formattedDate;
-    _monthlyReport = await _attendanceService.getMonthlyReport(
-      data: _searchParams,
-    );
-    _reportSummary =
-        await _attendanceService.getMonthlySummary(data: _searchParams);
-    _searchParams['date_from'] = formattedStartOfMonths;
-    _searchParams['date_to'] = formattedDate;
+    _searchParams['date_from'] = firstDayOfYear.toLocal().toString();
+    _searchParams['date_to'] = lastDayOfYear.toLocal().toString();
     _monthlyReport = await _attendanceService.getMonthlyReport(
       data: _searchParams,
     );

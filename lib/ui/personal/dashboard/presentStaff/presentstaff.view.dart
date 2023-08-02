@@ -80,7 +80,7 @@ class PresentStaffView extends StatelessWidget {
                                 },
                                 separatorBuilder: (context, index) {
                                   return const SizedBox(
-                                    height: 0,
+                                    height: 5,
                                   );
                                 },
                                 itemCount: model.filteredList.length),

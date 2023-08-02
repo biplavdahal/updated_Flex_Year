@@ -1,8 +1,10 @@
 import 'package:bestfriend/ui/view.dart';
+import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/date_converter/date_converter.viewmodel.dart';
 import 'package:flex_year_tablet/widgets/fy_date_time_field.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_nepali_date_time_field.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_section.widget.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
@@ -33,11 +35,11 @@ class DateConverterView extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        _buildEnglish(model),
+                        _buildEnglish(context, model),
                         const SizedBox(
                           height: 20,
                         ),
-                        _buildNepali(model)
+                        _buildNepali(context, model)
                       ],
                     ),
                   ),
@@ -46,7 +48,16 @@ class DateConverterView extends StatelessWidget {
         });
   }
 
-  Widget _buildEnglish(DateConverterViewModel model) {
+  Widget _buildEnglish(BuildContext context, DateConverterViewModel model) {
+    void copyToClipboard(BuildContext context, String text) {
+      ClipboardData data = ClipboardData(text: text);
+      Clipboard.setData(data);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Text copied to clipboard')),
+          
+      );
+    }
+
     return FYSection(
       title: "Convert From AD to BS : ",
       infoBox: true,
@@ -63,17 +74,34 @@ class DateConverterView extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            width: 16,
+            width: 10,
           ),
           Expanded(
             child: Column(
               children: [
-                Text(
-                  model.dateTo != null
-                      ? DateFormat('yyyy-MM-dd').format(model.dateTo!)
-                      : '',
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                )
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      model.dateTo != null
+                          ? DateFormat('yyyy-MM-dd').format(model.dateTo!)
+                          : '',
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        String text = model.dateTo != null
+                            ? DateFormat('yyyy-MM-dd').format(model.dateTo!)
+                            : '';
+                        copyToClipboard(context, text);
+                      },
+                      icon: const Icon(
+                        Icons.copy,
+                        size: 16,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           )
@@ -92,7 +120,19 @@ class DateConverterView extends StatelessWidget {
     );
   }
 
-  Widget _buildNepali(DateConverterViewModel model) {
+  Widget _buildNepali(BuildContext context, DateConverterViewModel model) {
+    void copyToClipboard(BuildContext context, String text) {
+      ClipboardData data = ClipboardData(text: text);
+      Clipboard.setData(data);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Text copied to clipboard',),
+        backgroundColor: AppColor.accent,  
+        ),
+        
+      );
+    }
+
     return FYSection(
       title: "Convert From BS to AD",
       infoBox: true,
@@ -102,23 +142,40 @@ class DateConverterView extends StatelessWidget {
             child: FYNepaliDateField(
               onNepaliChanged: (value) => model.nepaliDateFrom = value!,
               nepaliValue: model.nepaliDateFrom,
-              nepaliFirstDate:
-                  NepaliDateTime.now().subtract(const Duration(days: 365 * 140)),
+              nepaliFirstDate: NepaliDateTime.now()
+                  .subtract(const Duration(days: 365 * 140)),
               nepaliLastDate:
                   NepaliDateTime.now().add(const Duration(days: 365 * 20)),
             ),
           ),
           const SizedBox(
-            width: 16,
+            width: 10,
           ),
           Expanded(
             child: Column(
               children: [
-                Text(
-                  model.nepaliDateTo != null
-                      ? DateFormat('yyyy-MM-dd').format(model.nepaliDateTo!)
-                      : '',
-                  style: const TextStyle(fontWeight: FontWeight.w600),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      model.nepaliDateTo != null
+                          ? DateFormat('yyyy-MM-dd').format(model.nepaliDateTo!)
+                          : '',
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                IconButton(
+                  onPressed: () {
+                    String text = model.nepaliDateTo != null
+                        ? DateFormat('yyyy-MM-dd').format(model.nepaliDateTo!)
+                        : '';
+                    copyToClipboard(context, text);
+                  },
+                  icon: const Icon(
+                    Icons.copy,
+                    size: 16,
+                  ),
                 )
               ],
             ),

@@ -50,6 +50,9 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
               children: [
                 Text(
                   report.checkInTime == '00:00' ? '-' : report.checkInTime,
+                  style: const TextStyle(
+                    fontSize: 12,
+                  ),
                 ),
               ],
             ),
@@ -60,6 +63,9 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
               children: [
                 Text(
                   report.checkOutTime == '00:00' ? '-' : report.checkOutTime,
+                  style: const TextStyle(
+                    fontSize: 12,
+                  ),
                 ),
               ],
             ),
@@ -68,15 +74,15 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
               children: [
                 Text(
                   report.weekend.isNotEmpty
-                      ? "We"
+                      ? "Weekend"
                       : report.holiday != null
                           ? report.holiday.toString()
                           : report.totalWorkingHours == '0.00' ||
                                   report.totalWorkingHours == '00:00'
-                              ? 'Ab'
+                              ? 'Absent'
                               : report.totalWorkingHours,
                   style: TextStyle(
-                      fontSize: 10,
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: report.weekend.isNotEmpty
                           ? AppColor.primary
