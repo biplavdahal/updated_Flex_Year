@@ -1,8 +1,5 @@
 // ignore_for_file: invalid_annotation_target
 
-
-
-import 'package:flex_year_tablet/data_models/attendance_report_summary.data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'attendance_report.data.freezed.dart';

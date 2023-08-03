@@ -12,7 +12,8 @@ class HolidayItem extends StatelessWidget {
     int daysRemaining =
         DateTime.parse(holiday.date).difference(DateTime.now()).inDays;
 
-    return Card(
+    return 
+    Card(
       margin: const EdgeInsets.only(bottom: 8),
       shape: RoundedRectangleBorder(
         side: BorderSide(
