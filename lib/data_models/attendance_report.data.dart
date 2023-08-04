@@ -1,5 +1,8 @@
 // ignore_for_file: invalid_annotation_target
 
+import 'dart:convert';
+
+import 'package:clean_nepali_calendar/clean_nepali_calendar.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'attendance_report.data.freezed.dart';
@@ -20,8 +23,25 @@ class AttendanceReportData with _$AttendanceReportData {
     @JsonKey(name: 'total_lunch') required String lunchDuration,
     @JsonKey(name: 'attendance') required String workingHours,
     @JsonKey(name: 'grand_total') required String totalWorkingHours,
+    @JsonKey(name: 'nepali_date') required String nepaliDate,
   }) = _AttendanceReportData;
 
   factory AttendanceReportData.fromJson(Map<String, dynamic> json) =>
       _$AttendanceReportDataFromJson(json);
+
+  static AttendanceReportData empty() {
+    return const AttendanceReportData(
+      nepaliDate: '',
+      holiday: null,
+      weekend: "",
+      checkInTime: "",
+      checkOutTime: "",
+      totalWorkingHours: "",
+      date: '',
+      lunchDuration: '',
+      lunchIn: '',
+      lunchOut: '',
+      workingHours: '',
+    );
+  }
 }

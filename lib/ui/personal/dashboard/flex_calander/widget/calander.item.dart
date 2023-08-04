@@ -47,14 +47,14 @@ class _CalanderItemsState extends State<CalanderItems> {
   Map<DateTime, List<Event>> _createEventsMap(List<AttendanceReportData> data) {
     final eventsMap = <DateTime, List<Event>>{};
     for (final report in data) {
-      final date = DateTime.parse(report.date);
+      final date = DateTime.parse(report.date.toString());
       final event = Event(
           date: date,
-          checkInTime: report.checkInTime,
-          checkOutTime: report.checkOutTime,
+          checkInTime: report.checkInTime.toString(),
+          checkOutTime: report.checkOutTime.toString(),
           holiday: report.holiday,
-          weekend: report.weekend,
-          grandTotal: report.totalWorkingHours);
+          weekend: report.weekend.toString(),
+          grandTotal: report.totalWorkingHours.toString());
       eventsMap[date] = [event];
     }
     return eventsMap;
@@ -87,14 +87,14 @@ class _CalanderItemsState extends State<CalanderItems> {
 
   List<Event> _getEventsForDay(DateTime day) {
     return widget.monthlyReport
-        .where((report) => isSameDay(DateTime.parse(report.date), day))
+        .where((report) => isSameDay(DateTime.parse(report.date.toString()), day))
         .map((report) => Event(
-              date: DateTime.parse(report.date),
-              checkInTime: report.checkInTime,
-              checkOutTime: report.checkOutTime,
+              date: DateTime.parse(report.date.toString()),
+              checkInTime: report.checkInTime.toString(),
+              checkOutTime: report.checkOutTime.toString(),
               holiday: report.holiday,
-              weekend: report.weekend,
-              grandTotal: report.totalWorkingHours,
+              weekend: report.weekend.toString(),
+              grandTotal: report.totalWorkingHours.toString(),
             ))
         .toList();
   }

@@ -30,8 +30,9 @@ class _CalanderViewState extends State<CalanderView> {
               title: const Text('Flex Calendar'),
             ),
             body: Padding(
-              padding: const EdgeInsets.all(5),
+              padding: const EdgeInsets.all(4),
               child: FutureBuilder<void>(
+                future: model.init(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const FYLinearLoader();
