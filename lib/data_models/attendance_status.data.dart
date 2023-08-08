@@ -1,5 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 
+import 'dart:convert';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'attendance_status.data.freezed.dart';
@@ -14,6 +16,8 @@ class AttendanceStatusData with _$AttendanceStatusData {
     @JsonKey(name: 'checkout') required int checkOut,
     @JsonKey(name: 'breakin') required int breakIn,
     @JsonKey(name: 'breakout') required int breakOut,
+    @JsonKey(name: 'onsitein') required int onsiteIn,
+    @JsonKey(name: 'onsiteout') required int onsiteOut, 
   }) = _AttendanceStatusData;
 
   factory AttendanceStatusData.fromJson(Map<String, dynamic> json) =>

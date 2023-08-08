@@ -158,34 +158,39 @@ class TabletServiceImpl implements TabletService {
         lunchOut: 0,
         breakIn: 0,
         breakOut: 0,
+        onsiteIn: 0,
+        onsiteOut: 0,
       );
     } else if (status == 'checkout') {
       return const AttendanceStatusData(
-        checkIn: 1,
-        checkOut: 0,
-        lunchIn: 0,
-        lunchOut: 0,
-        breakIn: 0,
-        breakOut: 0,
-      );
+          checkIn: 1,
+          checkOut: 0,
+          lunchIn: 0,
+          lunchOut: 0,
+          breakIn: 0,
+          breakOut: 0,
+          onsiteIn: 0,
+          onsiteOut: 0);
     } else if (status == 'lunchin') {
       return const AttendanceStatusData(
-        checkIn: 0,
-        checkOut: 0,
-        lunchIn: 0,
-        lunchOut: 1,
-        breakIn: 0,
-        breakOut: 0,
-      );
+          checkIn: 0,
+          checkOut: 0,
+          lunchIn: 0,
+          lunchOut: 1,
+          breakIn: 0,
+          breakOut: 0,
+          onsiteIn: 0,
+          onsiteOut: 0);
     } else {
       return const AttendanceStatusData(
-        checkIn: 0,
-        checkOut: 1,
-        lunchIn: 0,
-        lunchOut: 0,
-        breakIn: 0,
-        breakOut: 0,
-      );
+          checkIn: 0,
+          checkOut: 1,
+          lunchIn: 0,
+          lunchOut: 0,
+          breakIn: 0,
+          breakOut: 0,
+          onsiteIn: 0,
+          onsiteOut: 0);
     }
   }
 

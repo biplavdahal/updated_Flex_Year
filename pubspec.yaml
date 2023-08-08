@@ -59,10 +59,6 @@ flutter:
   assets:
     - assets/images/
 
-  fonts:
-    - family: NepaliFont
-      fonts:
-        - asset:  fonts/nepali_font.ttf
 
 
 

@@ -7,6 +7,7 @@ import 'package:flex_year_tablet/ui/personal/attendance_correction/attendance_co
 import 'package:flex_year_tablet/ui/personal/attendance_correction_review/attendance_correction_review.view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/flex_calander/calander.view.dart';
+import 'package:flex_year_tablet/ui/personal/date_converter/date_converter.view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
@@ -322,14 +323,14 @@ class DashboardDrawer extends StatelessWidget {
             ),
             ListTile(
               title: const Text(
-                'Calander',
+                'Date Converter',
                 style: TextStyle(color: AppColor.primary),
               ),
               onTap: () {
-                locator<DashboardModel>().goto(CalanderView.tag);
+                locator<DashboardModel>().goto(DateConverterView.tag);
               },
               leading: const Icon(
-                MdiIcons.calendarRangeOutline,
+                MdiIcons.swapHorizontalBold,
                 color: AppColor.primary,
               ),
             ),

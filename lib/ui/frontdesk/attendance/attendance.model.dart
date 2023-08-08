@@ -51,6 +51,8 @@ class AttendanceModel extends ViewModel with SnackbarMixin, DialogMixin {
             breakOut: 0,
             lunchIn: 0,
             lunchOut: 0,
+            onsiteIn: 0,
+            onsiteOut: 0
           );
 
           await _sharedPreferenceService.set<String>(
