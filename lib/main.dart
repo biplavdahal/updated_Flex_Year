@@ -7,7 +7,6 @@ import 'package:flex_year_tablet/app.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/di.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 // Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 //   await Firebase.initializeApp();
@@ -28,16 +27,7 @@ Future<void> main() async {
   await locator<SharedPreferenceService>()();
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  runApp(const FlexYearApp()
-      // MultiProvider(
-      //   providers: [
-      //     ChangeNotifierProvider<SettingModel>(create: (_) => SettingModel()),
-      //   ],
-      //   child: FlexYearApp(
-
-      //   ),
-      // ),
-      );
+  runApp(const FlexYearApp());
 }
 
 class LocaleProvider extends ChangeNotifier {
@@ -50,5 +40,3 @@ class LocaleProvider extends ChangeNotifier {
     notifyListeners();
   }
 }
-
-_changeLocale(Locale p1) {}

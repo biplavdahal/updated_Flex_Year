@@ -157,7 +157,6 @@ class DashboardView extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                  
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -203,9 +202,9 @@ class DashboardView extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             margin: const EdgeInsets.only(top: 10),
             padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(
-              color: Color(0xFFF1F1F1),
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade100,
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
               ),

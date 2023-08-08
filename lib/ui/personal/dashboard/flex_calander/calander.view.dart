@@ -31,7 +31,7 @@ class _CalanderViewState extends State<CalanderView> {
             body: Padding(
               padding: const EdgeInsets.all(4),
               child: FutureBuilder<void>(
-                future: model.init(),
+                // future: model.init(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const FYLinearLoader();

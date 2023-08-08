@@ -1,8 +1,5 @@
 import 'package:clean_nepali_calendar/clean_nepali_calendar.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../../data_models/attendance_report.data.dart';
 import '../../../../../theme.dart';
 
@@ -19,7 +16,6 @@ class NepaliCalanderItems extends StatefulWidget {
 }
 
 class _NepaliCalanderItemsState extends State<NepaliCalanderItems> {
-  TextEditingController _textFieldController = TextEditingController();
   DateTime? selectedDate;
   String selectedCheckInTime = '';
   String selectedCheckOutTime = '';
@@ -64,6 +60,20 @@ class _NepaliCalanderItemsState extends State<NepaliCalanderItems> {
             initialDate: initialNepaliDate,
             calendarStyle: const CalendarStyle(selectedColor: AppColor.primary),
             dateCellBuilder: cellBuilder,
+            headerDayBuilder: (headername, dayNumber) {
+              return Column(
+                children: [
+                  Text(
+                    headername,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: AppColor.primary,
+                    ),
+                  ),
+                  const Divider()
+                ],
+              );
+            },
             headerBuilder: (decoration, height, nextMonthHaldler,
                 prevMonthHandler, nepaliDateTime) {
               String monthName = NepaliDateFormat.MMMM().format(nepaliDateTime);
@@ -73,23 +83,29 @@ class _NepaliCalanderItemsState extends State<NepaliCalanderItems> {
                 child: Center(
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            monthName + "  ",
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: AppColor.primary),
-                          ),
-                          Text(
-                            year,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      )
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              monthName + "  ",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: AppColor.primary),
+                            ),
+                            Text(
+                              year,
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Divider(),
                     ],
                   ),
                 ),

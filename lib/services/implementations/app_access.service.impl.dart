@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/constants/prefs.constants.dart';
