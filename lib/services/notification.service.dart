@@ -1,6 +1,8 @@
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flex_year_tablet/data_models/notice.data.dart';
 
+import '../data_models/staff_birthday.data.dart';
+
 abstract class NotificationService {
   /// Initializes local notification channels
   void initializeLocalNotification();
@@ -30,4 +32,7 @@ abstract class NotificationService {
   NoticeData? get notice;
 
   Future<void> fetchNotices();
+
+  //staff birthday
+  Future<List<StaffBirthdayData>> getStaffBirthday();
 }

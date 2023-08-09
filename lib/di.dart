@@ -115,8 +115,9 @@ Future<void> setupLocator() async {
 
   locator.registerFactory(() => DateConverterViewModel());
   locator.registerFactory(() => PerformanceModel());
-  locator.registerFactory(() => CalanderModel());
+
   locator.registerFactory(() => PresentStaffModel());
+  locator.registerFactory(() => CalanderModel());
 
   // Unkillable models
 }

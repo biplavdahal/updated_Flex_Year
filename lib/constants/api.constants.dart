@@ -21,7 +21,7 @@ const auUserLogout = "user/logout";
 const auAttendanceStatus = "attendance/attstatus";
 const auAttendanceForgot = "attendance/forgottocheckout";
 const auAttendanceInOut = "attendance/inout";
-const auMonthlyAttendanceReport = "attendance/reportclientflutter";
+const auMonthlyAttendanceReport = "attendance/reportclient";
 const auAttendanceSummary = "userstaff/staff-attendance";
 const auUserStaffDetail = "userstaff/index";
 const auWeeklyReport = "attendance/weekly-report";
@@ -63,6 +63,7 @@ const auPayrollHistory = "payroll/history";
 
 //Notification's API
 const auStaffDashboard = "site/staffdashboard";
+const auStaffBirthday = "site/birthday";
 
 //update profile
 const auUpdateProfile = "staff/upload";

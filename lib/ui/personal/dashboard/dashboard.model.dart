@@ -9,6 +9,7 @@ import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/data_models/company.data.dart';
 import 'package:flex_year_tablet/data_models/company_logo.data.dart';
 import 'package:flex_year_tablet/data_models/notice.data.dart';
+import 'package:flex_year_tablet/data_models/staff_birthday.data.dart';
 import 'package:flex_year_tablet/data_models/user.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
@@ -89,6 +90,10 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   AttendanceForgotData? _attendanceForgot;
   AttendanceForgotData? get attendanceForgot => _attendanceForgot;
 
+  List<StaffBirthdayData> _staffBirthdayData = [];
+  List<StaffBirthdayData> get staffBirthdayData => _staffBirthdayData;
+  final today = DateTime.now();
+
   List<String>? _clientLabels;
   List<String>? get clientLabels => _clientLabels;
 
@@ -99,6 +104,8 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   String? get selectedClientLabel => _selectedClientLabel;
 
   // UI Controllers
+
+  bool isBirthdaySnackBarShown = false;
   int _currentFragment = 2;
   int get currentFragment => _currentFragment;
   set currentFragment(int value) {
@@ -159,7 +166,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     _monthlyReport = await _attendanceService.getMonthlyReport(
       data: _searchParams,
     );
-    HolidaysModel.holidaydata();
 
     _currentDateTimeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _currentDateTime = DateTime.now().toString();
@@ -199,8 +205,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
     try {
       HolidaysModel.holidaydata();
-
-      _notificationService.fetchNotices();
+      _staffBirthdayData = await _notificationService.getStaffBirthday();
     } catch (e) {
       rethrow;
     }

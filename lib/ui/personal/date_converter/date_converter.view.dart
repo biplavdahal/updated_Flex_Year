@@ -53,8 +53,12 @@ class DateConverterView extends StatelessWidget {
       ClipboardData data = ClipboardData(text: text);
       Clipboard.setData(data);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Text copied to clipboard')),
-          
+        SnackBar(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            backgroundColor: AppColor.primary,
+            content: const Text('Text copied to clipboard.')),
       );
     }
 
@@ -125,11 +129,15 @@ class DateConverterView extends StatelessWidget {
       ClipboardData data = ClipboardData(text: text);
       Clipboard.setData(data);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Text copied to clipboard',),
-        backgroundColor: AppColor.accent,  
+        SnackBar(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          content: const Text(
+            'Text copied to clipboard.',
+          ),
+          backgroundColor: AppColor.accent,
         ),
-        
       );
     }
 

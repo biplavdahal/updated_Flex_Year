@@ -45,6 +45,35 @@ class DashboardView extends StatelessWidget {
     return View<DashboardModel>(
       onModelReady: (model) => model.init(),
       builder: (ctx, model, child) {
+        final todayBirthdays = model.staffBirthdayData.where((staff) {
+          final staffDobParts = staff.dob!.split('-');
+          final staffDob = DateTime(
+            int.parse(staffDobParts[0]),
+            int.parse(staffDobParts[1]),
+            int.parse(staffDobParts[2]),
+          );
+          return staffDob.month == model.today.month &&
+              staffDob.day == model.today.day;
+        });
+        if (todayBirthdays.isNotEmpty && !model.isBirthdaySnackBarShown) {
+          final staffNames = todayBirthdays
+              .map((staff) => '${staff.firstName} ${staff.lastName}')
+              .join(', ');
+          model.isBirthdaySnackBarShown = true;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(ctx).showSnackBar(
+              SnackBar(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                backgroundColor: AppColor.primary,
+                content: Text("It's $staffNames's birthday today! "),
+                duration: const Duration(seconds: 5),
+              ),
+            );
+          });
+        }
+
         return Scaffold(
           backgroundColor: AppColor.primary,
           drawer: const DashboardDrawer(),

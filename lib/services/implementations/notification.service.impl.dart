@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/data_models/notice.data.dart';
+import 'package:flex_year_tablet/data_models/staff_birthday.data.dart';
 import 'package:flex_year_tablet/helper/api_error.helper.dart';
 import 'package:flex_year_tablet/helper/dio_helper.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
@@ -127,7 +128,29 @@ class NotificationServiceImplementation implements NotificationService {
 
   @override
   Future<bool> getPermission() {
-    // TODO: implement getPermission
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<StaffBirthdayData>> getStaffBirthday() async {
+    try {
+      final _response = await _apiService.get(auStaffBirthday, params: {
+        'access_token': _authenticationService.user!.accessToken,
+        'company_id': _appAccessService.appAccess!.company.companyId
+      });
+
+      final _data = constructResponse(_response.data);
+
+      if (_data!.containsKey("status") && _data["status"] == false) {
+        throw _data["response"] ?? _data["data"] ?? _data["detail"];
+      }
+      return (_data['today_birthday'] as List<dynamic>)
+          .map<StaffBirthdayData>(
+            (e) => StaffBirthdayData.fromJson(e),
+          )
+          .toList();
+    } catch (e) {
+      throw apiError(e);
+    }
   }
 }

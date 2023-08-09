@@ -3,6 +3,8 @@ import 'package:bestfriend/mixins/snack_bar.mixin.dart';
 import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import '../../../../data_models/attendance_report.data.dart';
+import '../../../../data_models/company.data.dart';
+import '../../../../services/app_access.service.dart';
 import '../../../../services/attendance.service.dart';
 
 class CalanderModel extends ViewModel with DialogMixin, SnackbarMixin {
@@ -10,6 +12,8 @@ class CalanderModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   List<AttendanceReportData> _monthlyReport = [];
   List<AttendanceReportData> get monthlyReport => _monthlyReport;
+
+  CompanyData get company => locator<AppAccessService>().appAccess!.company;
 
 // Get the first day of the current year
   DateTime firstDayOfYear = DateTime(DateTime.now().year, 1, 1);
