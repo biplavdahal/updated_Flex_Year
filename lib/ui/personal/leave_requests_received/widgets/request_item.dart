@@ -85,13 +85,13 @@ class RequestItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              request.staffName,
+                              request.staffName.toString(),
                               style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                             Text(
-                              request.title,
+                              request.title.toString(),
                             ),
                           ],
                         ),
@@ -199,7 +199,7 @@ class RequestItem extends StatelessWidget {
                         ),
                         DataCell(
                           Text(
-                            formattedDate(request.requestedDate),
+                            formattedDate(request.requestedDate.toString()),
                           ),
                         ),
                       ],
@@ -216,8 +216,8 @@ class RequestItem extends StatelessWidget {
                         ),
                         DataCell(
                           Text(
-                            request.reason.isEmpty ? "Not Set" : request.reason,
-                            style: request.reason.isEmpty
+                            request.reason.toString().isEmpty ? "Not Set" : request.reason.toString(),
+                            style: request.reason.toString().isEmpty
                                 ? TextStyle(
                                     color: Colors.grey.shade400,
                                     fontStyle: FontStyle.italic,

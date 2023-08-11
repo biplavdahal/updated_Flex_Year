@@ -23,9 +23,14 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
           ? const Color.fromARGB(255, 139, 213, 245)
           : report.holiday != null
               ? Colors.amber.shade100
-              : report.checkInTime == "00:00" && report.checkOutTime == "00:00"
+              : (report.checkInTime == "00:00" &&
+                      report.checkOutTime == "00:00")
                   ? Colors.white70
-                  : _getCardColor(report.totalWorkingHours),
+                  : (report.checkInTime.isNotEmpty &&
+                          report.checkOutTime == "00:00" &&
+                          report.checkInTime != "00:00")
+                      ? Colors.grey.shade300
+                      : _getCardColor(report.totalWorkingHours),
       margin: const EdgeInsets.only(bottom: 5),
       child: Padding(
         padding: const EdgeInsets.all(5.0),
@@ -77,18 +82,25 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
                       ? "Weekend"
                       : report.holiday != null
                           ? report.holiday.toString()
-                          : report.totalWorkingHours == '0.00' ||
-                                  report.totalWorkingHours == '00:00'
-                              ? 'Absent'
-                              : report.totalWorkingHours,
+                          : (report.checkInTime.isNotEmpty &&
+                                  report.checkOutTime == "00:00" &&
+                                  report.checkInTime != "00:00")
+                              ? ''
+                              : report.totalWorkingHours == '0.00'
+                                  ? 'Absent'
+                                  : report.totalWorkingHours,
                   style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: report.weekend.isNotEmpty
-                          ? AppColor.primary
-                          : report.holiday != null
-                              ? AppColor.primary
-                              : _getTextColor(report.totalWorkingHours)),
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: report.weekend.isNotEmpty
+                        ? AppColor.primary
+                        : report.holiday != null
+                            ? AppColor.primary
+                            : (report.checkInTime.isNotEmpty &&
+                                    report.checkOutTime.isEmpty)
+                                ? AppColor.primary
+                                : _getTextColor(report.totalWorkingHours),
+                  ),
                 ),
               ],
             )

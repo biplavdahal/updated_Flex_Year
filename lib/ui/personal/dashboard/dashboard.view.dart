@@ -410,6 +410,26 @@ class DashboardView extends StatelessWidget {
                             }
                           : null,
                     ),
+                    AttendanceButton(
+                        titles: "",
+                        title: "Onsite In",
+                        icon: MdiIcons.bicycle,
+                        color: AppColor.primary,
+                        onPressed: model.attendanceStatus?.onsiteIn == 1
+                            ? () {
+                                model.onAttendanceButtonPressed('onsitein');
+                              }
+                            : null),
+                    AttendanceButton(
+                        titles: "",
+                        title: "Onsite Out",
+                        icon: MdiIcons.bicycle,
+                        color: AppColor.primary,
+                        onPressed: model.attendanceStatus?.onsiteOut == 1
+                            ? () {
+                                model.onAttendanceButtonPressed('onsiteout');
+                              }
+                            : null)
                   ],
                 ),
               ],

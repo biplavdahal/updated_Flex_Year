@@ -1,7 +1,5 @@
 // ignore_for_file: invalid_annotation_target
 
-import 'dart:convert';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'staff.data.freezed.dart';
@@ -24,13 +22,13 @@ class StaffData with _$StaffData {
     @JsonKey(name: 'emp_id') required String empId,
     @JsonKey(name: 'dob') String? dob,
     @JsonKey(name: 'remaining_leave_days') String? remainingLeave,
-    @JsonKey(name: 'sick_leave')  String? sickLeave,
-    @JsonKey(name : 'citizenship_no') String? citizenshipNo,
+    @JsonKey(name: 'sick_leave') String? sickLeave,
+    @JsonKey(name: 'citizenship_no') String? citizenshipNo,
     @JsonKey(name: 'expiry_date') String? expiryDate,
     @JsonKey(name: 'employee_type') String? employeeType,
     @JsonKey(name: 'salary_period') String? salaryPeriod,
-    @JsonKey(name: 'normal_salary_rate') String? normalSalaryRate,
-    @JsonKey(name: 'overtime_salary_rate') String? overtimeSalaryRate,
+    // @JsonKey(name: 'normal_salary_rate') String? normalSalaryRate,
+    // @JsonKey(name: 'overtime_salary_rate') String? overtimeSalaryRate,
     @JsonKey(name: 'payment_type') String? paymentType,
     @JsonKey(name: 'checkinRestrictiontime') String? checkinRestrictionTime,
     @JsonKey(name: 'remarks') String? remarks,

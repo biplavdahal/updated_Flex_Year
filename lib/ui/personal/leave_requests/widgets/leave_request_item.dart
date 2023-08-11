@@ -40,8 +40,7 @@ class LeaveRequestItem extends StatelessWidget {
       child: AnimatedOpacity(
         duration: const Duration(milliseconds: 300),
         opacity: isBusy ? 0.5 : 1,
-        child: 
-        Card(
+        child: Card(
           shape: RoundedRectangleBorder(
             side: BorderSide(
               color: _statusColor[request.status] ?? Colors.red.shade300,
@@ -60,7 +59,7 @@ class LeaveRequestItem extends StatelessWidget {
                     if (_user.role == 'staff')
                       Expanded(
                         child: Text(
-                          request.title,
+                          request.title.toString(),
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             color: AppColor.primary,
@@ -73,13 +72,13 @@ class LeaveRequestItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              request.staffName,
+                              request.staffName.toString(),
                               style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                             Text(
-                              request.title,
+                              request.title.toString(),
                             ),
                           ],
                         ),
@@ -194,7 +193,7 @@ class LeaveRequestItem extends StatelessWidget {
                           ),
                           DataCell(
                             Text(
-                              "${request.totalHours != null ? hourFormatter(request.totalHours!) : '-'}\n(${request.fromTime} - ${request.toTime})",
+                              "${request.totalHours != null ? hourFormatter(request.totalHours.toString()) : '-'}\n${request.fromTime ?? ''} - ${request.toTime ?? ''}",
                               style: const TextStyle(
                                 height: 1.5,
                               ),
@@ -214,7 +213,7 @@ class LeaveRequestItem extends StatelessWidget {
                         ),
                         DataCell(
                           Text(
-                            formattedDate(request.requestedDate),
+                            formattedDate(request.requestedDate.toString()),
                           ),
                         ),
                       ],
@@ -230,15 +229,18 @@ class LeaveRequestItem extends StatelessWidget {
                           ),
                         ),
                         DataCell(
-                          Text(request.reason
-                              // request.reason.isEmpty ? "Not Set" : request.reason,
-                              // style: request.reason.isEmpty
-                              //     ? TextStyle(
-                              //         color: Colors.grey.shade400,
-                              //         fontStyle: FontStyle.italic,
-                              //       )
-                              //     : null,
-                              ),
+                          Text(
+                            request.reason.toString() != 'null'
+                                ? request.reason.toString()
+                                : '-',
+                            // request.reason.isEmpty ? "Not Set" : request.reason,
+                            // style: request.reason.isEmpty
+                            //     ? TextStyle(
+                            //         color: Colors.grey.shade400,
+                            //         fontStyle: FontStyle.italic,
+                            //       )
+                            //     : null,
+                          ),
                         ),
                       ],
                     ),

@@ -1,4 +1,4 @@
-import 'package:flex_year_tablet/data_models/attendance_report_summary.data.dart';
+ import 'package:flex_year_tablet/data_models/attendance_report_summary.data.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
 

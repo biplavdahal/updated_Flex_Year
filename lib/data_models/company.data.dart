@@ -16,7 +16,7 @@ class CompanyData with _$CompanyData {
     @JsonKey(name: 'remarks') required String remarks,
     @JsonKey(name: 'status') required int status,
     @JsonKey(name: 'subdomain') required String subdomain,
-    @JsonKey(name: 'company_preference') required String companyPreference,
+    @JsonKey(name: 'company_preference') String? companyPreference,
   }) = _CompanyData;
 
   factory CompanyData.fromJson(Map<String, dynamic> json) =>

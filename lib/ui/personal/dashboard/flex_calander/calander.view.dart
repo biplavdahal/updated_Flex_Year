@@ -37,8 +37,9 @@ class _CalanderViewState extends State<CalanderView> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const FYLinearLoader();
                   } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (model.company.companyPreference == "N") {
+                    return Expanded(
+                        child: Center(child: Text('Error: ${snapshot.error}')));
+                  } else if (model.company.companyPreference == 'N') {
                     return NepaliCalanderItems(
                         monthlyReport: model.monthlyReport);
                   } else {

@@ -181,13 +181,13 @@ class ProfileView extends StatelessWidget {
                                           (model.user.staff.salaryPeriod ?? ''),
                                       icon: MdiIcons.calendarClock,
                                     ),
-                                    _buildProfileField(
-                                      label: "Normal Salary Rate",
-                                      value:
-                                          (model.user.staff.normalSalaryRate ??
-                                              ''),
-                                      icon: MdiIcons.cash,
-                                    ),
+                                    // _buildProfileField(
+                                    //   label: "Normal Salary Rate",
+                                    //   value:
+                                    //       (model.user.staff.normalSalaryRate ??
+                                    //           ''),
+                                    //   icon: MdiIcons.cash,
+                                    // ),
                                     _buildProfileField(
                                       label: "Payment Type",
                                       value:
@@ -211,61 +211,61 @@ class ProfileView extends StatelessWidget {
                               ),
                             ),
                           ),
-                        if (model.selectedTab == "0" ||
-                            model.selectedTab == "1")
-                          Center(
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: const [
-                                    Text(
-                                      "Performance Report : ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColor.primary,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 58,
-                                  child: ListView.separated(
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context, index) {
-                                      return SizedBox(
-                                        height: 150,
-                                        child: GestureDetector(
-                                          onTap: () async {
-                                            await model
-                                                .goto(PerformanceView.tag);
-                                          },
-                                          child: Card(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(16),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    children: const [
-                                                      Text("2080-Baishakh")
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    separatorBuilder: (context, index) =>
-                                        const SizedBox(
-                                      width: 0,
-                                    ),
-                                    itemCount: 5,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        // if (model.selectedTab == "0" ||
+                        //     model.selectedTab == "1")
+                        //   Center(
+                        //     child: Column(
+                        //       children: [
+                        //         Row(
+                        //           children: const [
+                        //             Text(
+                        //               "Performance Report : ",
+                        //               style: TextStyle(
+                        //                 fontWeight: FontWeight.bold,
+                        //                 color: AppColor.primary,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         SizedBox(
+                        //           height: 58,
+                        //           child: ListView.separated(
+                        //             scrollDirection: Axis.horizontal,
+                        //             itemBuilder: (context, index) {
+                        //               return SizedBox(
+                        //                 height: 150,
+                        //                 child: GestureDetector(
+                        //                   onTap: () async {
+                        //                     await model
+                        //                         .goto(PerformanceView.tag);
+                        //                   },
+                        //                   child: Card(
+                        //                     child: Padding(
+                        //                       padding: const EdgeInsets.all(16),
+                        //                       child: Column(
+                        //                         children: [
+                        //                           Row(
+                        //                             children: const [
+                        //                               Text("2080-Baishakh")
+                        //                             ],
+                        //                           )
+                        //                         ],
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               );
+                        //             },
+                        //             separatorBuilder: (context, index) =>
+                        //                 const SizedBox(
+                        //               width: 0,
+                        //             ),
+                        //             itemCount: 5,
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
                       ],
                     ),
                   ),

@@ -10,7 +10,7 @@ import '../../../../services/attendance.service.dart';
 class CalanderModel extends ViewModel with DialogMixin, SnackbarMixin {
   final AttendanceService _attendanceService = locator<AttendanceService>();
 
-  List<AttendanceReportData> _monthlyReport = [];
+  List<AttendanceReportData> _monthlyReport = []; 
   List<AttendanceReportData> get monthlyReport => _monthlyReport;
 
   CompanyData get company => locator<AppAccessService>().appAccess!.company;

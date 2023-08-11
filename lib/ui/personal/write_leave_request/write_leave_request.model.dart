@@ -46,7 +46,6 @@ class WriteLeaveRequestModel extends ViewModel with DialogMixin, SnackbarMixin {
     setIdle();
   }
 
-
   String _currentDateTime = DateTime.now().toString();
   String get currentDateTime => _currentDateTime;
 
@@ -89,8 +88,8 @@ class WriteLeaveRequestModel extends ViewModel with DialogMixin, SnackbarMixin {
         (e) => e.id.toString() == arguments.request!.leaveType,
       );
       _selectedLeaveTypeLabel = _selectedLeaveType.title;
-      _leaveDateFrom = DateTime.parse(arguments.request!.dateFrom);
-      _leaveDateUpto = DateTime.parse(arguments.request!.dateTo);
+      _leaveDateFrom = DateTime.parse(arguments.request!.dateFrom.toString());
+      _leaveDateUpto = DateTime.parse(arguments.request!.dateTo.toString());
       _isHalfDayLeave =
           arguments.request!.totalHours != "00:00:00" ? true : false;
       if (_isHalfDayLeave) {
@@ -104,7 +103,7 @@ class WriteLeaveRequestModel extends ViewModel with DialogMixin, SnackbarMixin {
         );
       }
 
-      _leaveDescriptionController.text = arguments.request!.reason;
+      _leaveDescriptionController.text = arguments.request!.reason.toString();
     } else {
       _selectedLeaveType = leaveTypes.first;
       _selectedLeaveTypeLabel = _selectedLeaveType.title;

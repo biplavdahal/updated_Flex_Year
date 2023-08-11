@@ -275,18 +275,24 @@ class _NepaliCalanderItemsState extends State<NepaliCalanderItems> {
     Color? cellColor;
     Decoration? cellDecoration;
 
+    double workingHours = double.tryParse(reportData.workingHours) ?? 0.0;
+
     if (reportData.holiday != null) {
       cellColor = Colors.amber.shade200;
     } else if (reportData.weekend.isNotEmpty) {
       cellColor = const Color.fromARGB(255, 139, 213, 245);
     } else if (reportData.checkInTime == '00:00' &&
         reportData.checkOutTime == '00:00') {
-      cellColor = Colors.red.shade300;
+      cellColor = Colors.grey.shade300;
     } else if (reportData.checkInTime.isNotEmpty &&
         reportData.checkOutTime == '00:00') {
       cellColor = Colors.grey;
-    } else {
+    } else if (workingHours >= 8.0) {
       cellColor = Colors.green.shade300;
+    } else if (workingHours < 8 && workingHours > 0.1) {
+      cellColor = Colors.red.shade300;
+    } else {
+      cellColor = Colors.grey.shade100;
     }
 
     bool isFutureDate =

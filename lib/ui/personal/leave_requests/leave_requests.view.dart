@@ -1,14 +1,11 @@
 import 'package:bestfriend/di.dart';
 import 'package:bestfriend/ui/view.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/widgets/leave_request_item.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.view.dart';
-import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_shimmer.widget.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:shimmer/shimmer.dart';
-import '../../../theme.dart';
 import '../dashboard/dashboard.model.dart';
 
 class LeaveRequestView extends StatelessWidget {
@@ -46,9 +43,8 @@ class LeaveRequestView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text('Leave Requests'),
-            
           ),
-          
+
           floatingActionButton: Stack(
             children: [
               Positioned(
@@ -142,14 +138,16 @@ class LeaveRequestView extends StatelessWidget {
                             controller: _scrollController,
                             physics: const AlwaysScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              return LeaveRequestItem(
-                                request: model.requestsToShow[index],
-                                isBusy: model.isBusyWidget(
-                                    model.requestsToShow[index].id),
-                                onRemoveTap: model.removeLeave,
-                                onEditTap: model.onUpdatePressed,
-                                onApprove: model.onApprove,
-                                onDecline: model.onDecline,
+                              return DelayedDisplay(
+                                child: LeaveRequestItem(
+                                  request: model.requestsToShow[index],
+                                  isBusy: model.isBusyWidget(
+                                      model.requestsToShow[index].id),
+                                  onRemoveTap: model.removeLeave,
+                                  onEditTap: model.onUpdatePressed,
+                                  onApprove: model.onApprove,
+                                  onDecline: model.onDecline,
+                                ),
                               );
                             },
                             separatorBuilder: (context, index) {
@@ -168,14 +166,16 @@ class LeaveRequestView extends StatelessWidget {
                           controller: _scrollController,
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            return LeaveRequestItem(
-                              request: model.request[index],
-                              isBusy:
-                                  model.isBusyWidget(model.request[index].id),
-                              onRemoveTap: model.removeLeave,
-                              onEditTap: model.onUpdatePressed,
-                              onApprove: model.onApprove,
-                              onDecline: model.onDecline,
+                            return DelayedDisplay(
+                              child: LeaveRequestItem(
+                                request: model.request[index],
+                                isBusy:
+                                    model.isBusyWidget(model.request[index].id),
+                                onRemoveTap: model.removeLeave,
+                                onEditTap: model.onUpdatePressed,
+                                onApprove: model.onApprove,
+                                onDecline: model.onDecline,
+                              ),
                             );
                           },
                           separatorBuilder: (context, index) {

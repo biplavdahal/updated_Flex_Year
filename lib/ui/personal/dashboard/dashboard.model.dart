@@ -20,7 +20,6 @@ import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/services/notification.service.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/flex_calander/calander.view.dart';
-import 'package:flex_year_tablet/ui/personal/date_converter/date_converter.view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/login/login.view.dart';
@@ -153,24 +152,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     }).catchError((e) {
       // snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     });
-    Map<String, dynamic> _searchParams = {};
-    _searchParams['date_from'] = formattedStartOfMonths;
-    _searchParams['date_to'] = formattedDate;
-    _monthlyReport = await _attendanceService.getMonthlyReport(
-      data: _searchParams,
-    );
-    _reportSummary =
-        await _attendanceService.getMonthlySummary(data: _searchParams);
-    _searchParams['date_from'] = formattedStartOfMonths;
-    _searchParams['date_to'] = formattedDate;
-    _monthlyReport = await _attendanceService.getMonthlyReport(
-      data: _searchParams,
-    );
-
-    _currentDateTimeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      _currentDateTime = DateTime.now().toString();
-      setIdle();
-    });
 
     _clientLabels = [];
     _attendanceCorrectionData =
@@ -202,9 +183,27 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       unsetWidgetBusy('dashboard');
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     });
+    HolidaysModel.holidaydata();
+    Map<String, dynamic> _searchParams = {};
+    _searchParams['date_from'] = formattedStartOfMonths;
+    _searchParams['date_to'] = formattedDate;
+    _monthlyReport = await _attendanceService.getMonthlyReport(
+      data: _searchParams,
+    );
+    _reportSummary =
+        await _attendanceService.getMonthlySummary(data: _searchParams);
+    _searchParams['date_from'] = formattedStartOfMonths;
+    _searchParams['date_to'] = formattedDate;
+    _monthlyReport = await _attendanceService.getMonthlyReport(
+      data: _searchParams,
+    );
+
+    _currentDateTimeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      _currentDateTime = DateTime.now().toString();
+      setIdle();
+    });
 
     try {
-      HolidaysModel.holidaydata();
       _staffBirthdayData = await _notificationService.getStaffBirthday();
     } catch (e) {
       rethrow;
@@ -300,6 +299,14 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       } else if (status == 'checkout') {
         Fluttertoast.showToast(
             msg: 'You have successfully checkout',
+            backgroundColor: Colors.green);
+      } else if (status == 'onsitein') {
+        Fluttertoast.showToast(
+            msg: 'You have checked in Onsite successfully',
+            backgroundColor: Colors.yellow.shade300);
+      } else if (status == 'onsiteout') {
+        Fluttertoast.showToast(
+            msg: 'You have checked out Onsite successfully',
             backgroundColor: Colors.green);
       } else if (status == 'lunchin') {
         Fluttertoast.showToast(
