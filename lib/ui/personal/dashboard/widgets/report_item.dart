@@ -88,7 +88,7 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
                               ? ''
                               : report.totalWorkingHours == '0.00'
                                   ? 'Absent'
-                                  : report.totalWorkingHours,
+                                  : convertIntoHrs(report.totalWorkingHours),
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,

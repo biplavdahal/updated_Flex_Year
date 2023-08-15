@@ -19,6 +19,17 @@ String formattedDate(String unformattedDateTime) {
   return formattedDate;
 }
 
+String convertIntoHrs(String time) {
+  double totalHrs = double.parse(time);
+
+  int hours = totalHrs.toInt();
+  int minutes = ((totalHrs - hours) * 60).toInt();
+  String formattedHours = hours.toString().padLeft(2, '0');
+  String formattedMinutes = minutes.toString().padLeft(2, '0');
+
+  return '$formattedHours:$formattedMinutes Hrs';
+}
+
 String getCurrentDateTime() {
   DateTime now = DateTime.now();
 

@@ -157,7 +157,8 @@ class MonthlyReportItem extends StatelessWidget {
                                   : report.totalWorkingHours == '0.00' ||
                                           report.totalWorkingHours == '00:00'
                                       ? 'Absent'
-                                      : report.totalWorkingHours,
+                                      : convertIntoHrs(
+                                          report.totalWorkingHours),
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: report.weekend.isNotEmpty

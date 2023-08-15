@@ -34,6 +34,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:upgrader/upgrader.dart';
 
 class DashboardView extends StatelessWidget {
   static String tag = "dashboard-view";
@@ -226,35 +227,42 @@ class DashboardView extends StatelessWidget {
               // ),
             ],
           ),
-          body: Container(
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height,
-            margin: const EdgeInsets.only(top: 10),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.grey.shade100,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
+          body: UpgradeAlert(
+            upgrader: Upgrader(
+                shouldPopScope: () => true,
+                canDismissDialog: true,
+                durationUntilAlertAgain: const Duration(days: 2),
+                dialogStyle: UpgradeDialogStyle.cupertino),
+            child: Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height,
+              margin: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
               ),
-            ),
-            child: RefreshIndicator(
-              onRefresh: model.init,
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // _buildProgressIndicator(model),
-                    _buildValidAttendance(model),
-                    _buildAttendanceActivities(model),
-                    _buildForgotToCheckout(model),
-                    _buildTodaysAttendance(model),
-                    _buildUtilities(model),
-                    if (model.monthlyReport.isNotEmpty)
-                      _buildCurrentReport(model),
-                    _buildCalander(model)
-                  ],
+              child: RefreshIndicator(
+                onRefresh: model.init,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // _buildProgressIndicator(model),
+                      _buildValidAttendance(model),
+                      _buildAttendanceActivities(model),
+                      _buildForgotToCheckout(model),
+                      _buildTodaysAttendance(model),
+                      _buildUtilities(model),
+                      if (model.monthlyReport.isNotEmpty)
+                        _buildCurrentReport(model),
+                      _buildCalander(model)
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -388,48 +396,52 @@ class DashboardView extends StatelessWidget {
                             }
                           : null,
                     ),
-                    AttendanceButton(
-                      titles: "",
-                      title: "Lunch In",
-                      icon: MdiIcons.food,
-                      color: AppColor.primary,
-                      onPressed: model.attendanceStatus?.lunchIn == 1
-                          ? () {
-                              model.onAttendanceButtonPressed('lunchin');
-                            }
-                          : null,
-                    ),
-                    AttendanceButton(
-                      titles: "",
-                      title: "Lunch Out",
-                      icon: MdiIcons.foodOff,
-                      color: AppColor.primary,
-                      onPressed: model.attendanceStatus?.lunchOut == 1
-                          ? () {
-                              model.onAttendanceButtonPressed('lunchout');
-                            }
-                          : null,
-                    ),
-                    AttendanceButton(
+                    if (model.attendanceStatus?.checkIn == 0)
+                      AttendanceButton(
                         titles: "",
-                        title: "Onsite In",
-                        icon: MdiIcons.bicycle,
+                        title: "Lunch In",
+                        icon: MdiIcons.food,
                         color: AppColor.primary,
-                        onPressed: model.attendanceStatus?.onsiteIn == 1
+                        onPressed: model.attendanceStatus?.lunchIn == 1
                             ? () {
-                                model.onAttendanceButtonPressed('onsitein');
+                                model.onAttendanceButtonPressed('lunchin');
                               }
-                            : null),
-                    AttendanceButton(
+                            : null,
+                      ),
+                    if (model.attendanceStatus?.checkIn == 0)
+                      AttendanceButton(
                         titles: "",
-                        title: "Onsite Out",
-                        icon: MdiIcons.bicycle,
+                        title: "Lunch Out",
+                        icon: MdiIcons.foodOff,
                         color: AppColor.primary,
-                        onPressed: model.attendanceStatus?.onsiteOut == 1
+                        onPressed: model.attendanceStatus?.lunchOut == 1
                             ? () {
-                                model.onAttendanceButtonPressed('onsiteout');
+                                model.onAttendanceButtonPressed('lunchout');
                               }
-                            : null)
+                            : null,
+                      ),
+                    if (model.attendanceStatus?.checkIn == 0)
+                      AttendanceButton(
+                          titles: "",
+                          title: "Onsite In",
+                          icon: MdiIcons.bicycle,
+                          color: AppColor.primary,
+                          onPressed: model.attendanceStatus?.onsiteIn == 1
+                              ? () {
+                                  model.onAttendanceButtonPressed('onsitein');
+                                }
+                              : null),
+                    if (model.attendanceStatus?.checkIn == 0)
+                      AttendanceButton(
+                          titles: "",
+                          title: "Onsite Out",
+                          icon: MdiIcons.bicycle,
+                          color: AppColor.primary,
+                          onPressed: model.attendanceStatus?.onsiteOut == 1
+                              ? () {
+                                  model.onAttendanceButtonPressed('onsiteout');
+                                }
+                              : null)
                   ],
                 ),
               ],
@@ -516,70 +528,67 @@ class DashboardView extends StatelessWidget {
                         ),
                     itemBuilder: (context, index) {
                       if (index == model.monthlyReport.length) {
-                        return SizedBox(
-                          height: 140,
-                          child: Card(
-                            margin: const EdgeInsets.only(bottom: 5),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: const [
+                        return Card(
+                          margin: const EdgeInsets.only(bottom: 5),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: const [
+                                    Text(
+                                      "Total(Hrs)",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 1,
+                                ),
+                                Center(
+                                  child: Row(
+                                    children: [
                                       Text(
-                                        "Total(Hrs)",
-                                        style: TextStyle(
+                                        model.WorkingHours as String,
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.w600,
-                                          fontSize: 12,
+                                          fontSize: 10,
                                         ),
                                       )
                                     ],
                                   ),
-                                  const SizedBox(
-                                    height: 1,
+                                ),
+                                Text(
+                                  "Leave : ${model.Leave}",
+                                  style: const TextStyle(
+                                    color: Colors.orange,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
                                   ),
-                                  Center(
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          model.WorkingHours as String,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 10,
-                                          ),
-                                        )
-                                      ],
-                                    ),
+                                ),
+                                Text(
+                                  "Holiday : ${model.holidays}",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
                                   ),
-                                  Text(
-                                    "Leave : ${model.Leave}",
+                                ),
+                                Text('Present : ${model.present}',
                                     style: const TextStyle(
-                                      color: Colors.orange,
+                                      color: Colors.green,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Holiday : ${model.holidays}",
+                                    )),
+                                Text('Absent : ${model.absent}',
                                     style: const TextStyle(
+                                      color: Colors.red,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
-                                    ),
-                                  ),
-                                  Text('Present : ${model.present}',
-                                      style: const TextStyle(
-                                        color: Colors.green,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                      )),
-                                  Text('Absent : ${model.absent}',
-                                      style: const TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                      ))
-                                ],
-                              ),
+                                    ))
+                              ],
                             ),
                           ),
                         );

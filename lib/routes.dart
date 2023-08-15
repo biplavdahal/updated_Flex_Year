@@ -70,7 +70,9 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
           PayrollFilterView(settings.arguments as Arguments?),
       NoticeView.tag: const NoticeView(),
       DateConverterView.tag: const DateConverterView(),
-      PerformanceView.tag: const PerformanceView(),
-    CalanderView.tag: const CalanderView(),
+      PerformanceView.tag: PerformanceView(
+        arguments: settings.arguments as Arguments?,
+      ),
+      CalanderView.tag: const CalanderView(),
       PresentStaffView.tag: const PresentStaffView()
     };

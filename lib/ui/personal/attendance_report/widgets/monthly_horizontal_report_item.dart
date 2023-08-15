@@ -1,4 +1,5 @@
 import 'package:flex_year_tablet/data_models/attendance_report_summary.data.dart';
+import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -14,8 +15,7 @@ class MonthlyHorizontalReportItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Card(
+    return Card(
       child: ExpansionTile(
         initiallyExpanded: true,
         iconColor: AppColor.primary,
@@ -126,7 +126,7 @@ class MonthlyHorizontalReportItem extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              Text(report.workingHours.toString())
+              Text(convertIntoHrs(report.workingHours.toString()))
             ],
           ),
           const Divider()

@@ -1,4 +1,5 @@
 import 'package:clean_nepali_calendar/clean_nepali_calendar.dart';
+import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flutter/material.dart';
 import '../../../../../data_models/attendance_report.data.dart';
 import '../../../../../theme.dart';
@@ -237,7 +238,7 @@ class _NepaliCalanderItemsState extends State<NepaliCalanderItems> {
                           color: Colors.grey,
                         ),
                         Text(
-                          'Total Hrs : $selectedTotalHours Hrs',
+                          'Total Hrs : ${convertIntoHrs(selectedTotalHours.toString())}',
                           style: TextStyle(
                             color: selectedTotalHours < 8.0
                                 ? Colors.red

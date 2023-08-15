@@ -1,10 +1,5 @@
-import 'dart:math';
-
 import 'package:flex_year_tablet/data_models/present_staff.data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 import '../../../../../theme.dart';
 
 class PresentStaffItem extends StatelessWidget {
@@ -93,7 +88,7 @@ class PresentStaffItem extends StatelessWidget {
                   children: [
                     RichText(
                       text: TextSpan(
-                        text: 'Check In',
+                        text: staff.status,
                         style: const TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -128,7 +123,7 @@ class PresentStaffItem extends StatelessWidget {
                     ),
                     RichText(
                       text: TextSpan(
-                        text: 'Check Out',
+                        text: getUpdatedStatusText(staff.status),
                         style: const TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -137,11 +132,12 @@ class PresentStaffItem extends StatelessWidget {
                           const TextSpan(
                             children: [
                               WidgetSpan(
-                                  child: Icon(
-                                Icons.outbond,
-                                color: Colors.red,
-                                size: 15,
-                              ))
+                                child: Icon(
+                                  Icons.outbound,
+                                  color: Colors.red,
+                                  size: 15,
+                                ),
+                              ),
                             ],
                             text: '',
                           ),
@@ -163,5 +159,18 @@ class PresentStaffItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getUpdatedStatusText(String originalStatus) {
+    switch (originalStatus) {
+      case 'Check In':
+        return 'Check Out';
+      case 'Onsite In':
+        return 'Onsite Out';
+      case 'Lunch In':
+        return 'Lunch Out';
+      default:
+        return originalStatus;
+    }
   }
 }

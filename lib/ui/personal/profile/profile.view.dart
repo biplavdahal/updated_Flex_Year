@@ -2,7 +2,9 @@ import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/performance/performance_view.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.model.dart';
+import 'package:flex_year_tablet/ui/personal/profile/widget/arguments.dart';
 import 'package:flex_year_tablet/ui/personal/profile/widget/user_profile_header.dart';
+import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -14,6 +16,7 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return View<ProfileModel>(
+      onModelReady: (model) => model.init(),
       builder: (ctx, model, child) {
         return Scaffold(
           backgroundColor: AppColor.primary,
@@ -211,61 +214,85 @@ class ProfileView extends StatelessWidget {
                               ),
                             ),
                           ),
-                        // if (model.selectedTab == "0" ||
-                        //     model.selectedTab == "1")
-                        //   Center(
-                        //     child: Column(
-                        //       children: [
-                        //         Row(
-                        //           children: const [
-                        //             Text(
-                        //               "Performance Report : ",
-                        //               style: TextStyle(
-                        //                 fontWeight: FontWeight.bold,
-                        //                 color: AppColor.primary,
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //         SizedBox(
-                        //           height: 58,
-                        //           child: ListView.separated(
-                        //             scrollDirection: Axis.horizontal,
-                        //             itemBuilder: (context, index) {
-                        //               return SizedBox(
-                        //                 height: 150,
-                        //                 child: GestureDetector(
-                        //                   onTap: () async {
-                        //                     await model
-                        //                         .goto(PerformanceView.tag);
-                        //                   },
-                        //                   child: Card(
-                        //                     child: Padding(
-                        //                       padding: const EdgeInsets.all(16),
-                        //                       child: Column(
-                        //                         children: [
-                        //                           Row(
-                        //                             children: const [
-                        //                               Text("2080-Baishakh")
-                        //                             ],
-                        //                           )
-                        //                         ],
-                        //                       ),
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //               );
-                        //             },
-                        //             separatorBuilder: (context, index) =>
-                        //                 const SizedBox(
-                        //               width: 0,
-                        //             ),
-                        //             itemCount: 5,
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
+                        if (model.isLoading) const FYLinearLoader(),
+                        FutureBuilder(
+                          future: model.init(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const FYLinearLoader();
+                            } else if (snapshot.hasError) {
+                              return const Text('No performance Report found');
+                            } else {
+                              return Center(
+                                  child: Column(
+                                children: [
+                                  Row(
+                                    children: const [
+                                      Text(
+                                        "Performance Report : ",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColor.primary,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 58,
+                                    child: ListView.separated(
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        final reversedIndex =
+                                            model.staffPerformancedata.length -
+                                                1 -
+                                                index;
+                                        final reportData =
+                                            model.staffPerformancedata[
+                                                reversedIndex];
+                                        final reportDataMap =
+                                            reportData.toJson();
+                                        return SizedBox(
+                                          height: 150,
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              model.goto(PerformanceView.tag,
+                                                  arguments:
+                                                      StaffPerformanceArguments(
+                                                          reportDataMap));
+                                            },
+                                            child: Card(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(16),
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                            "${reportData.year}-${reportData.monthName}")
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) =>
+                                          const SizedBox(
+                                        width: 0,
+                                      ),
+                                      itemCount:
+                                          model.staffPerformancedata.length,
+                                    ),
+                                  ),
+                                ],
+                              ));
+                            }
+                          },
+                        )
                       ],
                     ),
                   ),

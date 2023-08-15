@@ -7,7 +7,7 @@ import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.argument.da
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.view.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.argument.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
-import 'package:flutter/material.dart';
+
 
 class PayrollModel extends ViewModel with SnackbarMixin, DialogMixin {
   //Service
