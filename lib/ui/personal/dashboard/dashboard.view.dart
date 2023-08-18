@@ -36,6 +36,11 @@ import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:upgrader/upgrader.dart';
 
+import '../attendance_correction/attendance_correction.view.dart';
+import '../holidays/holidays.view.dart';
+import '../payroll/payroll_filter/payroll.filter.argument.dart';
+import '../payroll/payroll_filter/payroll.filter.view.dart';
+
 class DashboardView extends StatelessWidget {
   static String tag = "dashboard-view";
 
@@ -77,21 +82,90 @@ class DashboardView extends StatelessWidget {
 
         return Scaffold(
           backgroundColor: AppColor.primary,
-          drawer: const DashboardDrawer(),
+          drawer: Drawer(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+
+              width: MediaQuery.of(context).size.width *
+                  0.33, // Adjust the fraction as needed
+              child: const DashboardDrawer(),
+            ),
+          ),
+          body: UpgradeAlert(
+            upgrader: Upgrader(
+                shouldPopScope: () => true,
+                canDismissDialog: true,
+                durationUntilAlertAgain: const Duration(days: 2),
+                dialogStyle: UpgradeDialogStyle.cupertino),
+            child: Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height,
+              margin: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
+              ),
+              child: RefreshIndicator(
+                onRefresh: model.init,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // _buildProgressIndicator(model),
+                      _buildValidAttendance(model),
+                      _buildAttendanceActivities(model),
+                      _buildForgotToCheckout(model),
+                      _buildTodaysAttendance(model),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      _buildUtilities(model, context),
+                      if (model.monthlyReport.isNotEmpty)
+                        const SizedBox(
+                          height: 15,
+                        ),
+                      _buildCurrentReport(model),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      _buildCalander(model)
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
           bottomNavigationBar: CurvedNavigationBar(
             backgroundColor: AppColor.primary,
             color: Colors.white,
-            height: 52,
+            height: 50,
             index: model.currentFragment,
             onTap: (value) => model.currentFragment = value,
             items: const [
               Icon(
                 MdiIcons.checkboxOutline,
               ),
-              Icon(MdiIcons.shieldAirplaneOutline, size: 25),
-              Icon(MdiIcons.home, size: 30),
-              Icon(MdiIcons.calendarMonth, size: 25),
-              Icon(MdiIcons.accountGroupOutline, size: 25),
+              Icon(
+                MdiIcons.shieldAirplaneOutline,
+                size: 25,
+              ),
+              Icon(
+                MdiIcons.home,
+                size: 35,
+              ),
+              Icon(
+                MdiIcons.calendarMonth,
+                size: 25,
+              ),
+              Icon(
+                MdiIcons.accountGroupOutline,
+                size: 25,
+              ),
             ],
             animationCurve: Curves.fastLinearToSlowEaseIn,
           ),
@@ -133,82 +207,85 @@ class DashboardView extends StatelessWidget {
               height: MediaQuery.of(context).size.height,
             ),
             bottom: PreferredSize(
-              child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              child: Container(
+                color: AppColor.primary,
+                child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    formattedDate(
+                                      model.currentDateTime,
+                                    ),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  SizedBox(
+                                    height: 20,
+                                    child: VerticalDivider(
+                                      color: Colors.white,
+                                      thickness: 1,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    formattedTime(model.currentDateTime),
+                                    style: const TextStyle(color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  formattedDate(
-                                    model.currentDateTime,
-                                  ),
+                                  _getGreeting() +
+                                      " " +
+                                      model.user.staff.firstName,
                                   style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                SizedBox(
-                                  height: 20,
-                                  child: VerticalDivider(
-                                    color: Colors.white,
-                                    thickness: 1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  formattedTime(model.currentDateTime),
-                                  style: const TextStyle(color: Colors.white),
-                                  textAlign: TextAlign.center,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
                                 )
                               ],
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Welcome ! " +
-                                    model.user.staff.firstName +
-                                    model.user.staff.middleName +
-                                    " " +
-                                    model.user.staff.lastName,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ],
-                  )),
+                            )
+                          ],
+                        ),
+                      ],
+                    )),
+              ),
               preferredSize: const Size(double.infinity, 60),
             ),
             actions: [
@@ -226,46 +303,6 @@ class DashboardView extends StatelessWidget {
               //   icon: const Icon(MdiIcons.bellOutline),
               // ),
             ],
-          ),
-          body: UpgradeAlert(
-            upgrader: Upgrader(
-                shouldPopScope: () => true,
-                canDismissDialog: true,
-                durationUntilAlertAgain: const Duration(days: 2),
-                dialogStyle: UpgradeDialogStyle.cupertino),
-            child: Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height,
-              margin: const EdgeInsets.only(top: 10),
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-              ),
-              child: RefreshIndicator(
-                onRefresh: model.init,
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // _buildProgressIndicator(model),
-                      _buildValidAttendance(model),
-                      _buildAttendanceActivities(model),
-                      _buildForgotToCheckout(model),
-                      _buildTodaysAttendance(model),
-                      _buildUtilities(model),
-                      if (model.monthlyReport.isNotEmpty)
-                        _buildCurrentReport(model),
-                      _buildCalander(model)
-                    ],
-                  ),
-                ),
-              ),
-            ),
           ),
         );
       },
@@ -449,66 +486,112 @@ class DashboardView extends StatelessWidget {
     );
   }
 
-  Widget _buildUtilities(DashboardModel model) {
+  Widget _buildUtilities(DashboardModel model, BuildContext context) {
     return FYSection(
       title: "Utilities",
-      child: GridView.count(
+      child: GridView.custom(
         physics: const NeverScrollableScrollPhysics(),
-        crossAxisCount: 2,
-        childAspectRatio: 1.5,
         shrinkWrap: true,
-        crossAxisSpacing: 8,
-        children: [
-          UtilityItem(
-            title: 'Leave Request  ',
-            labelText: model.user.staff.remainingLeave,
-            icon: MdiIcons.shieldAirplaneOutline,
-            iconColor: Colors.orange,
-            onPressed: () async {
-              model.goto(LeaveRequestView.tag);
-            },
-          ),
-          UtilityItem(
-            title: " Monthly Report",
-            iconColor: Colors.lightGreen,
-            icon: MdiIcons.chartBoxOutline,
-            onPressed: () {
-              model.goto(
-                AttendanceReportFilterView.tag,
-                arguments: AttendanceReportFilterArguments(
-                  type: AttendanceReportFilterType.monthly,
-                ),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 0,
+        ),
+        childrenDelegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            late Widget utilityItem;
+            if (index == 0) {
+              utilityItem = UtilityItem(
+                title: "Leave   Request",
+                labelText: model.user.staff.remainingLeave,
+                icon: MdiIcons.shieldAirplaneOutline,
+                iconColor: Colors.orange,
+                onPressed: () async {
+                  model.goto(LeaveRequestView.tag);
+                },
               );
-            },
-          ),
-          UtilityItem(
-            title: "One-day Report",
-            iconColor: Colors.lightGreen,
-            icon: MdiIcons.chartBoxOutline,
-            onPressed: () {
-              model.goto(
-                AttendanceReportFilterView.tag,
-                arguments: AttendanceReportFilterArguments(
-                  type: AttendanceReportFilterType.daily,
-                ),
+            } else if (index == 1) {
+              utilityItem = UtilityItem(
+                title: "One-day  Report",
+                iconColor: Colors.lightGreen,
+                icon: MdiIcons.chartBoxOutline,
+                onPressed: () {
+                  model.goto(
+                    AttendanceReportFilterView.tag,
+                    arguments: AttendanceReportFilterArguments(
+                      type: AttendanceReportFilterType.daily,
+                    ),
+                  );
+                },
               );
-            },
-          ),
-          // if (model.clientLabels != null && model.clientLabels!.isNotEmpty)
-          UtilityItem(
-            title: "Weekly Report",
-            iconColor: Colors.lightGreen,
-            icon: MdiIcons.chartBoxOutline,
-            onPressed: () {
-              model.goto(
-                AttendanceReportFilterView.tag,
-                arguments: AttendanceReportFilterArguments(
-                  type: AttendanceReportFilterType.weekly,
-                ),
+            } else if (index == 2) {
+              utilityItem = UtilityItem(
+                title: "Weekly   Report",
+                iconColor: Colors.lightGreen,
+                icon: MdiIcons.chartBoxOutline,
+                onPressed: () {
+                  model.goto(
+                    AttendanceReportFilterView.tag,
+                    arguments: AttendanceReportFilterArguments(
+                      type: AttendanceReportFilterType.weekly,
+                    ),
+                  );
+                },
               );
-            },
-          )
-        ],
+            } else if (index == 3) {
+              utilityItem = UtilityItem(
+                title: " Monthly Report",
+                iconColor: Colors.lightGreen,
+                icon: MdiIcons.chartBoxOutline,
+                onPressed: () {
+                  model.goto(
+                    AttendanceReportFilterView.tag,
+                    arguments: AttendanceReportFilterArguments(
+                      type: AttendanceReportFilterType.monthly,
+                    ),
+                  );
+                },
+              );
+            } else if (index == 4) {
+              utilityItem = UtilityItem(
+                title: " Payroll  ",
+                iconColor: AppColor.primary,
+                icon: MdiIcons.cash,
+                onPressed: () {
+                  model.goto(PayrollFilterView.tag,
+                      arguments: PayrollFilterArguments(returnBack: false));
+                },
+              );
+            } else if (index == 5) {
+              utilityItem = UtilityItem(
+                title: "Attendance Corrections",
+                iconColor: AppColor.primary,
+                icon: MdiIcons.checkboxOutline,
+                onPressed: () {
+                  model.goto(AttendanceCorrectionView.tag);
+                },
+              );
+            } else if (index == 6) {
+              utilityItem = UtilityItem(
+                title: "Holidays",
+                iconColor: AppColor.primary,
+                icon: MdiIcons.calendarStar,
+                onPressed: () {
+                  model.goto(HolidaysView.tag);
+                },
+              );
+            } else if (index == 7) {
+              utilityItem = UtilityItem(
+                title: "Upcoming Birthdays",
+                iconColor: AppColor.primary,
+                icon: MdiIcons.cake,
+                onPressed: () {},
+              );
+            }
+            return utilityItem;
+          },
+          childCount: 8,
+        ),
       ),
     );
   }
@@ -519,7 +602,7 @@ class DashboardView extends StatelessWidget {
         child: model.isLoading
             ? const FYLinearLoader()
             : SizedBox(
-                height: 150,
+                height: 113,
                 child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemCount: model.monthlyReport.length + 1,
@@ -534,35 +617,23 @@ class DashboardView extends StatelessWidget {
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
                               children: [
-                                Row(
-                                  children: const [
-                                    Text(
-                                      "Total(Hrs)",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 1,
-                                ),
                                 Center(
                                   child: Row(
                                     children: [
                                       Text(
-                                        model.WorkingHours as String,
+                                        "Total : " +
+                                            convertIntoHrs(
+                                                model.WorkingHours.toString()),
                                         style: const TextStyle(
                                           fontWeight: FontWeight.w600,
-                                          fontSize: 10,
+                                          fontSize: 12,
                                         ),
                                       )
                                     ],
                                   ),
                                 ),
                                 Text(
-                                  "Leave : ${model.Leave}",
+                                  "Leave : ${model.Leave} days",
                                   style: const TextStyle(
                                     color: Colors.orange,
                                     fontWeight: FontWeight.w600,
@@ -570,19 +641,19 @@ class DashboardView extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  "Holiday : ${model.holidays}",
+                                  "Holiday : ${model.holidays} days",
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 12,
                                   ),
                                 ),
-                                Text('Present : ${model.present}',
+                                Text('Present : ${model.present} days',
                                     style: const TextStyle(
                                       color: Colors.green,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
                                     )),
-                                Text('Absent : ${model.absent}',
+                                Text('Absent : ${model.absent} days',
                                     style: const TextStyle(
                                       color: Colors.red,
                                       fontWeight: FontWeight.w600,
@@ -641,5 +712,17 @@ class DashboardView extends StatelessWidget {
         child: FYSection(
             title: 'Progress Indicator :',
             child: LiquidLinearProgressIndicator()));
+  }
+
+  String _getGreeting() {
+    final currentTime = DateTime.now();
+
+    if (currentTime.hour < 12) {
+      return "Good Morning,";
+    } else if (currentTime.hour < 18) {
+      return "Good Afternoon,";
+    } else {
+      return "Good Evening,";
+    }
   }
 }

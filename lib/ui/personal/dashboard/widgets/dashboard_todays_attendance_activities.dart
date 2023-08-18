@@ -102,8 +102,10 @@ class _TodaysAttendanceActivitiesState
                                           child: ListTile(
                                             leading: const Icon(
                                                 Icons.calendar_today),
-                                            title: const Expanded(
-                                                child: Text('Select date')),
+                                            title: Row(children: const [
+                                              Expanded(
+                                                  child: Text('Select date')),
+                                            ]),
                                             subtitle: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -186,7 +188,7 @@ class _TodaysAttendanceActivitiesState
                               return AlertDialog(
                                 scrollable: true,
                                 title: const Text(
-                                  "Request Review " + "(" " Out" + ")",
+                                  "Request Review " "(" " Out" ")",
                                   style: TextStyle(color: AppColor.primary),
                                 ),
                                 actions: [
@@ -220,7 +222,13 @@ class _TodaysAttendanceActivitiesState
                                           child: ListTile(
                                             leading: const Icon(
                                                 Icons.calendar_today),
-                                            title: const Text('Select Date'),
+                                            title: Row(
+                                              children: const [
+                                                Expanded(
+                                                  child: Text('Select Date'),
+                                                )
+                                              ],
+                                            ),
                                             subtitle: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,

@@ -1,6 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/holiday.data.dart';
-import 'package:flex_year_tablet/helper/api_error.helper.dart';
 import 'package:flex_year_tablet/services/company.service.dart';
 
 class HolidaysModel extends ViewModel with SnackbarMixin {

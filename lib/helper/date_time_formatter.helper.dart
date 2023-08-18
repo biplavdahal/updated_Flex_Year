@@ -19,6 +19,8 @@ String formattedDate(String unformattedDateTime) {
   return formattedDate;
 }
 
+
+//example: 12.90 -> 13:30 Hrs
 String convertIntoHrs(String time) {
   double totalHrs = double.parse(time);
 

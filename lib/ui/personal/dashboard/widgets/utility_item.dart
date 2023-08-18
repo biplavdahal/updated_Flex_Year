@@ -1,7 +1,6 @@
 import 'package:bestfriend/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-
 import '../../../../data_models/user.data.dart';
 import '../../../../services/authentication.service.dart';
 
@@ -24,11 +23,11 @@ class UtilityItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 0),
+      margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
       child: InkWell(
         onTap: onPressed,
         child: Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(2),
           alignment: Alignment.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -36,7 +35,7 @@ class UtilityItem extends StatelessWidget {
             children: [
               if (labelText != null)
                 Align(
-                  alignment: Alignment.topLeft,
+                  alignment: Alignment.topCenter,
                   child: _AnimatedTotalLeaveCount(),
                 ),
               Column(
@@ -45,15 +44,18 @@ class UtilityItem extends StatelessWidget {
                 children: <Widget>[
                   Icon(
                     icon,
-                    size: 32,
+                    size: 25,
                     color: iconColor,
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 7,
                   ),
                   Text(
                     title,
                     textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 12,
+                    ),
                   )
                 ],
               ),
@@ -105,10 +107,9 @@ class _AnimatedTotalLeaveCountState extends State<_AnimatedTotalLeaveCount>
         return Text(
           user.staff.remainingLeave == '' ? '0 days' : '$formattedValue days',
           style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 13,
-            color: Color.fromARGB(255, 24, 215, 31),
-          ),
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+              color: Colors.lightGreen),
         );
       },
     );

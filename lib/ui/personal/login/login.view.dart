@@ -1,5 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/ui/view.dart';
+import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/helper/fy_validator.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/login/login.model.dart';
@@ -227,7 +227,6 @@ class LoginView extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   maxLength: 9,
                   validator: FYValidator.isRequired,
-                  
                 ),
                 Align(
                   alignment: Alignment.centerRight,

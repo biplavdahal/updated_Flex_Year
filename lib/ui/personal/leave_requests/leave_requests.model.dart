@@ -29,11 +29,7 @@ class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
   final _user = locator<DashboardModel>().user;
 
   List<LeaveRequestData> _requests = [];
-  final _status = {
-    "0": "1",
-     "1": "2",
-      "2": "3",
-       "": "0"};
+  final _status = {"0": "1", "1": "2", "2": "3", "": "0"};
   List<LeaveRequestData> get requestsToShow => _requests
       .where((request) => _status[request.status] == _selectedTab)
       .toList();

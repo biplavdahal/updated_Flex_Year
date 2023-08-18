@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class AppAccessModel extends ViewModel with SnackbarMixin {
   // Services
-  final AppAccessService _appAccessService = locator<AppAccessService>();
+  final AppAccessService _appAccessService = locator<AppAccessService>(); 
 
   // UI Controllers
   final GlobalKey<FormState> _appAccessFormKey = GlobalKey<FormState>();

@@ -46,7 +46,9 @@ class ProfileView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 14),
-              UserProfileHeader(),
+              UserProfileHeader(
+                textcolor: Colors.white,
+              ),
               const SizedBox(height: 14),
               const SizedBox(height: 14),
               Expanded(

@@ -1,9 +1,6 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/mixins/snack_bar.mixin.dart';
-import 'package:bestfriend/ui/view.model.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/services/attendance.service.dart';
-
 import '../../../../data_models/present_staff.data.dart';
 
 class PresentStaffModel extends ViewModel with SnackbarMixin, DialogMixin {

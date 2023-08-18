@@ -14,6 +14,7 @@ import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_reque
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.argument.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.view.dart';
+import 'package:flex_year_tablet/ui/personal/profile/widget/user_profile_header.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../attendance_report_filter/attendance_report_filter.arguments.dart';
@@ -36,26 +37,30 @@ class DashboardDrawer extends StatelessWidget {
             Stack(
               children: [
                 DrawerHeader(
-                  padding: EdgeInsets.zero,
-                  margin: EdgeInsets.zero,
-                  child: UserAccountsDrawerHeader(
-                    currentAccountPicture: CircleAvatar(
-                      radius: 40,
-                      backgroundColor: AppColor.primary,
-                      child: CircleAvatar(
-                        radius: 60,
-                        backgroundColor: AppColor.primary.withOpacity(0.5),
-                        backgroundImage:
-                            const AssetImage("assets/images/avatar.png"),
-                      ),
+                    padding: EdgeInsets.zero,
+                    margin: EdgeInsets.zero,
+                    child: UserProfileHeader(
+                      textcolor: AppColor.primary,
+                    )
+
+                    // UserAccountsDrawerHeader(
+                    //   currentAccountPicture: CircleAvatar(
+                    //     radius: 40,
+                    //     backgroundColor: AppColor.primary,
+                    //     child: CircleAvatar(
+                    //       radius: 60,
+                    //       backgroundColor: AppColor.primary.withOpacity(0.5),
+                    //       backgroundImage:
+                    //           const AssetImage("assets/images/avatar.png"),
+                    //     ),
+                    //   ),
+                    //   accountEmail: Text(_user.role != null
+                    //       ? _user.role!.toUpperCase()
+                    //       : 'Staff'),
+                    //   accountName: Text(
+                    //       '${_user.staff.firstName} ${_user.staff.lastName}'),
+                    // ),
                     ),
-                    accountEmail: Text(_user.role != null
-                        ? _user.role!.toUpperCase()
-                        : 'Staff'),
-                    accountName: Text(
-                        '${_user.staff.firstName} ${_user.staff.lastName}'),
-                  ),
-                ),
                 Positioned(
                   right: 10,
                   top: 15,
@@ -394,7 +399,9 @@ class DashboardDrawer extends StatelessWidget {
               ),
             if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
                 'manager')
-              const Divider(),
+              const Divider(
+                color: AppColor.primary,
+              ),
             ListTile(
               title: const Text(
                 'Logout',

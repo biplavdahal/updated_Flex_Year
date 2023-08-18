@@ -257,7 +257,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
         snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
       });
 
-      setIdle();
+     setIdle();
     }
   }
 
@@ -271,6 +271,8 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   static DateTime dateTimeStartOfMonth = nepaliStartOfMonth.toDateTime();
   static String formattedStartOfMonths =
       DateFormat('yyyy-MM-dd').format(dateTimeStartOfMonth);
+
+      bool isDrawerOpen = false;
 
   Future<void> onAttendanceButtonPressed(String status) async {
     try {
