@@ -64,7 +64,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   late String? WorkingHours =
       _reportSummary.isNotEmpty ? _reportSummary[0].workingHours : '';
   late int? Leave =
-      (_reportSummary.isNotEmpty ? _reportSummary[0].leaveTotal : '') as int;
+      (_reportSummary.isNotEmpty ? _reportSummary[0].leaveTotal : '' as int);
   late int? holidays =
       _reportSummary.isNotEmpty ? _reportSummary[0].offDay : '' as int;
   late int? present =
@@ -103,6 +103,12 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   String? get selectedClientLabel => _selectedClientLabel;
 
   // UI Controllers
+
+  //components
+  final TextEditingController _attendanceMessageController =
+      TextEditingController();
+  TextEditingController get attendanceMessageController =>
+      _attendanceMessageController;
 
   bool isBirthdaySnackBarShown = false;
   int _currentFragment = 2;
@@ -257,7 +263,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
         snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
       });
 
-     setIdle();
+      setIdle();
     }
   }
 
@@ -272,9 +278,9 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   static String formattedStartOfMonths =
       DateFormat('yyyy-MM-dd').format(dateTimeStartOfMonth);
 
-      bool isDrawerOpen = false;
+  bool isDrawerOpen = false;
 
-  Future<void> onAttendanceButtonPressed(String status) async {
+  Future<void> onAttendanceButtonPressed(String status, String message) async {
     try {
       dialog.showDialog(
         DialogRequest(
@@ -289,9 +295,15 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
         time: _attendanceForgot == null
             ? getCurrentDateTime()
             : _attendanceForgot!.forgottonDate,
+        checkInMessage:
+            status == 'checkin' ? attendanceMessageController.text : '',
+        checkOutMessage:
+            status == 'checkout' ? attendanceMessageController.text : '',
       );
+      attendanceMessageController.clear();
 
       dialog.hideDialog();
+
       init();
       setIdle();
       if (status == 'checkin') {

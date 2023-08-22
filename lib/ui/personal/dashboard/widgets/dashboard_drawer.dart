@@ -4,9 +4,7 @@ import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/add_attendance/add_attendance.view.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_correction/attendance_correction.view.dart';
-import 'package:flex_year_tablet/ui/personal/attendance_correction_review/attendance_correction_review.view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
-import 'package:flex_year_tablet/ui/personal/dashboard/flex_calander/calander.view.dart';
 import 'package:flex_year_tablet/ui/personal/date_converter/date_converter.view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
@@ -26,8 +24,6 @@ class DashboardDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _user = locator<DashboardModel>().user;
-
     return SizedBox(
       width: double.infinity,
       child: Drawer(
@@ -39,38 +35,24 @@ class DashboardDrawer extends StatelessWidget {
                 DrawerHeader(
                     padding: EdgeInsets.zero,
                     margin: EdgeInsets.zero,
-                    child: UserProfileHeader(
-                      textcolor: AppColor.primary,
-                    )
-
-                    // UserAccountsDrawerHeader(
-                    //   currentAccountPicture: CircleAvatar(
-                    //     radius: 40,
-                    //     backgroundColor: AppColor.primary,
-                    //     child: CircleAvatar(
-                    //       radius: 60,
-                    //       backgroundColor: AppColor.primary.withOpacity(0.5),
-                    //       backgroundImage:
-                    //           const AssetImage("assets/images/avatar.png"),
-                    //     ),
-                    //   ),
-                    //   accountEmail: Text(_user.role != null
-                    //       ? _user.role!.toUpperCase()
-                    //       : 'Staff'),
-                    //   accountName: Text(
-                    //       '${_user.staff.firstName} ${_user.staff.lastName}'),
-                    // ),
-                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        locator<DashboardModel>().goto(ProfileView.tag);
+                      },
+                      child: UserProfileHeader(
+                        textcolor: AppColor.primary,
+                      ),
+                    )),
                 Positioned(
-                  right: 10,
-                  top: 15,
+                  right: 0,
+                  top: 0,
                   child: IconButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     icon: const Icon(
                       MdiIcons.close,
-                      color: Colors.white,
+                      color: AppColor.primary,
                     ),
                   ),
                 ),

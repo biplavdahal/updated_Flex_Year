@@ -196,16 +196,16 @@ class AttendanceReportFilterView extends StatelessWidget {
             child: FYDropdown<String>(
           items: model.months,
           labels: model.months,
-          value: model.selectedMonth,
+          value: model.selectedMonth!,
           title: 'Month',
           onChanged: (value) => model.selectedMonth = value!,
         )),
-        Expanded(
-          child: FYCheckbox(
-              value: model.isNepaliDate,
-              onChanged: (value) => model.isNepaliDate = value!,
-              label: "नेपाली"),
-        ),
+        // Expanded(
+        //   child: FYCheckbox(
+        //       value: model.isNepaliDate,
+        //       onChanged: (value) => model.isNepaliDate = value!,
+        //       label: "नेपाली"),
+        // ),
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
+import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report/attandance_report.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report/attendance_report.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report/widgets/monthly_horizontal_report_item.dart';
@@ -93,8 +94,31 @@ class AttendanceReportView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Attendence [${model.searchParams['type']}] Report for ${getMonthStringFromDateString(model.searchParams['date_from'])}',
+            Text.rich(
+              TextSpan(
+                children: [
+                  const TextSpan(
+                      text: 'Attendence [', style: TextStyle(fontSize: 16)),
+                  TextSpan(
+                      text: '${model.searchParams['type']}',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.primary)),
+                  const TextSpan(
+                      text: '] Report from ', style: TextStyle(fontSize: 16)),
+                  TextSpan(
+                      text: '${model.searchParams['date_from']}',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.primary)),
+                  const TextSpan(text: ' to ', style: TextStyle(fontSize: 16)),
+                  TextSpan(
+                      text: '${model.searchParams['date_to']}',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.primary)),
+                ],
+              ),
             ),
             if (model.searchParams.containsKey('client_id'))
               const SizedBox(height: 6),

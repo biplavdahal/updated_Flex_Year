@@ -13,7 +13,7 @@ import '../../dashboard/dashboard.model.dart';
 
 class CorrectionItem extends StatelessWidget {
   final AttendanceCorrectionReviewData correction;
-  final ValueSetter<String> onDeletePressed;
+  // final ValueSetter<String> onDeletePressed;
   final ValueSetter<AttendanceCorrectionReviewData>? onEditTap;
   final ValueSetter<String>? onApprove;
   final ValueSetter<String>? onDecline;
@@ -26,7 +26,7 @@ class CorrectionItem extends StatelessWidget {
     this.onApprove,
     this.onDecline,
     this.onEditTap,
-    required this.onDeletePressed,
+    // required this.onDeletePressed,
   }) : super(key: key);
 
   final Map<String, Color> _statusColor = {
@@ -136,22 +136,22 @@ class CorrectionItem extends StatelessWidget {
                                     }
                                   : null,
                         ),
-                        const SizedBox(width: 14),
-                        GestureDetector(
-                          child: Icon(
-                            Icons.delete,
-                            color: _status[correction.correctionStatus] ==
-                                    "Pending"
-                                ? Colors.redAccent
-                                : Colors.grey,
-                          ),
-                          onTap:
-                              _status[correction.correctionStatus] == "Pending"
-                                  ? () {
-                                      onDeletePressed(correction.id);
-                                    }
-                                  : null,
-                        ),
+                        // const SizedBox(width: 14),
+                        // GestureDetector(
+                        //   child: Icon(
+                        //     Icons.delete,
+                        //     color: _status[correction.correctionStatus] ==
+                        //             "Pending"
+                        //         ? Colors.redAccent
+                        //         : Colors.grey,
+                        //   ),
+                        //   onTap:
+                        //       _status[correction.correctionStatus] == "Pending"
+                        //           ? () {
+                        //               onDeletePressed(correction.id);
+                        //             }
+                        //           : null,
+                        // ),
                       ],
                     ),
                   ],

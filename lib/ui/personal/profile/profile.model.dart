@@ -44,7 +44,9 @@ class ProfileModel extends ViewModel with SnackbarMixin, DialogMixin {
   //Action
   Future<void> init() async {
     try {
+      setLoading();
       _staffPerformancedata = await _notificationService.getStaffPerformance();
+      setIdle();
     } catch (e) {
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     }

@@ -20,11 +20,12 @@ abstract class AttendanceService {
   Future<AttendanceForgotData?> getAttendanceForgot();
 
   /// Post attendance status
-  Future<AttendanceStatusData> postAttendanceStatus({
-    required String time,
-    String? clientId,
-    required String status,
-  });
+  Future<AttendanceStatusData> postAttendanceStatus(
+      {required String time,
+      String? clientId,
+      required String status,
+      String checkInMessage,
+       String checkOutMessage,});
 
   /// Get monthly report
   ///

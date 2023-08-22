@@ -51,6 +51,7 @@ import 'package:flex_year_tablet/ui/personal/performance/performance_model.dart'
 import 'package:flex_year_tablet/ui/personal/profile/profile.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
 import 'package:flex_year_tablet/ui/personal/staffs/staffs.model.dart';
+import 'package:flex_year_tablet/ui/personal/upcoming_birthday/upcoming_birthday.viewmodel.dart';
 import 'package:flex_year_tablet/ui/start_up/start_up.model.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.model.dart';
 
@@ -118,6 +119,7 @@ Future<void> setupLocator() async {
 
   locator.registerFactory(() => PresentStaffModel());
   locator.registerFactory(() => CalanderModel());
+  locator.registerFactory(() => AllStaffBirthdayModel());
 
   // Unkillable models
 }

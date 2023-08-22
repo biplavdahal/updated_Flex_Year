@@ -38,10 +38,10 @@ class UserProfileHeader extends StatelessWidget {
           fontWeight: FontWeight.w700,
         ),
       ),
-      if (textcolor == AppColor.primary) const Divider(),
-      const Divider(
-        color: AppColor.primary,
-      )
+      if (textcolor == AppColor.primary)
+        const Divider(
+          color: AppColor.primary,
+        )
     ]);
   }
 }

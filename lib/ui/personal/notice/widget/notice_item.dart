@@ -8,7 +8,7 @@ import '../../../../theme.dart';
 
 class NoticeItem extends StatelessWidget {
   final HolidayData notice;
-  const NoticeItem(this.notice, {Key? key}) : super(key: key);
+  const NoticeItem({Key? key, required this.notice}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

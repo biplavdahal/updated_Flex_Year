@@ -78,18 +78,17 @@ class PayrollFilterView extends StatelessWidget {
           title: 'Month',
           onChanged: (value) => model.selectedMonth = value!,
         )),
-        Expanded(
-          child: FYCheckbox(
-              value: model.isNepaliDate,
-              onChanged: (value) => model.isNepaliDate = value!,
-              label: "नेपाली"),
-        ),
+        // Expanded(
+        //   child: FYCheckbox(
+        //       value: model.isNepaliDate,
+        //       onChanged: (value) => model.isNepaliDate = value!,
+        //       label: "नेपाली"),
+        // ),
       ],
     );
   }
 
-  Widget _buildFieldForMonthlyNepaliReportFilter(
-    PayrollFilterModel model) {
+  Widget _buildFieldForMonthlyNepaliReportFilter(PayrollFilterModel model) {
     return Row(
       children: [
         Expanded(

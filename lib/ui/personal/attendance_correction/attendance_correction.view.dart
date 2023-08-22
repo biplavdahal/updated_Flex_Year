@@ -86,7 +86,7 @@ class AttendanceCorrectionView extends StatelessWidget {
                                 correction: model.correctionsToShow[index],
                                 isBusy: model.isBusyWidget(
                                     model.correctionsToShow[index].id),
-                                onDeletePressed: model.onDelete,
+                                // onDeletePressed: model.onDelete,
                                 onApprove: model.onApprove,
                                 onDecline: model.onDecline,
                               ),
@@ -114,7 +114,7 @@ class AttendanceCorrectionView extends StatelessWidget {
                                   isBusy: model.isBusyWidget(
                                     model.corrections[index].id,
                                   ),
-                                  onDeletePressed: model.onDelete,
+                                  // onDeletePressed: model.onDelete,
                                   onApprove: model.onApprove,
                                   onDecline: model.onDecline,
                                 ),

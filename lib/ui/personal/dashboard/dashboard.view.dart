@@ -22,13 +22,16 @@ import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/widgets/holiday_item.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/notice/notice.view.dart';
+import 'package:flex_year_tablet/ui/personal/profile/widget/user_profile_header.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.dart';
+import 'package:flex_year_tablet/ui/personal/upcoming_birthday/upcoming_birthday.view.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_section.widget.dart';
+import 'package:flex_year_tablet/widgets/fy_user_avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
@@ -85,9 +88,7 @@ class DashboardView extends StatelessWidget {
           drawer: Drawer(
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
-
-              width: MediaQuery.of(context).size.width *
-                  0.33, // Adjust the fraction as needed
+              width: MediaQuery.of(context).size.width * 0.33,
               child: const DashboardDrawer(),
             ),
           ),
@@ -143,29 +144,29 @@ class DashboardView extends StatelessWidget {
           bottomNavigationBar: CurvedNavigationBar(
             backgroundColor: AppColor.primary,
             color: Colors.white,
-            height: 50,
+            height: 48,
             index: model.currentFragment,
             onTap: (value) => model.currentFragment = value,
-            items: const [
-              Icon(
+            items: [
+              const Icon(
                 MdiIcons.checkboxOutline,
               ),
-              Icon(
+              const Icon(
                 MdiIcons.shieldAirplaneOutline,
                 size: 25,
               ),
-              Icon(
+              const Icon(
                 MdiIcons.home,
-                size: 35,
+                size: 30,
               ),
-              Icon(
+              const Icon(
                 MdiIcons.calendarMonth,
                 size: 25,
               ),
-              Icon(
-                MdiIcons.accountGroupOutline,
-                size: 25,
-              ),
+              UserAvatar(
+                user: model.user.staff,
+                size: 15,
+              )
             ],
             animationCurve: Curves.fastLinearToSlowEaseIn,
           ),
@@ -187,16 +188,16 @@ class DashboardView extends StatelessWidget {
                 child: const Icon(Icons.people),
                 backgroundColor: AppColor.accent,
               ),
-              const SizedBox(
-                height: 5,
-              ),
-              FloatingActionButton(
-                onPressed: () async {
-                  await model.goto(ChatContactsView.tag);
-                },
-                child: const Icon(Icons.chat_bubble),
-                backgroundColor: AppColor.accent,
-              ),
+              // const SizedBox(
+              //   height: 5,
+              // ),
+              // FloatingActionButton(
+              //   onPressed: () async {
+              //     await model.goto(ChatContactsView.tag);
+              //   },
+              //   child: const Icon(Icons.chat_bubble),
+              //   backgroundColor: AppColor.accent,
+              // ),
             ],
           ),
           appBar: AppBar(
@@ -418,7 +419,8 @@ class DashboardView extends StatelessWidget {
                       onPressed: model.attendanceStatus?.checkIn == null ||
                               model.attendanceStatus?.checkIn == 1
                           ? () {
-                              model.onAttendanceButtonPressed('checkin');
+                              model.onAttendanceButtonPressed('checkin',
+                                  model.attendanceMessageController.toString());
                             }
                           : null,
                     ),
@@ -429,7 +431,8 @@ class DashboardView extends StatelessWidget {
                       color: Colors.red,
                       onPressed: model.attendanceStatus?.checkOut == 1
                           ? () {
-                              model.onAttendanceButtonPressed('checkout');
+                              model.onAttendanceButtonPressed('checkout',
+                                  model.attendanceMessageController.toString());
                             }
                           : null,
                     ),
@@ -441,7 +444,10 @@ class DashboardView extends StatelessWidget {
                         color: AppColor.primary,
                         onPressed: model.attendanceStatus?.lunchIn == 1
                             ? () {
-                                model.onAttendanceButtonPressed('lunchin');
+                                model.onAttendanceButtonPressed(
+                                    'lunchin',
+                                    model.attendanceMessageController
+                                        .toString());
                               }
                             : null,
                       ),
@@ -453,7 +459,10 @@ class DashboardView extends StatelessWidget {
                         color: AppColor.primary,
                         onPressed: model.attendanceStatus?.lunchOut == 1
                             ? () {
-                                model.onAttendanceButtonPressed('lunchout');
+                                model.onAttendanceButtonPressed(
+                                    'lunchout',
+                                    model.attendanceMessageController
+                                        .toString());
                               }
                             : null,
                       ),
@@ -465,7 +474,10 @@ class DashboardView extends StatelessWidget {
                           color: AppColor.primary,
                           onPressed: model.attendanceStatus?.onsiteIn == 1
                               ? () {
-                                  model.onAttendanceButtonPressed('onsitein');
+                                  model.onAttendanceButtonPressed(
+                                      'onsitein',
+                                      model.attendanceMessageController
+                                          .toString());
                                 }
                               : null),
                     if (model.attendanceStatus?.checkIn == 0)
@@ -476,11 +488,28 @@ class DashboardView extends StatelessWidget {
                           color: AppColor.primary,
                           onPressed: model.attendanceStatus?.onsiteOut == 1
                               ? () {
-                                  model.onAttendanceButtonPressed('onsiteout');
+                                  model.onAttendanceButtonPressed(
+                                      'onsiteout',
+                                      model.attendanceMessageController
+                                          .toString());
                                 }
-                              : null)
+                              : null),
                   ],
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Align(
+                    child: TextField(
+                  autofocus: false,
+                  controller: model.attendanceMessageController,
+                  decoration: InputDecoration(
+                    hintText: model.attendanceStatus?.checkIn == 1
+                        ? 'Check in message ...'
+                        : 'Check out message ...',
+                    hintStyle: TextStyle(color: Colors.grey.shade500),
+                  ),
+                )),
               ],
             ),
     );
@@ -585,7 +614,9 @@ class DashboardView extends StatelessWidget {
                 title: "Upcoming Birthdays",
                 iconColor: AppColor.primary,
                 icon: MdiIcons.cake,
-                onPressed: () {},
+                onPressed: () {
+                  model.goto(AllStaffBirthdayView.tag);
+                },
               );
             }
             return utilityItem;
@@ -620,15 +651,20 @@ class DashboardView extends StatelessWidget {
                                 Center(
                                   child: Row(
                                     children: [
+                                      const Text(
+                                        "Total hrs : ",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                        ),
+                                      ),
                                       Text(
-                                        "Total : " +
-                                            convertIntoHrs(
-                                                model.WorkingHours.toString()),
+                                        model.WorkingHours as String,
                                         style: const TextStyle(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12,
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),

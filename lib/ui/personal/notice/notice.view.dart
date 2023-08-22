@@ -2,7 +2,6 @@ import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/notice/notice.viewmodel.dart';
 import 'package:flex_year_tablet/ui/personal/notice/widget/notice_item.dart';
-import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
 
 class NoticeView extends StatelessWidget {
@@ -28,8 +27,9 @@ class NoticeView extends StatelessWidget {
                     Expanded(
                       child: ListView.separated(
                         itemBuilder: (context, index) {
+                          final _notice = HolidaysModel.upcomingHoliday;
                           return NoticeItem(
-                            HolidaysModel.upcomingHoliday,
+                            notice: _notice,
                           );
                         },
                         separatorBuilder: (context, index) => const SizedBox(

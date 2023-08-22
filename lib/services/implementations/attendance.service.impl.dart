@@ -107,10 +107,12 @@ class AttendanceServiceImpl implements AttendanceService {
 
   // FIXME: Need to fix this API
   @override
-  Future<AttendanceStatusData> postAttendanceStatus({
-    required String time,
-    String? clientId,
-    required String status,
+  Future<AttendanceStatusData> postAttendanceStatus(
+      {required String time,
+      String? clientId,
+      required String status,
+       String? checkInMessage,
+    String? checkOutMessage,
   }) async {
     try {
       debugPrint(time);
@@ -122,6 +124,8 @@ class AttendanceServiceImpl implements AttendanceService {
         if (clientId != null) 'client_id': clientId,
         'type': status,
         'datetime': time,
+        'checkout_message': checkOutMessage,
+        'checkin_message': checkInMessage
       });
 
       final data = constructResponse(_response.data);

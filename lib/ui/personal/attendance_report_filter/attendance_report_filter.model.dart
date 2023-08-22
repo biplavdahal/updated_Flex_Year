@@ -121,43 +121,54 @@ class AttendanceReportFilterModel extends ViewModel
   String get selectedMonth => _selectedMonth;
   set selectedMonth(String value) {
     _selectedMonth = value;
-    if (_selectedMonth == "January") {
-      _dateFrom = DateTime.utc(DateTime.now().year, 1);
-      _dateTo = _dateFrom?.add(const Duration(days: 30));
-    } else if (_selectedMonth == "February") {
-      _dateFrom = DateTime.utc(DateTime.now().year, 2);
-      _dateTo = _dateFrom?.add(const Duration(days: 27));
-    } else if (_selectedMonth == "March") {
-      _dateFrom = DateTime.utc(DateTime.now().year, 3);
-      _dateTo = _dateFrom?.add(const Duration(days: 30));
-    } else if (_selectedMonth == "April") {
-      _dateFrom = DateTime.utc(DateTime.now().year, 4);
-      _dateTo = _dateFrom?.add(const Duration(days: 29));
-    } else if (_selectedMonth == "May") {
-      _dateFrom = DateTime.utc(DateTime.now().year, 5);
-      _dateTo = _dateFrom?.add(const Duration(days: 30));
-    } else if (_selectedMonth == "June") {
-      _dateFrom = DateTime.utc(DateTime.now().year, 6);
-      _dateTo = _dateFrom?.add(const Duration(days: 29));
-    } else if (_selectedMonth == "July") {
-      _dateFrom = DateTime.utc(DateTime.now().year, 7);
-      _dateTo = _dateFrom?.add(const Duration(days: 30));
-    } else if (_selectedMonth == "August") {
-      _dateFrom = DateTime.utc(DateTime.now().year, 8);
-      _dateTo = _dateFrom?.add(const Duration(days: 30));
-    } else if (_selectedMonth == "September") {
-      _dateFrom = DateTime.utc(DateTime.now().year, 9);
-      _dateTo = _dateFrom?.add(const Duration(days: 29));
-    } else if (_selectedMonth == "October") {
-      _dateFrom = DateTime.utc(DateTime.now().year, 10);
-      _dateTo = _dateFrom?.add(const Duration(days: 30));
-    } else if (_selectedMonth == "November") {
-      _dateFrom = DateTime.utc(DateTime.now().year, 11);
-      _dateTo = _dateFrom?.add(const Duration(days: 29));
-    } else if (_selectedMonth == "December") {
-      _dateFrom = DateTime.utc(DateTime.now().year, 12);
-      _dateTo = _dateFrom?.add(const Duration(days: 30));
+    final int currentYear = DateTime.now().year;
+    int month;
+
+    switch (_selectedMonth) {
+      case 'January':
+        month = 1;
+        break;
+      case 'February':
+        month = 2;
+        break;
+      case 'March':
+        month = 3;
+        break;
+      case 'April':
+        month = 4;
+        break;
+      case 'May':
+        month = 5;
+        break;
+      case 'June':
+        month = 6;
+        break;
+      case 'July':
+        month = 7;
+        break;
+      case 'August':
+        month = 8;
+        break;
+      case 'September':
+        month = 9;
+        break;
+      case 'October':
+        month = 10;
+        break;
+      case 'November':
+        month = 11;
+        break;
+      case 'December':
+        month = 12;
+        break;
+      default:
+        month = DateTime.now().month;
+        break;
     }
+    _dateFrom = DateTime.utc(currentYear, month);
+    _dateTo =
+        DateTime.utc(currentYear, month + 1).subtract(const Duration(days: 1));
+
     setIdle();
   }
 

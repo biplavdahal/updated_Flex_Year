@@ -17,6 +17,7 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return View<ProfileModel>(
       onModelReady: (model) => model.init(),
+      killViewOnClose: true,
       builder: (ctx, model, child) {
         return Scaffold(
           backgroundColor: AppColor.primary,
@@ -217,84 +218,75 @@ class ProfileView extends StatelessWidget {
                             ),
                           ),
                         if (model.isLoading) const FYLinearLoader(),
-                        FutureBuilder(
-                          future: model.init(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const FYLinearLoader();
-                            } else if (snapshot.hasError) {
-                              return const Text('No performance Report found');
-                            } else {
-                              return Center(
-                                  child: Column(
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Text(
-                                        "Performance Report : ",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColor.primary,
-                                        ),
+                        if (!model.isLoading)
+                          if (model.staffPerformancedata.isNotEmpty)
+                            Center(
+                                child: Column(
+                              children: [
+                                Row(
+                                  children: const [
+                                    Text(
+                                      "Performance Report : ",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColor.primary,
                                       ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 58,
-                                    child: ListView.separated(
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        final reversedIndex =
-                                            model.staffPerformancedata.length -
-                                                1 -
-                                                index;
-                                        final reportData =
-                                            model.staffPerformancedata[
-                                                reversedIndex];
-                                        final reportDataMap =
-                                            reportData.toJson();
-                                        return SizedBox(
-                                          height: 150,
-                                          child: GestureDetector(
-                                            onTap: () async {
-                                              model.goto(PerformanceView.tag,
-                                                  arguments:
-                                                      StaffPerformanceArguments(
-                                                          reportDataMap));
-                                            },
-                                            child: Card(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(16),
-                                                child: Column(
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                            "${reportData.year}-${reportData.monthName}")
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 58,
+                                  child: ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      final reversedIndex =
+                                          model.staffPerformancedata.length -
+                                              1 -
+                                              index;
+                                      final reportData = model
+                                          .staffPerformancedata[reversedIndex];
+                                      final reportDataMap = reportData.toJson();
+                                      return SizedBox(
+                                        height: 150,
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            model.goto(PerformanceView.tag,
+                                                arguments:
+                                                    StaffPerformanceArguments(
+                                                        reportDataMap));
+                                          },
+                                          child: Card(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(16),
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                          "${reportData.year}-${reportData.monthName}")
+                                                    ],
+                                                  )
+                                                ],
                                               ),
                                             ),
                                           ),
-                                        );
-                                      },
-                                      separatorBuilder: (context, index) =>
-                                          const SizedBox(
-                                        width: 0,
-                                      ),
-                                      itemCount:
-                                          model.staffPerformancedata.length,
+                                        ),
+                                      );
+                                    },
+                                    separatorBuilder: (context, index) =>
+                                        const SizedBox(
+                                      width: 0,
                                     ),
+                                    itemCount:
+                                        model.staffPerformancedata.length,
                                   ),
-                                ],
-                              ));
-                            }
-                          },
-                        )
+                                ),
+                              ],
+                            ))
+                          else
+                            const Center(
+                              child: Text('No performance report found.'),
+                            )
                       ],
                     ),
                   ),
