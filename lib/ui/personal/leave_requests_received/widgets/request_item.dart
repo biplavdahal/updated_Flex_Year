@@ -1,6 +1,6 @@
 import 'package:flex_year_tablet/data_models/leave_request.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
-import 'package:flex_year_tablet/widgets/fy_horizontal_list_view.widget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -216,7 +216,9 @@ class RequestItem extends StatelessWidget {
                         ),
                         DataCell(
                           Text(
-                            request.reason.toString().isEmpty ? "Not Set" : request.reason.toString(),
+                            request.reason.toString().isEmpty
+                                ? "Not Set"
+                                : request.reason.toString(),
                             style: request.reason.toString().isEmpty
                                 ? TextStyle(
                                     color: Colors.grey.shade400,

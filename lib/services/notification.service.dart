@@ -1,5 +1,6 @@
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flex_year_tablet/data_models/notice.data.dart';
+import 'package:flex_year_tablet/data_models/notification.data.dart';
 
 import '../data_models/all_staff_birthday.data.dart';
 import '../data_models/staff_birthday.data.dart';
@@ -44,4 +45,7 @@ abstract class NotificationService {
 
   //upcomming Birthday
   Future<List<AllStaffBirthdayData>> getAllStaffBirthday();
+
+  //In app notification
+  Future<List<NotificationData>> getAllNotification();
 }

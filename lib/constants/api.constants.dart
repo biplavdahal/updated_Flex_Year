@@ -64,6 +64,7 @@ const auPayrollHistory = "payroll/history";
 //Notification's API
 const auStaffDashboard = "site/staffdashboard";
 const auStaffBirthday = "site/birthday";
+const auNotificationList = 'notification/list';
 //performance report
 const auStaffPerformance = "performance/list";
 

@@ -10,7 +10,6 @@ import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.view.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_summary/attendance_summary.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_summary/attendance_summary.view.dart';
-import 'package:flex_year_tablet/ui/personal/chat_contacts/chat_contacts.view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/presentStaff/presentstaff.view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/attendance_button.dart';
@@ -22,10 +21,12 @@ import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/widgets/holiday_item.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/notice/notice.view.dart';
+import 'package:flex_year_tablet/ui/personal/notifications/notification.view.dart';
 import 'package:flex_year_tablet/ui/personal/profile/widget/user_profile_header.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.dart';
+import 'package:flex_year_tablet/ui/personal/staff_leave/staff_leave.view.dart';
 import 'package:flex_year_tablet/ui/personal/upcoming_birthday/upcoming_birthday.view.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
@@ -297,12 +298,14 @@ class DashboardView extends StatelessWidget {
                     await locator<DashboardModel>().goto(NoticeView.tag);
                   },
                   icon: const Icon(MdiIcons.noteText)),
-              // IconButton(
-              //   tooltip: "notification",
-              //   iconSize: 25,
-              //   onPressed: () {},
-              //   icon: const Icon(MdiIcons.bellOutline),
-              // ),
+              IconButton(
+                tooltip: "notification",
+                iconSize: 25,
+                onPressed: () async {
+                  await locator<DashboardModel>().goto(AllNotificationView.tag);
+                },
+                icon: const Icon(MdiIcons.bellOutline),
+              ),
             ],
           ),
         );
@@ -618,10 +621,19 @@ class DashboardView extends StatelessWidget {
                   model.goto(AllStaffBirthdayView.tag);
                 },
               );
+            } else if (index == 8) {
+              utilityItem = UtilityItem(
+                title: "Staff on Leave",
+                iconColor: Colors.orange,
+                icon: MdiIcons.airplaneAlert,
+                onPressed: () {
+                  model.goto(StaffLeaveView.tag);
+                },
+              );
             }
             return utilityItem;
           },
-          childCount: 8,
+          childCount: 9,
         ),
       ),
     );
@@ -659,7 +671,7 @@ class DashboardView extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        model.WorkingHours as String,
+                                        model.WorkingHours!,
                                         style: const TextStyle(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12,

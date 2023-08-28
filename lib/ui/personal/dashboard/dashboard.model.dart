@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
@@ -64,7 +65,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   late String? WorkingHours =
       _reportSummary.isNotEmpty ? _reportSummary[0].workingHours : '';
   late int? Leave =
-      (_reportSummary.isNotEmpty ? _reportSummary[0].leaveTotal : '' as int);
+      _reportSummary.isNotEmpty ? _reportSummary[0].leaveTotal : '' as int;
   late int? holidays =
       _reportSummary.isNotEmpty ? _reportSummary[0].offDay : '' as int;
   late int? present =
@@ -75,11 +76,13 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   MyClass() {
     WorkingHours =
         _reportSummary.isNotEmpty ? _reportSummary[0].workingHours : '';
-    Leave = (_reportSummary.isNotEmpty ? _reportSummary[0].absent : '') as int?;
+    Leave =
+        _reportSummary.isNotEmpty ? _reportSummary[0].leaveTotal : '' as int?;
     holidays =
         _reportSummary.isNotEmpty ? _reportSummary[0].offDay : '' as int?;
     present =
         _reportSummary.isNotEmpty ? _reportSummary[0].present : '' as int?;
+        
     absent = _reportSummary.isNotEmpty ? _reportSummary[0].absent : '' as int?;
   }
 

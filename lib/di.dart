@@ -45,11 +45,13 @@ import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.model
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.model.dart';
 import 'package:flex_year_tablet/ui/personal/login/login.model.dart';
 import 'package:flex_year_tablet/ui/personal/notice/notice.viewmodel.dart';
+import 'package:flex_year_tablet/ui/personal/notifications/notification.model.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.model.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.model.dart';
 import 'package:flex_year_tablet/ui/personal/performance/performance_model.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
+import 'package:flex_year_tablet/ui/personal/staff_leave/staff_leave.model.dart';
 import 'package:flex_year_tablet/ui/personal/staffs/staffs.model.dart';
 import 'package:flex_year_tablet/ui/personal/upcoming_birthday/upcoming_birthday.viewmodel.dart';
 import 'package:flex_year_tablet/ui/start_up/start_up.model.dart';
@@ -120,6 +122,8 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => PresentStaffModel());
   locator.registerFactory(() => CalanderModel());
   locator.registerFactory(() => AllStaffBirthdayModel());
+  locator.registerFactory(() => StaffLeavemodel());
+  locator.registerFactory(() => AllNotificationModel());
 
   // Unkillable models
 }
