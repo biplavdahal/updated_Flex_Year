@@ -22,11 +22,9 @@ import 'package:flex_year_tablet/ui/personal/holidays/widgets/holiday_item.dart'
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/notice/notice.view.dart';
 import 'package:flex_year_tablet/ui/personal/notifications/notification.view.dart';
-import 'package:flex_year_tablet/ui/personal/profile/widget/user_profile_header.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.dart';
-import 'package:flex_year_tablet/ui/personal/staff_leave/staff_leave.view.dart';
 import 'package:flex_year_tablet/ui/personal/upcoming_birthday/upcoming_birthday.view.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
@@ -39,7 +37,6 @@ import 'package:intl/intl.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:upgrader/upgrader.dart';
-
 import '../attendance_correction/attendance_correction.view.dart';
 import '../holidays/holidays.view.dart';
 import '../payroll/payroll_filter/payroll.filter.argument.dart';
@@ -78,7 +75,7 @@ class DashboardView extends StatelessWidget {
                 ),
                 backgroundColor: AppColor.primary,
                 content: Text("It's $staffNames's birthday today! "),
-                duration: const Duration(seconds: 5),
+                duration: const Duration(seconds: 7),
               ),
             );
           });
@@ -621,19 +618,20 @@ class DashboardView extends StatelessWidget {
                   model.goto(AllStaffBirthdayView.tag);
                 },
               );
-            } else if (index == 8) {
-              utilityItem = UtilityItem(
-                title: "Staff on Leave",
-                iconColor: Colors.orange,
-                icon: MdiIcons.airplaneAlert,
-                onPressed: () {
-                  model.goto(StaffLeaveView.tag);
-                },
-              );
             }
+            // else if (index == 8) {
+            //   utilityItem = UtilityItem(
+            //     title: "Staff on Leave",
+            //     iconColor: Colors.orange,
+            //     icon: MdiIcons.airplaneAlert,
+            //     onPressed: () {
+            //       model.goto(StaffLeaveView.tag);
+            //     },
+            //   );
+            // }
             return utilityItem;
           },
-          childCount: 9,
+          childCount: 8,
         ),
       ),
     );
@@ -641,7 +639,7 @@ class DashboardView extends StatelessWidget {
 
   Widget _buildCurrentReport(DashboardModel model) {
     return FYSection(
-        title: "Current Month Attendance Report : ",
+        title: "Current Month Attendance Report  ",
         child: model.isLoading
             ? const FYLinearLoader()
             : SizedBox(
@@ -671,7 +669,7 @@ class DashboardView extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        model.WorkingHours!,
+                                        convertIntoHrs(model.WorkingHours!),
                                         style: const TextStyle(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12,
@@ -691,9 +689,9 @@ class DashboardView extends StatelessWidget {
                                 Text(
                                   "Holiday : ${model.holidays} days",
                                   style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12,
-                                  ),
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      color: AppColor.primary),
                                 ),
                                 Text('Present : ${model.present} days',
                                     style: const TextStyle(
@@ -719,10 +717,6 @@ class DashboardView extends StatelessWidget {
                             AttendanceSummaryView.tag,
                             arguments:
                                 AttendanceSummaryArguments(date: _report.date));
-                        model.goto(AttendanceSummaryView.tag,
-                            arguments: AttendanceSummaryArguments(
-                              date: _report.date,
-                            ));
                       });
                     }),
               ));

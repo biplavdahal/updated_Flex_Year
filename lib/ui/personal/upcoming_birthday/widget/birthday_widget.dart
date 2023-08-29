@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
-import 'package:flex_year_tablet/widgets/fy_user_avatar_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 import '../../../../data_models/all_staff_birthday.data.dart';
 import '../../../../theme.dart';
 
@@ -77,6 +76,11 @@ class BirthdayItem extends StatelessWidget {
                         imageUrl: auBaseURL + birthdayData.staffPhoto!,
                         errorWidget: (context, url, error) =>
                             const CircleAvatar(),
+                        placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator(
+                          color: AppColor.primary,
+                          strokeWidth: 2,
+                        )),
                       )
                     : const Image(
                         image: AssetImage('assets/images/avatar.png')),

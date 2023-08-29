@@ -48,7 +48,10 @@ class NotificationItem extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(data.detailsm),
+                  Text(
+                    data.detailsm,
+                    style: const TextStyle(color: AppColor.primary),
+                  ),
                 ],
               ),
             ),

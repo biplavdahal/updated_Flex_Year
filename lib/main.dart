@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bestfriend/bestfriend.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';

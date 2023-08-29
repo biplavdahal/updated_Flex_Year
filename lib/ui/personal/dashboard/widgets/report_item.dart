@@ -113,10 +113,10 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
 
 Color _getCardColor(String totalWorkingHours) {
   double hours = double.tryParse(totalWorkingHours) ?? 0.0;
-  return hours < 8 ? Colors.red.shade100 : Colors.green.shade100;
+  return hours < 8.5 ? Colors.red.shade100 : Colors.green.shade100;
 }
 
 Color _getTextColor(String totalWorkingHours) {
   double hours = double.tryParse(totalWorkingHours) ?? 0.0;
-  return hours > 8 ? Colors.green : Colors.red;
+  return hours >= 8.5 ? Colors.green : Colors.red;
 }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
@@ -62,28 +61,19 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   List<AttendanceReportSummaryData> _reportSummary = [];
   List<AttendanceReportSummaryData> get reportSummary => _reportSummary;
 
-  late String? WorkingHours =
-      _reportSummary.isNotEmpty ? _reportSummary[0].workingHours : '';
-  late int? Leave =
-      _reportSummary.isNotEmpty ? _reportSummary[0].leaveTotal : '' as int;
-  late int? holidays =
-      _reportSummary.isNotEmpty ? _reportSummary[0].offDay : '' as int;
-  late int? present =
-      _reportSummary.isNotEmpty ? _reportSummary[0].present : '' as int;
-  late int? absent =
-      _reportSummary.isNotEmpty ? _reportSummary[0].absent : '' as int;
+  late String? WorkingHours = _reportSummary[0].workingHours;
+  late String? Leave = _reportSummary[0].leaveTotal.toString();
+  late String? holidays = _reportSummary[0].offDay.toString();
+  late String? present = _reportSummary[0].present.toString();
+  late String? absent = _reportSummary[0].absent.toString();
 
   MyClass() {
-    WorkingHours =
-        _reportSummary.isNotEmpty ? _reportSummary[0].workingHours : '';
-    Leave =
-        _reportSummary.isNotEmpty ? _reportSummary[0].leaveTotal : '' as int?;
-    holidays =
-        _reportSummary.isNotEmpty ? _reportSummary[0].offDay : '' as int?;
-    present =
-        _reportSummary.isNotEmpty ? _reportSummary[0].present : '' as int?;
-        
-    absent = _reportSummary.isNotEmpty ? _reportSummary[0].absent : '' as int?;
+    WorkingHours = _reportSummary[0].workingHours;
+    Leave = _reportSummary[0].leaveTotal.toString();
+    holidays = _reportSummary[0].offDay.toString();
+    present = _reportSummary[0].present.toString();
+
+    absent = _reportSummary[0].absent.toString();
   }
 
   AttendanceSummaryData? _attendanceData;
