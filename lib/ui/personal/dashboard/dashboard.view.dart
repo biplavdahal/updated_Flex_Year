@@ -75,7 +75,7 @@ class DashboardView extends StatelessWidget {
                 ),
                 backgroundColor: AppColor.primary,
                 content: Text("It's $staffNames's birthday today! "),
-                duration: const Duration(seconds: 7),
+                duration: const Duration(seconds: 20),
               ),
             );
           });
@@ -124,11 +124,12 @@ class DashboardView extends StatelessWidget {
                         height: 15,
                       ),
                       _buildUtilities(model, context),
+
+                      const SizedBox(
+                        height: 15,
+                      ),
                       if (model.monthlyReport.isNotEmpty)
-                        const SizedBox(
-                          height: 15,
-                        ),
-                      _buildCurrentReport(model),
+                        _buildCurrentReport(model),
                       const SizedBox(
                         height: 15,
                       ),
@@ -639,87 +640,101 @@ class DashboardView extends StatelessWidget {
 
   Widget _buildCurrentReport(DashboardModel model) {
     return FYSection(
-        title: "Current Month Attendance Report  ",
-        child: model.isLoading
-            ? const FYLinearLoader()
-            : SizedBox(
-                height: 113,
-                child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: model.monthlyReport.length + 1,
-                    separatorBuilder: (context, index) => const SizedBox(
-                          width: 5,
-                        ),
-                    itemBuilder: (context, index) {
-                      if (index == model.monthlyReport.length) {
-                        return Card(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              children: [
-                                Center(
-                                  child: Row(
-                                    children: [
-                                      const Text(
-                                        "Total hrs : ",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      Text(
-                                        convertIntoHrs(model.WorkingHours!),
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Text(
-                                  "Leave : ${model.Leave} days",
-                                  style: const TextStyle(
-                                    color: Colors.orange,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                Text(
-                                  "Holiday : ${model.holidays} days",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                      color: AppColor.primary),
-                                ),
-                                Text('Present : ${model.present} days',
-                                    style: const TextStyle(
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                    )),
-                                Text('Absent : ${model.absent} days',
-                                    style: const TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                    ))
-                              ],
-                            ),
-                          ),
-                        );
-                      }
-                      final _report = model.monthlyReport[index];
-                      return MonthlyHorizontalReportItems(_report, index,
-                          onTap: () async {
-                        await locator<DashboardModel>().goto(
-                            AttendanceSummaryView.tag,
-                            arguments:
-                                AttendanceSummaryArguments(date: _report.date));
-                      });
-                    }),
-              ));
+      title: "Current Month Attendance Report",
+      child: SizedBox(
+        height: 112,
+        width: double.infinity,
+        child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Container(
+                  child: _buildTotalHrsCard(model),
+                ),
+                ListView.separated(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: model.monthlyReport.length,
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 3),
+                  itemBuilder: (context, index) {
+                    final _report = model.monthlyReport[index];
+                    return MonthlyHorizontalReportItems(_report, index,
+                        onTap: () async {
+                      await locator<DashboardModel>().goto(
+                          AttendanceSummaryView.tag,
+                          arguments:
+                              AttendanceSummaryArguments(date: _report.date));
+                    });
+                  },
+                ),
+              ],
+            )),
+      ),
+    );
+  }
+
+  Widget _buildTotalHrsCard(DashboardModel model) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 5),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                const Text(
+                  "Total hrs : ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                  ),
+                ),
+                Text(
+                  convertIntoHrs(model.WorkingHours?.toString() ?? 'N/A'),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              "Leave : ${model.Leave} days",
+              style: const TextStyle(
+                color: Colors.orange,
+                fontWeight: FontWeight.w600,
+                fontSize: 12,
+              ),
+            ),
+            Text(
+              "Holiday : ${model.holidays} days",
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 12,
+                color: AppColor.primary,
+              ),
+            ),
+            Text(
+              'Present : ${model.present} days',
+              style: const TextStyle(
+                color: Colors.green,
+                fontWeight: FontWeight.w600,
+                fontSize: 12,
+              ),
+            ),
+            Text(
+              'Absent : ${model.absent} days',
+              style: const TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.w600,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildCalander(DashboardModel model) {
@@ -768,3 +783,62 @@ class DashboardView extends StatelessWidget {
     }
   }
 }
+
+
+// Card(
+//                       margin: const EdgeInsets.only(bottom: 5),
+//                       child: Padding(
+//                         padding: const EdgeInsets.all(16.0),
+//                         child: Column(
+//                           children: [
+//                             Center(
+//                               child: Row(
+//                                 children: [
+//                                   const Text(
+//                                     "Total hrs : ",
+//                                     style: TextStyle(
+//                                       fontWeight: FontWeight.w600,
+//                                       fontSize: 12,
+//                                     ),
+//                                   ),
+//                                   Text(
+//                                     convertIntoHrs(model.WorkingHours!),
+//                                     style: const TextStyle(
+//                                       fontWeight: FontWeight.w600,
+//                                       fontSize: 12,
+//                                     ),
+//                                   ),
+//                                 ],
+//                               ),
+//                             ),
+//                             Text(
+//                               "Leave : ${model.Leave} days",
+//                               style: const TextStyle(
+//                                 color: Colors.orange,
+//                                 fontWeight: FontWeight.w600,
+//                                 fontSize: 12,
+//                               ),
+//                             ),
+//                             Text(
+//                               "Holiday : ${model.holidays} days",
+//                               style: const TextStyle(
+//                                   fontWeight: FontWeight.w600,
+//                                   fontSize: 12,
+//                                   color: AppColor.primary),
+//                             ),
+//                             Text('Present : ${model.present} days',
+//                                 style: const TextStyle(
+//                                   color: Colors.green,
+//                                   fontWeight: FontWeight.w600,
+//                                   fontSize: 12,
+//                                 )),
+//                             Text('Absent : ${model.absent} days',
+//                                 style: const TextStyle(
+//                                   color: Colors.red,
+//                                   fontWeight: FontWeight.w600,
+//                                   fontSize: 12,
+//                                 ))
+//                           ],
+//                         ),
+//                       ),
+//                     );

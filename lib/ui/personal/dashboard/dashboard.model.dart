@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
@@ -8,6 +9,7 @@ import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/data_models/company.data.dart';
 import 'package:flex_year_tablet/data_models/company_logo.data.dart';
+import 'package:flex_year_tablet/data_models/holiday.data.dart';
 import 'package:flex_year_tablet/data_models/notice.data.dart';
 import 'package:flex_year_tablet/data_models/staff_birthday.data.dart';
 import 'package:flex_year_tablet/data_models/user.data.dart';
@@ -17,6 +19,7 @@ import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/attendance.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
+import 'package:flex_year_tablet/services/company.service.dart';
 import 'package:flex_year_tablet/services/notification.service.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/flex_calander/calander.view.dart';
@@ -36,8 +39,11 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   final AttendanceService _attendanceService = locator<AttendanceService>();
   final NotificationService _notificationService =
       locator<NotificationService>();
+  final CompanyService _companyService = locator<CompanyService>();
 
   // Data
+  List<HolidayData> get holiday => _companyService.holidays;
+  final List<HolidayData> _holidays = [];
   CompanyData get company => locator<AppAccessService>().appAccess!.company;
   CompanyLogoData get logo => locator<AppAccessService>().appAccess!.logo;
   UserData get user => locator<AuthenticationService>().user!;
@@ -142,6 +148,16 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   // Actions
   Future<void> init() async {
+    try {
+      setLoading();
+      final _holidays = await _companyService.getHolidays();
+      _companyService.holidays = _holidays;
+      setIdle();
+    } catch (e) {
+      rethrow;
+    }
+    _staffBirthdayData = await _notificationService.getStaffBirthday();
+
     _attendanceForgot = null;
     _attendanceService.getAttendanceForgot().then((status) {
       if (status != null) {
@@ -182,31 +198,30 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       unsetWidgetBusy('dashboard');
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     });
-    HolidaysModel.holidaydata();
-    Map<String, dynamic> _searchParams = {};
-    _searchParams['date_from'] = formattedStartOfMonths;
-    _searchParams['date_to'] = formattedDate;
-    _monthlyReport = await _attendanceService.getMonthlyReport(
-      data: _searchParams,
-    );
-    _reportSummary =
-        await _attendanceService.getMonthlySummary(data: _searchParams);
-    _searchParams['date_from'] = formattedStartOfMonths;
-    _searchParams['date_to'] = formattedDate;
-    _monthlyReport = await _attendanceService.getMonthlyReport(
-      data: _searchParams,
-    );
+    try {
+      setLoading();
+      Map<String, dynamic> _searchParams = {};
+      _searchParams['date_from'] = formattedStartOfMonths;
+      _searchParams['date_to'] = formattedDate;
+      _monthlyReport = await _attendanceService.getMonthlyReport(
+        data: _searchParams,
+      );
+      _reportSummary =
+          await _attendanceService.getMonthlySummary(data: _searchParams);
+      _searchParams['date_from'] = formattedStartOfMonths;
+      _searchParams['date_to'] = formattedDate;
+      _monthlyReport = await _attendanceService.getMonthlyReport(
+        data: _searchParams,
+      );
+      setIdle();
+    } catch (e) {
+      rethrow;
+    }
 
     _currentDateTimeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _currentDateTime = DateTime.now().toString();
       setIdle();
     });
-
-    try {
-      _staffBirthdayData = await _notificationService.getStaffBirthday();
-    } catch (e) {
-      rethrow;
-    }
   }
 
   Future<void> logout() async {

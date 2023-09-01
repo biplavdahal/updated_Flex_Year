@@ -17,8 +17,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   device_preview: ^0.7.0
   dio: ^4.0.3
-  # firebase_core: ^2.8.0
-  # firebase_messaging: ^14.3.0
+  firebase_core: ^2.8.0
+  firebase_messaging: ^14.3.0
   flex_color_scheme: ^4.2.0
   flutter:
     sdk: flutter
@@ -45,6 +45,7 @@ dependencies:
   table_calendar: ^3.0.8
   clean_nepali_calendar: ^2.0.1
   upgrader: ^4.8.1
+  flutter_local_notifications: ^8.2.0
  
 
 

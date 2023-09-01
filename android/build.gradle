@@ -29,4 +29,10 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+// plugins {
+
+//   id("com.google.gms.google-services") version "4.3.15" apply false
+
+// }
+
 apply plugin: 'com.google.gms.google-services'
