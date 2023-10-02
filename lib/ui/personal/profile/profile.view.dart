@@ -107,11 +107,6 @@ class ProfileView extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     _buildProfileField(
-                                      label: "Mobile",
-                                      value: model.user.staff.mobile,
-                                      icon: MdiIcons.cellphone,
-                                    ),
-                                    _buildProfileField(
                                       label: "E-mail",
                                       value: model.user.staff.email,
                                       icon: MdiIcons.emailOutline,
@@ -146,7 +141,7 @@ class ProfileView extends StatelessWidget {
                         if (model.selectedTab == "1")
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.all(16),
+                              padding: const EdgeInsets.all(8),
                               child: SingleChildScrollView(
                                 child: Column(
                                   children: [
@@ -156,7 +151,7 @@ class ProfileView extends StatelessWidget {
                                       icon: MdiIcons.calendarStar,
                                     ),
                                     _buildProfileField(
-                                      label: "Remaining Leave Days",
+                                      label: "Remaining Leave",
                                       value: (model.user.staff.remainingLeave ??
                                               '0') +
                                           " day(s)",
@@ -200,13 +195,7 @@ class ProfileView extends StatelessWidget {
                                           (model.user.staff.paymentType ?? ''),
                                       icon: MdiIcons.creditCard,
                                     ),
-                                    _buildProfileField(
-                                      label: "Checkin Restrictiontime",
-                                      value: (model.user.staff
-                                              .checkinRestrictionTime ??
-                                          ''),
-                                      icon: MdiIcons.clockTimeFour,
-                                    ),
+
                                     _buildProfileField(
                                       label: "Remarks",
                                       value: (model.user.staff.remarks ?? ''),
@@ -309,7 +298,7 @@ class ProfileView extends StatelessWidget {
       child: Row(
         children: [
           Icon(icon),
-          const SizedBox(width: 16),
+          const SizedBox(width: 5),
           Text(
             "$label : ",
             style: const TextStyle(

@@ -22,9 +22,11 @@ import 'package:flex_year_tablet/ui/personal/holidays/widgets/holiday_item.dart'
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/notice/notice.view.dart';
 import 'package:flex_year_tablet/ui/personal/notifications/notification.view.dart';
+import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.dart';
+import 'package:flex_year_tablet/ui/personal/staff_directory/staff_directory.view.dart';
 import 'package:flex_year_tablet/ui/personal/upcoming_birthday/upcoming_birthday.view.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
@@ -40,7 +42,6 @@ import 'package:upgrader/upgrader.dart';
 import '../attendance_correction/attendance_correction.view.dart';
 import '../holidays/holidays.view.dart';
 import '../payroll/payroll_filter/payroll.filter.argument.dart';
-import '../payroll/payroll_filter/payroll.filter.view.dart';
 
 class DashboardView extends StatelessWidget {
   static String tag = "dashboard-view";
@@ -91,11 +92,11 @@ class DashboardView extends StatelessWidget {
             ),
           ),
           body: UpgradeAlert(
-            upgrader: Upgrader(
-                shouldPopScope: () => true,
-                canDismissDialog: true,
-                durationUntilAlertAgain: const Duration(days: 2),
-                dialogStyle: UpgradeDialogStyle.cupertino),
+            // upgrader: Upgrader(
+            //     shouldPopScope: () => true,
+            //     canDismissDialog: true,
+            //     durationUntilAlertAgain: const Duration(days: 2),
+            //     dialogStyle: UpgradeDialogStyle.cupertino),
             child: Container(
               width: double.infinity,
               height: MediaQuery.of(context).size.height,
@@ -217,20 +218,14 @@ class DashboardView extends StatelessWidget {
                         Row(
                           children: [
                             Expanded(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text(
-                                    formattedDate(
-                                      model.currentDateTime,
-                                    ),
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
+                              child: Text(
+                                formattedDate(
+                                  model.currentDateTime,
+                                ),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
                             Expanded(
@@ -505,9 +500,7 @@ class DashboardView extends StatelessWidget {
                   autofocus: false,
                   controller: model.attendanceMessageController,
                   decoration: InputDecoration(
-                    hintText: model.attendanceStatus?.checkIn == 1
-                        ? 'Check in message ...'
-                        : 'Check out message ...',
+                    hintText: 'Attendance message',
                     hintStyle: TextStyle(color: Colors.grey.shade500),
                   ),
                 )),
@@ -612,27 +605,26 @@ class DashboardView extends StatelessWidget {
               );
             } else if (index == 7) {
               utilityItem = UtilityItem(
-                title: "Upcoming Birthdays",
+                title: "Birthdays",
                 iconColor: AppColor.primary,
                 icon: MdiIcons.cake,
                 onPressed: () {
                   model.goto(AllStaffBirthdayView.tag);
                 },
               );
+            } else if (index == 8) {
+              utilityItem = UtilityItem(
+                title: "Staff Directory",
+                iconColor: AppColor.primary,
+                icon: Icons.groups,
+                onPressed: () {
+                  model.goto(StaffDirectoryView.tag);
+                },
+              );
             }
-            // else if (index == 8) {
-            //   utilityItem = UtilityItem(
-            //     title: "Staff on Leave",
-            //     iconColor: Colors.orange,
-            //     icon: MdiIcons.airplaneAlert,
-            //     onPressed: () {
-            //       model.goto(StaffLeaveView.tag);
-            //     },
-            //   );
-            // }
             return utilityItem;
           },
-          childCount: 8,
+          childCount: 9,
         ),
       ),
     );

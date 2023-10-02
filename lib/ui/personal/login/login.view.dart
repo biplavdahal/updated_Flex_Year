@@ -167,20 +167,20 @@ class LoginView extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  child: TextButton.icon(
-                    style: TextButton.styleFrom(
-                      primary: Colors.black,
-                    ),
-                    onPressed: () async {},
-                    icon: const Icon(Icons.fingerprint_sharp),
-                    label: const Text('Login with Fingerprint'),
-                  ),
-                ),
+                // const SizedBox(
+                //   height: 12,
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                //   child: TextButton.icon(
+                //     style: TextButton.styleFrom(
+                //       primary: Colors.black,
+                //     ),
+                //     onPressed: () async {},
+                //     icon: const Icon(Icons.fingerprint_sharp),
+                //     label: const Text('Login with Fingerprint'),
+                //   ),
+                // ),
               ],
             ),
           ),

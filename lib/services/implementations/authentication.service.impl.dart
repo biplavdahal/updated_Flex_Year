@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:bestfriend/bestfriend.dart';
 import 'package:dio/dio.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
@@ -12,7 +11,6 @@ import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.model.dart';
-import 'package:flutter/material.dart';
 
 class AuthenticationServiceImpl implements AuthenticationService {
   // Services
@@ -59,8 +57,6 @@ class AuthenticationServiceImpl implements AuthenticationService {
       });
 
       final data = constructResponse(_response.data);
-
-      debugPrint(data.toString());
 
       if (data!.containsKey("status") && data["status"] == false) {
         throw data["response"];

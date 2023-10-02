@@ -10,15 +10,15 @@ import 'package:provider/provider.dart';
 import 'main.dart';
 
 class FlexYearApp extends StatelessWidget {
-  
-  const FlexYearApp({Key? key,  }) : super(key: key);
+  const FlexYearApp({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(428, 926),
       builder: (context, child) => ChangeNotifierProvider(
-        create: (context) => LocaleProvider(), 
+        create: (context) => LocaleProvider(),
         child: Consumer<LocaleProvider>(
           builder: (context, localeProvider, child) {
             return MaterialApp(
@@ -39,8 +39,7 @@ class FlexYearApp extends StatelessWidget {
                 }
                 return supportedLocales.first;
               },
-              locale:
-                  localeProvider.locale,
+              locale: localeProvider.locale,
               debugShowCheckedModeBanner: false,
               theme: getThemeDataTheme(context),
               onGenerateRoute: (settings) =>
@@ -74,7 +73,7 @@ class FlexYearApp extends StatelessWidget {
     );
   }
   // void _changeLocale(Locale newLocale) {
-    
+
   //   final localeProvider = Provider.of<LocaleProvider>(
   //       navigatorKey.currentContext!,
   //       listen: false);

@@ -38,7 +38,7 @@ class PerformanceView extends StatelessWidget {
                       children: [
                         Image.network(
                           auBaseURL + model.logo.logoPath,
-                          width: 100,
+                          width: 90,
                         )
                       ],
                     ),
@@ -615,10 +615,13 @@ class PerformanceView extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  DataCell(Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [Text(model.data['s_name'])],
+                                  DataCell(SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [Text(model.data['s_name'])],
+                                    ),
                                   )),
                                 ],
                               ),

@@ -27,7 +27,6 @@ class UtilityItem extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         child: Container(
-          padding: const EdgeInsets.all(2),
           alignment: Alignment.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -48,7 +47,7 @@ class UtilityItem extends StatelessWidget {
                     color: iconColor,
                   ),
                   const SizedBox(
-                    height: 7,
+                    height: 1,
                   ),
                   Text(
                     title,

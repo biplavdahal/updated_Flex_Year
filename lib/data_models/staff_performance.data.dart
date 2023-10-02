@@ -1,7 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'package:flex_year_tablet/data_models/staff_performance_allreport.dart';
-import 'package:flex_year_tablet/data_models/staff_performance_type.data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'staff_performance.data.freezed.dart';

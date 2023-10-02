@@ -102,7 +102,7 @@ class AppAccessServiceImplementation implements AppAccessService {
       if (data!.containsKey("status") && data["status"] == false) {
         throw data["response"];
       }
-      debugPrint(data.toString());
+     
 
       _client = ClientData.fromJson({
         ...data['data'],

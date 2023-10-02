@@ -1,6 +1,7 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:dio/dio.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
+import 'package:flex_year_tablet/data_models/department_list.data.dart';
 import 'package:flex_year_tablet/data_models/error_data.dart';
 import 'package:flex_year_tablet/data_models/staff.data.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
@@ -62,6 +63,27 @@ class UserServiceImplementation implements UserService {
         }
       }
     } on DioError catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<List<DepartmentListdata>> getDepartmentList() async {
+    try {
+      final _response = await _apiService.get(austaffDepartmentIndex, params: {
+        'access_token': _authenticationService.user!.accessToken,
+        'company_id': _appAccessService.appAccess!.company.companyId
+      });
+
+      final _data = constructResponse(_response.data);
+
+      if (_data!.containsKey("status") && _data["status"] == false) {
+        throw _data["response"] ?? _data["data"] ?? _data["detail"];
+      }
+      return (_data["data"] as List<dynamic>)
+          .map<DepartmentListdata>((e) => DepartmentListdata.fromJson(e))
+          .toList();
+    } catch (e) {
       throw apiError(e);
     }
   }

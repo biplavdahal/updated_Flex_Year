@@ -89,3 +89,6 @@ const auRequestResetPassword = "user/request-password-reset";
 
 //-------Staff api---------
 const auStaffDetail = "staff/details";
+
+//Staff Directory
+const austaffDepartmentIndex = 'department/index';

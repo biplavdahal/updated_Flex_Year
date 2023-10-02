@@ -107,16 +107,14 @@ class AttendanceServiceImpl implements AttendanceService {
 
   // FIXME: Need to fix this API
   @override
-  Future<AttendanceStatusData> postAttendanceStatus(
-      {required String time,
-      String? clientId,
-      required String status,
-       String? checkInMessage,
+  Future<AttendanceStatusData> postAttendanceStatus({
+    required String time,
+    String? clientId,
+    required String status,
+    String? checkInMessage,
     String? checkOutMessage,
   }) async {
     try {
-      debugPrint(time);
-
       final _response = await _apiService.post(auAttendanceInOut, {}, params: {
         'access_token': _authenticationService.user!.accessToken,
         'id': _authenticationService.user!.id,
@@ -157,7 +155,6 @@ class AttendanceServiceImpl implements AttendanceService {
       );
 
       final _data = constructResponse(_response.data);
-      debugPrint(_data.toString());
 
       if (_data!.containsKey("status") && _data["status"] == false) {
         throw _data["response"] ?? _data["data"] ?? _data["detail"];
@@ -179,13 +176,6 @@ class AttendanceServiceImpl implements AttendanceService {
     String? staffId,
   }) async {
     try {
-      debugPrint(jsonEncode({
-        'date': date,
-        'access_token': _authenticationService.user!.accessToken,
-        'client_id': clientId,
-        'id': staffId ?? _authenticationService.user!.staff.staffId,
-      }));
-
       final _response = await _apiService.get(auAttendanceSummary, params: {
         'date': date,
         'access_token': _authenticationService.user!.accessToken,
@@ -206,8 +196,6 @@ class AttendanceServiceImpl implements AttendanceService {
       }
 
       final _data = constructResponse(_response.data);
-
-      debugPrint(_data.toString());
 
       if (_data!.containsKey("status") && _data["status"] == false) {
         throw _data["response"] ?? _data["detail"] ?? _data["data"];
@@ -275,8 +263,6 @@ class AttendanceServiceImpl implements AttendanceService {
 
       final _data = constructResponse(_response.data);
 
-      debugPrint(_data.toString());
-
       if (_data!.containsKey("status") && _data["status"] == false) {
         throw _data["response"] ?? _data["detail"] ?? _data["data"];
       }
@@ -317,8 +303,6 @@ class AttendanceServiceImpl implements AttendanceService {
         'id': attendanceId,
         'access_token': _authenticationService.user!.accessToken,
       });
-
-      debugPrint(_response.data.toString());
 
       final _data = constructResponse(_response.data);
 
@@ -474,11 +458,7 @@ class AttendanceServiceImpl implements AttendanceService {
         'company_id': _appAccessService.appAccess!.company.companyId,
       });
 
-      debugPrint(_response.data.toString());
-
       final _data = constructResponse(_response.data);
-
-      debugPrint(_data.toString());
 
       if (_data!.containsKey("status") && _data["status"] == false) {
         throw _data["response"] ?? _data["detail"] ?? _data["data"];
@@ -536,8 +516,6 @@ class AttendanceServiceImpl implements AttendanceService {
       );
 
       final _data = constructResponse(_response.data);
-
-      debugPrint(jsonEncode(_response.data));
 
       if (_data!.containsKey("status") && _data["status"] == false) {
         throw _data["response"] ?? _data["data"] ?? _data["detail"];

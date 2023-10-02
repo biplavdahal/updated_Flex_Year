@@ -80,7 +80,7 @@ class _NepaliCalanderItemsState extends State<NepaliCalanderItems> {
               String monthName = NepaliDateFormat.MMMM().format(nepaliDateTime);
               String year = NepaliDateFormat.y().format(nepaliDateTime);
               return Padding(
-                padding: const EdgeInsets.only(top: 12, bottom: 6),
+                padding: const EdgeInsets.only(top: 9, bottom: 3),
                 child: Center(
                   child: Column(
                     children: [
@@ -95,13 +95,13 @@ class _NepaliCalanderItemsState extends State<NepaliCalanderItems> {
                               monthName + "  ",
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   color: AppColor.primary),
                             ),
                             Text(
                               year,
                               style: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
+                                  fontSize: 14, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -316,7 +316,7 @@ class _NepaliCalanderItemsState extends State<NepaliCalanderItems> {
     return Padding(
       padding: const EdgeInsets.all(01),
       child: AnimatedContainer(
-        padding: const EdgeInsets.all(3),
+        padding: const EdgeInsets.all(2),
         duration: const Duration(milliseconds: 2000),
         decoration: cellDecoration,
         child: Center(
