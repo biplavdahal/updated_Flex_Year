@@ -21,7 +21,6 @@ class StaffDirectoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     Uint8List? imageBytes;
     if (directory.icon != null) {
-      // Remove HTML tags and prefixes
       final base64Image = directory.icon!
           .replaceAll(RegExp(r'^<imgsrc=\"data:image/png;base64,'), '')
           .replaceAll('\">', '');
@@ -75,21 +74,11 @@ class StaffDirectoryItem extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Icon(
-                  Icons.arrow_forward_sharp,
-                  size: 17,
-                ),
-              ),
-              Container(
-                width: 70,
-                height: 80,
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  gradient: const LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.center,
-                    colors: [AppColor.primary],
+                child: InkWell(
+                  onTap: onClick,
+                  child: const Icon(
+                    Icons.arrow_forward_sharp,
+                    size: 17,
                   ),
                 ),
               ),

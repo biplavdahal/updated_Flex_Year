@@ -2,7 +2,6 @@ import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/ui/personal/staff_directory/staff_directory.viewmodel.dart';
 import 'package:flex_year_tablet/ui/personal/staff_directory/widget/staff_directory_widget.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class StaffDirectoryView extends StatelessWidget {
@@ -33,7 +32,10 @@ class StaffDirectoryView extends StatelessWidget {
                           final _directory = model.departmentListData[index];
                           return StaffDirectoryItem(
                             directory: _directory,
-                            onClick: () {},
+                            onClick: () async {
+                              model.onClick(
+                                  _directory.departmentName!.toString(), index);
+                            },
                           );
                         },
                         separatorBuilder: (context, index) => const SizedBox(

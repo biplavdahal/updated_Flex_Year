@@ -92,3 +92,4 @@ const auStaffDetail = "staff/details";
 
 //Staff Directory
 const austaffDepartmentIndex = 'department/index';
+const auStaffDepartmentDetailList = 'department/search';

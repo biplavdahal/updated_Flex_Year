@@ -1,12 +1,13 @@
+import 'dart:math';
+
 import 'package:bestfriend/bestfriend.dart';
 import 'package:dio/dio.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
+import 'package:flex_year_tablet/data_models/department_detail_list.data.dart';
 import 'package:flex_year_tablet/data_models/department_list.data.dart';
-import 'package:flex_year_tablet/data_models/error_data.dart';
 import 'package:flex_year_tablet/data_models/staff.data.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/services/user_service.dart';
-import 'package:flutter/material.dart';
 import '../../helper/api_error.helper.dart';
 import '../../helper/api_response.helper.dart';
 import '../app_access.service.dart';
@@ -17,6 +18,20 @@ class UserServiceImplementation implements UserService {
       locator<AuthenticationService>();
   final ApiService _apiService = locator<ApiService>();
   final AppAccessService _appAccessService = locator<AppAccessService>();
+
+  @override
+  List<DepartmentDetailListdata> _details = [];
+  @override
+  List<DepartmentDetailListdata> get details => _details;
+  @override
+  set details(List<DepartmentDetailListdata> value) {
+    _details = value;
+  }
+
+  bool _hasMoreData = false;
+  @override
+  bool get hasMoreData => _hasMoreData;
+
   @override
   Future<void> changePassword({
     required String oldPassword,
@@ -82,6 +97,31 @@ class UserServiceImplementation implements UserService {
       }
       return (_data["data"] as List<dynamic>)
           .map<DepartmentListdata>((e) => DepartmentListdata.fromJson(e))
+          .toList();
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<List<DepartmentDetailListdata>> getDepartmentDetailList(
+      {required Map<String, dynamic> data, required id}) async {
+    try {
+      final _response = await _apiService.post(auStaffDepartmentDetailList, {
+        'access_token': _authenticationService.user!.accessToken,
+        'company_id': _appAccessService.appAccess!.company.companyId,
+        'sortnane': '',
+        'sortno': '',
+        ...data,
+      });
+      final _data = constructResponse(_response.data);
+      if (_data!.containsKey("status") && _data["status"] == false) {
+        throw _data["response"] ?? _data["data"] ?? _data["detail"];
+      }
+
+      return _data['data'][id]['staff']
+          .map<DepartmentDetailListdata>(
+              (e) => DepartmentDetailListdata.fromJson(e))
           .toList();
     } catch (e) {
       throw apiError(e);

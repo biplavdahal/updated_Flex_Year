@@ -27,6 +27,7 @@ import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filt
 import 'package:flex_year_tablet/ui/personal/performance/performance_view.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.dart';
 import 'package:flex_year_tablet/ui/personal/staff_directory/staff_directory.view.dart';
+import 'package:flex_year_tablet/ui/personal/staff_directory/staff_directory_detail/staff_directory_detail.view.dart';
 import 'package:flex_year_tablet/ui/personal/staff_leave/staff_leave.view.dart';
 import 'package:flex_year_tablet/ui/personal/staffs/staffs.view.dart';
 import 'package:flex_year_tablet/ui/personal/upcoming_birthday/upcoming_birthday.view.dart';
@@ -83,4 +84,6 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
       StaffLeaveView.tag: const StaffLeaveView(),
       AllNotificationView.tag: const AllNotificationView(),
       StaffDirectoryView.tag: const StaffDirectoryView(),
+      StaffDirectoryDetailView.tag:
+          StaffDirectoryDetailView(settings.arguments as Arguments?),
     };
