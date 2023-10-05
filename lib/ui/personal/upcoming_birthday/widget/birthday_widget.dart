@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flutter/material.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../../../data_models/all_staff_birthday.data.dart';
 import '../../../../theme.dart';

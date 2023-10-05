@@ -41,7 +41,7 @@ class LeaveServiceImpl implements LeaveService {
 
   @override
   Future<List<LeaveRequestData>> getAllLeaveRequests(
-      {required int limit, bool self = true}) async {
+      {required int limit, bool self = false}) async {
     try {
       final _response = await _apiService.post(auLeaveSearch, {
         'access_token': _authenticationService.user!.accessToken,

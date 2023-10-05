@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bestfriend/bestfriend.dart';
 
 // import 'package:firebase_core/firebase_core.dart';
@@ -7,8 +6,6 @@ import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/app.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/di.dart';
-import 'package:flex_year_tablet/firebase_options.dart';
-import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {

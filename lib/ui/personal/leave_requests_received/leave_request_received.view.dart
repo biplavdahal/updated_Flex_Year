@@ -1,11 +1,9 @@
-import 'package:bestfriend/di.dart';
+
 import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/widgets/request_item.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
-
-import '../dashboard/dashboard.model.dart';
 
 class LeaveRequestReceivedView extends StatelessWidget {
   static String tag = 'leave-request-received-view';

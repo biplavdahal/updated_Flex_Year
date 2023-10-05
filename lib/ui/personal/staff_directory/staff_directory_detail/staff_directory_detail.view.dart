@@ -7,7 +7,6 @@ import 'package:flex_year_tablet/ui/personal/staff_directory/staff_directory_det
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 import '../../../../theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -158,6 +157,7 @@ class _StaffDirectoryDetailViewState extends State<StaffDirectoryDetailView> {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             _buildProfileField(
                                 context: context,
