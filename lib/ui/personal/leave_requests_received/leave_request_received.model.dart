@@ -1,10 +1,7 @@
 import 'package:bestfriend/bestfriend.dart';
-
 import 'package:flex_year_tablet/data_models/leave_request.data.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/leave.service.dart';
-import 'package:flutter/material.dart';
-
 import '../write_leave_request/write_leave_request.arguments.dart';
 import '../write_leave_request/write_leave_request.view.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
@@ -38,7 +35,7 @@ class LeaveRequestReceivedModel extends ViewModel
   Future<void> init() async {
     try {
       setLoading();
-      // _requests = await _leaveService.getAllLeaveRequests();
+      _requests = await _leaveService.getAllLeaveRequests(limit: 100);
       setIdle();
     } catch (e) {
       setIdle();

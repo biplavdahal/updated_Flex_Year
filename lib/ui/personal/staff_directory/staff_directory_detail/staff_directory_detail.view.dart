@@ -155,41 +155,58 @@ class _StaffDirectoryDetailViewState extends State<StaffDirectoryDetailView> {
                     color: Colors.grey.shade100,
                     child: Padding(
                       padding: const EdgeInsets.all(8),
-                      child: Column(
-                        children: [
-                          _buildProfileField(
-                              context: context,
-                              label: "Email Address",
-                              value: model
-                                  .details[model.index ?? 0].emailAddress
-                                  .toString(),
-                              icon: MdiIcons.emailBox),
-                          _buildProfileField(
-                              context: context,
-                              label: "Mobile Number",
-                              value: model.details[model.index ?? 0].mobile
-                                  .toString(),
-                              icon: MdiIcons.phone),
-                          _buildProfileField(
-                              context: context,
-                              label: "Gender",
-                              value: model.details[model.index ?? 0].gender
-                                          .toString() ==
-                                      'M'
-                                  ? 'Male'
-                                  : 'Female',
-                              icon: MdiIcons.genderMaleFemaleVariant),
-                          _buildProfileField(
-                              context: context,
-                              label: "Maritual Status",
-                              value: model.details[model.index ?? 0]
-                                          .maritalStatus
-                                          .toString() ==
-                                      'M'
-                                  ? 'Married'
-                                  : 'Unmarried',
-                              icon: MdiIcons.accountGroup),
-                        ],
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Column(
+                          children: [
+                            _buildProfileField(
+                                context: context,
+                                label: "Email Address",
+                                value: model
+                                    .details[model.index ?? 0].emailAddress
+                                    .toString(),
+                                icon: MdiIcons.emailBox),
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    _launchPhoneCall(
+                                        model.details[model.index ?? 0].mobile
+                                            .toString(),
+                                        context);
+                                  },
+                                  child: _buildProfileField(
+                                      context: context,
+                                      label: "Mobile Number",
+                                      value: model
+                                          .details[model.index ?? 0].mobile
+                                          .toString(),
+                                      icon: MdiIcons.phone,
+                                      color: Colors.green),
+                                ),
+                              ],
+                            ),
+                            _buildProfileField(
+                                context: context,
+                                label: "Gender",
+                                value: model.details[model.index ?? 0].gender
+                                            .toString() ==
+                                        'M'
+                                    ? 'Male'
+                                    : 'Female',
+                                icon: MdiIcons.genderMaleFemaleVariant),
+                            _buildProfileField(
+                                context: context,
+                                label: "Maritual Status",
+                                value: model.details[model.index ?? 0]
+                                            .maritalStatus
+                                            .toString() ==
+                                        'M'
+                                    ? 'Married'
+                                    : 'Unmarried',
+                                icon: MdiIcons.accountGroup),
+                          ],
+                        ),
                       ),
                     ),
                   )
@@ -206,13 +223,17 @@ class _StaffDirectoryDetailViewState extends State<StaffDirectoryDetailView> {
     required String label,
     required String value,
     required IconData icon,
+    Color? color,
     required BuildContext context,
   }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 24),
       child: Row(
         children: [
-          Icon(icon),
+          Icon(
+            icon,
+            color: color,
+          ),
           const SizedBox(width: 5),
           Text(
             "$label : ",
@@ -221,16 +242,7 @@ class _StaffDirectoryDetailViewState extends State<StaffDirectoryDetailView> {
             ),
           ),
           const SizedBox(width: 16),
-          Expanded(
-            child: GestureDetector(
-              onTap: () {
-                if (label == "Mobile Number") {
-                  _launchPhoneCall(value, context);
-                }
-              },
-              child: Text(value),
-            ),
-          ),
+          Text(value),
         ],
       ),
     );
@@ -243,8 +255,11 @@ class _StaffDirectoryDetailViewState extends State<StaffDirectoryDetailView> {
       await launch(url);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Could not launch the phone call.'),
+        const SnackBar(
+          backgroundColor: AppColor.primary,
+          content: Text(
+            'Could not launch the phone call.',
+          ),
         ),
       );
     }
