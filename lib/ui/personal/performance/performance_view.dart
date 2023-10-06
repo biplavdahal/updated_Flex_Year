@@ -113,11 +113,11 @@ class PerformanceView extends StatelessWidget {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            Text(_user.firstName +
+                            Text(_user.firstName.toString() +
                                 " " +
-                                _user.middleName +
+                                _user.middleName.toString() +
                                 " " +
-                                _user.lastName)
+                                _user.lastName.toString())
                           ],
                         ),
                         const Divider(),

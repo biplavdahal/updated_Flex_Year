@@ -18,7 +18,7 @@ class AttendanceCorrectionModel extends ViewModel
 
   int _limit = 10;
 
-  int get id => _user.id;
+  int get id => _user.id!;
 
   set selectedTab(String tab) {
     _selectedTab = tab;

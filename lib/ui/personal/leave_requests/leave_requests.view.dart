@@ -140,6 +140,7 @@ class LeaveRequestView extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return DelayedDisplay(
                                 child: LeaveRequestItem(
+                                  index: index,
                                   request: model.requestsToShow[index],
                                   isBusy: model.isBusyWidget(
                                       model.requestsToShow[index].id),
@@ -168,6 +169,7 @@ class LeaveRequestView extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return DelayedDisplay(
                               child: LeaveRequestItem(
+                                index: index,
                                 request: model.request[index],
                                 isBusy:
                                     model.isBusyWidget(model.request[index].id),

@@ -14,9 +14,11 @@ class LeaveRequestItem extends StatelessWidget {
   final ValueSetter<LeaveRequestData>? onEditTap;
   final ValueSetter<String>? onApprove;
   final ValueSetter<String>? onDecline;
+  final int index;
 
   LeaveRequestItem(
       {Key? key,
+      required this.index,
       required this.request,
       this.isBusy = false,
       this.onRemoveTap,
@@ -59,7 +61,7 @@ class LeaveRequestItem extends StatelessWidget {
                     if (_user.role == 'staff')
                       Expanded(
                         child: Text(
-                          request.title.toString(),
+                          index.toString() + request.title.toString(),
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             color: AppColor.primary,
@@ -72,7 +74,9 @@ class LeaveRequestItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              request.staffName.toString(),
+                              ((index) + 1).toString() +
+                                  " .   " +
+                                  request.staffName.toString(),
                               style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                               ),

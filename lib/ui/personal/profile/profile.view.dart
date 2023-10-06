@@ -108,7 +108,7 @@ class ProfileView extends StatelessWidget {
                                   children: [
                                     _buildProfileField(
                                       label: "E-mail",
-                                      value: model.user.staff.email,
+                                      value: model.user.staff.email.toString(),
                                       icon: MdiIcons.emailOutline,
                                     ),
                                     _buildProfileField(

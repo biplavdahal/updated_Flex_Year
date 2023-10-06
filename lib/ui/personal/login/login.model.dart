@@ -7,7 +7,6 @@ import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
-import '../../../data_models/app_access.data.dart';
 import '../../../services/app_access.service.dart';
 
 class LoginModel extends ViewModel with DialogMixin, SnackbarMixin {

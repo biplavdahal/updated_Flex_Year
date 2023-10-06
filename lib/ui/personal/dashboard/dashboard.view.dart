@@ -269,7 +269,7 @@ class DashboardView extends StatelessWidget {
                                 Text(
                                   _getGreeting() +
                                       " " +
-                                      model.user.staff.firstName,
+                                      model.user.staff.firstName.toString(),
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),

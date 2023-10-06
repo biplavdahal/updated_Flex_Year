@@ -24,11 +24,11 @@ class UserProfileHeader extends StatelessWidget {
       const SizedBox(height: 10),
       Text(
         "   " +
-            _user.firstName +
+            _user.firstName.toString() +
             "  " +
-            _user.middleName +
+            _user.middleName.toString() +
             "" +
-            _user.lastName +
+            _user.lastName.toString() +
             " [ " +
             _users.role.toString() +
             " ]",

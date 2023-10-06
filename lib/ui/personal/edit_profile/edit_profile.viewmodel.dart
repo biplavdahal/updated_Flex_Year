@@ -47,11 +47,15 @@ class EditProfileViewModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   //Actions
   void init() {
-    _firstnameController.text = _authenticationService.user!.staff.firstName;
-    _middlenameController.text = _authenticationService.user!.staff.middleName;
-    _lastnameController.text = _authenticationService.user!.staff.lastName;
-    _mobileController.text = _authenticationService.user!.staff.mobile;
-    _emailController.text = _authenticationService.user!.staff.email;
+    _firstnameController.text =
+        _authenticationService.user!.staff.firstName.toString();
+    _middlenameController.text =
+        _authenticationService.user!.staff.middleName.toString();
+    _lastnameController.text =
+        _authenticationService.user!.staff.lastName.toString();
+    _mobileController.text =
+        _authenticationService.user!.staff.mobile.toString();
+    _emailController.text = _authenticationService.user!.staff.email.toString();
     setIdle();
   }
 

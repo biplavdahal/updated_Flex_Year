@@ -13,13 +13,14 @@ class AttendanceCorrectionReviewModel extends ViewModel with SnackbarMixin {
   List<AttendanceCorrectionReviewData> get reviews => _reviews;
   int _limit = 10;
   final _user = locator<DashboardModel>().user;
-   int get id => _user.id;
+  int get id => _user.id!;
 
   // Actions
   Future<void> init() async {
     try {
       setLoading();
-      _reviews = await _attendanceService.getAttendanceCorrectionReviews(limit:_limit, id: id );
+      _reviews = await _attendanceService.getAttendanceCorrectionReviews(
+          limit: _limit, id: id);
       setIdle();
     } catch (e) {
       setIdle();
