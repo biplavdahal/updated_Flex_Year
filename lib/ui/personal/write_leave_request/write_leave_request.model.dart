@@ -1,22 +1,45 @@
 import 'package:bestfriend/bestfriend.dart';
+import 'package:flex_year_tablet/data_models/client.data.dart';
 import 'package:flex_year_tablet/data_models/get_userstaff.data.dart';
 import 'package:flex_year_tablet/data_models/leave_type.data.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/company.service.dart';
 import 'package:flex_year_tablet/services/leave.service.dart';
+import 'package:flex_year_tablet/ui/personal/staffs/staffs.view.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.arguments.dart';
 import 'package:flutter/material.dart';
+
+import '../../../data_models/company_staff.data.dart';
+import '../../../services/authentication.service.dart';
+import '../staffs/staffs.arguments.dart';
 
 class WriteLeaveRequestModel extends ViewModel with DialogMixin, SnackbarMixin {
   // Services
   final LeaveService _leaveService = locator<LeaveService>();
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
 
   // UI Controllers and keys
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState> get formKey => _formKey;
 
   // Data
+  List<ClientData>? get clients => locator<CompanyService>().clients;
+  List<String>? get clientsLabel => clients?.map((e) => e.name).toList();
+
+  ClientData? _selectedClient;
+  String? _selectedClientLabel;
+  String? get selectedClientLabel => _selectedClientLabel;
+
+  set selectedClientLabel(String? value) {
+    _selectedClientLabel = value;
+    _selectedClient = clients?.firstWhere((e) => e.name == value);
+    setIdle();
+  }
+
+  List<CompanyStaffData> _selectedStaffs = [];
+  List<CompanyStaffData> get selectedStaffs => _selectedStaffs;
 
   late UserStaffData _selectedUserStaffType;
   UserStaffData get selectedUserStaffType => _selectedUserStaffType;
@@ -147,6 +170,23 @@ class WriteLeaveRequestModel extends ViewModel with DialogMixin, SnackbarMixin {
     }
   }
 
+  Future<void> onSelectStaffPressed() async {
+    final _response = await goto(
+      StaffsView.tag,
+      arguments: StaffsArguments(
+        isSelectMode: true,
+        selectedStaffs: _selectedStaffs.toList(),
+        preventSelf: true,
+        clientId: _selectedClient?.clientId.toString(),
+      ),
+    );
+
+    if ((_response as Set<CompanyStaffData>).isNotEmpty) {
+      _selectedStaffs = _response.toList();
+      setIdle();
+    }
+  }
+
   void _validateFields() {
     if (_leaveDateFrom == null) {
       snackbar.displaySnackbar(
@@ -222,7 +262,17 @@ class WriteLeaveRequestModel extends ViewModel with DialogMixin, SnackbarMixin {
     if (_isEditMode) {
       data['id'] = _requestId;
     }
-
+    if (_authenticationService.user!.role.toString().toLowerCase() == 'staff') {
+      data['user_id'] = _authenticationService.user!.id;
+    }
+    if (_authenticationService.user!.role.toString().toLowerCase() != 'staff' &&
+        selectedStaffs.isNotEmpty) {
+      data['user_id'] = _selectedStaffs.first.userId;
+    }
+    if (_authenticationService.user!.role.toString().toLowerCase() != 'staff' &&
+        selectedStaffs.isEmpty) {
+      data['user_id'] = _authenticationService.user!.id;
+    }
     return data;
   }
 }

@@ -22,7 +22,7 @@ class LeaveServiceImpl implements LeaveService {
     try {
       final _response = await _apiService.post(auNewLeaveRequest, {
         ...leaveData,
-        'user_id': _authenticationService.user!.id,
+        // 'user_id': _authenticationService.user!.id,
         'access_token': _authenticationService.user!.accessToken,
         'company_id': _appAccessService.appAccess!.company.companyId,
       });
@@ -55,7 +55,6 @@ class LeaveServiceImpl implements LeaveService {
             if (self) 'staff_id': _authenticationService.user!.id,
         }
       });
-
 
       final data = constructResponse(_response.data);
 

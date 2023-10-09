@@ -99,8 +99,6 @@ class AddAttendanceModel extends ViewModel with SnackbarMixin, DialogMixin {
       ),
     );
 
-    debugPrint(_response.toString());
-
     if ((_response as Set<CompanyStaffData>).isNotEmpty) {
       _selectedStaffs = _response.toList();
       setIdle();
