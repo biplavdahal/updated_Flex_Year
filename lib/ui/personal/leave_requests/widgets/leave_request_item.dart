@@ -61,7 +61,9 @@ class LeaveRequestItem extends StatelessWidget {
                     if (_user.role == 'staff')
                       Expanded(
                         child: Text(
-                          index.toString() + request.title.toString(),
+                          ((index) + 1).toString() +
+                              " .   " +
+                              request.title.toString(),
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             color: AppColor.primary,
@@ -78,11 +80,17 @@ class LeaveRequestItem extends StatelessWidget {
                                   " .   " +
                                   request.staffName.toString(),
                               style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              ),
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColor.primary),
+                            ),
+                            const SizedBox(
+                              height: 10,
                             ),
                             Text(
                               request.title.toString(),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColor.primary),
                             ),
                           ],
                         ),
@@ -114,7 +122,7 @@ class LeaveRequestItem extends StatelessWidget {
                         child: Icon(
                           MdiIcons.close,
                           color: _status[request.status] == "Approved" ||
-                                  request.checkedBy != '0'
+                                  request.checkedBy == '0'
                               ? Colors.red
                               : Colors.grey,
                         ),
@@ -237,17 +245,31 @@ class LeaveRequestItem extends StatelessWidget {
                             request.reason.toString() != 'null'
                                 ? request.reason.toString()
                                 : '-',
-                            // request.reason.isEmpty ? "Not Set" : request.reason,
-                            // style: request.reason.isEmpty
-                            //     ? TextStyle(
-                            //         color: Colors.grey.shade400,
-                            //         fontStyle: FontStyle.italic,
-                            //       )
-                            //     : null,
                           ),
                         ),
                       ],
                     ),
+                    if (_user.role != 'staff')
+                      if (_status[request.status] != "Pending")
+                        DataRow(
+                          cells: [
+                            const DataCell(
+                              Text(
+                                "Checked By",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                request.reason.toString() != 'null'
+                                    ? request.checkedByName.toString()
+                                    : '-',
+                              ),
+                            ),
+                          ],
+                        ),
                   ],
                 ),
               )

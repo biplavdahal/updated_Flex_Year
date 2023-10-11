@@ -1,6 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/client.data.dart';
-import 'package:flex_year_tablet/helper/fy_validator.helper.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_report_filter/attendance_report_filter.model.dart';
@@ -106,7 +105,10 @@ class AttendanceReportFilterView extends StatelessWidget {
                             AttendanceReportFilterType.oneDayReport)
                       _buildFieldForDailyReportFilter(model),
                     if (model.filterType == AttendanceReportFilterType.weekly)
-                      _buildFieldForWeeklyReportFilter(model),
+                      if (model.company.companyPreference != 'N')
+                        _buildFieldForWeeklyReportFilterEnglish(model),
+                    if (model.company.companyPreference == 'N')
+                      _buildFieldForWeeklyReportFilterNepali(model),
                     if (model.filterType == AttendanceReportFilterType.monthly)
                       if (model.isNepaliDate == false)
                         _buildFieldForMonthlyReportFilter(model),
@@ -164,7 +166,8 @@ class AttendanceReportFilterView extends StatelessWidget {
     );
   }
 
-  Widget _buildFieldForWeeklyReportFilter(AttendanceReportFilterModel model) {
+  Widget _buildFieldForWeeklyReportFilterEnglish(
+      AttendanceReportFilterModel model) {
     return Row(
       children: [
         Expanded(
@@ -185,6 +188,28 @@ class AttendanceReportFilterView extends StatelessWidget {
             value: model.weekTo,
           ),
         ),
+      ],
+    );
+  }
+
+  Widget _buildFieldForWeeklyReportFilterNepali(
+      AttendanceReportFilterModel model) {
+    return Row(
+      children: [
+        Expanded(
+          child: FYNepaliDateField(
+              title: "Week From",
+              onNepaliChanged: (value) => model.weekFrom = value!,
+              nepaliFirstDate:
+                  NepaliDateTime.now().subtract(const Duration(days: 365 * 7)),
+              nepaliLastDate: NepaliDateTime.now()),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+            child: FYNepaliDateField(
+          title: "Week To",
+          nepaliValue: model.nepaliDateTo,
+        )),
       ],
     );
   }

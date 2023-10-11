@@ -1,6 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/attendance_correction_review.data.dart';
-import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_correction/attendance_correction.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.arguments.dart';
@@ -18,9 +17,11 @@ class CorrectionItem extends StatelessWidget {
   final ValueSetter<String>? onApprove;
   final ValueSetter<String>? onDecline;
   final bool isBusy;
+  final int index;
 
   CorrectionItem({
     Key? key,
+    required this.index,
     required this.correction,
     this.isBusy = false,
     this.onApprove,
@@ -68,7 +69,11 @@ class CorrectionItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      correction.firstName + " " + correction.lastName,
+                      ((index) + 1).toString() +
+                          " .   " +
+                          correction.firstName +
+                          " " +
+                          correction.lastName,
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                       ),
@@ -177,7 +182,7 @@ class CorrectionItem extends StatelessWidget {
                         DataCell(
                           Text(
                             correction.checkinDatetime != null
-                                ? formattedTime(correction.checkinDatetime!)
+                                ? correction.checkinDatetime!
                                 : "N/A",
                           ),
                         )
@@ -186,7 +191,7 @@ class CorrectionItem extends StatelessWidget {
                     DataRow(
                       cells: [
                         const DataCell(Text(
-                          "CheckOut Date Time :",
+                          "CheckOut Date Time:",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                           ),
@@ -194,7 +199,7 @@ class CorrectionItem extends StatelessWidget {
                         DataCell(
                           Text(
                             correction.checkoutDatetime != null
-                                ? formattedTime(correction.checkoutDatetime!)
+                                ? correction.checkoutDatetime!
                                 : "N/A",
                           ),
                         )
@@ -211,8 +216,7 @@ class CorrectionItem extends StatelessWidget {
                         DataCell(
                           Text(
                             correction.checkinDatetimeRequest != null
-                                ? formattedTime(
-                                    correction.checkinDatetimeRequest!)
+                                ? correction.checkinDatetimeRequest!
                                 : "N/A",
                           ),
                         )
@@ -229,9 +233,25 @@ class CorrectionItem extends StatelessWidget {
                         DataCell(
                           Text(
                             correction.checkoutDatetimeRequest != null
-                                ? formattedTime(
-                                    correction.checkoutDatetimeRequest!)
+                                ? correction.checkoutDatetimeRequest!
                                 : "N/A",
+                          ),
+                        )
+                      ],
+                    ),
+                    DataRow(
+                      cells: [
+                        const DataCell(Text(
+                          "Message:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )),
+                        DataCell(
+                          Text(
+                            correction.requestMessage != null
+                                ? correction.requestMessage!
+                                : "-",
                           ),
                         )
                       ],

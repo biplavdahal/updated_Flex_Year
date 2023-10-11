@@ -13,6 +13,9 @@ import 'package:flex_year_tablet/ui/personal/staffs/staffs.view.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
 
+import '../../../data_models/company.data.dart';
+import '../../../services/app_access.service.dart';
+
 enum AttendanceReportFilterType {
   daily,
   weekly,
@@ -23,6 +26,8 @@ enum AttendanceReportFilterType {
 class AttendanceReportFilterModel extends ViewModel
     with DialogMixin, SnackbarMixin {
   // Data
+  CompanyData get company => locator<AppAccessService>().appAccess!.company;
+
   late AttendanceReportFilterType _filterType;
   AttendanceReportFilterType? get filterType => _filterType;
 
@@ -179,6 +184,9 @@ class AttendanceReportFilterModel extends ViewModel
     setIdle();
   }
 
+  //WEEKELY UI CONTROL
+//ENGLISH
+
   DateTime? _weekFrom;
   DateTime? get weekFrom => _weekFrom;
   DateTime? _weekTo;
@@ -186,6 +194,18 @@ class AttendanceReportFilterModel extends ViewModel
   set weekFrom(DateTime? value) {
     _weekFrom = value;
     _weekTo = _weekFrom?.add(const Duration(days: 6));
+    setIdle();
+  }
+
+  //NEPALI
+  NepaliDateTime? _nepaliWeekFrom;
+  NepaliDateTime? get nepaliWeekFrom => _nepaliWeekFrom;
+  NepaliDateTime? _nepaliWeekTo;
+  NepaliDateTime? get nepaliWeekTo => _nepaliWeekTo;
+
+  set nepaliWeekFrom(NepaliDateTime? value) {
+    _nepaliWeekFrom = value;
+    _nepaliWeekTo = _nepaliWeekFrom?.add(const Duration(days: 6));
     setIdle();
   }
 

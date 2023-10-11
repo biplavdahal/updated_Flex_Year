@@ -77,7 +77,7 @@ class WriteLeaveRequestView extends StatelessWidget {
                                 },
                               ),
                             ActionChip(
-                              label: const Text('Select Staffs'),
+                              label: const Text('Select Employee'),
                               onPressed: model.onSelectStaffPressed,
                               backgroundColor: Colors.green,
                             ),

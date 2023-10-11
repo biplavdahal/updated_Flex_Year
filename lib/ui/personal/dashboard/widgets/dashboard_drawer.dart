@@ -85,18 +85,36 @@ class DashboardDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: const Text(
-                'Leave Request ',
-                style: TextStyle(color: AppColor.primary),
-              ),
-              onTap: () {
-                locator<DashboardModel>().goto(LeaveRequestView.tag);
-              },
-              leading: const Icon(
-                MdiIcons.shieldAirplaneOutline,
-                color: Colors.orange,
-              ),
-            ),
+                title: const Text(
+                  'Leave Request ',
+                  style: TextStyle(color: AppColor.primary),
+                ),
+                onTap: () {
+                  locator<DashboardModel>().goto(LeaveRequestView.tag);
+                },
+                leading: locator<AuthenticationService>()
+                                .user!
+                                .role
+                                ?.toLowerCase() ==
+                            'manager' ||
+                        locator<AuthenticationService>()
+                                .user!
+                                .role
+                                ?.toLowerCase() ==
+                            'admin' ||
+                        locator<AuthenticationService>()
+                                .user!
+                                .role
+                                ?.toLowerCase() ==
+                            'super admin'
+                    ? const Icon(
+                        MdiIcons.airplaneAlert,
+                        color: Colors.orange,
+                      )
+                    : const Icon(
+                        MdiIcons.shieldAirplaneOutline,
+                        color: Colors.orange,
+                      )),
             ListTile(
               title: const Text(
                 'Payroll',
@@ -360,25 +378,25 @@ class DashboardDrawer extends StatelessWidget {
                   color: Colors.blue,
                 ),
               ),
-            if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
-                    'manager' ||
-                locator<AuthenticationService>().user!.role?.toLowerCase() ==
-                    'admin' ||
-                locator<AuthenticationService>().user!.role?.toLowerCase() ==
-                    'super admin')
-              ListTile(
-                title: const Text(
-                  'Leave Request Received',
-                  style: TextStyle(color: Colors.blue),
-                ),
-                onTap: () {
-                  locator<DashboardModel>().goto(LeaveRequestReceivedView.tag);
-                },
-                leading: const Icon(
-                  MdiIcons.airplaneAlert,
-                  color: Colors.blue,
-                ),
-              ),
+            // if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
+            //         'manager' ||
+            //     locator<AuthenticationService>().user!.role?.toLowerCase() ==
+            //         'admin' ||
+            //     locator<AuthenticationService>().user!.role?.toLowerCase() ==
+            //         'super admin')
+            //   ListTile(
+            //     title: const Text(
+            //       'Leave Request Received',
+            //       style: TextStyle(color: Colors.blue),
+            //     ),
+            //     onTap: () {
+            //       locator<DashboardModel>().goto(LeaveRequestReceivedView.tag);
+            //     },
+            //     leading: const Icon(
+            //       MdiIcons.airplaneAlert,
+            //       color: Colors.blue,
+            //     ),
+            //   ),
             if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
                 'manager')
               const Divider(

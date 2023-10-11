@@ -2,7 +2,6 @@ import 'package:bestfriend/ui/view.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_correction/attendance_correction.model.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_correction/widgets/correction_item.dart';
-import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_shimmer.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -83,6 +82,7 @@ class AttendanceCorrectionView extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return DelayedDisplay(
                               child: CorrectionItem(
+                                index: index,
                                 correction: model.correctionsToShow[index],
                                 isBusy: model.isBusyWidget(
                                     model.correctionsToShow[index].id),
@@ -110,6 +110,7 @@ class AttendanceCorrectionView extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return DelayedDisplay(
                                 child: CorrectionItem(
+                                  index: index,
                                   correction: model.corrections[index],
                                   isBusy: model.isBusyWidget(
                                     model.corrections[index].id,

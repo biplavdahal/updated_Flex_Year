@@ -33,188 +33,202 @@ class _StaffDirectoryDetailViewState extends State<StaffDirectoryDetailView> {
       onModelReady: (model) =>
           model.init(widget.arguments as StaffDirectoryArgument),
       builder: (ctx, model, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(model.searchParams['search'][0]['department_name']),
-          ),
-          body: Column(
-            children: [
-              if (model.isLoading) const FYLinearLoader(),
-              if (!model.isLoading)
-                SizedBox(
-                  height: 75,
-                  child: Scrollbar(
-                    controller: _scrollController,
-                    thumbVisibility: true,
-                    scrollbarOrientation: ScrollbarOrientation.bottom,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Scrollable(
-                            controller: _scrollController,
-                            axisDirection: AxisDirection.right,
-                            viewportBuilder: (BuildContext context, mode) {
-                              return ListView.separated(
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: model.details.length,
-                                separatorBuilder: (context, index) =>
-                                    const SizedBox(
-                                  width: 3,
-                                ),
-                                itemBuilder: (context, index) {
-                                  final _report = model.details[index];
-                                  return InkWell(
-                                    onTap: () {
-                                      model.index = index;
-                                      setState(() {});
-                                    },
-                                    child: StaffDirectoryDetailItem(
-                                      _report,
+        if (model.details.isNotEmpty) {
+          model.index ??= 0;
+
+          if (model.index! >= 0 && model.index! < model.details.length) {
+            final _report = model.details[model.index!];
+
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(model.searchParams['search'][0]['department_name']),
+              ),
+              body: Column(
+                children: [
+                  if (model.isLoading) const FYLinearLoader(),
+                  if (!model.isLoading)
+                    SizedBox(
+                      height: 75,
+                      child: Scrollbar(
+                        controller: _scrollController,
+                        thumbVisibility: true,
+                        scrollbarOrientation: ScrollbarOrientation.bottom,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              Scrollable(
+                                controller: _scrollController,
+                                axisDirection: AxisDirection.right,
+                                viewportBuilder: (BuildContext context, mode) {
+                                  return ListView.separated(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: model.details.length,
+                                    separatorBuilder: (context, index) =>
+                                        const SizedBox(
+                                      width: 3,
                                     ),
+                                    itemBuilder: (context, index) {
+                                      final _report = model.details[index];
+                                      return InkWell(
+                                        onTap: () {
+                                          model.index = index;
+                                          setState(() {});
+                                        },
+                                        child: StaffDirectoryDetailItem(
+                                          _report,
+                                        ),
+                                      );
+                                    },
                                   );
                                 },
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(
-                    height: 14,
-                  ),
-                  CircleAvatar(
-                    child: model.details[model.index ?? 0].staffPhoto != null
-                        ? CachedNetworkImage(
-                            imageUrl: auBaseURL +
-                                model.details[model.index ?? 0].staffPhoto!,
-                            errorWidget: (context, url, error) =>
-                                const CircleAvatar(
-                              backgroundColor: AppColor.primary,
-                            ),
-                            placeholder: (context, url) => const Center(
-                              child: CircularProgressIndicator(
-                                color: AppColor.primary,
-                                strokeWidth: 2,
-                              ),
-                            ),
-                          )
-                        : CircleAvatar(
-                            backgroundColor: AppColor.primary,
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text(
-                                    model.details[model.index ?? 0].firstName
-                                        .toString()[0],
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                  ),
-                                  Text(
-                                    model.details[model.index ?? 0].lastName
-                                        .toString()[0],
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                  )
-                                ],
-                              ),
-                            )),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Center(
-                    child: Text(
-                      model.details[model.index ?? 0].firstName.toString() +
-                          "  " +
-                          model.details[model.index ?? 0].middleName
-                              .toString() +
-                          "  " +
-                          model.details[model.index ?? 0].lastName.toString(),
-                      style: const TextStyle(
-                          color: AppColor.primary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 14,
-                  ),
-                  Card(
-                    color: Colors.grey.shade100,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            _buildProfileField(
-                                context: context,
-                                label: "Email Address",
-                                value: model
-                                    .details[model.index ?? 0].emailAddress
-                                    .toString(),
-                                icon: MdiIcons.emailBox),
-                            Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    _launchPhoneCall(
-                                        model.details[model.index ?? 0].mobile
-                                            .toString(),
-                                        context);
-                                  },
-                                  child: _buildProfileField(
-                                      context: context,
-                                      label: "Mobile Number",
-                                      value: model
-                                          .details[model.index ?? 0].mobile
-                                          .toString(),
-                                      icon: MdiIcons.phone,
-                                      color: Colors.green),
-                                ),
-                              ],
-                            ),
-                            _buildProfileField(
-                                context: context,
-                                label: "Gender",
-                                value: model.details[model.index ?? 0].gender
-                                            .toString() ==
-                                        'M'
-                                    ? 'Male'
-                                    : 'Female',
-                                icon: MdiIcons.genderMaleFemaleVariant),
-                            _buildProfileField(
-                                context: context,
-                                label: "Maritual Status",
-                                value: model.details[model.index ?? 0]
-                                            .maritalStatus
-                                            .toString() ==
-                                        'M'
-                                    ? 'Married'
-                                    : 'Unmarried',
-                                icon: MdiIcons.accountGroup),
-                          ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      CircleAvatar(
+                        child: model.details[model.index ?? 0].staffPhoto !=
+                                null
+                            ? CachedNetworkImage(
+                                imageUrl: auBaseURL +
+                                    model.details[model.index ?? 0].staffPhoto!,
+                                errorWidget: (context, url, error) =>
+                                    const CircleAvatar(
+                                  backgroundColor: AppColor.primary,
+                                ),
+                                placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColor.primary,
+                                    strokeWidth: 2,
+                                  ),
+                                ),
+                              )
+                            : CircleAvatar(
+                                backgroundColor: AppColor.primary,
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        model
+                                            .details[model.index ?? 0].firstName
+                                            .toString()[0],
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                      Text(
+                                        model.details[model.index ?? 0].lastName
+                                            .toString()[0],
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      )
+                                    ],
+                                  ),
+                                )),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Center(
+                        child: Text(
+                          model.details[model.index ?? 0].firstName.toString() +
+                              "  " +
+                              model.details[model.index ?? 0].middleName
+                                  .toString() +
+                              "  " +
+                              model.details[model.index ?? 0].lastName
+                                  .toString(),
+                          style: const TextStyle(
+                              color: AppColor.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      Card(
+                        color: Colors.grey.shade100,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                _buildProfileField(
+                                    context: context,
+                                    label: "Email Address",
+                                    value: model
+                                        .details[model.index ?? 0].emailAddress
+                                        .toString(),
+                                    icon: MdiIcons.emailBox),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        _launchPhoneCall(
+                                            model.details[model.index ?? 0]
+                                                .mobile
+                                                .toString(),
+                                            context);
+                                      },
+                                      child: _buildProfileField(
+                                          context: context,
+                                          label: "Mobile Number",
+                                          value: model
+                                              .details[model.index ?? 0].mobile
+                                              .toString(),
+                                          icon: MdiIcons.phone,
+                                          color: Colors.green),
+                                    ),
+                                  ],
+                                ),
+                                _buildProfileField(
+                                    context: context,
+                                    label: "Gender",
+                                    value: model.details[model.index ?? 0]
+                                                .gender
+                                                .toString() ==
+                                            'M'
+                                        ? 'Male'
+                                        : 'Female',
+                                    icon: MdiIcons.genderMaleFemaleVariant),
+                                _buildProfileField(
+                                    context: context,
+                                    label: "Maritual Status",
+                                    value: model.details[model.index ?? 0]
+                                                .maritalStatus
+                                                .toString() ==
+                                            'M'
+                                        ? 'Married'
+                                        : 'Unmarried',
+                                    icon: MdiIcons.accountGroup),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   )
                 ],
-              )
-            ],
-          ),
-        );
+              ),
+            );
+          }
+        }
+        return Container();
       },
     );
   }
