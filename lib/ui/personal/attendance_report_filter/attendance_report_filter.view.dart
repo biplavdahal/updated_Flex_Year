@@ -8,7 +8,6 @@ import 'package:flex_year_tablet/widgets/fy_date_time_field.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
-
 import '../../../widgets/fy_checkbox.widget.dart';
 import '../../../widgets/fy_nepali_date_time_field.widget.dart';
 
@@ -105,10 +104,10 @@ class AttendanceReportFilterView extends StatelessWidget {
                             AttendanceReportFilterType.oneDayReport)
                       _buildFieldForDailyReportFilter(model),
                     if (model.filterType == AttendanceReportFilterType.weekly)
-                      if (model.company.companyPreference != 'N')
-                        _buildFieldForWeeklyReportFilterEnglish(model),
-                    if (model.company.companyPreference == 'N')
-                      _buildFieldForWeeklyReportFilterNepali(model),
+                      // if (model.company.companyPreference != 'N') 
+                      _buildFieldForWeeklyReportFilterEnglish(model),
+                    // if (model.company.companyPreference == 'N')
+                    //   _buildFieldForWeeklyReportFilterNepali(model),
                     if (model.filterType == AttendanceReportFilterType.monthly)
                       if (model.isNepaliDate == false)
                         _buildFieldForMonthlyReportFilter(model),

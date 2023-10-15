@@ -53,7 +53,7 @@ class StaffsView extends StatelessWidget {
 
                             return ListTile(
                               onTap: () => model.addSelectedStaffs(_staff),
-                              title: Text(_staff.fullName),
+                              title: Text('' + _staff.fullName),
                               leading: model.isSelected(_staff)
                                   ? const Icon(Icons.check_box,
                                       color: Colors.green)

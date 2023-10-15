@@ -4,7 +4,6 @@ import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 import '../../dashboard/dashboard.model.dart';
 
 class LeaveRequestItem extends StatelessWidget {

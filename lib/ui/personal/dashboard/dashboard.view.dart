@@ -76,7 +76,7 @@ class DashboardView extends StatelessWidget {
                 ),
                 backgroundColor: AppColor.primary,
                 content: Text("It's $staffNames's birthday today! "),
-                duration: const Duration(seconds: 20),
+                duration: const Duration(seconds: 15),
               ),
             );
           });
@@ -84,59 +84,47 @@ class DashboardView extends StatelessWidget {
 
         return Scaffold(
           backgroundColor: AppColor.primary,
-          drawer: Drawer(
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              width: MediaQuery.of(context).size.width * 0.33,
-              child: const DashboardDrawer(),
-            ),
+          drawer: const Drawer(
+            child: DashboardDrawer(),
           ),
-          body: UpgradeAlert(
-            // upgrader: Upgrader(
-            //     shouldPopScope: () => true,
-            //     canDismissDialog: true,
-            //     durationUntilAlertAgain: const Duration(days: 2),
-            //     dialogStyle: UpgradeDialogStyle.cupertino),
-            child: Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height,
-              margin: const EdgeInsets.only(top: 10),
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
+          body: Container(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height,
+            margin: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade100,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
               ),
-              child: RefreshIndicator(
-                onRefresh: model.init,
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // _buildProgressIndicator(model),
-                      _buildValidAttendance(model),
-                      _buildAttendanceActivities(model),
-                      _buildForgotToCheckout(model),
-                      _buildTodaysAttendance(model),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      _buildUtilities(model, context),
-
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      if (model.monthlyReport.isNotEmpty)
-                        _buildCurrentReport(model),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      _buildCalander(model)
-                    ],
-                  ),
+            ),
+            child: RefreshIndicator(
+              onRefresh: model.init,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // _buildProgressIndicator(model),
+                    _buildValidAttendance(model),
+                    _buildAttendanceActivities(model),
+                    _buildForgotToCheckout(model),
+                    _buildTodaysAttendance(model),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    _buildUtilities(model, context),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    if (model.monthlyReport.isNotEmpty)
+                      _buildCurrentReport(model),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    _buildCalander(model)
+                  ],
                 ),
               ),
             ),
