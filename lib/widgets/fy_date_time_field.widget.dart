@@ -8,9 +8,7 @@ class FYDateField extends StatelessWidget {
   final DateTime? value;
   final String? title;
   final ValueSetter<DateTime?>? onChanged;
-
   final DateTime? firstDate;
-
   final DateTime? lastDate;
   final Icon? icon;
 

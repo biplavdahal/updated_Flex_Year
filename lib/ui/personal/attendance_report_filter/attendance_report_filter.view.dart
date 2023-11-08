@@ -104,7 +104,7 @@ class AttendanceReportFilterView extends StatelessWidget {
                             AttendanceReportFilterType.oneDayReport)
                       _buildFieldForDailyReportFilter(model),
                     if (model.filterType == AttendanceReportFilterType.weekly)
-                      // if (model.company.companyPreference != 'N') 
+                      // if (model.company.companyPreference != 'N')
                       _buildFieldForWeeklyReportFilterEnglish(model),
                     // if (model.company.companyPreference == 'N')
                     //   _buildFieldForWeeklyReportFilterNepali(model),

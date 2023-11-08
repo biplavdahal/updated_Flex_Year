@@ -1,10 +1,8 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/payroll.data.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
-import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/payroll.service.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.argument.dart';
-import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.view.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.argument.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
 
@@ -44,3 +42,4 @@ class PayrollModel extends ViewModel with SnackbarMixin, DialogMixin {
     }
   }
 }
+ 

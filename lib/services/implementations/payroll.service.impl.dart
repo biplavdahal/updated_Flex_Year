@@ -26,8 +26,6 @@ class PayrollServiceImpl implements PayrollService {
         'company_id': _appAccessService.appAccess!.company.companyId,
         'limit': 15,
         'page': 1,
-        'sortnane': "start_date",
-        'sortno': 1,
         'search': {"staff_id": _authenticationService.user!.id, ...data}
       });
       final _data = constructResponse(_response.data);

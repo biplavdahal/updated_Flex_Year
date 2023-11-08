@@ -1,12 +1,14 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/services/payroll.service.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.argument.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.view.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.argument.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
+import '../../../../data_models/company.data.dart';
 import '../../../../data_models/payroll.data.dart';
+import '../../../../services/app_access.service.dart';
 
 class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
   //Service
@@ -16,12 +18,10 @@ class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
   List<PayrollData> _payrolls = [];
   List<PayrollData> get payroll => _payrolls;
 
-  bool _isNepaliDate = false;
-  bool get isNepaliDate => _isNepaliDate;
-  set isNepaliDate(bool value) {
-    _isNepaliDate = value;
-    setIdle();
-  }
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> get formKey => _formKey;
+
+  CompanyData get company => locator<AppAccessService>().appAccess!.company;
 
   List<String> get nepaliMonths => [
         "बैशाख",
@@ -41,10 +41,62 @@ class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
   String get selectedNepaliMonth => _selectedNepaliMonth;
   set selectedNepaliMonth(String value) {
     _selectedNepaliMonth = value;
-    if (_selectedNepaliMonth == "बैशाख") {
-      _dateFrom = DateTime.utc(DateTime.now().year, 1);
-      _dateTo = _dateFrom?.add(const Duration(days: 30));
+
+    int nepaliMonth;
+
+    switch (_selectedNepaliMonth) {
+      case 'बैशाख':
+        nepaliMonth = 1;
+        break;
+      case 'जेष्ठ':
+        nepaliMonth = 2;
+        break;
+      case 'आषाढ़':
+        nepaliMonth = 3;
+        break;
+      case 'श्रावण':
+        nepaliMonth = 4;
+        break;
+      case 'भाद्र':
+        nepaliMonth = 5;
+        break;
+      case 'आश्विन':
+        nepaliMonth = 6;
+        break;
+      case 'कार्तिक':
+        nepaliMonth = 7;
+        break;
+      case 'मंसिर':
+        nepaliMonth = 8;
+        break;
+      case 'पौष':
+        nepaliMonth = 9;
+        break;
+      case 'माघ':
+        nepaliMonth = 10;
+        break;
+      case 'फाल्गुन':
+        nepaliMonth = 11;
+        break;
+      case 'चैत्र':
+        nepaliMonth = 12;
+        break;
+      default:
+        nepaliMonth = NepaliDateTime.now().month;
     }
+
+    final NepaliDateTime startNepaliDate =
+        NepaliDateTime(NepaliDateTime.now().year, nepaliMonth, 1);
+
+    final NepaliDateTime endNepaliDate = NepaliDateTime(
+        NepaliDateTime.now().year,
+        nepaliMonth,
+        NepaliDateTime(NepaliDateTime.now().year, nepaliMonth, 1).totalDays);
+
+    _nepaliDateFrom = startNepaliDate;
+    _nepaliDateTo = endNepaliDate;
+
+    setIdle();
   }
 
   List<String> get months => [
@@ -124,16 +176,21 @@ class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
   NepaliDateTime? get nepaliDateFrom => _nepaliDateFrom;
   NepaliDateTime? _nepaliDateTo;
   NepaliDateTime? get nepaliDateTo => _nepaliDateTo;
+
   set nepaliDateFrom(NepaliDateTime? value) {
     _nepaliDateFrom = value;
     _nepaliDateTo = _nepaliDateFrom?.add(const Duration(days: 31));
     setIdle();
   }
 
+  set nepaliDateTo(NepaliDateTime? value) {
+    _nepaliDateTo = value;
+    setIdle();
+  }
+
   //Action
   Future<void> init(PayrollFilterArguments arguments) async {
     _returnBack = arguments.returnBack;
-    _selectedMonth = months[DateTime.now().month - 1];
     _selectedNepaliMonth = nepaliMonths[DateTime.now().month - 1];
     setIdle();
   }
@@ -141,10 +198,8 @@ class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
   void onViewPayrollPressed() {
     Map<String, dynamic> _searchParams = {};
 
-    _searchParams['date_from'] =
-        "${DateTime.now().year}-${(months.indexOf(_selectedMonth) + 1).toString().length == 1 ? '0${months.indexOf(_selectedMonth) + 1}' : months.indexOf(_selectedMonth) + 1}-01";
-    _searchParams['date_to'] =
-        lastDateOfMonth(months.indexOf(_selectedMonth) + 1);
+    _searchParams['date_from'] = nepaliDateFrom;
+    _searchParams['date_to'] = nepaliDateTo;
 
     // if(isNepaliDate ==true){
     //   _searchParams['date_from'] =

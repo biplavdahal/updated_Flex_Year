@@ -1,16 +1,10 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.argument.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.model.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/widget/payroll_item.dart';
-import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
-import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
-import 'package:flex_year_tablet/widgets/fy_date_time_field.widget.dart';
-import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 
 class PayrollView extends StatelessWidget {
@@ -62,7 +56,7 @@ class PayrollView extends StatelessWidget {
         children: [
           if (model.payroll.isNotEmpty)
             Text(
-              'Payroll report of ${getMonthStringFromDateString(model.searchParams['date_from'])}.',
+              'Payroll report of ${(model.searchParams['date_from'] - model.searchParams['date_to'])}.',
               style: const TextStyle(color: AppColor.secondaryTextColor),
             ),
         ],
