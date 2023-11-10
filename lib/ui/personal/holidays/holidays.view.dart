@@ -1,5 +1,3 @@
-
-
 import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/widgets/holiday_item.dart';
@@ -16,6 +14,7 @@ class HolidaysView extends StatelessWidget {
   Widget build(BuildContext context) {
     return View<HolidaysModel>(
       onModelReady: (model) => model.init(),
+      killViewOnClose: false,
       builder: (ctx, model, child) {
         return Scaffold(
           appBar: AppBar(

@@ -97,9 +97,8 @@ class PayrollFilterView extends StatelessWidget {
           items: model.nepaliMonths,
           labels: model.nepaliMonths,
           value: model.selectedNepaliMonth,
-          title: "महिना",
+          title: "Month",
           onChanged: (value) => model.selectedNepaliMonth = value!,
-        
         )),
       ],
     );
@@ -137,7 +136,7 @@ class PayrollFilterView extends StatelessWidget {
           key: model.formKey,
           child: Expanded(
             child: FYNepaliDateField(
-              title: "मिति देखि :",
+              title: "Date From :",
               onNepaliChanged: (value) => model.nepaliDateFrom = value!,
               nepaliValue: model.nepaliDateFrom,
               nepaliFirstDate: NepaliDateTime.now().subtract(
@@ -152,7 +151,7 @@ class PayrollFilterView extends StatelessWidget {
         ),
         Expanded(
           child: FYNepaliDateField(
-            title: "मिति सम्म :",
+            title: "Date To :",
             onNepaliChanged: (value) => model.nepaliDateTo = value!,
             nepaliValue: model.nepaliDateTo,
           ),

@@ -43,6 +43,7 @@ class PayrollItem extends StatelessWidget {
               dividerColor: Colors.transparent,
             ),
             child: ExpansionTile(
+                initiallyExpanded: true,
                 iconColor: AppColor.primary,
                 textColor: AppColor.primary,
                 childrenPadding: const EdgeInsets.only(
@@ -53,17 +54,21 @@ class PayrollItem extends StatelessWidget {
                   left: 16,
                   right: 16,
                 ),
-                subtitle: Text(
-                  'Salary: ${payroll.salary}',
-                  style: TextStyle(color: _statusColor[payroll.status]),
-                ),
+                // subtitle: Text(
+                //   'Salary: ${payroll.salary}',
+                //   style: TextStyle(color: _statusColor[payroll.status]),
+                // ),
                 title: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
                       Expanded(
                         child: Text(
-                          payroll.firstName + " " + payroll.lastName,
+                          payroll.firstName +
+                              " " +
+                              payroll.middleName +
+                              ' ' +
+                              payroll.lastName,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -73,10 +78,7 @@ class PayrollItem extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerRight,
                         child: GestureDetector(
-                          onTap: () async{
-                          
-                        
-                          },
+                          onTap: () async {},
                           child: const Icon(
                             Icons.file_download,
                             color: Colors.green,
@@ -91,7 +93,7 @@ class PayrollItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text("Basic Salary"),
-                      Text(payroll.salary),
+                      Text(payroll.salary.toString()),
                     ],
                   ),
                   const Divider(),
@@ -99,23 +101,43 @@ class PayrollItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('Start Date'),
-                      Text(payroll.startDate),
+                      Text(payroll.startDate.toString()),
                     ],
                   ),
                   const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text('Addition'),
-                      Text("Null"),
+                    children: [
+                      const Text('Salary Period'),
+                      Text(payroll.salaryPeriod.toString()),
                     ],
                   ),
                   const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text('Deduction'),
-                      Text("Null"),
+                    children: [
+                      const Text('Allowance'),
+                      Text(payroll.allowance),
+                    ],
+                  ),
+                  const Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Total Addition'),
+                      Text(payroll.totalAddition.toString() != 'null'
+                          ? payroll.totalAddition.toString()
+                          : '- -'),
+                    ],
+                  ),
+                  const Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Total Deduction'),
+                      Text(payroll.totalDeduction.toString() != 'null'
+                          ? payroll.totalDeduction.toString()
+                          : '- -'),
                     ],
                   ),
                   const Divider(),
@@ -123,7 +145,7 @@ class PayrollItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('End Date'),
-                      Text(payroll.endDate),
+                      Text(payroll.endDate.toString()),
                     ],
                   ),
                   const Divider(),
@@ -139,7 +161,7 @@ class PayrollItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('Total Tax'),
-                      Text(payroll.totalTax),
+                      Text(payroll.totalTax.toString()),
                     ],
                   ),
                   const Divider(),

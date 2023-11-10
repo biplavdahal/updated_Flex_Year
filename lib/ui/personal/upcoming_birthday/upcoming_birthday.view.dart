@@ -13,6 +13,7 @@ class AllStaffBirthdayView extends StatelessWidget {
   Widget build(BuildContext context) {
     return View<AllStaffBirthdayModel>(
       onModelReady: (model) => model.init(),
+      killViewOnClose: false,
       builder: (ctx, model, child) {
         return Scaffold(
           appBar: AppBar(

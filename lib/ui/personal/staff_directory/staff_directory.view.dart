@@ -13,6 +13,7 @@ class StaffDirectoryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return View<StaffDirectoryViewModel>(
       onModelReady: (model) => model.init(),
+      killViewOnClose: false,
       builder: (ctx, model, child) {
         return Scaffold(
           appBar: AppBar(

@@ -2,7 +2,6 @@ import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/ui/personal/notifications/notification.model.dart';
 import 'package:flex_year_tablet/ui/personal/notifications/widget/notification.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AllNotificationView extends StatelessWidget {
@@ -14,6 +13,7 @@ class AllNotificationView extends StatelessWidget {
   Widget build(BuildContext context) {
     return View<AllNotificationModel>(
         onModelReady: (model) => model.init(),
+        killViewOnClose: false,
         builder: (ctx, model, child) {
           return Scaffold(
             appBar: AppBar(

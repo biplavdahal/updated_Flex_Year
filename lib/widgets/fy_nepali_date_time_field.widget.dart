@@ -54,7 +54,7 @@ class FYNepaliDateField extends StatelessWidget {
                   padding: const EdgeInsets.all(5.0),
                   child: Text(
                     nepaliValue != null
-                        ? (nepaliValue.toString())
+                        ? (nepaliValue.toString().substring(0, 10))
                         : "Select date...",
                     style: nepaliValue == null
                         ? const TextStyle(

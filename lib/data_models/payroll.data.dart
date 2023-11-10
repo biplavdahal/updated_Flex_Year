@@ -1,5 +1,4 @@
 // ignore_for_file: invalid_annotation_target
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'payroll.data.freezed.dart';
@@ -20,6 +19,9 @@ class PayrollData with _$PayrollData {
     @JsonKey(name: 'status') required String status,
     @JsonKey(name: 'total_tax') required String totalTax,
     @JsonKey(name: 'working_salary') required String workingSalary,
+    @JsonKey(name: 'totalAddition') String? totalAddition,
+    @JsonKey(name: 'totalDeduction') String? totalDeduction,
+    @JsonKey(name: 'allowance') required String allowance,
   }) = _PayrollData;
 
   factory PayrollData.fromJson(Map<String, dynamic> json) =>

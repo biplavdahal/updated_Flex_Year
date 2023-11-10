@@ -5,7 +5,7 @@ import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.model.dart'
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/widget/payroll_item.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
+import 'package:flutter/rendering.dart';
 
 class PayrollView extends StatelessWidget {
   static String tag = 'payroll-view';
@@ -56,7 +56,7 @@ class PayrollView extends StatelessWidget {
         children: [
           if (model.payroll.isNotEmpty)
             Text(
-              'Payroll report of ${(model.searchParams['date_from'] - model.searchParams['date_to'])}.',
+              'Payroll report of ${model.month}',
               style: const TextStyle(color: AppColor.secondaryTextColor),
             ),
         ],
@@ -68,22 +68,27 @@ class PayrollView extends StatelessWidget {
     if (model.isLoading) {
       return const FYLinearLoader();
     } else if (model.payroll.isNotEmpty) {
-      return ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          final _payroll = model.payroll[index];
-          return PayrollItem(payroll: _payroll);
-        },
-        itemCount: model.payroll.length,
+      return ShrinkWrappingViewport(
+        offset: ViewportOffset.zero(),
+        slivers: [
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final _payroll = model.payroll[index];
+                return PayrollItem(payroll: _payroll);
+              },
+              childCount: model.payroll.length,
+            ),
+          ),
+        ],
       );
     } else {
-      return Expanded(
-          child: Center(
+      return Center(
         child: Image.asset(
           "assets/images/oops.png",
           width: 300,
         ),
-      ));
+      );
     }
   }
 }

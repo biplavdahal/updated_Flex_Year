@@ -21,6 +21,8 @@ class _CalanderViewState extends State<CalanderView> {
   Widget build(BuildContext context) {
     return View<CalanderModel>(
       enableTouchRepeal: true,
+      killViewOnClose: false,
+      
       onModelReady: (model) async {
         await model.init();
       },
@@ -33,6 +35,7 @@ class _CalanderViewState extends State<CalanderView> {
               padding: const EdgeInsets.all(4),
               child: FutureBuilder<void>(
                 future: model.init(),
+                
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const FYLinearLoader();

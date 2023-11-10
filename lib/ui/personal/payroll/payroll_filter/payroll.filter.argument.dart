@@ -1,7 +1,8 @@
 import 'package:bestfriend/bestfriend.dart';
 
 class PayrollFilterArguments extends Arguments {
-final bool returnBack;
+  final bool returnBack;
+  
 
-  PayrollFilterArguments({ required this.returnBack });
+  PayrollFilterArguments({required this.returnBack,});
 }

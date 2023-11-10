@@ -24,18 +24,18 @@ class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
   CompanyData get company => locator<AppAccessService>().appAccess!.company;
 
   List<String> get nepaliMonths => [
-        "बैशाख",
-        "जेष्ठ",
-        "आषाढ़",
-        "श्रावण",
-        "भाद्र",
-        "आश्विन",
-        "कार्तिक",
-        "मंसिर",
-        "पौष",
-        "माघ",
-        "फाल्गुन",
-        "चैत्र",
+        "Baisakh",
+        "Jestha",
+        "Asadh",
+        "Shrawan",
+        "Bhadra",
+        "Ashoj",
+        "Kartik",
+        "Mangshir",
+        "Poush",
+        "Magh",
+        "Falgun",
+        "Chaitra",
       ];
   late String _selectedNepaliMonth;
   String get selectedNepaliMonth => _selectedNepaliMonth;
@@ -45,40 +45,40 @@ class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
     int nepaliMonth;
 
     switch (_selectedNepaliMonth) {
-      case 'बैशाख':
+      case 'Baisakh':
         nepaliMonth = 1;
         break;
-      case 'जेष्ठ':
+      case 'Jestha':
         nepaliMonth = 2;
         break;
-      case 'आषाढ़':
+      case 'Asadh':
         nepaliMonth = 3;
         break;
-      case 'श्रावण':
+      case 'Shrawan':
         nepaliMonth = 4;
         break;
-      case 'भाद्र':
+      case 'Bhadra':
         nepaliMonth = 5;
         break;
-      case 'आश्विन':
+      case 'Ashoj':
         nepaliMonth = 6;
         break;
-      case 'कार्तिक':
+      case 'Kartik':
         nepaliMonth = 7;
         break;
-      case 'मंसिर':
+      case 'Mangshir':
         nepaliMonth = 8;
         break;
-      case 'पौष':
+      case 'Poush':
         nepaliMonth = 9;
         break;
-      case 'माघ':
+      case 'Magh':
         nepaliMonth = 10;
         break;
-      case 'फाल्गुन':
+      case 'Falgun':
         nepaliMonth = 11;
         break;
-      case 'चैत्र':
+      case 'Chaitra':
         nepaliMonth = 12;
         break;
       default:
@@ -191,6 +191,7 @@ class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
   //Action
   Future<void> init(PayrollFilterArguments arguments) async {
     _returnBack = arguments.returnBack;
+    
     _selectedNepaliMonth = nepaliMonths[DateTime.now().month - 1];
     setIdle();
   }
@@ -198,18 +199,20 @@ class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
   void onViewPayrollPressed() {
     Map<String, dynamic> _searchParams = {};
 
-    _searchParams['date_from'] = nepaliDateFrom;
-    _searchParams['date_to'] = nepaliDateTo;
+    _searchParams['date_from'] =
+        nepaliDateFrom?.toDateTime().toString().substring(0, 10);
+    _searchParams['date_to'] =
+        nepaliDateTo?.toDateTime().toString().substring(0, 10);
 
-    // if(isNepaliDate ==true){
-    //   _searchParams['date_from'] =
-    // }
+    // // if(isNepaliDate ==true){
+    // //   _searchParams['date_from'] =
+    // // }
 
     if (_returnBack) {
-      goBack(result: PayrollArgument(searchParams: _searchParams));
+      goBack(result: PayrollArgument(searchParams: _searchParams, month: selectedNepaliMonth));
     } else {
       gotoAndPop(PayrollView.tag,
-          arguments: PayrollArgument(searchParams: _searchParams));
+          arguments: PayrollArgument(searchParams: _searchParams, month: selectedNepaliMonth));
     }
   }
 }

@@ -6,7 +6,6 @@ import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.argument.da
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.argument.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
 
-
 class PayrollModel extends ViewModel with SnackbarMixin, DialogMixin {
   //Service
   final PayrollService _payrollService = locator<PayrollService>();
@@ -15,11 +14,16 @@ class PayrollModel extends ViewModel with SnackbarMixin, DialogMixin {
   late Map<String, dynamic> _searchParams;
   Map<String, dynamic> get searchParams => _searchParams;
 
+  late String _month;
+  String get month => _month;
+
   List<PayrollData> _payrolls = [];
   List<PayrollData> get payroll => _payrolls;
 
   Future<void> init(PayrollArgument argument) async {
     _searchParams = argument.searchParams;
+    _month = argument.month;
+
     setIdle();
 
     try {
@@ -35,11 +39,12 @@ class PayrollModel extends ViewModel with SnackbarMixin, DialogMixin {
 
   Future<void> onSubmitPressed() async {
     final response = await goto(PayrollFilterView.tag,
-        arguments: PayrollFilterArguments(returnBack: false));
+        arguments: PayrollFilterArguments(
+          returnBack: false,
+        ));
 
     if (response != null) {
       init(response);
     }
   }
 }
- 
