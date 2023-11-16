@@ -17,7 +17,7 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return View<ProfileModel>(
       onModelReady: (model) => model.init(),
-      killViewOnClose: true,
+      killViewOnClose: false,
       builder: (ctx, model, child) {
         return Scaffold(
           backgroundColor: AppColor.primary,

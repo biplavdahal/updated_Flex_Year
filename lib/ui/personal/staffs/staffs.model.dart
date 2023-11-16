@@ -39,10 +39,6 @@ class StaffsModel extends ViewModel with SnackbarMixin {
   final Set<CompanyStaffData> _selectedStaffs = {};
   Set<CompanyStaffData> get selectedStaffs => _selectedStaffs;
   void addSelectedStaffs(CompanyStaffData staff) {
-    debugPrint(staff.toString());
-    debugPrint(locator<AuthenticationService>().user!.id.toString());
-    debugPrint(_preventSelf.toString());
-
     if (staff.userId == locator<AuthenticationService>().user!.id.toString() &&
         _preventSelf) {
       snackbar.displaySnackbar(

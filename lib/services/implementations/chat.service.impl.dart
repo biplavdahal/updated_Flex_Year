@@ -38,7 +38,6 @@ class ChatServiceImpl implements ChatService {
       final data = constructResponse(_response.data);
 
       if (data!.containsKey("status") && data["status"] == false) {
-        debugPrint(data.toString());
         throw data["response"];
       }
 

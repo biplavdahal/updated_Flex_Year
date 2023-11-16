@@ -21,16 +21,18 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
     return Card(
       color: report.weekend.isNotEmpty
           ? const Color.fromARGB(255, 139, 213, 245)
-          : report.holiday != null
+          : report.leaveType.toString().isNotEmpty
               ? Colors.amber.shade100
-              : (report.checkInTime == "00:00" &&
-                      report.checkOutTime == "00:00")
-                  ? Colors.white70
-                  : (report.checkInTime.isNotEmpty &&
-                          report.checkOutTime == "00:00" &&
-                          report.checkInTime != "00:00")
-                      ? Colors.grey.shade300
-                      : _getCardColor(report.totalWorkingHours),
+              : report.holiday != null
+                  ? Colors.amber.shade100
+                  : (report.checkInTime == "00:00" &&
+                          report.checkOutTime == "00:00")
+                      ? Colors.white70
+                      : (report.checkInTime.isNotEmpty &&
+                              report.checkOutTime == "00:00" &&
+                              report.checkInTime != "00:00")
+                          ? Colors.grey.shade300
+                          : _getCardColor(report.totalWorkingHours),
       margin: const EdgeInsets.only(bottom: 5),
       child: Padding(
         padding: const EdgeInsets.all(5.0),
@@ -80,26 +82,35 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
                 Text(
                   report.weekend.isNotEmpty
                       ? "Weekend"
-                      : report.holiday != null
-                          ? report.holiday.toString()
-                          : (report.checkInTime.isNotEmpty &&
-                                  report.checkOutTime == "00:00" &&
-                                  report.checkInTime != "00:00")
-                              ? ''
-                              : report.totalWorkingHours == '0.00'
-                                  ? 'Absent'
-                                  : convertIntoHrs(report.totalWorkingHours),
+                      : report.leaveType.toString().isNotEmpty ||
+                              report.leaveTime.toString().isNotEmpty
+                          ? report.leaveType.toString() +
+                              " " +
+                              report.leaveTime.toString() +
+                              " Leave"
+                          : report.holiday != null
+                              ? report.holiday.toString()
+                              : (report.checkInTime.isNotEmpty &&
+                                      report.checkOutTime == "00:00" &&
+                                      report.checkInTime != "00:00")
+                                  ? ''
+                                  : report.totalWorkingHours == '0.00'
+                                      ? 'Absent'
+                                      : convertIntoHrs(
+                                          report.totalWorkingHours),
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                     color: report.weekend.isNotEmpty
                         ? AppColor.primary
-                        : report.holiday != null
+                        : report.leaveType.toString().isNotEmpty
                             ? AppColor.primary
-                            : (report.checkInTime.isNotEmpty &&
-                                    report.checkOutTime.isEmpty)
+                            : report.holiday != null
                                 ? AppColor.primary
-                                : _getTextColor(report.totalWorkingHours),
+                                : (report.checkInTime.isNotEmpty &&
+                                        report.checkOutTime.isEmpty)
+                                    ? AppColor.primary
+                                    : _getTextColor(report.totalWorkingHours),
                   ),
                 ),
               ],

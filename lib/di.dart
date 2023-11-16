@@ -90,7 +90,6 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => LoginModel());
   locator.registerFactory(() => AppAccessModel());
   locator.registerFactory(() => DashboardModel());
-  locator.registerFactory(() => ProfileModel());
   locator.registerFactory(() => WriteLeaveRequestModel());
   locator.registerFactory(() => AttendanceReportModel());
   locator.registerFactory(() => AttendanceReportFilterModel());
@@ -122,12 +121,13 @@ Future<void> setupLocator() async {
 
   locator.registerFactory(() => PresentStaffModel());
   locator.registerFactory(() => StaffLeavemodel());
+    locator.registerFactory(() => StaffDirectoryDetailViewModel());
 
   // Unkillable models
   locator.registerLazySingleton(() => AllStaffBirthdayModel());
-  locator.registerLazySingleton(() => StaffDirectoryDetailViewModel());
   locator.registerLazySingleton(() => StaffDirectoryViewModel());
   locator.registerLazySingleton(() => HolidaysModel());
   locator.registerLazySingleton(() => CalanderModel());
   locator.registerLazySingleton(() => AllNotificationModel());
+  locator.registerLazySingleton(() => ProfileModel());
 }

@@ -38,7 +38,6 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:upgrader/upgrader.dart';
 import '../attendance_correction/attendance_correction.view.dart';
 import '../holidays/holidays.view.dart';
 import '../payroll/payroll_filter/payroll.filter.argument.dart';

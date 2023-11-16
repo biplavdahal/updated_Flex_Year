@@ -41,7 +41,6 @@ class CompanyServiceImpl implements CompanyService {
       await _fetchClients();
       // await _fetchUserStaffData();
 
-      debugPrint(_leaveTypes.toString());
     } catch (e) {
       throw apiError(e);
     }

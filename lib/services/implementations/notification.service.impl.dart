@@ -163,7 +163,6 @@ class NotificationServiceImplementation implements NotificationService {
         'date_format': 'Nepali'
       });
       final data = constructResponse(_response.data);
-      debugPrint(data.toString());
 
       if (data!.containsKey("status") && data["status"] == false) {
         throw data["response"];

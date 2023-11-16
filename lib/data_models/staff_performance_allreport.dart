@@ -1,7 +1,5 @@
 // ignore_for_file: invalid_annotation_target
 
-import 'dart:convert';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'staff_performance_allreport.freezed.dart';
@@ -13,19 +11,17 @@ class StaffPerformanceAllReportData with _$StaffPerformanceAllReportData {
     @JsonKey(name: 'year') String? year,
     @JsonKey(name: 'month') String? month,
     @JsonKey(name: 'remarks') String? remarks,
-    @JsonKey(name: 'status') String? status,
-    @JsonKey(name: 'update_by') int? updateBy,
-    @JsonKey(name: 'job_know') int? jobKnow,
+    @JsonKey(name: 'job_know') String? jobKnow,
     @JsonKey(name: 'job_know_commrnt') String? jobknowCommrnt,
-    @JsonKey(name: 'quality') int? quality,
+    @JsonKey(name: 'quality') String? quality,
     @JsonKey(name: 'quality_comment') String? qualityComment,
-    @JsonKey(name: 'punctuality') int? punctuality,
+    @JsonKey(name: 'punctuality') String? punctuality,
     @JsonKey(name: 'punctuality_comment') String? punctualityComment,
-    @JsonKey(name: 'productivity') int? productivity,
+    @JsonKey(name: 'productivity') String? productivity,
     @JsonKey(name: 'productivity_comment') String? productivityComment,
-    @JsonKey(name: 'communication') int? communication,
+    @JsonKey(name: 'communication') String? communication,
     @JsonKey(name: 'communication_comment') String? communicationComment,
-    @JsonKey(name: 'dependability') int? dependability,
+    @JsonKey(name: 'dependability') String? dependability,
     @JsonKey(name: 'dependability_comment') String? dependabilityComment,
     @JsonKey(name: 'additional_comment') String? additionalComment,
     @JsonKey(name: 'goal_comment') String? goalComment,

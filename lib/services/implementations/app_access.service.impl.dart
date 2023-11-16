@@ -110,7 +110,6 @@ class AppAccessServiceImplementation implements AppAccessService {
         'company_id': data['data']['company_id'].toString(),
       });
 
-      debugPrint(_client.toString());
 
       await _sharedPreferenceService.set<String>(
         pfClientData,

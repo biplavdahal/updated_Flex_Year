@@ -112,8 +112,6 @@ class LeaveServiceImpl implements LeaveService {
 
       final data = constructResponse(_response.data);
 
-      debugPrint(data.toString());
-
       if (data!.containsKey("status") && data["status"] == false) {
         throw data["response"] ?? data["detail"] ?? data["data"];
       }

@@ -155,7 +155,6 @@ class AttendanceServiceImpl implements AttendanceService {
       );
 
       final _data = constructResponse(_response.data);
-
       if (_data!.containsKey("status") && _data["status"] == false) {
         throw _data["response"] ?? _data["data"] ?? _data["detail"];
       }
@@ -220,15 +219,6 @@ class AttendanceServiceImpl implements AttendanceService {
       }, params: {
         'access_token': _authenticationService.user!.accessToken,
       });
-
-      debugPrint(jsonEncode({
-        'user': [_authenticationService.user!.id],
-        'company_id': _appAccessService.appAccess!.company.companyId,
-        'page': 1,
-        'limit': 10000,
-        'access_token': _authenticationService.user!.accessToken,
-        ...data,
-      }));
 
       final _data = constructResponse(_response.data);
 

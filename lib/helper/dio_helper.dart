@@ -26,7 +26,6 @@ ErrorData dioError(DioError e) {
       }
     }
   } else {
-    debugPrint("e: ${e.response?.data}");
     data = {
       "response":
           "Could not talk to server at this time. Check your internet connection and try again later!",
