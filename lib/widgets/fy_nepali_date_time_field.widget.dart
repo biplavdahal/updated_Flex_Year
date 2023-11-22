@@ -39,9 +39,9 @@ class FYNepaliDateField extends StatelessWidget {
             height: 8,
           ),
         GestureDetector(
-          onTap: () {
-            _showDatePicker(context);
-          },
+          // onTap: () {
+          //   _showDatePicker(context);
+          // },
           child: InputDecorator(
             decoration: InputDecoration(
               border: OutlineInputBorder(

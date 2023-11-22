@@ -1,11 +1,13 @@
 import 'dart:async';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bestfriend/bestfriend.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flex_year_tablet/app.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/di.dart';
+import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
@@ -72,13 +74,10 @@ class LocaleProvider extends ChangeNotifier {
   }
 }
 
-
-
-// class FireBaseAPI {
-//   final _firebaseMessaging = FirebaseMessaging.instance;
-//   Future<void> initNotifications() async {
-//     await _firebaseMessaging.requestPermission();
-//     final FCMToken = await _firebaseMessaging.getToken();
-//     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
-//   }
-// }
+class FireBaseAPI {
+  final _firebaseMessaging = FirebaseMessaging.instance;
+  Future<void> initNotifications() async {
+    await _firebaseMessaging.requestPermission();
+    final FCMToken = await _firebaseMessaging.getToken();
+  }
+}

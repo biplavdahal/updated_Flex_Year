@@ -1,4 +1,5 @@
 // import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flex_year_tablet/data_models/notice.data.dart';
 import 'package:flex_year_tablet/data_models/notification.data.dart';
 
@@ -14,17 +15,27 @@ abstract class NotificationService {
   /// Get permission [Apple/Web]
   Future<bool> getPermission();
 
-  // /// Listen to foreground notification
-  // Stream<RemoteMessage> onNotificationArrive();
+  /// Update FCM Token into user's firestore document.
+  Future<void> updateFcmToken(String accessToken, int userId);
 
-  // /// Listens to notification that was clicked to open app
-  // Stream<RemoteMessage> onMessageOpenedApp();
+  /// Listen to foreground notification
+  Stream<RemoteMessage> onNotificationArrive();
 
-  // /// Gets initial notification
-  // Future<RemoteMessage?> getInitialMessage();
+  /// Listens to notification that was clicked to open app
+  Stream<RemoteMessage> onMessageOpenedApp();
+
+  /// Gets initial notification
+  Future<RemoteMessage?> getInitialMessage();
 
   /// Notify locally
-  Future<void> showNotification({String? title, String? body, String? payload});
+  Future<void> showNotification(
+      {required String title, required String body, String? payload});
+
+  // Show message notification
+  Future<void> showMessageNotification({
+    required String senderName,
+    required Map<String, dynamic> payload,
+  });
 
   /// Cancel all notifications
   Future<void> cancelNotification([String? key]);

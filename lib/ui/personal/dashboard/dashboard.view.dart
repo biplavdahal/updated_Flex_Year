@@ -78,7 +78,7 @@ class DashboardView extends StatelessWidget {
                 duration: const Duration(seconds: 15),
               ),
             );
-          });
+          });  
         }
 
         return Scaffold(
@@ -198,23 +198,29 @@ class DashboardView extends StatelessWidget {
               child: Container(
                 color: AppColor.primary,
                 child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(6.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            Expanded(
-                              child: Text(
-                                formattedDate(
-                                  model.currentDateTime,
-                                ),
+                            if (model.company.companyPreference == 'N')
+                              Text(
+                                "  " +
+                                    formattedNepaliDate(model.currentDateTime),
                                 style: const TextStyle(
                                   color: Colors.white,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
-                            ),
+                            if (model.company.companyPreference != 'N')
+                              Text(
+                                "  " + formattedDate(model.currentDateTime),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
                             Expanded(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -245,7 +251,7 @@ class DashboardView extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 15,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -268,7 +274,7 @@ class DashboardView extends StatelessWidget {
                       ],
                     )),
               ),
-              preferredSize: const Size(double.infinity, 60),
+              preferredSize: const Size(double.infinity, 70),
             ),
             actions: [
               IconButton(
@@ -317,7 +323,6 @@ class DashboardView extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) {
                   final _correction = model.attendanceCorrectionData[index];
-
                   return TodaysAttendanceActivities(
                     _correction,
                   );

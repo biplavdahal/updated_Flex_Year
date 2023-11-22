@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nepali_date_picker/nepali_date_picker.dart';
 
 String formattedTime(String unformattedDateTime) {
   DateTime dateTime = DateTime.parse(unformattedDateTime);
@@ -12,13 +13,24 @@ String formattedTime(String unformattedDateTime) {
 
 String formattedDate(String unformattedDateTime) {
   DateTime dateTime = DateTime.parse(unformattedDateTime);
-  DateFormat format = DateFormat.yMMMMd();
+  DateFormat format = DateFormat('dd MMM, y');
 
   String formattedDate = format.format(dateTime);
 
   return formattedDate;
 }
 
+String formattedNepaliDate(String unformattedDateTime) {
+  DateTime dateTime = DateTime.parse(unformattedDateTime);
+  NepaliDateTime nepaliDateTime = NepaliDateTime.fromDateTime(dateTime);
+  NepaliDateFormat format = NepaliDateFormat(
+    'dd MMMM, y',
+  );
+
+  String formattedNepaliDate = format.format(nepaliDateTime);
+
+  return formattedNepaliDate;
+}
 
 //example: 12.90 -> 13:30 Hrs
 String convertIntoHrs(String time) {

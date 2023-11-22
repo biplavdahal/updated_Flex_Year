@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bestfriend/di.dart';
 import 'package:bestfriend/services/api.service.dart';
+import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/data_models/all_staff_birthday.data.dart';
+import 'package:flex_year_tablet/data_models/error_data.dart';
 import 'package:flex_year_tablet/data_models/notice.data.dart';
 import 'package:flex_year_tablet/data_models/notification.data.dart';
 import 'package:flex_year_tablet/data_models/staff_birthday.data.dart';
@@ -10,7 +15,6 @@ import 'package:flex_year_tablet/helper/api_error.helper.dart';
 import 'package:flex_year_tablet/helper/dio_helper.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/notification.service.dart';
-import 'package:flutter/material.dart';
 
 import '../../data_models/staff_performance_allreport.dart';
 import '../authentication.service.dart';
@@ -22,44 +26,82 @@ class NotificationServiceImplementation implements NotificationService {
   NoticeData? get notice => _notice;
 
   // External depedencies
-  // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final ApiService _apiService = locator<ApiService>();
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final AppAccessService _appAccessService = locator<AppAccessService>();
-  // @override
-  // Future<bool> getPermission() async {
-  //   if (Platform.isIOS) {
-  //     NotificationSettings settings =
-  //         await _firebaseMessaging.requestPermission(
-  //       alert: true,
-  //       announcement: false,
-  //       badge: true,
-  //       carPlay: false,
-  //       criticalAlert: false,
-  //       provisional: false,
-  //       sound: true,
-  //     );
 
-  //     return (settings.authorizationStatus == AuthorizationStatus.authorized ||
-  //         settings.authorizationStatus == AuthorizationStatus.provisional);
-  //   }
 
-  //   bool localNotificationAllowed =
-  //       await AwesomeNotifications().isNotificationAllowed();
+  @override
+  Future<bool> getPermission() async {
+    if (Platform.isIOS) {
+      NotificationSettings settings =
+          await _firebaseMessaging.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true,
+        
+      );
 
-  //   if (!localNotificationAllowed) {
-  //     localNotificationAllowed =
-  //         await AwesomeNotifications().requestPermissionToSendNotifications();
-  //   }
+      return (settings.authorizationStatus == AuthorizationStatus.authorized ||
+          settings.authorizationStatus == AuthorizationStatus.provisional);
+    }
 
-  //   return localNotificationAllowed;
-  // }
+    bool localNotificationAllowed =
+        await AwesomeNotifications().isNotificationAllowed();
 
-  // @override
-  // Future<RemoteMessage?> getInitialMessage() {
-  //   return _firebaseMessaging.getInitialMessage();
-  // }
+    if (!localNotificationAllowed) {
+      localNotificationAllowed =
+          await AwesomeNotifications().requestPermissionToSendNotifications();
+    }
+
+    return localNotificationAllowed;
+  }
+
+    @override
+  Future<void> updateFcmToken(String accessToken, int uid) async {
+    try {
+      final token = await _firebaseMessaging.getToken();
+      final response = await _apiService.post(
+        "auFCMNotificationPost",
+        {
+          "access_token": accessToken,
+          "type": Platform.isIOS ? "Ios" : "Android",
+          "token": token,
+          "user_id": uid
+        },
+      );
+
+      final data = constructResponse(response.data);
+
+      if (data!["status"] == "failure") {
+        throw ErrorData.fromJson(data);
+      }
+    } on DioError catch (e) {
+      throw dioError(e);
+    }
+  }
+
+    @override
+  Future<RemoteMessage?> getInitialMessage() {
+    return _firebaseMessaging.getInitialMessage();
+  }
+
+    @override
+  Stream<RemoteMessage> onMessageOpenedApp() {
+    return FirebaseMessaging.onMessageOpenedApp;
+  }
+
+    @override
+  Stream<RemoteMessage> onNotificationArrive() {
+    return FirebaseMessaging.onMessage;
+  }
+
 
   @override
   void initializeLocalNotification() async {
@@ -79,15 +121,6 @@ class NotificationServiceImplementation implements NotificationService {
     );
   }
 
-  // @override
-  // Stream<RemoteMessage> onMessageOpenedApp() {
-  //   return FirebaseMessaging.onMessageOpenedApp;
-  // }
-
-  // @override
-  // Stream<RemoteMessage> onNotificationArrive() {
-  //   return FirebaseMessaging.onMessage;
-  // }
 
   @override
   Future<void> showNotification(
@@ -125,10 +158,6 @@ class NotificationServiceImplementation implements NotificationService {
     }
   }
 
-  @override
-  Future<bool> getPermission() {
-    throw UnimplementedError();
-  }
 
   @override
   Future<List<StaffBirthdayData>> getStaffBirthday() async {
@@ -223,5 +252,24 @@ class NotificationServiceImplementation implements NotificationService {
     } catch (e) {
       throw apiError(e);
     }
+  }
+  
+  @override
+  Future<void> showMessageNotification({
+    required String senderName,
+    required Map<String, dynamic> payload,
+  }) async {
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 1,
+        channelKey: 'message',
+        title: senderName,
+        body: payload["message"],
+        payload: {
+          "sender_id": payload["sender_id"],
+          "sender_name": payload["full_name"],
+        },
+      ),
+    );
   }
 }
