@@ -65,6 +65,9 @@ const auPayrollHistory = "payroll/history";
 const auStaffDashboard = "site/staffdashboard";
 const auStaffBirthday = "site/birthday";
 const auNotificationList = 'notification/list';
+
+
+const auFCMNotificationPost = "token/post";
 //performance report
 const auStaffPerformance = "performance/list";
 

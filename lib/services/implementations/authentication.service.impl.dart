@@ -9,6 +9,7 @@ import 'package:flex_year_tablet/helper/api_error.helper.dart';
 import 'package:flex_year_tablet/helper/api_response.helper.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
+import 'package:flex_year_tablet/services/push.notification.service.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.model.dart';
 
@@ -18,6 +19,8 @@ class AuthenticationServiceImpl implements AuthenticationService {
   final ApiService _apiService = locator<ApiService>();
   final SharedPreferenceService _sharedPreferenceService =
       locator<SharedPreferenceService>();
+  final PushNotificationService _pushNotificationService =
+      locator<PushNotificationService>();
 
   // Properties
   UserData? _user;
@@ -65,6 +68,10 @@ class AuthenticationServiceImpl implements AuthenticationService {
       _user = UserData.fromJson(data);
 
       _sharedPreferenceService.set(pfLoggedInUser, jsonEncode(_user!.toJson()));
+
+      await _pushNotificationService.updateFcmToken(_user!.id);
+
+      print(_user!.id);
     } catch (e) {
       throw apiError(e);
     }
@@ -87,6 +94,8 @@ class AuthenticationServiceImpl implements AuthenticationService {
       _user = UserData.fromJson(data);
 
       _sharedPreferenceService.set(pfLoggedInUser, jsonEncode(_user!.toJson()));
+
+      await _pushNotificationService.updateFcmToken(_user!.id);
     } catch (e) {
       throw apiError(e);
     }

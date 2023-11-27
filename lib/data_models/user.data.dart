@@ -15,7 +15,7 @@ class UserData with _$UserData {
   const factory UserData({
     @JsonKey(name: 'role') String? role,
     @JsonKey(name: 'access_token') required String accessToken,
-    @JsonKey(name: 'id')  int ? id,
+    @JsonKey(name: 'id')   required int  id,
     // @JsonKey(name: 'access_level') required int accessLevel,
     @JsonKey(name: 'staff') required StaffData staff,
     @JsonKey(name: 'staffaddressper')

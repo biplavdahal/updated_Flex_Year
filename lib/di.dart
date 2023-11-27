@@ -14,11 +14,13 @@ import 'package:flex_year_tablet/services/implementations/company.service.impl.d
 import 'package:flex_year_tablet/services/implementations/leave.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/notification.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/payroll.service.impl.dart';
+import 'package:flex_year_tablet/services/implementations/push_notification.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/tablet.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/user_service_impl.dart';
 import 'package:flex_year_tablet/services/leave.service.dart';
 import 'package:flex_year_tablet/services/notification.service.dart';
 import 'package:flex_year_tablet/services/payroll.service.dart';
+import 'package:flex_year_tablet/services/push.notification.service.dart';
 import 'package:flex_year_tablet/services/tablet.service.dart';
 import 'package:flex_year_tablet/services/user_service.dart';
 import 'package:flex_year_tablet/ui/frontdesk/attendance/attendance.model.dart';
@@ -64,6 +66,13 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<SharedPreferenceService>(
       () => SharedPreferenceServiceImplementation());
   locator.registerLazySingleton<ApiService>(() => ApiServiceImplementation());
+
+  locator.registerLazySingleton<NotificationService>(
+      () => NotificationServiceImplementation());
+
+  locator.registerLazySingleton<PushNotificationService>(
+      () => PushNotificationServiceImplementation());
+      
   locator.registerLazySingleton<NavigationService>(
       () => NavigationServiceImplementation());
   locator.registerLazySingleton<SnackbarService>(
@@ -80,8 +89,6 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<LeaveService>(() => LeaveServiceImpl());
   locator.registerLazySingleton<TabletService>(() => TabletServiceImpl());
   locator.registerLazySingleton<ChatService>(() => ChatServiceImpl());
-  locator.registerLazySingleton<NotificationService>(
-      () => NotificationServiceImplementation());
   locator.registerLazySingleton<PayrollService>(() => PayrollServiceImpl());
   locator.registerLazySingleton<UserService>(() => UserServiceImplementation());
 
@@ -121,7 +128,7 @@ Future<void> setupLocator() async {
 
   locator.registerFactory(() => PresentStaffModel());
   locator.registerFactory(() => StaffLeavemodel());
-    locator.registerFactory(() => StaffDirectoryDetailViewModel());
+  locator.registerFactory(() => StaffDirectoryDetailViewModel());
 
   // Unkillable models
   locator.registerLazySingleton(() => AllStaffBirthdayModel());

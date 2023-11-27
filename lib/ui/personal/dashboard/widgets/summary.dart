@@ -1,5 +1,4 @@
  import 'package:flex_year_tablet/data_models/attendance_report_summary.data.dart';
-import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
 
 class Summary extends StatelessWidget {
@@ -30,7 +29,7 @@ class Summary extends StatelessWidget {
             ),
             Text(
               report.workingHours.toString(),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12,
               ),
             ),

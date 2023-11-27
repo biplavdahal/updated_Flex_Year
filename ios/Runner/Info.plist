@@ -2,6 +2,39 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0.1">
 <dict>
+<key>CLIENT_ID</key>
+	<string>830101525264-tt0vlfj4ocotf5j1v438oiec924hr5a5.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.830101525264-tt0vlfj4ocotf5j1v438oiec924hr5a5</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>830101525264-1i41oevsv31vvphgep9ajde18ql6agpo.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBaqPNrXRfwt8iCzEY9BtXnEE54S1dbj-0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>830101525264</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>work.flexyear.flexYearTablet</string>
+	<key>PROJECT_ID</key>
+	<string>flexyear-7500d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>flexyear-7500d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:830101525264:ios:9d0816a8f8c324dacccb95</string>
+	<key>DATABASE_URL</key>
+	<string>https://flexyear-7500d.firebaseio.com</string>
+
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>

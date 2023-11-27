@@ -7,6 +7,7 @@
     <application
         android:name="androidx.multidex.MultiDexApplication"
         android:label="FlexYear"
+        android:targetSdkVersion="31" 
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

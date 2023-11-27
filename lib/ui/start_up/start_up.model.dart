@@ -15,8 +15,6 @@ class StartUpModel extends ViewModel with SnackbarMixin {
   final AppAccessService _appAccessService = locator<AppAccessService>();
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
-  final NotificationService _notificationService =
-      locator<NotificationService>();
 
   Future<void> init() async {
     try {
@@ -31,22 +29,6 @@ class StartUpModel extends ViewModel with SnackbarMixin {
             final _isLoggedIn = await _authenticationService.isLoggedIn();
             if (_isLoggedIn) {
               debugPrint(_authenticationService.user?.accessToken);
-
-              final notificationPermission =
-                  await _notificationService.getPermission();
-              if (!notificationPermission) {
-                snackbar.displaySnackbar(
-                  SnackbarRequest.of(
-                    message: "You won't receive any notifications.",
-                    action: SnackbarAction(
-                      label: "Grant Permission",
-                      onPressed: _notificationService.getPermission,
-                    ),
-                  ),
-                );
-              }
-
-              _notificationService.initializeLocalNotification();
 
               // final initialMessage =
               //     await _notificationService.getInitialMessage();
