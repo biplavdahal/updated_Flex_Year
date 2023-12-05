@@ -75,6 +75,7 @@ class PresentStaffView extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   return DelayedDisplay(
                                     child: PresentStaffItem(
+                                        index: index,
                                         staff: model.filteredList[index]),
                                   );
                                 },

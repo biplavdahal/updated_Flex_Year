@@ -17,13 +17,17 @@ class ChatsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return View<ChatsModel>(
+      killViewOnClose: false,
       onDispose: (model) => model.dispose(),
       enableTouchRepeal: true,
       onModelReady: (model) => model.init(arguments as ChatsArgument),
       builder: (ctx, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(model.receiverName),
+            centerTitle: false,
+            title: Text(
+              model.receiverName,
+            ),
           ),
           body: model.isLoading
               ? const Center(
@@ -41,7 +45,7 @@ class ChatsView extends StatelessWidget {
                           return MessageItem(
                             model.messages[index],
                             showDateTime: model
-                                .showDateTime(model.messages[index].messageId),
+                                .showDateTime(model.messages[index].messageId!),
                             onTap: (id) => model.showDateTimeFor = id,
                           );
                         },

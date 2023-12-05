@@ -13,13 +13,14 @@ class ChatContactsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return View<ChatContactsModel>(
+      killViewOnClose: false,
       onModelReady: (model) {
         model.init();
       },
       builder: (ctx, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Available recipients'),
+            title: const Text('Chats'),
           ),
           body: model.isLoading
               ? const FYLinearLoader()

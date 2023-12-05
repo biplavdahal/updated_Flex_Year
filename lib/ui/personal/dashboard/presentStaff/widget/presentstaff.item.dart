@@ -4,8 +4,10 @@ import '../../../../../theme.dart';
 
 class PresentStaffItem extends StatelessWidget {
   final PresentStaffModelData staff;
+  final int index;
 
-  PresentStaffItem({Key? key, required this.staff}) : super(key: key);
+  PresentStaffItem({Key? key, required this.staff, required this.index})
+      : super(key: key);
 
   final Map<String, Color> _statusColor = {
     "Check In": Colors.green.shade300,
@@ -60,7 +62,12 @@ class PresentStaffItem extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    staff.staffName + " [" + staff.hours + "]",
+                    (index + 1).toString() +
+                        ". " +
+                        staff.staffName +
+                        " [" +
+                        staff.hours +
+                        "]",
                     style: const TextStyle(
                         color: AppColor.primary,
                         fontSize: 15,

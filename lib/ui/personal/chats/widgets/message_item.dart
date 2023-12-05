@@ -24,7 +24,7 @@ class MessageItem extends StatelessWidget {
             isSelf ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           GestureDetector(
-            onTap: () => onTap(message.messageId),
+            onTap: () => onTap(message.messageId!),
             child: Container(
               constraints: BoxConstraints(
                 maxWidth: MediaQuery.of(context).size.width * 0.8,
@@ -35,7 +35,7 @@ class MessageItem extends StatelessWidget {
                 color: isSelf ? AppColor.primary : Colors.grey[200],
               ),
               child: Text(
-                message.messageContent,
+                message.messageContent!,
                 style: TextStyle(
                   color: isSelf ? Colors.white : Colors.black,
                 ),
@@ -45,7 +45,7 @@ class MessageItem extends StatelessWidget {
           if (showDateTime) const SizedBox(height: 5),
           if (showDateTime)
             Text(
-              message.postedDatetime,
+              message.postedDatetime!,
               style: const TextStyle(
                 fontSize: 10,
                 color: Colors.grey,

@@ -51,7 +51,6 @@ class PushNotificationServiceImplementation implements PushNotificationService {
     try {
       final token = await _firebaseMessaging.getToken();
       final response = await _apiService.post(auFCMNotificationPost, {
-       
         "type": Platform.isIOS ? "Ios" : "Android",
         "token": token,
         "user_id": uid

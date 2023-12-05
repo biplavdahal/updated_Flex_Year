@@ -1,5 +1,4 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_correction_review.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_summary.data.dart';
@@ -113,6 +112,8 @@ class RequestReviewModel extends ViewModel with SnackbarMixin, DialogMixin {
         if (inTime == null || outTime == null) {
           throw "Please select checkin and checkout time";
         }
+
+      
 
         await _attendanceService.editAttendanceCorrection(
           attendanceId: _attendanceId,

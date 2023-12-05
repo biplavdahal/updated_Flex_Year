@@ -39,6 +39,7 @@ import 'package:intl/intl.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../attendance_correction/attendance_correction.view.dart';
+import '../chat_contacts/chat_contacts.view.dart';
 import '../holidays/holidays.view.dart';
 import '../payroll/payroll_filter/payroll.filter.argument.dart';
 
@@ -78,7 +79,7 @@ class DashboardView extends StatelessWidget {
                 duration: const Duration(seconds: 15),
               ),
             );
-          });  
+          });
         }
 
         return Scaffold(
@@ -175,16 +176,16 @@ class DashboardView extends StatelessWidget {
                 child: const Icon(Icons.people),
                 backgroundColor: AppColor.accent,
               ),
-              // const SizedBox(
-              //   height: 5,
-              // ),
-              // FloatingActionButton(
-              //   onPressed: () async {
-              //     await model.goto(ChatContactsView.tag);
-              //   },
-              //   child: const Icon(Icons.chat_bubble),
-              //   backgroundColor: AppColor.accent,
-              // ),
+              const SizedBox(
+                height: 5,
+              ),
+              FloatingActionButton(
+                onPressed: () async {
+                  await model.goto(ChatContactsView.tag);
+                },
+                child: const Icon(Icons.chat_bubble),
+                backgroundColor: AppColor.accent,
+              ),
             ],
           ),
           appBar: AppBar(

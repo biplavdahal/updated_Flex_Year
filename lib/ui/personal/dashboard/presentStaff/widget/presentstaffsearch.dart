@@ -49,7 +49,11 @@ class PresentStaffSearch extends SearchDelegate {
                 ),
             itemBuilder: (context, index) {
               final _staff = matchQuery[index];
-              return DelayedDisplay(child: PresentStaffItem(staff: _staff));
+              return DelayedDisplay(
+                  child: PresentStaffItem(
+                staff: _staff,
+                index: index,
+              ));
             },
             itemCount: matchQuery.length)
       ],
@@ -72,7 +76,11 @@ class PresentStaffSearch extends SearchDelegate {
                 ),
             itemBuilder: (context, index) {
               final _staff = matchQuery[index];
-              return DelayedDisplay(child: PresentStaffItem(staff: _staff));
+              return DelayedDisplay(
+                  child: PresentStaffItem(
+                staff: _staff,
+                index: index,
+              ));
             },
             itemCount: matchQuery.length)
       ],
