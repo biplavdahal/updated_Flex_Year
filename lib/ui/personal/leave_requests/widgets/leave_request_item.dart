@@ -75,9 +75,11 @@ class LeaveRequestItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              ((index) + 1).toString() +
-                                  " .   " +
-                                  request.staffName.toString(),
+                              request.staffName == null
+                                  ? ((index) + 1).toString() + " .  " + "N/A"
+                                  : ((index) + 1).toString() +
+                                      " .  " +
+                                      request.staffName.toString(),
                               style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: AppColor.primary),

@@ -378,6 +378,23 @@ class DashboardDrawer extends StatelessWidget {
                   color: Colors.blue,
                 ),
               ),
+            if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
+                    'manager' ||
+                locator<AuthenticationService>().user!.role?.toLowerCase() ==
+                    'admin' ||
+                locator<AuthenticationService>().user!.role?.toLowerCase() ==
+                    'super admin')
+              ListTile(
+                title: const Text(
+                  'Create Access Message',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                onTap: () {},
+                leading: const Icon(
+                  MdiIcons.plusBoxMultiple,
+                  color: Colors.blue,
+                ),
+              ),
             // if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
             //         'manager' ||
             //     locator<AuthenticationService>().user!.role?.toLowerCase() ==

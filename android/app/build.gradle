@@ -52,8 +52,8 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "work.flexyear.flex_year_tablet"
         minSdkVersion 23
-        targetSdkVersion 32
-        versionCode 11
+        targetSdkVersion 33
+        versionCode 13
         versionName "1.2.0"
         multiDexEnabled true
     }

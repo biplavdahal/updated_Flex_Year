@@ -307,16 +307,16 @@ class PerformanceView extends StatelessWidget {
                               ),
                               DataRow(
                                 cells: [
+                                  const DataCell(
+                                    Text('Comments : '),
+                                  ),
                                   DataCell(
                                     Text(
-                                      'Comments : ' +
-                                          model.data['job_know_commrnt'],
-                                    ),
-                                  ),
-                                  const DataCell(
-                                    Text(
-                                      "",
-                                      style: TextStyle(
+                                      model.data['job_know_commrnt'] != null
+                                          ? model.data['job_know_commrnt']
+                                              .toString()
+                                          : '--',
+                                      style: const TextStyle(
                                         height: 1.5,
                                       ),
                                     ),
@@ -344,14 +344,14 @@ class PerformanceView extends StatelessWidget {
                               ),
                               DataRow(
                                 cells: [
-                                  DataCell(
-                                    Text(
-                                      "Comments : " +
-                                          model.data['quality_comment'],
-                                    ),
-                                  ),
                                   const DataCell(
-                                    Text(""),
+                                    Text("Comments : "),
+                                  ),
+                                  DataCell(
+                                    Text(model.data['quality_comment'] != null
+                                        ? model.data['quality_comment']
+                                            .toString()
+                                        : '--'),
                                   ),
                                 ],
                               ),
@@ -376,16 +376,15 @@ class PerformanceView extends StatelessWidget {
                               ),
                               DataRow(
                                 cells: [
-                                  DataCell(
-                                    Text(
-                                      "Comments : " +
-                                          model.data['punctuality_comment'],
-                                    ),
-                                  ),
                                   const DataCell(
-                                    Text(
-                                      "",
-                                    ),
+                                    Text("Comments : "),
+                                  ),
+                                  DataCell(
+                                    Text(model.data['punctuality_comment'] !=
+                                            null
+                                        ? model.data['punctuality_comment']
+                                            .toString()
+                                        : '--'),
                                   ),
                                 ],
                               ),
@@ -408,16 +407,15 @@ class PerformanceView extends StatelessWidget {
                               ),
                               DataRow(
                                 cells: [
-                                  DataCell(
-                                    Text(
-                                      "Comments : " +
-                                          model.data['productivity_comment'],
-                                    ),
-                                  ),
                                   const DataCell(
-                                    Text(
-                                      "",
-                                    ),
+                                    Text("Comments : "),
+                                  ),
+                                  DataCell(
+                                    Text(model.data['productivity_comment'] !=
+                                            null
+                                        ? model.data['productivity_comment']
+                                            .toString()
+                                        : '--'),
                                   ),
                                 ],
                               ),
@@ -445,17 +443,18 @@ class PerformanceView extends StatelessWidget {
                                 cells: [
                                   DataCell(
                                     Text(
-                                      "Comments : " +
-                                          model.data['communication_comment'],
+                                      "Comments : ",
                                       style: const TextStyle(
                                         fontWeight: FontWeight.w100,
                                       ),
                                     ),
                                   ),
-                                  const DataCell(
-                                    Text(
-                                      "",
-                                    ),
+                                  DataCell(
+                                    Text(model.data['communication_comment'] !=
+                                            null
+                                        ? model.data['communication_comment']
+                                            .toString()
+                                        : '--'),
                                   ),
                                 ],
                               ),
@@ -481,19 +480,20 @@ class PerformanceView extends StatelessWidget {
                               ),
                               DataRow(
                                 cells: [
-                                  DataCell(
+                                  const DataCell(
                                     Text(
-                                      "Comments : " +
-                                          model.data['dependability_comment'],
-                                      style: const TextStyle(
+                                      "Comments : ",
+                                      style: TextStyle(
                                         fontWeight: FontWeight.w100,
                                       ),
                                     ),
                                   ),
-                                  const DataCell(
-                                    Text(
-                                      "",
-                                    ),
+                                  DataCell(
+                                    Text(model.data['dependability_comment'] !=
+                                            null
+                                        ? model.data['dependability_comment']
+                                            .toString()
+                                        : "--"),
                                   ),
                                 ],
                               ),
@@ -542,7 +542,9 @@ class PerformanceView extends StatelessWidget {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              Text(model.data['additional_comment'])
+                              Text(model.data['additional_comment'] != null
+                                  ? model.data['additional_comment'].toString()
+                                  : "--")
                             ],
                           ),
                         ),
@@ -550,7 +552,7 @@ class PerformanceView extends StatelessWidget {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
                                 'Goal comment :',
@@ -558,7 +560,9 @@ class PerformanceView extends StatelessWidget {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              Text("  " + model.data['goal_comment']),
+                              Text(model.data['goal_comment'] != null
+                                  ? model.data['goal_comment'].toString()
+                                  : '--'),
                             ],
                           ),
                         ),
@@ -620,7 +624,11 @@ class PerformanceView extends StatelessWidget {
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
-                                      children: [Text(model.data['s_name'])],
+                                      children: [
+                                        Text(model.data['s_name'] != null
+                                            ? model.data['s_name'].toString()
+                                            : '--')
+                                      ],
                                     ),
                                   )),
                                 ],
@@ -637,9 +645,9 @@ class PerformanceView extends StatelessWidget {
                                   ),
                                   DataCell(
                                     Text(
-                                      model.data['from'] +
+                                      (model.data['from'] ?? 'N/A') +
                                           " - " +
-                                          model.data['s_date'],
+                                          (model.data['s_date'] ?? 'N/A'),
                                     ),
                                   ),
                                 ],
