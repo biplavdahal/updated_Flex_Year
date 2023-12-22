@@ -106,7 +106,8 @@ class DashboardView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // _buildProgressIndicator(model),
+                    if (model.attendanceCorrectionData.isNotEmpty)
+                      _buildProgressIndicator(model),
                     _buildValidAttendance(model),
                     _buildAttendanceActivities(model),
                     _buildForgotToCheckout(model),
@@ -269,7 +270,7 @@ class DashboardView extends StatelessWidget {
                                       fontWeight: FontWeight.bold),
                                 )
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ],
@@ -749,11 +750,39 @@ class DashboardView extends StatelessWidget {
   }
 
   Widget _buildProgressIndicator(DashboardModel model) {
+    if (model.attendanceCorrectionData.isEmpty) {
+      return const Text('No attendance data available');
+    }
+
+    double progress = model.calculateProgress();
+
+    DateTime checkinTime =
+        DateTime.parse(model.attendanceCorrectionData[0].checkinDatetime!);
+    DateTime now = DateTime.now();
+    Duration remainingTime =
+        checkinTime.add(const Duration(hours: 8, minutes: 30)).difference(now);
+    Color progressBarColor = progress >= 1.0 ? Colors.green : AppColor.primary;
+
     return SizedBox(
-        height: 60,
-        child: FYSection(
-            title: 'Progress Indicator :',
-            child: LiquidLinearProgressIndicator()));
+      height: 20,
+      child: LiquidLinearProgressIndicator(
+        value: progress.clamp(0.0, 1.0),
+        valueColor: AlwaysStoppedAnimation(progressBarColor),
+        backgroundColor: Colors.grey,
+        borderColor: Colors.white,
+        borderWidth: 1.0,
+        borderRadius: 12.0,
+        direction: Axis.horizontal,
+        center: Text(
+          "Remaining Time: ${remainingTime.inHours}h ${remainingTime.inMinutes.remainder(60)}m ${remainingTime.inSeconds.remainder(60)}s",
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 11,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
   }
 
   String _getGreeting() {
@@ -768,7 +797,6 @@ class DashboardView extends StatelessWidget {
     }
   }
 }
-
 
 // Card(
 //                       margin: const EdgeInsets.only(bottom: 5),

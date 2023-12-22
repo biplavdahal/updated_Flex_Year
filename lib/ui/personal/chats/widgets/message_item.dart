@@ -31,26 +31,36 @@ class MessageItem extends StatelessWidget {
               ),
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: isSelf ? AppColor.primary : Colors.grey[200],
-              ),
-              child: Text(
-                message.messageContent!,
-                style: TextStyle(
-                  color: isSelf ? Colors.white : Colors.black,
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(20),
+                  topRight: const Radius.circular(20),
+                  bottomLeft: Radius.circular(isSelf ? 25 : 0),
+                  bottomRight: Radius.circular(isSelf ? 0 : 25),
                 ),
+                color: isSelf ? AppColor.primary : Colors.grey[300],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    message.messageContent!,
+                    style: TextStyle(
+                      color: isSelf ? Colors.white : Colors.black,
+                    ),
+                  ),
+                  if (showDateTime)
+                    Text(
+                      message.postedDatetime!,
+                      style: const TextStyle(
+                        fontSize: 10,
+                        color: Colors.grey,
+                      ),
+                    ),
+                ],
               ),
             ),
           ),
           if (showDateTime) const SizedBox(height: 5),
-          if (showDateTime)
-            Text(
-              message.postedDatetime!,
-              style: const TextStyle(
-                fontSize: 10,
-                color: Colors.grey,
-              ),
-            ),
         ],
       ),
     );

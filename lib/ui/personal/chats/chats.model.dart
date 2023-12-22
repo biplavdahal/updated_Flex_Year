@@ -24,6 +24,7 @@ class ChatsModel extends ViewModel with SnackbarMixin {
   bool _enableSendButton = false;
   bool get enableSendButton => _enableSendButton;
 
+
   int? _showDateTimeFor;
   bool showDateTime(int id) {
     return _showDateTimeFor != null && _showDateTimeFor == id;

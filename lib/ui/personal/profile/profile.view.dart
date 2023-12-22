@@ -121,8 +121,11 @@ class ProfileView extends StatelessWidget {
                                     ),
                                     _buildProfileField(
                                         label: "Marital status",
-                                        value: model.user.staff.maritalStatus ??
-                                            "",
+                                        value: (model.user.staff.maritalStatus!
+                                                    .toLowerCase() ==
+                                                'u'
+                                            ? "Unmarried"
+                                            : "Married"),
                                         icon: MdiIcons.heart),
                                     _buildProfileField(
                                         label: "Date Of Birth",
@@ -178,8 +181,11 @@ class ProfileView extends StatelessWidget {
                                     ),
                                     _buildProfileField(
                                       label: "Salary Period",
-                                      value:
-                                          (model.user.staff.salaryPeriod ?? ''),
+                                      value: (model.user.staff.salaryPeriod!
+                                                  .toLowerCase() ==
+                                              'm'
+                                          ? 'Monthly'
+                                          : 'Yearly'),
                                       icon: MdiIcons.calendarClock,
                                     ),
                                     // _buildProfileField(

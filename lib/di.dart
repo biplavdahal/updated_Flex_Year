@@ -6,11 +6,13 @@ import 'package:flex_year_tablet/services/attendance.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/services/chat.service.dart';
 import 'package:flex_year_tablet/services/company.service.dart';
+import 'package:flex_year_tablet/services/exit_process.service.dart';
 import 'package:flex_year_tablet/services/implementations/app_access.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/attendance.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/authentication.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/chat.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/company.service.impl.dart';
+import 'package:flex_year_tablet/services/implementations/exit_process.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/leave.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/notification.service.impl.dart';
 import 'package:flex_year_tablet/services/implementations/payroll.service.impl.dart';
@@ -53,6 +55,8 @@ import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filt
 import 'package:flex_year_tablet/ui/personal/performance/performance_model.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
+import 'package:flex_year_tablet/ui/personal/resign/resign_view.dart';
+import 'package:flex_year_tablet/ui/personal/resign/resign_viewmodel.dart';
 import 'package:flex_year_tablet/ui/personal/staff_directory/staff_directory.viewmodel.dart';
 import 'package:flex_year_tablet/ui/personal/staff_directory/staff_directory_detail/staff_directory_detaill.viewmodel.dart';
 import 'package:flex_year_tablet/ui/personal/staff_leave/staff_leave.model.dart';
@@ -72,7 +76,7 @@ Future<void> setupLocator() async {
 
   locator.registerLazySingleton<PushNotificationService>(
       () => PushNotificationServiceImplementation());
-      
+
   locator.registerLazySingleton<NavigationService>(
       () => NavigationServiceImplementation());
   locator.registerLazySingleton<SnackbarService>(
@@ -91,6 +95,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<ChatService>(() => ChatServiceImpl());
   locator.registerLazySingleton<PayrollService>(() => PayrollServiceImpl());
   locator.registerLazySingleton<UserService>(() => UserServiceImplementation());
+  locator.registerLazySingleton<ExitProcess>(() => ExitProcessImpl());
 
   // Killable models
   locator.registerFactory(() => StartUpModel());
@@ -129,6 +134,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => PresentStaffModel());
   locator.registerFactory(() => StaffLeavemodel());
   locator.registerFactory(() => StaffDirectoryDetailViewModel());
+  locator.registerFactory(() => ResignViewModel());
 
   // Unkillable models
   locator.registerLazySingleton(() => AllStaffBirthdayModel());

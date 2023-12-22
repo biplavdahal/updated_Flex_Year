@@ -5,15 +5,13 @@ import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/services/company.service.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:local_auth/local_auth.dart';
 import '../../../services/app_access.service.dart';
 
 class LoginModel extends ViewModel with DialogMixin, SnackbarMixin {
   // Services
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
-  final LocalAuthentication _auth = LocalAuthentication();
+  // final LocalAuthentication _auth = LocalAuthentication();
   final AppAccessService _appAccessService = locator<AppAccessService>();
 
   // UI components
@@ -128,7 +126,7 @@ class LoginModel extends ViewModel with DialogMixin, SnackbarMixin {
     }
   }
 
-  // FIXME: API ERROR
+  //FIXME: API ERROR
   Future<void> onForgotPasswordPressed() async {
     if (_forgotPasswordFormKey.currentState!.validate()) {
       dialog.showDialog(
@@ -158,26 +156,26 @@ class LoginModel extends ViewModel with DialogMixin, SnackbarMixin {
     }
   }
 
-  Future<bool> _loginWithFingerprint() async {
-    await getBiometrics();
-    try {
-      final isSupport = await _auth.isDeviceSupported();
-      if (!isSupport) {
-        return false;
-      }
-      return await _auth.authenticate(
-        localizedReason: 'Scan FingerPrint to authenticate',
-      );
-    } on PlatformException catch (e) {
-      return false;
-    }
-  }
+  // Future<bool> _loginWithFingerprint() async {
+  //   await getBiometrics();
+  //   try {
+  //     final isSupport = await _auth.isDeviceSupported();
+  //     if (!isSupport) {
+  //       return false;
+  //     }
+  //     return await _auth.authenticate(
+  //       localizedReason: 'Scan FingerPrint to authenticate',
+  //     );
+  //   } on PlatformException catch (e) {
+  //     return false;
+  //   }
+  // }
 
-  Future<List<BiometricType>> getBiometrics() async {
-    try {
-      return await _auth.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      return <BiometricType>[];
-    }
-  }
+  // Future<List<BiometricType>> getBiometrics() async {
+  //   try {
+  //     return await _auth.getAvailableBiometrics();
+  //   } on PlatformException catch (e) {
+  //     return <BiometricType>[];
+  //   }
+  // }
 }

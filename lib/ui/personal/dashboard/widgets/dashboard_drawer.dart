@@ -13,6 +13,7 @@ import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filt
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.view.dart';
 import 'package:flex_year_tablet/ui/personal/profile/widget/user_profile_header.dart';
+import 'package:flex_year_tablet/ui/personal/resign/resign_view.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../attendance_report_filter/attendance_report_filter.arguments.dart';
@@ -326,6 +327,7 @@ class DashboardDrawer extends StatelessWidget {
                 color: AppColor.primary,
               ),
             ),
+
             ListTile(
               title: const Text(
                 'Date Converter',
@@ -339,6 +341,20 @@ class DashboardDrawer extends StatelessWidget {
                 color: AppColor.primary,
               ),
             ),
+            ListTile(
+              title: const Text(
+                'Resign',
+                style: TextStyle(color: AppColor.primary),
+              ),
+              onTap: () {
+                locator<DashboardModel>().goto(ResignView.tag);
+              },
+              leading: const Icon(
+                MdiIcons.doorOpen,
+                color: AppColor.primary,
+              ),
+            ),
+
             const Divider(),
             if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
                     'manager' ||

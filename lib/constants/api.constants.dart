@@ -66,7 +66,6 @@ const auStaffDashboard = "site/staffdashboard";
 const auStaffBirthday = "site/birthday";
 const auNotificationList = 'notification/list';
 
-
 const auFCMNotificationPost = "token/post";
 //performance report
 const auStaffPerformance = "performance/list";
@@ -96,3 +95,6 @@ const auStaffDetail = "staff/details";
 //Staff Directory
 const austaffDepartmentIndex = 'department/index';
 const auStaffDepartmentDetailList = 'department/search';
+
+//Exit Process
+const auStaffGetResign = 'resignation-letter/index';

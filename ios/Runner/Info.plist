@@ -1,44 +1,17 @@
-<?xml version="1.0.1" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0.1">
+<plist version="1.0">
 <dict>
-<key>CLIENT_ID</key>
-	<string>830101525264-tt0vlfj4ocotf5j1v438oiec924hr5a5.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.830101525264-tt0vlfj4ocotf5j1v438oiec924hr5a5</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>830101525264-1i41oevsv31vvphgep9ajde18ql6agpo.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBaqPNrXRfwt8iCzEY9BtXnEE54S1dbj-0</string>
-	<key>GCM_SENDER_ID</key>
-	<string>830101525264</string>
-	<key>PLIST_VERSION</key>
-	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>work.flexyear.flexYearTablet</string>
-	<key>PROJECT_ID</key>
-	<string>flexyear-7500d</string>
-	<key>STORAGE_BUCKET</key>
-	<string>flexyear-7500d.appspot.com</string>
-	<key>IS_ADS_ENABLED</key>
-	<false></false>
-	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
-	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
-	<key>IS_GCM_ENABLED</key>
-	<true></true>
-	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
-	<key>GOOGLE_APP_ID</key>
-	<string>1:830101525264:ios:9d0816a8f8c324dacccb95</string>
-	<key>DATABASE_URL</key>
-	<string>https://flexyear-7500d.firebaseio.com</string>
-
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string> 
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Flex Year</string>
 	<key>CFBundleExecutable</key>
@@ -60,13 +33,39 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>1.0.1</string>
+	<key>CLIENT_ID</key>
+	<string>830101525264-tt0vlfj4ocotf5j1v438oiec924hr5a5.apps.googleusercontent.com</string>
+	<key>DATABASE_URL</key>
+	<string>https://flexyear-7500d.firebaseio.com</string>
+	<key>GCM_SENDER_ID</key>
+	<string>830101525264</string>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:830101525264:ios:9d0816a8f8c324dacccb95</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Why is my app authenticating using face id?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow excess of photo</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>PROJECT_ID</key>
+	<string>flexyear-7500d</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.830101525264-tt0vlfj4ocotf5j1v438oiec924hr5a5</string>
+	<key>STORAGE_BUCKET</key>
+	<string>flexyear-7500d.appspot.com</string>
 	<key>UILaunchStoryboardName</key>
 	<string>Main.storyboard</string>
 	<key>UIMainStoryboardFile</key>
@@ -76,15 +75,13 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

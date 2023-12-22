@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:math';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
@@ -23,7 +21,6 @@ import 'package:flex_year_tablet/services/company.service.dart';
 import 'package:flex_year_tablet/services/notification.service.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/flex_calander/calander.view.dart';
-import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
 import 'package:flex_year_tablet/ui/personal/login/login.view.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.view.dart';
@@ -60,6 +57,25 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   List<AttendanceCorrectionData> _attendanceCorrectionData = [];
   List<AttendanceCorrectionData> get attendanceCorrectionData =>
       _attendanceCorrectionData;
+  double calculateProgress() {
+    if (_attendanceCorrectionData.isEmpty) {
+      return 0.0;
+    }
+    DateTime now = DateTime.now();
+    if (_attendanceCorrectionData[0].checkinDatetime == null) {
+      return 0.0;
+    }
+
+    DateTime checkinTime =
+        DateTime.parse(_attendanceCorrectionData[0].checkinDatetime!);
+
+    int elapsedSeconds = now.difference(checkinTime).inSeconds;
+
+    int totalSeconds = 8 * 60 * 60 + 30 * 60;
+
+    double progress = elapsedSeconds / totalSeconds;
+    return progress.clamp(0.0, 1.0);
+  }
 
   List<AttendanceReportData> _monthlyReport = [];
   List<AttendanceReportData> get monthlyReport => _monthlyReport;
@@ -343,20 +359,20 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       dialog.hideDialog();
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     }
-    if (attendanceForgot == null) {
-      AwesomeNotifications()
-          .initialize('resource://drawable/ic_notification_logo', [
-        NotificationChannel(
-          channelKey: ' flex message',
-          channelName: 'Forget Checkout??',
-          channelDescription:
-              "This channle contail all of the notification related to forget checkout.",
-          playSound: true,
-          enableLights: true,
-          enableVibration: true,
-        )
-      ]);
-    }
+    // if (attendanceForgot == null) {
+    //   AwesomeNotifications()
+    //       .initialize('resource://drawable/ic_notification_logo', [
+    //     NotificationChannel(
+    //       channelKey: ' flex message',
+    //       channelName: 'Forget Checkout??',
+    //       channelDescription:
+    //           "This channle contail all of the notification related to forget checkout.",
+    //       playSound: true,
+    //       enableLights: true,
+    //       enableVibration: true,
+    //     )
+    //   ]);
+    // }
   }
 
   void moreActions(String action) {

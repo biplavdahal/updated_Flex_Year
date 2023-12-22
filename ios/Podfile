@@ -32,6 +32,8 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
   pod 'FMDB'
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
@@ -44,6 +46,7 @@ post_install do |installer|
     project.targets.each do |target|
             target.build_configurations.each do |config|
                 config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.1'
+                config.build_settings['PODS_CONFIGURATION_BUILD_DIR'] = '$(inherited)'
             end
         end
     end
