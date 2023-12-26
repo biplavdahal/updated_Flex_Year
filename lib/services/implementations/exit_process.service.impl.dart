@@ -17,7 +17,7 @@ class ExitProcessImpl implements ExitProcess {
   @override
   Future<List<ResignData>> getResignData() async {
     try {
-      final _response = await _apiService.post(auStaffGetResign, {
+      final _response = await _apiService.get(auStaffGetResign, params: {
         'access_token': _authenticationService.user!.accessToken,
         'company_id': _appAccessService.appAccess!.company.companyId,
         'staff_id': _authenticationService.user!.id,
@@ -30,6 +30,28 @@ class ExitProcessImpl implements ExitProcess {
       return data["data"]
           .map<ResignData>((item) => ResignData.fromJson(item))
           .toList();
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<void> createResignRequest(Map<String, dynamic> resignData) async {
+    try {
+      final _response = await _apiService.post(auStaffPostResign, {
+        ...resignData,
+        'access_token': _authenticationService.user!.accessToken,
+        'company_id': _appAccessService.appAccess!.company.companyId,
+        'staff_id': _authenticationService.user!.id,
+      });
+
+      final data = constructResponse(_response.data);
+
+      if (data!.containsKey("status") && data["status"] == false) {
+        throw data["response"] ?? data["detail"] ?? data["data"];
+      }
+
+      return;
     } catch (e) {
       throw apiError(e);
     }

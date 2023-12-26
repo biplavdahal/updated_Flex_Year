@@ -83,10 +83,12 @@ class PayrollView extends StatelessWidget {
         ],
       );
     } else {
-      return Center(
-        child: Image.asset(
-          "assets/images/oops.png",
-          width: 300,
+      return Expanded(
+        child: Center(
+          child: Image.asset(
+            "assets/images/oops.png",
+            width: 300,
+          ),
         ),
       );
     }

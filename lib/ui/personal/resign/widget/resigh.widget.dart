@@ -7,21 +7,22 @@ class ResignItem extends StatelessWidget {
   ResignItem({Key? key, required this.resign}) : super(key: key);
 
   final Map<String, Color> _statusColor = {
-    'pending': Colors.yellow.shade300,
-    'approved': Colors.green.shade300,
-    'declined': Colors.red.shade200
+    'Pending': Colors.yellow.shade300,
+    'Approved': Colors.green.shade300,
+    'Declined': Colors.red.shade200
   };
 
   @override
   Widget build(BuildContext context) {
+    Color statusColor = resign.status != null
+        ? _statusColor[resign.status] ?? Colors.grey
+        : Colors.grey;
     return Card(
         shape: RoundedRectangleBorder(
-          side: BorderSide(
-              color: _statusColor[resign.status] ?? Colors.grey, width: 1),
+          side: BorderSide(color: statusColor, width: 1),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.all(10),
@@ -29,15 +30,23 @@ class ResignItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: Text(
-                        resign.firstName ?? '' + resign.lastName.toString()),
+                    child: Text(resign.date.toString() != 'null'
+                        ? resign.date.toString()
+                        : 'No Date Selected'),
                   )
                 ],
               ),
             ),
-            SingleChildScrollView(
-              child: Text(resign.letter ?? 'N/A'),
-            )
+            Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(resign.letter.toString())),
+            const Divider(),
+            Card(
+                child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(resign.feedBack.toString() != 'null'
+                        ? resign.feedBack.toString()
+                        : 'No Feedback')))
           ],
         ));
   }

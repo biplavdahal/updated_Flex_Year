@@ -191,11 +191,16 @@ class DashboardView extends StatelessWidget {
           ),
           appBar: AppBar(
             centerTitle: true,
-            title: Image.network(
-              auBaseURL + model.logo.logoPath,
-              width: 150,
-              height: MediaQuery.of(context).size.height,
-            ),
+            title: auBaseURL + model.logo.logoPath == null
+                ? Image.network(
+                    auBaseURL + model.logo.logoPath,
+                    width: 150,
+                    height: MediaQuery.of(context).size.height,
+                  )
+                : Image.asset(
+                    "assets/images/flex_year_login_image.png",
+                    width: 145,
+                  ),
             bottom: PreferredSize(
               child: Container(
                 color: AppColor.primary,

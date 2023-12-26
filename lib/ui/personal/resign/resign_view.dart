@@ -1,6 +1,7 @@
 import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/ui/personal/resign/resign_viewmodel.dart';
 import 'package:flex_year_tablet/ui/personal/resign/widget/resigh.widget.dart';
+import 'package:flex_year_tablet/ui/personal/resign/write_resigh_request/write_resign_request.view.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widgets/fy_shimmer.widget.dart';
@@ -14,9 +15,7 @@ class ResignView extends StatelessWidget {
   Widget build(BuildContext context) {
     return View<ResignViewModel>(
       onDispose: (model) {},
-      onModelReady: (model) async {
-        await model.init();
-      },
+      onModelReady: (model) => model.init(),
       killViewOnClose: false,
       builder: (ctx, model, child) {
         return Scaffold(
@@ -25,18 +24,21 @@ class ResignView extends StatelessWidget {
           ),
           floatingActionButton: Stack(
             children: [
-              Positioned(
-                bottom: 16,
-                right: 16,
-                child: FloatingActionButton(
-                  child: const Icon(Icons.add),
-                  onPressed: () {},
-                ),
-              )
+              if (model.resignData.isEmpty)
+                Positioned(
+                  bottom: 16,
+                  right: 16,
+                  child: FloatingActionButton(
+                    child: const Icon(Icons.add),
+                    onPressed: () async {
+                      model.goto(WriteResignRequestView.tag);
+                    },
+                  ),
+                )
             ],
           ),
           body: Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(4),
             child: Column(
               children: [
                 if (model.isLoading)
@@ -46,7 +48,7 @@ class ResignView extends StatelessWidget {
                         separatorBuilder: (context, index) => const SizedBox(
                               height: 30,
                             ),
-                        itemCount: 9),
+                        itemCount: 5),
                   ),
                 const SizedBox(height: 16),
                 if (!model.isLoading)

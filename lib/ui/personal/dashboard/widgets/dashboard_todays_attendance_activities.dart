@@ -1,3 +1,4 @@
+
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
@@ -45,14 +46,20 @@ class _TodaysAttendanceActivitiesState
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              Text(widget.correctionData.checkinDatetime == null
-                  ? '-'
-                  : widget.correctionData.checkinDatetime.toString())
+              Text(
+                widget.correctionData.checkinDatetime == null
+                    ? '-'
+                    : TimeOfDay.fromDateTime(DateTime.parse(widget
+                                .correctionData.checkinDatetime
+                                .toString()))
+                            .format(context) +
+                        " ",
+              )
             ],
           ),
           SizedBox(
               height: 29,
-              width: 110,
+              width: 103,
               child: ElevatedButton(
                   onPressed: () async {
                     showDialog(
@@ -145,12 +152,12 @@ class _TodaysAttendanceActivitiesState
                         });
                   },
                   child: const Padding(
-                    padding: EdgeInsets.only(left: 30, right: 30),
+                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                     child: FittedBox(
                       fit: BoxFit.none,
                       child: Text(
-                        "Request Review",
-                        style: TextStyle(color: Colors.white),
+                        "Request Review   ",
+                        style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     ),
                   ))),
@@ -162,7 +169,7 @@ class _TodaysAttendanceActivitiesState
             children: [
               if (widget.correctionData.checkoutDatetime != null)
                 if (widget.correctionData.statusOut == "Lunch Out")
-                  const Text("Lunch Out :- ",
+                  const Text("Lunch Out : ",
                       style: TextStyle(fontWeight: FontWeight.w600)),
               if (widget.correctionData.checkoutDatetime != null)
                 if (widget.correctionData.statusOut != "Lunch Out")
@@ -172,7 +179,116 @@ class _TodaysAttendanceActivitiesState
                   ),
               Text(widget.correctionData.checkoutDatetime == null
                   ? ''
-                  : widget.correctionData.checkoutDatetime.toString()),
+                  : TimeOfDay.fromDateTime(DateTime.parse(widget
+                              .correctionData.checkoutDatetime
+                              .toString()))
+                          .format(context) +
+                      " "),
+              if (widget.correctionData.checkinDatetime != null)
+                if (widget.correctionData.Status != "Check In")
+                  SizedBox(
+                      height: 29,
+                      width: 110,
+                      child: ElevatedButton(
+                          onPressed: () async {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    scrollable: true,
+                                    title: const Text(
+                                      "Request Review " "(" "Lunch Out" ")",
+                                      style: TextStyle(color: AppColor.primary),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: const Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                          onPressed: () async {
+                                            await onSubmit(
+                                                "${widget.correctionData.attendanceId}");
+                                            Navigator.pop(context);
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "Request submitted successfully!");
+                                          },
+                                          child: const Text(
+                                            "Submit",
+                                            style: TextStyle(
+                                                color: AppColor.primary),
+                                          ))
+                                    ],
+                                    content: Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Form(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                            Card(
+                                              child: ListTile(
+                                                leading: const Icon(
+                                                    Icons.calendar_today),
+                                                title: Row(
+                                                  children: const [
+                                                    Expanded(
+                                                      child:
+                                                          Text('Select Date'),
+                                                    )
+                                                  ],
+                                                ),
+                                                subtitle: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      DateFormat.jm().format(
+                                                          DateTime(
+                                                              DateTime.now()
+                                                                  .year,
+                                                              DateTime.now()
+                                                                  .month,
+                                                              DateTime.now()
+                                                                  .day,
+                                                              _selectedTime
+                                                                  .hour,
+                                                              _selectedTime
+                                                                  .minute)),
+                                                    ),
+                                                  ],
+                                                ),
+                                                trailing: const Icon(
+                                                    Icons.keyboard_arrow_down),
+                                                onTap: _pickTime,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 16,
+                                            ),
+                                            FYInputField(
+                                              label: 'Message',
+                                              title: 'message ',
+                                              controller: messageController,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                });
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.only(left: 30, right: 30),
+                            child: FittedBox(
+                              fit: BoxFit.none,
+                              child: Text(
+                                "Request Review",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ))),
             ],
           ),
           if (widget.correctionData.checkoutDatetime != null)

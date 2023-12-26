@@ -342,18 +342,95 @@ class DashboardDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: const Text(
-                'Resign',
-                style: TextStyle(color: AppColor.primary),
-              ),
+              title: const Text('Exit Process',
+                  style: TextStyle(color: AppColor.primary)),
               onTap: () {
-                locator<DashboardModel>().goto(ResignView.tag);
+                showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height / 3,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColor.primary,
+                                  blurRadius: 10,
+                                  spreadRadius: 1,
+                                )
+                              ]),
+                          alignment: Alignment.topCenter,
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.all(3),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                title: const Text(
+                                  'Resignation',
+                                  style: TextStyle(color: AppColor.primary),
+                                ),
+                                onTap: () {
+                                  locator<DashboardModel>()
+                                      .goto(ResignView.tag);
+                                },
+                                leading: const Icon(
+                                  MdiIcons.doorOpen,
+                                  color: Colors.orange,
+                                ),
+                              ),
+                              ListTile(
+                                title: const Text(
+                                  'Clearance',
+                                  style: TextStyle(color: AppColor.primary),
+                                ),
+                                onTap: () {
+                                  locator<DashboardModel>()
+                                      .goto(ResignView.tag);
+                                },
+                                leading: const Icon(
+                                  MdiIcons.doorClosedLock,
+                                  color: Colors.orange,
+                                ),
+                              ),
+                              ListTile(
+                                title: const Text(
+                                  'Exit Interview',
+                                  style: TextStyle(color: AppColor.primary),
+                                ),
+                                onTap: () {
+                                  locator<DashboardModel>()
+                                      .goto(ResignView.tag);
+                                },
+                                leading: const Icon(
+                                  MdiIcons.chatQuestion,
+                                  color: Colors.orange,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    });
               },
               leading: const Icon(
-                MdiIcons.doorOpen,
-                color: AppColor.primary,
+                MdiIcons.doorSlidingOpen,
+                color: Color.fromARGB(255, 240, 119, 82),
               ),
             ),
+            // ListTile(
+            //   title: const Text(
+            //     'Resign',
+            //     style: TextStyle(color: AppColor.primary),
+            //   ),
+            //   onTap: () {
+            //     locator<DashboardModel>().goto(ResignView.tag);
+            //   },
+            //   leading: const Icon(
+            //     MdiIcons.doorOpen,
+            //     color: AppColor.primary,
+            //   ),
+            // ),
 
             const Divider(),
             if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
