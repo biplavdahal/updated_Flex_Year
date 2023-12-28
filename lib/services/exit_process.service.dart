@@ -1,3 +1,4 @@
+import 'package:flex_year_tablet/data_models/user_cleareance_data.dart';
 import 'package:flex_year_tablet/data_models/user_resign.data.dart';
 
 abstract class ExitProcess {
@@ -6,4 +7,7 @@ abstract class ExitProcess {
 
   //create resign letter
   Future<void> createResignRequest(Map<String, dynamic> resignData);
+
+  //search clearance
+  Future<List<Clearancedata>> getClearanceDetail();
 }

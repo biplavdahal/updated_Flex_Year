@@ -13,7 +13,9 @@ import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filt
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.view.dart';
 import 'package:flex_year_tablet/ui/personal/profile/widget/user_profile_header.dart';
+import 'package:flex_year_tablet/ui/personal/resign/clearance/clearance.view.dart';
 import 'package:flex_year_tablet/ui/personal/resign/resign_view.dart';
+import 'package:flex_year_tablet/ui/personal/resign/write_exit_interview/exit_interview.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../attendance_report_filter/attendance_report_filter.arguments.dart';
@@ -386,7 +388,7 @@ class DashboardDrawer extends StatelessWidget {
                                 ),
                                 onTap: () {
                                   locator<DashboardModel>()
-                                      .goto(ResignView.tag);
+                                      .goto(ClearanceView.tag);
                                 },
                                 leading: const Icon(
                                   MdiIcons.doorClosedLock,
@@ -400,7 +402,7 @@ class DashboardDrawer extends StatelessWidget {
                                 ),
                                 onTap: () {
                                   locator<DashboardModel>()
-                                      .goto(ResignView.tag);
+                                      .goto(ExitInterview.tag);
                                 },
                                 leading: const Icon(
                                   MdiIcons.chatQuestion,

@@ -1,4 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
+import 'package:flex_year_tablet/data_models/user_cleareance_data.dart';
 import 'package:flex_year_tablet/data_models/user_resign.data.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
@@ -11,6 +12,9 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
 
   List<ResignData> _resignData = [];
   List<ResignData> get resignData => _resignData;
+
+  List<Clearancedata> _clearanceData = [];
+  List<Clearancedata> get clearanceData => _clearanceData;
 
   // UI Controllers and keys
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -36,7 +40,6 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
       setLoading();
 
       _resignData = await _exitProcess.getResignData();
-      
 
       setIdle();
     } catch (e) {
@@ -53,6 +56,7 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
       await _exitProcess.createResignRequest(prepareData());
       dialog.hideDialog();
       goBack(result: true);
+      init();
     } catch (e) {
       dialog.hideDialog();
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
@@ -67,5 +71,18 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
     data['date'] = _resignDate.toString();
 
     return data;
+  }
+
+  Future<void> Clearanceinit() async {
+    try {
+      setLoading();
+
+      _clearanceData = await _exitProcess.getClearanceDetail();
+
+      setIdle();
+    } catch (e) {
+      setIdle();
+      snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
+    }
   }
 }

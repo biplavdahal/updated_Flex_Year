@@ -26,7 +26,9 @@ import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.view.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
 import 'package:flex_year_tablet/ui/personal/performance/performance_view.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.dart';
+import 'package:flex_year_tablet/ui/personal/resign/clearance/clearance.view.dart';
 import 'package:flex_year_tablet/ui/personal/resign/resign_view.dart';
+import 'package:flex_year_tablet/ui/personal/resign/write_exit_interview/exit_interview.dart';
 import 'package:flex_year_tablet/ui/personal/resign/write_resigh_request/write_resign_request.view.dart';
 import 'package:flex_year_tablet/ui/personal/staff_directory/staff_directory.view.dart';
 import 'package:flex_year_tablet/ui/personal/staff_directory/staff_directory_detail/staff_directory_detail.view.dart';
@@ -89,5 +91,7 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
       StaffDirectoryDetailView.tag:
           StaffDirectoryDetailView(settings.arguments as Arguments?),
       ResignView.tag: const ResignView(),
-      WriteResignRequestView.tag: const WriteResignRequestView()
+      WriteResignRequestView.tag: const WriteResignRequestView(),
+      ClearanceView.tag: const ClearanceView(),
+      ExitInterview.tag: const ExitInterview()
     };

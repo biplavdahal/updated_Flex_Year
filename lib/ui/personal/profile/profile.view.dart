@@ -179,15 +179,16 @@ class ProfileView extends StatelessWidget {
                                           (model.user.staff.employeeType ?? ''),
                                       icon: MdiIcons.accountTie,
                                     ),
-                                    _buildProfileField(
-                                      label: "Salary Period",
-                                      value: (model.user.staff.salaryPeriod!
-                                                  .toLowerCase() ==
-                                              'm'
-                                          ? 'Monthly'
-                                          : 'Yearly'),
-                                      icon: MdiIcons.calendarClock,
-                                    ),
+                                    if (model.user.staff.salaryPeriod != null)
+                                      _buildProfileField(
+                                        label: "Salary Period",
+                                        value: (model.user.staff.salaryPeriod!
+                                                    .toLowerCase() ==
+                                                'm'
+                                            ? 'Monthly'
+                                            : 'Yearly'),
+                                        icon: MdiIcons.calendarClock,
+                                      ),
                                     // _buildProfileField(
                                     //   label: "Normal Salary Rate",
                                     //   value:

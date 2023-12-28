@@ -4,22 +4,13 @@ import 'package:flutter/material.dart';
 class ResignItem extends StatelessWidget {
   final ResignData resign;
 
-  ResignItem({Key? key, required this.resign}) : super(key: key);
-
-  final Map<String, Color> _statusColor = {
-    'Pending': Colors.yellow.shade300,
-    'Approved': Colors.green.shade300,
-    'Declined': Colors.red.shade200
-  };
+  const ResignItem({Key? key, required this.resign}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Color statusColor = resign.status != null
-        ? _statusColor[resign.status] ?? Colors.grey
-        : Colors.grey;
     return Card(
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: statusColor, width: 1),
+          side: const BorderSide(width: 1),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
@@ -44,7 +35,8 @@ class ResignItem extends StatelessWidget {
             Card(
                 child: Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Text(resign.feedBack.toString() != 'null'
+                    child: Text(resign.feedBack.toString() != '' &&
+                            resign.feedBack.toString() != 'null'
                         ? resign.feedBack.toString()
                         : 'No Feedback')))
           ],

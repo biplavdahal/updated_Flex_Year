@@ -1,6 +1,7 @@
 import 'package:bestfriend/di.dart';
 import 'package:bestfriend/services/api.service.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
+import 'package:flex_year_tablet/data_models/user_cleareance_data.dart';
 import 'package:flex_year_tablet/data_models/user_resign.data.dart';
 import 'package:flex_year_tablet/helper/api_error.helper.dart';
 import 'package:flex_year_tablet/helper/dio_helper.dart';
@@ -52,6 +53,33 @@ class ExitProcessImpl implements ExitProcess {
       }
 
       return;
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
+
+  @override
+  Future<List<Clearancedata>> getClearanceDetail() async {
+    try {
+      final _response = await _apiService.post(auStaffGetClearance, {
+        'access_token': _authenticationService.user!.accessToken,
+        'company_id': _appAccessService.appAccess!.company.companyId,
+        'limit': 10,
+        'page': 1,
+        'sortnane': "",
+        'sortno': 1,
+        'search': {'staff_id': _authenticationService.user!.id}
+      });
+
+      final data = constructResponse(_response.data);
+
+      if (data!.containsKey("status") && data["status"] == false) {
+        throw data["response"] ?? data["detail"] ?? data["data"];
+      }
+
+      return data["data"]
+          .map<Clearancedata>((item) => Clearancedata.fromJson(item))
+          .toList();
     } catch (e) {
       throw apiError(e);
     }
