@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_resign.data.freezed.dart';
@@ -6,6 +8,7 @@ part 'user_resign.data.g.dart';
 @freezed
 class ResignData with _$ResignData {
   const factory ResignData({
+    @JsonKey(name: 'id') required String id,
     @JsonKey(name: 'letter') String? letter,
     @JsonKey(name: 'date') String? date,
     @JsonKey(name: 'feedback') String? feedBack,

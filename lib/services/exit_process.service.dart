@@ -1,4 +1,5 @@
 import 'package:flex_year_tablet/data_models/user_cleareance_data.dart';
+import 'package:flex_year_tablet/data_models/user_exit_survey.data.dart';
 import 'package:flex_year_tablet/data_models/user_resign.data.dart';
 
 abstract class ExitProcess {
@@ -10,4 +11,7 @@ abstract class ExitProcess {
 
   //search clearance
   Future<List<Clearancedata>> getClearanceDetail();
+
+  //get question
+  Future<List<ExitSurveyData>> getQuestions();
 }

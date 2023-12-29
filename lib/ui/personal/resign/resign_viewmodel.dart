@@ -1,10 +1,17 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/user_cleareance_data.dart';
+import 'package:flex_year_tablet/data_models/user_exit_survey.data.dart';
 import 'package:flex_year_tablet/data_models/user_resign.data.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/exit_process.service.dart';
+import 'package:flex_year_tablet/ui/personal/resign/resign_arguments.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import '../../../data_models/company.data.dart';
+import '../../../data_models/company_logo.data.dart';
+import '../../../services/app_access.service.dart';
 
 class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
 //service
@@ -15,6 +22,11 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
 
   List<Clearancedata> _clearanceData = [];
   List<Clearancedata> get clearanceData => _clearanceData;
+  CompanyLogoData get logo => locator<AppAccessService>().appAccess!.logo;
+  CompanyData get company => locator<AppAccessService>().appAccess!.company;
+
+  List<ExitSurveyData> _exitSurveyData = [];
+  List<ExitSurveyData> get exitSurveyData => _exitSurveyData;
 
   // UI Controllers and keys
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -35,7 +47,21 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
   TextEditingController get resignFeedbackController =>
       _resignFeedbackController;
 
-  Future<void> init() async {
+  bool _isEditMode = false;
+  String? _requestId;
+
+  Future<void> init(ResighViewArguments? arguments) async {
+    if (arguments?.resign != null) {
+      _isEditMode = true;
+      _requestId = arguments!.resign!.id;
+      _resignDate = DateTime.parse(arguments.resign!.date.toString());
+      _resignLetterController.text = arguments.resign!.letter.toString();
+      _resignFeedbackController.text = arguments.resign!.feedBack.toString();
+    } else {
+      _resignLetterController.text = '';
+      _resignFeedbackController.text = '';
+      _resignDate = resignDate;
+    }
     try {
       setLoading();
 
@@ -56,7 +82,6 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
       await _exitProcess.createResignRequest(prepareData());
       dialog.hideDialog();
       goBack(result: true);
-      init();
     } catch (e) {
       dialog.hideDialog();
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
@@ -78,6 +103,19 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
       setLoading();
 
       _clearanceData = await _exitProcess.getClearanceDetail();
+
+      setIdle();
+    } catch (e) {
+      setIdle();
+      snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
+    }
+  }
+
+  Future<void> ExitSurveyinit() async {
+    try {
+      setLoading();
+
+      _exitSurveyData = await _exitProcess.getQuestions();
 
       setIdle();
     } catch (e) {

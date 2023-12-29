@@ -96,7 +96,10 @@ const auStaffDetail = "staff/details";
 const austaffDepartmentIndex = 'department/index';
 const auStaffDepartmentDetailList = 'department/search';
 
-//Exit Process
+//--------Exit Process-----
 const auStaffGetResign = 'resignation-letter/index';
 const auStaffPostResign = 'resignation-letter/add';
 const auStaffGetClearance = 'user-clearances/search';
+
+//Questions and answer
+const auStaffGetQuestion = 'exit-survey/index';

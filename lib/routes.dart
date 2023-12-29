@@ -90,7 +90,7 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
       StaffDirectoryView.tag: const StaffDirectoryView(),
       StaffDirectoryDetailView.tag:
           StaffDirectoryDetailView(settings.arguments as Arguments?),
-      ResignView.tag: const ResignView(),
+      ResignView.tag: ResignView(settings.arguments as Arguments?),
       WriteResignRequestView.tag: const WriteResignRequestView(),
       ClearanceView.tag: const ClearanceView(),
       ExitInterview.tag: const ExitInterview()
