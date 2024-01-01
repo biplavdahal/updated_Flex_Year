@@ -6,6 +6,8 @@ import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/exit_process.service.dart';
 import 'package:flex_year_tablet/ui/personal/resign/resign_arguments.dart';
+import 'package:flex_year_tablet/ui/personal/resign/resign_view.dart';
+import 'package:flex_year_tablet/ui/personal/resign/write_resigh_request/write_resign_request.view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -74,14 +76,31 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
     }
   }
 
+  Future<void> onUpdatePressed(ResignData resign) async {
+    await goto(WriteResignRequestView.tag,
+        arguments: ResighViewArguments(resign));
+  }
+
   Future<void> onSubmitResignData() async {
     try {
-      dialog.showDialog(
-          DialogRequest(type: DialogType.progress, title: 'Creating resign..'));
+      dialog.showDialog(DialogRequest(
+          type: DialogType.progress,
+          title: '${_isEditMode ? 'Updating' : 'Creating'} resign request...'));
 
-      await _exitProcess.createResignRequest(prepareData());
+      if (_isEditMode) {
+        await _exitProcess.updateResignRequest(prepareData());
+        Fluttertoast.showToast(
+            msg: 'Your resignation letter Updated successfully');
+      } else {
+        await _exitProcess.createResignRequest(prepareData());
+        Fluttertoast.showToast(
+            msg: 'Your resignation letter Updated successfully');
+      }
+
       dialog.hideDialog();
-      goBack(result: true);
+      goBack(
+        result: true,
+      );
     } catch (e) {
       dialog.hideDialog();
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
@@ -94,6 +113,10 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
     data['letter'] = _resignLetterController.text;
     data['feedback'] = _resignFeedbackController.text;
     data['date'] = _resignDate.toString();
+
+    if (_isEditMode) {
+      data['id'] = _requestId;
+    }
 
     return data;
   }

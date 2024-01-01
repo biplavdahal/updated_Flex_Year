@@ -2,6 +2,7 @@ import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/resign/resign_viewmodel.dart';
+import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../widgets/fy_shimmer.widget.dart';
@@ -59,39 +60,81 @@ class ExitInterview extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "Exit Interview ! ",
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Text(
                             'All you need to do is follow the prompts to complete the process as requested by ${model.company.companyName}.',
-                            style: TextStyle(fontSize: 15),
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                          const SizedBox(
+                            height: 10,
                           ),
                           Image.asset(
                             "assets/images/exit.png",
                             height: 200,
                             width: MediaQuery.of(context).size.height / 2,
                           ),
-                          SizedBox(
-                            height: 5,
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Text(
+                            ' To do',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.primary),
+                          ),
+                          const SizedBox(
+                            height: 10,
                           ),
                           Card(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Exit Interview',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500),
-                                )
-                              ],
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: const [
+                                  Text(
+                                    'Exit Interview',
+                                    style: TextStyle(
+                                        fontSize: 14.5,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  FYPrimaryButton(
+                                    label: '  Start ->',
+                                    backgroundColor: AppColor.primary,
+                                  ),
+                                ],
+                              ),
                             ),
-                          )
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          const Text(
+                            'Have a question?',
+                            style: TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w600),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'You are welcome to reach out  to ${model.company.email} or contact directly at ${model.company.phone}. ',
+                            style: const TextStyle(
+                              fontSize: 11,
+                            ),
+                          ),
                         ],
                       ),
                     ),

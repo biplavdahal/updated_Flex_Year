@@ -9,6 +9,9 @@ abstract class ExitProcess {
   //create resign letter
   Future<void> createResignRequest(Map<String, dynamic> resignData);
 
+  //Update resign letter
+  Future<void> updateResignRequest(Map<String, dynamic> resignData);
+
   //search clearance
   Future<List<Clearancedata>> getClearanceDetail();
 

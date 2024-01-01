@@ -1,4 +1,6 @@
+import 'package:bestfriend/model/arguments.model.dart';
 import 'package:bestfriend/ui/view.dart';
+import 'package:flex_year_tablet/ui/personal/resign/resign_arguments.dart';
 import 'package:flex_year_tablet/ui/personal/resign/resign_viewmodel.dart';
 import 'package:flutter/material.dart';
 import '../../../../widgets/fy_date_time_field.widget.dart';
@@ -6,16 +8,21 @@ import '../../../../widgets/fy_date_time_field.widget.dart';
 class WriteResignRequestView extends StatelessWidget {
   static String tag = 'write-resign-request-view';
 
-  const WriteResignRequestView({Key? key}) : super(key: key);
+  final Arguments? arguments;
+
+  const WriteResignRequestView(this.arguments, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return View<ResignViewModel>(
+      onModelReady: (model) => model.init(arguments as ResighViewArguments?),
       enableTouchRepeal: true,
       builder: (ctx, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Create Resign Letter'),
+            title: Text(arguments != null
+                ? 'Update Resign Request'
+                : 'Create Resign Request'),
           ),
           body: Container(
             padding: const EdgeInsets.all(13),
@@ -44,6 +51,7 @@ class WriteResignRequestView extends StatelessWidget {
                           }
                           return null;
                         },
+                        initialValue: model.resignLetterController.text,
                         onChanged: (value) {
                           final modifiedValue = value
                               .replaceAll(' ', '\t')
@@ -58,6 +66,7 @@ class WriteResignRequestView extends StatelessWidget {
                         labelText: 'Feedback',
                         border: OutlineInputBorder(),
                       ),
+                      initialValue: model.resignFeedbackController.text,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Enter a Feedback';
@@ -76,12 +85,15 @@ class WriteResignRequestView extends StatelessWidget {
                           model.onSubmitResignData();
                         }
                       },
-                      child: const Text('Submit Resignation'),
+                      child: Text(arguments != null
+                          ? 'Update Resignation'
+                          : 'Submit resignation'),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                        'Note : Once you submit resign letter it cannot be deteted !',
-                        style: TextStyle(color: Colors.grey)),
+                    if (arguments == null)
+                      const Text(
+                          'Note : Once you submit resign letter it cannot be deteted !',
+                          style: TextStyle(color: Colors.grey)),
                   ],
                 ),
               ),

@@ -100,6 +100,7 @@ const auStaffDepartmentDetailList = 'department/search';
 const auStaffGetResign = 'resignation-letter/index';
 const auStaffPostResign = 'resignation-letter/add';
 const auStaffGetClearance = 'user-clearances/search';
+const auStaffEditResign = 'resignation-letter/edit';
 
 //Questions and answer
 const auStaffGetQuestion = 'exit-survey/index';
