@@ -92,7 +92,8 @@ class ResignView extends StatelessWidget {
                                 icon: const Icon(MdiIcons.refreshCircle))
                           ],
                         )),
-                      ))
+                      )),
+              
                 ],
               ),
             ),

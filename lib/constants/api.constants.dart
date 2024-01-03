@@ -104,3 +104,4 @@ const auStaffEditResign = 'resignation-letter/edit';
 
 //Questions and answer
 const auStaffGetQuestion = 'exit-survey/index';
+const auStaffPostAnswer = 'exitsurvey-ans/add';

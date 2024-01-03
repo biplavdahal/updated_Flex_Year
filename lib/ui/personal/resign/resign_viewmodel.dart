@@ -6,11 +6,9 @@ import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/exit_process.service.dart';
 import 'package:flex_year_tablet/ui/personal/resign/resign_arguments.dart';
-import 'package:flex_year_tablet/ui/personal/resign/resign_view.dart';
 import 'package:flex_year_tablet/ui/personal/resign/write_resigh_request/write_resign_request.view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
 import '../../../data_models/company.data.dart';
 import '../../../data_models/company_logo.data.dart';
 import '../../../services/app_access.service.dart';
@@ -51,6 +49,38 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
 
   bool _isEditMode = false;
   String? _requestId;
+
+  String? _questionID;
+  String? get questionID => _questionID;
+  set questionID(String? value) {
+    _questionID = value;
+    setIdle();
+  }
+   String? _optionOne;
+  String? get optionOne => _optionOne;
+  set optionOne(String? value) {
+    _optionOne = value;
+    setIdle();
+  }
+   String? _optionTwo;
+  String? get optionTwo => _optionTwo;
+  set optionTwo(String? value) {
+    _optionTwo = value;
+    setIdle();
+  }
+   String? _optionThree;
+  String? get optionThree => _optionThree;
+  set optionThree(String? value) {
+    _optionThree = value;
+    setIdle();
+  }
+   String? _optionFour;
+  String? get optionFour => _optionFour;
+  set optionFour(String? value) {
+    _optionFour = value;
+    setIdle();
+  }
+  
 
   Future<void> init(ResighViewArguments? arguments) async {
     if (arguments?.resign != null) {
@@ -143,6 +173,25 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
       setIdle();
     } catch (e) {
       setIdle();
+      snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
+    }
+  }
+
+  Future<void> onSubmitAnswer() async {
+    try {
+      dialog.showDialog(DialogRequest(
+          type: DialogType.progress, title: 'Sumbmitting answer ...'));
+
+      await _exitProcess.submitAnswer(
+          questionID: _questionID.toString(),
+          optionOne: optionOne.toString(),
+          optionTwo: optionTwo.toString(),
+          optionThree: optionThree.toString(),
+          optionFour: optionFour.toString());
+      dialog.hideDialog();
+      goBack(result: true);
+    } catch (e) {
+      dialog.hideDialog();
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     }
   }

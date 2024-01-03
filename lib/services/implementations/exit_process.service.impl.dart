@@ -129,4 +129,33 @@ class ExitProcessImpl implements ExitProcess {
       throw apiError(e);
     }
   }
+
+  @override
+  Future<void> submitAnswer(
+      {required String questionID,
+      required String optionOne,
+      required String optionTwo,
+      required String optionThree,
+      required String optionFour}) async {
+    try {
+      final _response = await _apiService.post(auStaffPostAnswer, {
+        'access_token': _authenticationService.user!.accessToken,
+        'company_id': _appAccessService.appAccess!.company.companyId,
+        'staff_id': _authenticationService.user!.id,
+        'survey': [
+          {
+            "question_id": questionID,
+            "option_1": optionOne,
+            "option_2": optionTwo,
+            "option_3": optionThree,
+            "option_4": optionFour
+          }
+        ]
+      });
+      constructResponse(_response.data);
+      return;
+    } catch (e) {
+      throw apiError(e);
+    }
+  }
 }

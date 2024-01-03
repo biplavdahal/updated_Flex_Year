@@ -8,7 +8,7 @@ part 'user_exit_survey.data.g.dart';
 @freezed
 class ExitSurveyData with _$ExitSurveyData {
   const factory ExitSurveyData(
-      {@JsonKey(name: 'id') required int questionId,
+      {@JsonKey(name: 'id')  String? questionId,
       @JsonKey(name: 'question') String? question,
       @JsonKey(name: 'option_1') String? optionOne,
       @JsonKey(name: 'option_2') String? optionTwo,

@@ -29,6 +29,7 @@ import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.
 import 'package:flex_year_tablet/ui/personal/resign/clearance/clearance.view.dart';
 import 'package:flex_year_tablet/ui/personal/resign/resign_view.dart';
 import 'package:flex_year_tablet/ui/personal/resign/write_exit_interview/exit_interview.dart';
+import 'package:flex_year_tablet/ui/personal/resign/write_exit_interview/survey.dart';
 import 'package:flex_year_tablet/ui/personal/resign/write_resigh_request/write_resign_request.view.dart';
 import 'package:flex_year_tablet/ui/personal/staff_directory/staff_directory.view.dart';
 import 'package:flex_year_tablet/ui/personal/staff_directory/staff_directory_detail/staff_directory_detail.view.dart';
@@ -94,5 +95,6 @@ Map<String, Widget> routesAndViews(RouteSettings settings) => {
       WriteResignRequestView.tag:
           WriteResignRequestView(settings.arguments as Arguments?),
       ClearanceView.tag: const ClearanceView(),
-      ExitInterview.tag: const ExitInterview()
+      ExitInterview.tag: const ExitInterview(),
+      SurveyView.tag: const SurveyView()
     };

@@ -2,6 +2,7 @@ import 'package:bestfriend/ui/view.dart';
 import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/resign/resign_viewmodel.dart';
+import 'package:flex_year_tablet/ui/personal/resign/write_exit_interview/survey.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -100,19 +101,22 @@ class ExitInterview extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: const [
-                                  Text(
+                                children: [
+                                  const Text(
                                     'Exit Interview',
                                     style: TextStyle(
                                         fontSize: 14.5,
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 20,
                                   ),
                                   FYPrimaryButton(
-                                    label: '  Start ->',
+                                    label: '  Start -->',
                                     backgroundColor: AppColor.primary,
+                                    onPressed: () async {
+                                      model.goto(SurveyView.tag);
+                                    },
                                   ),
                                 ],
                               ),

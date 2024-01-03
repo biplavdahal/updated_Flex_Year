@@ -17,4 +17,12 @@ abstract class ExitProcess {
 
   //get question
   Future<List<ExitSurveyData>> getQuestions();
+
+  //submit answer
+  Future<void> submitAnswer(
+      {required String questionID,
+       required String optionOne,
+       required String optionTwo,
+     required String optionThree,
+     required String optionFour});
 }
