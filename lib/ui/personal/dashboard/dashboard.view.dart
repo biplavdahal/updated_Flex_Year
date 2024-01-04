@@ -761,12 +761,23 @@ class DashboardView extends StatelessWidget {
 
     double progress = model.calculateProgress();
 
+    late DateTime checkoutTime;
+    if (model.attendanceCorrectionData.isNotEmpty &&
+        model.attendanceCorrectionData.last.checkoutDatetime != null) {
+      checkoutTime =
+          DateTime.parse(model.attendanceCorrectionData.last.checkoutDatetime!);
+    } else {
+      checkoutTime = DateTime.now();
+    }
+
     DateTime checkinTime =
         DateTime.parse(model.attendanceCorrectionData[0].checkinDatetime!);
     DateTime now = DateTime.now();
     Duration remainingTime =
         checkinTime.add(const Duration(hours: 8, minutes: 30)).difference(now);
     Color progressBarColor = progress >= 1.0 ? Colors.green : AppColor.primary;
+
+    Duration difference = checkoutTime.difference(checkinTime);
 
     return SizedBox(
       height: 20,
@@ -779,7 +790,10 @@ class DashboardView extends StatelessWidget {
         borderRadius: 12.0,
         direction: Axis.horizontal,
         center: Text(
-          "Remaining Time: ${remainingTime.inHours}h ${remainingTime.inMinutes.remainder(60)}m ${remainingTime.inSeconds.remainder(60)}s",
+          model.attendanceCorrectionData.isNotEmpty &&
+                  model.attendanceCorrectionData.last.checkoutDatetime != null
+              ? "Today time: ${formatDuration(difference)}"
+              : "Remaining Time: ${remainingTime.inHours}h ${remainingTime.inMinutes.remainder(60)}m ${remainingTime.inSeconds.remainder(60)}s",
           style: const TextStyle(
             color: Colors.white,
             fontSize: 11,
@@ -801,62 +815,23 @@ class DashboardView extends StatelessWidget {
       return "Good Evening,";
     }
   }
-}
 
-// Card(
-//                       margin: const EdgeInsets.only(bottom: 5),
-//                       child: Padding(
-//                         padding: const EdgeInsets.all(16.0),
-//                         child: Column(
-//                           children: [
-//                             Center(
-//                               child: Row(
-//                                 children: [
-//                                   const Text(
-//                                     "Total hrs : ",
-//                                     style: TextStyle(
-//                                       fontWeight: FontWeight.w600,
-//                                       fontSize: 12,
-//                                     ),
-//                                   ),
-//                                   Text(
-//                                     convertIntoHrs(model.WorkingHours!),
-//                                     style: const TextStyle(
-//                                       fontWeight: FontWeight.w600,
-//                                       fontSize: 12,
-//                                     ),
-//                                   ),
-//                                 ],
-//                               ),
-//                             ),
-//                             Text(
-//                               "Leave : ${model.Leave} days",
-//                               style: const TextStyle(
-//                                 color: Colors.orange,
-//                                 fontWeight: FontWeight.w600,
-//                                 fontSize: 12,
-//                               ),
-//                             ),
-//                             Text(
-//                               "Holiday : ${model.holidays} days",
-//                               style: const TextStyle(
-//                                   fontWeight: FontWeight.w600,
-//                                   fontSize: 12,
-//                                   color: AppColor.primary),
-//                             ),
-//                             Text('Present : ${model.present} days',
-//                                 style: const TextStyle(
-//                                   color: Colors.green,
-//                                   fontWeight: FontWeight.w600,
-//                                   fontSize: 12,
-//                                 )),
-//                             Text('Absent : ${model.absent} days',
-//                                 style: const TextStyle(
-//                                   color: Colors.red,
-//                                   fontWeight: FontWeight.w600,
-//                                   fontSize: 12,
-//                                 ))
-//                           ],
-//                         ),
-//                       ),
-//                     );
+  String formatDuration(Duration duration) {
+    int hours = duration.inHours;
+    int minutes = duration.inMinutes.remainder(60);
+    int seconds = duration.inSeconds.remainder(60);
+
+    List<String> parts = [];
+    if (hours > 0) {
+      parts.add('$hours hr');
+    }
+    if (minutes > 0) {
+      parts.add('$minutes min');
+    }
+    if (seconds > 0 || (hours == 0 && minutes == 0)) {
+      parts.add('$seconds sec');
+    }
+
+    return parts.join(' ');
+  }
+}

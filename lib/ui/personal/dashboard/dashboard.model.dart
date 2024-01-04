@@ -89,13 +89,20 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   late String? present = _reportSummary[0].present.toString();
   late String? absent = _reportSummary[0].absent.toString();
 
-  MyClass() {
-    WorkingHours = _reportSummary[0].workingHours;
-    Leave = _reportSummary[0].leaveTotal.toString();
-    holidays = _reportSummary[0].offDay.toString();
-    present = _reportSummary[0].present.toString();
 
-    absent = _reportSummary[0].absent.toString();
+  MyClass() {
+  WorkingHours =
+        _reportSummary.isNotEmpty ? _reportSummary[0].workingHours : null;
+    Leave = _reportSummary.isNotEmpty
+        ? _reportSummary[0].leaveTotal.toString()
+        : null;
+    holidays =
+        _reportSummary.isNotEmpty ? _reportSummary[0].offDay.toString() : null;
+    present =
+        _reportSummary.isNotEmpty ? _reportSummary[0].present.toString() : null;
+    absent =
+        _reportSummary.isNotEmpty ? _reportSummary[0].absent.toString() : null;
+
   }
 
   AttendanceSummaryData? _attendanceData;

@@ -4,7 +4,6 @@ import 'package:flex_year_tablet/ui/personal/resign/clearance/clearance.view.dar
 import 'package:flex_year_tablet/ui/personal/resign/resign_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 import '../../../../theme.dart';
 
 class ResignItem extends StatelessWidget {

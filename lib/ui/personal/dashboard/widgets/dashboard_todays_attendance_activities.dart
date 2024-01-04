@@ -1,4 +1,3 @@
-
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
@@ -184,111 +183,116 @@ class _TodaysAttendanceActivitiesState
                               .toString()))
                           .format(context) +
                       " "),
-              if (widget.correctionData.checkinDatetime != null)
-                if (widget.correctionData.Status != "Check In")
-                  SizedBox(
-                      height: 29,
-                      width: 110,
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    scrollable: true,
-                                    title: const Text(
-                                      "Request Review " "(" "Lunch Out" ")",
-                                      style: TextStyle(color: AppColor.primary),
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        child: const Text('Cancel'),
-                                      ),
-                                      TextButton(
-                                          onPressed: () async {
-                                            await onSubmit(
-                                                "${widget.correctionData.attendanceId}");
-                                            Navigator.pop(context);
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    "Request submitted successfully!");
-                                          },
-                                          child: const Text(
-                                            "Submit",
-                                            style: TextStyle(
-                                                color: AppColor.primary),
-                                          ))
-                                    ],
-                                    content: Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Form(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            Card(
-                                              child: ListTile(
-                                                leading: const Icon(
-                                                    Icons.calendar_today),
-                                                title: Row(
-                                                  children: const [
-                                                    Expanded(
-                                                      child:
-                                                          Text('Select Date'),
-                                                    )
-                                                  ],
-                                                ),
-                                                subtitle: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      DateFormat.jm().format(
-                                                          DateTime(
-                                                              DateTime.now()
-                                                                  .year,
-                                                              DateTime.now()
-                                                                  .month,
-                                                              DateTime.now()
-                                                                  .day,
-                                                              _selectedTime
-                                                                  .hour,
-                                                              _selectedTime
-                                                                  .minute)),
-                                                    ),
-                                                  ],
-                                                ),
-                                                trailing: const Icon(
-                                                    Icons.keyboard_arrow_down),
-                                                onTap: _pickTime,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 16,
-                                            ),
-                                            FYInputField(
-                                              label: 'Message',
-                                              title: 'message ',
-                                              controller: messageController,
-                                            )
-                                          ],
+              if (widget.correctionData.checkoutDatetime != null)
+                if (widget.correctionData.statusOut == "Lunch Out")
+                  if (widget.correctionData.checkinDatetime != null)
+                    if (widget.correctionData.Status != "Check In")
+                      SizedBox(
+                          height: 29,
+                          width: 110,
+                          child: ElevatedButton(
+                              onPressed: () async {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        scrollable: true,
+                                        title: const Text(
+                                          "Request Review " "(" "Lunch Out" ")",
+                                          style: TextStyle(
+                                              color: AppColor.primary),
                                         ),
-                                      ),
-                                    ),
-                                  );
-                                });
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.only(left: 30, right: 30),
-                            child: FittedBox(
-                              fit: BoxFit.none,
-                              child: Text(
-                                "Request Review",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ))),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: const Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                              onPressed: () async {
+                                                await onSubmit(
+                                                    "${widget.correctionData.attendanceId}");
+                                                Navigator.pop(context);
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "Request submitted successfully!");
+                                              },
+                                              child: const Text(
+                                                "Submit",
+                                                style: TextStyle(
+                                                    color: AppColor.primary),
+                                              ))
+                                        ],
+                                        content: Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: Form(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.stretch,
+                                              children: [
+                                                Card(
+                                                  child: ListTile(
+                                                    leading: const Icon(
+                                                        Icons.calendar_today),
+                                                    title: Row(
+                                                      children: const [
+                                                        Expanded(
+                                                          child: Text(
+                                                              'Select Date'),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    subtitle: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          DateFormat.jm()
+                                                              .format(DateTime(
+                                                                  DateTime.now()
+                                                                      .year,
+                                                                  DateTime.now()
+                                                                      .month,
+                                                                  DateTime.now()
+                                                                      .day,
+                                                                  _selectedTime
+                                                                      .hour,
+                                                                  _selectedTime
+                                                                      .minute)),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    trailing: const Icon(Icons
+                                                        .keyboard_arrow_down),
+                                                    onTap: _pickTime,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 16,
+                                                ),
+                                                FYInputField(
+                                                  label: 'Message',
+                                                  title: 'message ',
+                                                  controller: messageController,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.only(left: 30, right: 30),
+                                child: FittedBox(
+                                  fit: BoxFit.none,
+                                  child: Text(
+                                    "Request Review",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ))),
             ],
           ),
           if (widget.correctionData.checkoutDatetime != null)
