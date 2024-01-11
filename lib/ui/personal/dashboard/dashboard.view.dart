@@ -76,7 +76,7 @@ class DashboardView extends StatelessWidget {
                 ),
                 backgroundColor: AppColor.primary,
                 content: Text("It's $staffNames's birthday today! "),
-                duration: const Duration(seconds: 15),
+                duration: const Duration(seconds: 10),
               ),
             );
           });

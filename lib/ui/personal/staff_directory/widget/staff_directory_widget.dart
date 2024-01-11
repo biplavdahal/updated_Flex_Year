@@ -25,7 +25,6 @@ class StaffDirectoryItem extends StatelessWidget {
           .replaceAll(RegExp(r'^<imgsrc=\"data:image/png;base64,'), '')
           .replaceAll('\">', '');
 
-      // Decode Base64 image data
       imageBytes = decodeBase64Image(base64Image);
     }
 
@@ -40,9 +39,10 @@ class StaffDirectoryItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(children: [
-                    Image.memory(
-                      imageBytes as Uint8List,
-                    ),
+                    if (imageBytes != null)
+                      Image.memory(
+                        imageBytes as Uint8List,
+                      ),
                     const SizedBox(
                       width: 5,
                     ),

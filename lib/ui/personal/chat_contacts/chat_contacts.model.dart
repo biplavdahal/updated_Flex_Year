@@ -1,6 +1,7 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/data_models/chat_contact.data.dart';
 import 'package:flex_year_tablet/services/chat.service.dart';
+import 'package:flex_year_tablet/theme.dart';
 
 class ChatContactsModel extends ViewModel with SnackbarMixin {
   final ChatService _chatService = locator<ChatService>();
@@ -15,11 +16,9 @@ class ChatContactsModel extends ViewModel with SnackbarMixin {
       setIdle();
     } catch (e) {
       goBack();
-      snackbar.displaySnackbar(
-        SnackbarRequest.of(
-          message: e.toString(),
-        ),
-      );
+      Fluttertoast.showToast(
+          msg: 'Chat has not been assigned yet.. request to admin.',
+          backgroundColor: AppColor.primary);
     }
   }
 }

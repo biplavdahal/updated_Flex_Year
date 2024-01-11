@@ -25,7 +25,7 @@ class SurveyView extends StatelessWidget {
             title: const Text('Survey'),
           ),
           body: Container(
-            padding: EdgeInsets.all(30),
+            padding: const EdgeInsets.all(30),
             child: Column(
               children: [
                 Row(

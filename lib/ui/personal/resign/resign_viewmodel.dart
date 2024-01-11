@@ -56,31 +56,34 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
     _questionID = value;
     setIdle();
   }
-   String? _optionOne;
+
+  String? _optionOne;
   String? get optionOne => _optionOne;
   set optionOne(String? value) {
     _optionOne = value;
     setIdle();
   }
-   String? _optionTwo;
+
+  String? _optionTwo;
   String? get optionTwo => _optionTwo;
   set optionTwo(String? value) {
     _optionTwo = value;
     setIdle();
   }
-   String? _optionThree;
+
+  String? _optionThree;
   String? get optionThree => _optionThree;
   set optionThree(String? value) {
     _optionThree = value;
     setIdle();
   }
-   String? _optionFour;
+
+  String? _optionFour;
   String? get optionFour => _optionFour;
   set optionFour(String? value) {
     _optionFour = value;
     setIdle();
   }
-  
 
   Future<void> init(ResighViewArguments? arguments) async {
     if (arguments?.resign != null) {
@@ -172,6 +175,8 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
 
       setIdle();
     } catch (e) {
+      if (e == 'There are no any data.') goBack();
+
       setIdle();
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     }

@@ -7,6 +7,7 @@ import 'package:flex_year_tablet/ui/personal/profile/widget/user_profile_header.
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:upgrader/upgrader.dart';
 
 class ProfileView extends StatelessWidget {
   static String tag = 'profile-view';
@@ -43,252 +44,262 @@ class ProfileView extends StatelessWidget {
               ),
             ],
           ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 14),
-              UserProfileHeader(
-                textcolor: Colors.white,
-              ),
-              const SizedBox(height: 14),
-              const SizedBox(height: 14),
-              Expanded(
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
+          body: UpgradeAlert(
+            upgrader: Upgrader(dialogStyle: UpgradeDialogStyle.cupertino),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 14),
+                UserProfileHeader(
+                  textcolor: Colors.white,
+                ),
+                const SizedBox(height: 14),
+                const SizedBox(height: 14),
+                Expanded(
                   child: Container(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Center(
-                          child: Text(
-                            "Information",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 10),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Center(
+                            child: Text(
+                              "Information",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
                           ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ChoiceChip(
-                              label: Text(model.tabs[0]),
-                              selected: model.selectedTab == '0',
-                              labelStyle: TextStyle(
-                                color: model.selectedTab == '0'
-                                    ? AppColor.primary
-                                    : Colors.black,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ChoiceChip(
+                                label: Text(model.tabs[0]),
+                                selected: model.selectedTab == '0',
+                                labelStyle: TextStyle(
+                                  color: model.selectedTab == '0'
+                                      ? AppColor.primary
+                                      : Colors.black,
+                                ),
+                                onSelected: (_) => model.selectedTab = '0',
                               ),
-                              onSelected: (_) => model.selectedTab = '0',
-                            ),
-                            ChoiceChip(
-                              label: Text(model.tabs[1]),
-                              selected: model.selectedTab == '1',
-                              onSelected: (_) => model.selectedTab = '1',
-                              labelStyle: TextStyle(
-                                color: model.selectedTab == '1'
-                                    ? AppColor.primary
-                                    : Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                        if (model.selectedTab == "0")
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    _buildProfileField(
-                                      label: "E-mail",
-                                      value: model.user.staff.email.toString(),
-                                      icon: MdiIcons.emailOutline,
-                                    ),
-                                    _buildProfileField(
-                                      label: "Address",
-                                      value: model.user.staffAddresses.isEmpty
-                                          ? "N/A"
-                                          : model.user.staffAddresses[0]
-                                              .addressLine1,
-                                      icon: MdiIcons.mapMarkerOutline,
-                                    ),
-                                    _buildProfileField(
-                                        label: "Marital status",
-                                        value: (model.user.staff.maritalStatus!
-                                                    .toLowerCase() ==
-                                                'u'
-                                            ? "Unmarried"
-                                            : "Married"),
-                                        icon: MdiIcons.heart),
-                                    _buildProfileField(
-                                        label: "Date Of Birth",
-                                        value: model.user.staff.dob ?? "",
-                                        icon: MdiIcons.cake),
-                                    _buildProfileField(
-                                        label: "Citzenship No.",
-                                        value: model.user.staff.citizenshipNo ??
-                                            "",
-                                        icon: MdiIcons.passport),
-                                  ],
+                              ChoiceChip(
+                                label: Text(model.tabs[1]),
+                                selected: model.selectedTab == '1',
+                                onSelected: (_) => model.selectedTab = '1',
+                                labelStyle: TextStyle(
+                                  color: model.selectedTab == '1'
+                                      ? AppColor.primary
+                                      : Colors.black,
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                        if (model.selectedTab == "1")
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    _buildProfileField(
-                                      label: "Hire Date",
-                                      value: model.user.staff.hireDate ?? '',
-                                      icon: MdiIcons.calendarStar,
-                                    ),
-                                    _buildProfileField(
-                                      label: "Remaining Leave",
-                                      value: (model.user.staff.remainingLeave ??
-                                              '0') +
-                                          " day(s)",
-                                      icon: MdiIcons.calendarCheck,
-                                    ),
-                                    _buildProfileField(
-                                      label: "Sick Leave",
-                                      value:
-                                          (model.user.staff.sickLeave ?? '0') +
-                                              " day(s)",
-                                      icon: MdiIcons.hospital,
-                                    ),
-                                    _buildProfileField(
-                                      label: "Expiry date",
-                                      value:
-                                          (model.user.staff.expiryDate ?? ''),
-                                      icon: MdiIcons.calendarRemove,
-                                    ),
-                                    _buildProfileField(
-                                      label: "Employee Type",
-                                      value:
-                                          (model.user.staff.employeeType ?? ''),
-                                      icon: MdiIcons.accountTie,
-                                    ),
-                                    if (model.user.staff.salaryPeriod != null)
+                          if (model.selectedTab == "0")
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: [
                                       _buildProfileField(
-                                        label: "Salary Period",
-                                        value: (model.user.staff.salaryPeriod!
-                                                    .toLowerCase() ==
-                                                'm'
-                                            ? 'Monthly'
-                                            : 'Yearly'),
-                                        icon: MdiIcons.calendarClock,
+                                        label: "E-mail",
+                                        value:
+                                            model.user.staff.email.toString(),
+                                        icon: MdiIcons.emailOutline,
                                       ),
-                                    // _buildProfileField(
-                                    //   label: "Normal Salary Rate",
-                                    //   value:
-                                    //       (model.user.staff.normalSalaryRate ??
-                                    //           ''),
-                                    //   icon: MdiIcons.cash,
-                                    // ),
-                                    _buildProfileField(
-                                      label: "Payment Type",
-                                      value:
-                                          (model.user.staff.paymentType ?? ''),
-                                      icon: MdiIcons.creditCard,
-                                    ),
-
-                                    _buildProfileField(
-                                      label: "Remarks",
-                                      value: (model.user.staff.remarks ?? ''),
-                                      icon: MdiIcons.comment,
-                                    ),
-                                  ],
+                                      _buildProfileField(
+                                        label: "Address",
+                                        value: model.user.staffAddresses.isEmpty
+                                            ? "N/A"
+                                            : model.user.staffAddresses[0]
+                                                .addressLine1,
+                                        icon: MdiIcons.mapMarkerOutline,
+                                      ),
+                                      _buildProfileField(
+                                          label: "Marital status",
+                                          value: (model
+                                                      .user.staff.maritalStatus!
+                                                      .toLowerCase() ==
+                                                  'u'
+                                              ? "Unmarried"
+                                              : "Married"),
+                                          icon: MdiIcons.heart),
+                                      _buildProfileField(
+                                          label: "Date Of Birth",
+                                          value: model.user.staff.dob ?? "",
+                                          icon: MdiIcons.cake),
+                                      _buildProfileField(
+                                          label: "Citzenship No.",
+                                          value:
+                                              model.user.staff.citizenshipNo ??
+                                                  "",
+                                          icon: MdiIcons.passport),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        if (model.isLoading) const FYLinearLoader(),
-                        if (!model.isLoading)
-                          if (model.staffPerformancedata.isNotEmpty)
-                            Center(
-                                child: Column(
-                              children: [
-                                Row(
-                                  children: const [
-                                    Text(
-                                      "Performance Report : ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColor.primary,
+                          if (model.selectedTab == "1")
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      _buildProfileField(
+                                        label: "Hire Date",
+                                        value: model.user.staff.hireDate ?? '',
+                                        icon: MdiIcons.calendarStar,
                                       ),
-                                    ),
-                                  ],
+                                      _buildProfileField(
+                                        label: "Remaining Leave",
+                                        value:
+                                            (model.user.staff.remainingLeave ??
+                                                    '0') +
+                                                " day(s)",
+                                        icon: MdiIcons.calendarCheck,
+                                      ),
+                                      _buildProfileField(
+                                        label: "Sick Leave",
+                                        value: (model.user.staff.sickLeave ??
+                                                '0') +
+                                            " day(s)",
+                                        icon: MdiIcons.hospital,
+                                      ),
+                                      _buildProfileField(
+                                        label: "Expiry date",
+                                        value:
+                                            (model.user.staff.expiryDate ?? ''),
+                                        icon: MdiIcons.calendarRemove,
+                                      ),
+                                      _buildProfileField(
+                                        label: "Employee Type",
+                                        value: (model.user.staff.employeeType ??
+                                            ''),
+                                        icon: MdiIcons.accountTie,
+                                      ),
+                                      if (model.user.staff.salaryPeriod != null)
+                                        _buildProfileField(
+                                          label: "Salary Period",
+                                          value: (model.user.staff.salaryPeriod!
+                                                      .toLowerCase() ==
+                                                  'm'
+                                              ? 'Monthly'
+                                              : 'Yearly'),
+                                          icon: MdiIcons.calendarClock,
+                                        ),
+                                      // _buildProfileField(
+                                      //   label: "Normal Salary Rate",
+                                      //   value:
+                                      //       (model.user.staff.normalSalaryRate ??
+                                      //           ''),
+                                      //   icon: MdiIcons.cash,
+                                      // ),
+                                      _buildProfileField(
+                                        label: "Payment Type",
+                                        value: (model.user.staff.paymentType ??
+                                            ''),
+                                        icon: MdiIcons.creditCard,
+                                      ),
+
+                                      _buildProfileField(
+                                        label: "Remarks",
+                                        value: (model.user.staff.remarks ?? ''),
+                                        icon: MdiIcons.comment,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                SizedBox(
-                                  height: 58,
-                                  child: ListView.separated(
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context, index) {
-                                      final reversedIndex =
-                                          model.staffPerformancedata.length -
-                                              1 -
-                                              index;
-                                      final reportData = model
-                                          .staffPerformancedata[reversedIndex];
-                                      final reportDataMap = reportData.toJson();
-                                      return SizedBox(
-                                        height: 150,
-                                        child: GestureDetector(
-                                          onTap: () async {
-                                            model.goto(PerformanceView.tag,
-                                                arguments:
-                                                    StaffPerformanceArguments(
-                                                        reportDataMap));
-                                          },
-                                          child: Card(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(16),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                          "${reportData.year}-${reportData.monthName}")
-                                                    ],
-                                                  )
-                                                ],
+                              ),
+                            ),
+                          if (model.isLoading) const FYLinearLoader(),
+                          if (!model.isLoading)
+                            if (model.staffPerformancedata.isNotEmpty)
+                              Center(
+                                  child: Column(
+                                children: [
+                                  Row(
+                                    children: const [
+                                      Text(
+                                        "Performance Report : ",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColor.primary,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 58,
+                                    child: ListView.separated(
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        final reversedIndex =
+                                            model.staffPerformancedata.length -
+                                                1 -
+                                                index;
+                                        final reportData =
+                                            model.staffPerformancedata[
+                                                reversedIndex];
+                                        final reportDataMap =
+                                            reportData.toJson();
+                                        return SizedBox(
+                                          height: 150,
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              model.goto(PerformanceView.tag,
+                                                  arguments:
+                                                      StaffPerformanceArguments(
+                                                          reportDataMap));
+                                            },
+                                            child: Card(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(16),
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                            "${reportData.year}-${reportData.monthName}")
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                    separatorBuilder: (context, index) =>
-                                        const SizedBox(
-                                      width: 0,
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) =>
+                                          const SizedBox(
+                                        width: 0,
+                                      ),
+                                      itemCount:
+                                          model.staffPerformancedata.length,
                                     ),
-                                    itemCount:
-                                        model.staffPerformancedata.length,
                                   ),
-                                ),
-                              ],
-                            ))
-                          else
-                            const Center(
-                              child: Text('No performance report found.'),
-                            )
-                      ],
+                                ],
+                              ))
+                            else
+                              const Center(
+                                child: Text('No performance report found.'),
+                              )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
