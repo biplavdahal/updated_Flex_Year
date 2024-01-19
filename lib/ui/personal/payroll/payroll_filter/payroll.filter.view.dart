@@ -20,7 +20,7 @@ class PayrollFilterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<PayrollFilterModel>(
+    return FrontView<PayrollFilterModel>(
       onModelReady: (model) => model.init(arguments as PayrollFilterArguments),
       builder: (ctx, model, child) {
         return Scaffold(

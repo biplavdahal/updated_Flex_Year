@@ -16,7 +16,7 @@ class PayrollView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<PayrollModel>(
+    return FrontView<PayrollModel>(
       onModelReady: (model) => model.init(arguments as PayrollArgument),
       builder: (ctx, model, child) {
         return Scaffold(

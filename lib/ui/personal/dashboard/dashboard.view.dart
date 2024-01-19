@@ -34,9 +34,7 @@ import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_section.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_user_avatar_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../attendance_correction/attendance_correction.view.dart';
 import '../chat_contacts/chat_contacts.view.dart';
@@ -50,7 +48,7 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<DashboardModel>(
+    return FrontView<DashboardModel>(
       onModelReady: (model) => model.init(),
       builder: (ctx, model, child) {
         final todayBirthdays = model.staffBirthdayData.where((staff) {
@@ -85,6 +83,7 @@ class DashboardView extends StatelessWidget {
         return Scaffold(
           backgroundColor: AppColor.primary,
           drawer: const Drawer(
+            backgroundColor: Colors.white,
             child: DashboardDrawer(),
           ),
           body: Container(
@@ -106,8 +105,8 @@ class DashboardView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (model.attendanceCorrectionData.isNotEmpty)
-                      _buildProgressIndicator(model),
+                    // if (model.attendanceCorrectionData.isNotEmpty)
+                    //   _buildProgressIndicator(model),
                     _buildValidAttendance(model),
                     _buildAttendanceActivities(model),
                     _buildForgotToCheckout(model),
@@ -138,19 +137,23 @@ class DashboardView extends StatelessWidget {
             onTap: (value) => model.currentFragment = value,
             items: [
               const Icon(
-                MdiIcons.checkboxOutline,
+                Icons.check_box_outlined,
+                color: AppColor.primary,
               ),
               const Icon(
-                MdiIcons.shieldAirplaneOutline,
+                Icons.airplanemode_active,
                 size: 25,
+                color: AppColor.primary,
               ),
               const Icon(
-                MdiIcons.home,
+                Icons.home,
                 size: 30,
+                color: AppColor.primary,
               ),
               const Icon(
-                MdiIcons.calendarMonth,
+                Icons.calendar_month,
                 size: 25,
+                color: AppColor.primary,
               ),
               UserAvatar(
                 user: model.user.staff,
@@ -290,14 +293,18 @@ class DashboardView extends StatelessWidget {
                   onPressed: () async {
                     await locator<DashboardModel>().goto(NoticeView.tag);
                   },
-                  icon: const Icon(MdiIcons.noteText)),
+                  icon: const Icon(
+                    Icons.note,
+                  )),
               IconButton(
                 tooltip: "notification",
                 iconSize: 25,
                 onPressed: () async {
                   await locator<DashboardModel>().goto(AllNotificationView.tag);
                 },
-                icon: const Icon(MdiIcons.bellOutline),
+                icon: const Icon(
+                  Icons.notifications,
+                ),
               ),
             ],
           ),
@@ -524,7 +531,7 @@ class DashboardView extends StatelessWidget {
             late Widget utilityItem;
             if (index == 0) {
               utilityItem = UtilityItem(
-                title: "Leave   Request",
+                title: "Leave    Request",
                 labelText: model.user.staff.remainingLeave,
                 icon: MdiIcons.shieldAirplaneOutline,
                 iconColor: Colors.orange,
@@ -548,7 +555,7 @@ class DashboardView extends StatelessWidget {
               );
             } else if (index == 2) {
               utilityItem = UtilityItem(
-                title: "Weekly   Report",
+                title: "Weekly    Report",
                 iconColor: Colors.lightGreen,
                 icon: MdiIcons.chartBoxOutline,
                 onPressed: () {
@@ -562,7 +569,7 @@ class DashboardView extends StatelessWidget {
               );
             } else if (index == 3) {
               utilityItem = UtilityItem(
-                title: " Monthly Report",
+                title: " Monthly  Report",
                 iconColor: Colors.lightGreen,
                 icon: MdiIcons.chartBoxOutline,
                 onPressed: () {
@@ -613,7 +620,7 @@ class DashboardView extends StatelessWidget {
               );
             } else if (index == 8) {
               utilityItem = UtilityItem(
-                title: "Staff Directory",
+                title: "Staff     Directory",
                 iconColor: AppColor.primary,
                 icon: Icons.groups,
                 onPressed: () {
@@ -642,6 +649,9 @@ class DashboardView extends StatelessWidget {
                 Container(
                   child: _buildTotalHrsCard(model),
                 ),
+                const SizedBox(
+                  width: 2,
+                ),
                 ListView.separated(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
@@ -667,6 +677,7 @@ class DashboardView extends StatelessWidget {
 
   Widget _buildTotalHrsCard(DashboardModel model) {
     return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
       margin: const EdgeInsets.only(bottom: 5),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -754,55 +765,55 @@ class DashboardView extends StatelessWidget {
               ));
   }
 
-  Widget _buildProgressIndicator(DashboardModel model) {
-    if (model.attendanceCorrectionData.isEmpty) {
-      return const Text('No attendance data available');
-    }
+  // Widget _buildProgressIndicator(DashboardModel model) {
+  //   if (model.attendanceCorrectionData.isEmpty) {
+  //     return const Text('No attendance data available');
+  //   }
 
-    double progress = model.calculateProgress();
+  //   double progress = model.calculateProgress();
 
-    late DateTime checkoutTime;
-    if (model.attendanceCorrectionData.isNotEmpty &&
-        model.attendanceCorrectionData.last.checkoutDatetime != null) {
-      checkoutTime =
-          DateTime.parse(model.attendanceCorrectionData.last.checkoutDatetime!);
-    } else {
-      checkoutTime = DateTime.now();
-    }
+  //   late DateTime checkoutTime;
+  //   if (model.attendanceCorrectionData.isNotEmpty &&
+  //       model.attendanceCorrectionData.last.checkoutDatetime != null) {
+  //     checkoutTime =
+  //         DateTime.parse(model.attendanceCorrectionData.last.checkoutDatetime!);
+  //   } else {
+  //     checkoutTime = DateTime.now();
+  //   }
 
-    DateTime checkinTime =
-        DateTime.parse(model.attendanceCorrectionData[0].checkinDatetime!);
-    DateTime now = DateTime.now();
-    Duration remainingTime =
-        checkinTime.add(const Duration(hours: 8, minutes: 30)).difference(now);
-    Color progressBarColor = progress >= 1.0 ? Colors.green : AppColor.primary;
+  //   DateTime checkinTime =
+  //       DateTime.parse(model.attendanceCorrectionData[0].checkinDatetime!);
+  //   DateTime now = DateTime.now();
+  //   Duration remainingTime =
+  //       checkinTime.add(const Duration(hours: 8, minutes: 30)).difference(now);
+  //   Color progressBarColor = progress >= 1.0 ? Colors.green : AppColor.primary;
 
-    Duration difference = checkoutTime.difference(checkinTime);
+  //   Duration difference = checkoutTime.difference(checkinTime);
 
-    return SizedBox(
-      height: 20,
-      child: LiquidLinearProgressIndicator(
-        value: progress.clamp(0.0, 1.0),
-        valueColor: AlwaysStoppedAnimation(progressBarColor),
-        backgroundColor: Colors.grey,
-        borderColor: Colors.white,
-        borderWidth: 1.0,
-        borderRadius: 12.0,
-        direction: Axis.horizontal,
-        center: Text(
-          model.attendanceCorrectionData.isNotEmpty &&
-                  model.attendanceCorrectionData.last.checkoutDatetime != null
-              ? "Today time: ${formatDuration(difference)}"
-              : "Remaining Time: ${remainingTime.inHours}h ${remainingTime.inMinutes.remainder(60)}m ${remainingTime.inSeconds.remainder(60)}s",
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 11,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
-  }
+  //   return SizedBox(
+  //     height: 20,
+  //     child: LiquidLinearProgressIndicator(
+  //       value: progress.clamp(0.0, 1.0),
+  //       valueColor: AlwaysStoppedAnimation(progressBarColor),
+  //       backgroundColor: Colors.grey,
+  //       borderColor: Colors.white,
+  //       borderWidth: 1.0,
+  //       borderRadius: 12.0,
+  //       direction: Axis.horizontal,
+  //       center: Text(
+  //         model.attendanceCorrectionData.isNotEmpty &&
+  //                 model.attendanceCorrectionData.last.checkoutDatetime != null
+  //             ? "Today time: ${formatDuration(difference)}"
+  //             : "Remaining Time: ${remainingTime.inHours}h ${remainingTime.inMinutes.remainder(60)}m ${remainingTime.inSeconds.remainder(60)}s",
+  //         style: const TextStyle(
+  //           color: Colors.white,
+  //           fontSize: 11,
+  //           fontWeight: FontWeight.bold,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   String _getGreeting() {
     final currentTime = DateTime.now();

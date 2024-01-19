@@ -12,7 +12,7 @@ class ClearanceView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<ResignViewModel>(
+    return FrontView<ResignViewModel>(
       onModelReady: (model) => model.Clearanceinit(),
       enableTouchRepeal: true,
       builder: (ctx, model, child) {

@@ -21,7 +21,7 @@ class WriteLeaveRequestView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _user = locator<DashboardModel>().user;
-    return View<WriteLeaveRequestModel>(
+    return FrontView<WriteLeaveRequestModel>(
       onModelReady: (model) =>
           model.init(arguments as WriteLeaveRequestViewArguments?),
       enableTouchRepeal: true,

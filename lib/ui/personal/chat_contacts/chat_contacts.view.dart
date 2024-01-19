@@ -12,7 +12,7 @@ class ChatContactsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<ChatContactsModel>(
+    return FrontView<ChatContactsModel>(
       killViewOnClose: false,
       onModelReady: (model) {
         model.init();

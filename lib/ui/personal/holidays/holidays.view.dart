@@ -12,7 +12,7 @@ class HolidaysView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<HolidaysModel>(
+    return FrontView<HolidaysModel>(
       onModelReady: (model) => model.init(),
       killViewOnClose: false,
       builder: (ctx, model, child) {

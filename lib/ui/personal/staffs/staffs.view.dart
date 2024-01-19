@@ -14,7 +14,7 @@ class StaffsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<StaffsModel>(
+    return FrontView<StaffsModel>(
       enableTouchRepeal: true,
       onModelReady: (model) => model.init(arguments as StaffsArguments?),
       builder: (ctx, model, child) {

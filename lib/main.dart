@@ -37,7 +37,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
             id: 1,
             channelKey: 'message',
             title: message.data["full_name"],
-            body: message.notification!.body!,
+            body: message.notification!.body!, 
             payload: payload));
   }
 

@@ -19,7 +19,7 @@ class FYPrimaryButton extends StatelessWidget {
       onPressed: onPressed,
       child: FittedBox(alignment: Alignment.center, child: Text(label)),
       style: ElevatedButton.styleFrom(
-        primary: backgroundColor ?? AppColor.primary,
+        backgroundColor: backgroundColor ?? AppColor.primary,
         side: BorderSide(
           color: backgroundColor ?? AppColor.primary,
           width: 2,
@@ -42,7 +42,10 @@ class FYSecondaryButton extends StatelessWidget {
       width: double.infinity,
       child: OutlinedButton(
         onPressed: onPressed,
-        child: Text(label),
+        child: Text(
+          label,
+          style: TextStyle(color: AppColor.primary),
+        ),
       ),
     );
   }

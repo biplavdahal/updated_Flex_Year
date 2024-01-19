@@ -9,7 +9,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<HomeModel>(
+    return FrontView<HomeModel>(
       builder: (ctx, model, child) {
         return Scaffold(
           appBar: AppBar(

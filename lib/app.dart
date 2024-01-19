@@ -41,7 +41,10 @@ class FlexYearApp extends StatelessWidget {
               },
               locale: localeProvider.locale,
               debugShowCheckedModeBanner: false,
-              theme: getThemeDataTheme(context),
+              theme: ThemeData(
+                  useMaterial3: false,
+                  appBarTheme: AppBarTheme(color: AppColor.primary)),
+              color: AppColor.primary,
               onGenerateRoute: (settings) =>
                   locator<NavigationService>().generateRoute(
                 settings,

@@ -11,7 +11,7 @@ class StaffDirectoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<StaffDirectoryViewModel>(
+    return FrontView<StaffDirectoryViewModel>(
       onModelReady: (model) => model.init(),
       killViewOnClose: false,
       builder: (ctx, model, child) {

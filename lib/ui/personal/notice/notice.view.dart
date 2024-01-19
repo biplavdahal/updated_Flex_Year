@@ -11,7 +11,7 @@ class NoticeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<NoticeModel>(
+    return FrontView<NoticeModel>(
       onModelReady: (model) => model.init(),
       builder: (ctx, model, child) {
         return Scaffold(

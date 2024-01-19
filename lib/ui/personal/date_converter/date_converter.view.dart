@@ -4,8 +4,8 @@ import 'package:flex_year_tablet/ui/personal/date_converter/date_converter.viewm
 import 'package:flex_year_tablet/widgets/fy_date_time_field.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_nepali_date_time_field.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_section.widget.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
 
@@ -16,7 +16,7 @@ class DateConverterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<DateConverterViewModel>(
+    return FrontView<DateConverterViewModel>(
         enableTouchRepeal: true,
         onModelReady: (model) => model,
         builder: (ctx, model, child) {

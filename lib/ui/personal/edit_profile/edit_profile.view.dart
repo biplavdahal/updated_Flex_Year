@@ -17,7 +17,7 @@ class EditProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<EditProfileViewModel>(
+    return FrontView<EditProfileViewModel>(
       enableTouchRepeal: true,
       onModelReady: (model) => model.init(),
       builder: (ctx, model, child) {
@@ -52,7 +52,7 @@ class EditProfileView extends StatelessWidget {
                           ),
                           padding: const EdgeInsets.all(4),
                           child: const Icon(
-                            MdiIcons.camera,
+                            Icons.camera,
                             size: 12,
                             color: Colors.white,
                           ),

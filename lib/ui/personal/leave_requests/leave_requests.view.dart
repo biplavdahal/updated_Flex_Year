@@ -17,7 +17,7 @@ class LeaveRequestView extends StatelessWidget {
   Widget build(BuildContext context) {
     final _user = locator<DashboardModel>().user;
     final ScrollController _scrollController = ScrollController();
-    return View<LeaveRequestModel>(
+    return FrontView<LeaveRequestModel>(
       onDispose: (model) {
         _scrollController.dispose();
       },

@@ -1,8 +1,6 @@
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
-import 'package:flex_year_tablet/main.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class FYDateField extends StatelessWidget {
   final DateTime? value;
@@ -24,7 +22,6 @@ class FYDateField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localeProvider = Provider.of<LocaleProvider>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -129,23 +126,26 @@ class FYTimeField extends StatelessWidget {
           onTap: () {
             _showTimePicker(context);
           },
-          child: InputDecorator(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5.0),
+          child: SizedBox(
+            height: 65,
+            child: InputDecorator(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Text(
-                value != null
-                    ? "${value!.hour}:${value!.minute}"
-                    : 'Select time',
-                style: value == null
-                    ? const TextStyle(
-                        color: Colors.grey,
-                      )
-                    : null,
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Text(
+                  value != null
+                      ? "${value!.hour}:${value!.minute}"
+                      : 'Select time',
+                  style: value == null
+                      ? const TextStyle(
+                          color: Colors.grey,
+                        )
+                      : null,
+                ),
               ),
             ),
           ),

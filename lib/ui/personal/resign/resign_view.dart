@@ -18,7 +18,7 @@ class ResignView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<ResignViewModel>(
+    return FrontView<ResignViewModel>(
       onDispose: ((model) {}),
       onModelReady: (model) => model.init(arguments as ResighViewArguments?),
       killViewOnClose: false,
@@ -89,7 +89,7 @@ class ResignView extends StatelessWidget {
                             IconButton(
                                 onPressed: (() => model
                                     .init(arguments as ResighViewArguments?)),
-                                icon: const Icon(MdiIcons.refreshCircle))
+                                icon: const Icon(Icons.refresh))
                           ],
                         )),
                       )),

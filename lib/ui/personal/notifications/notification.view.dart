@@ -11,7 +11,7 @@ class AllNotificationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<AllNotificationModel>(
+    return FrontView<AllNotificationModel>(
         onModelReady: (model) => model.init(),
         killViewOnClose: false,
         builder: (ctx, model, child) {

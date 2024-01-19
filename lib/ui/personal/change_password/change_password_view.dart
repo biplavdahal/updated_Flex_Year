@@ -12,7 +12,7 @@ class ChangePasswordView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<ChangePasswordViewModel>(
+    return FrontView<ChangePasswordViewModel>(
       enableTouchRepeal: true,
       builder: (ctx, model, child) {
         return Scaffold(

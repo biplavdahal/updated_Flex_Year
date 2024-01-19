@@ -1,98 +1,168 @@
+import 'package:bestfriend/di.dart';
 import 'package:flex_year_tablet/data_models/user_exit_survey.data.dart';
+import 'package:flex_year_tablet/services/exit_process.service.dart';
+import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
 
-class SurveyItem extends StatefulWidget {
-  final ExitSurveyData survey;
-  final int index;
+class CustomSurveyDialog extends StatefulWidget {
+  final List<ExitSurveyData> surveyQuestions;
 
-  const SurveyItem({
-    Key? key,
-    required this.survey,
-    required this.index,
-  }) : super(key: key);
+  final VoidCallback onCancel;
+
+  CustomSurveyDialog({
+    required this.onCancel,
+    required this.surveyQuestions,
+  });
 
   @override
-  State<SurveyItem> createState() => _SurveyItemState();
+  _CustomSurveyDialogState createState() => _CustomSurveyDialogState();
 }
 
-bool isChecked = false;
-String selectedOption = '';
+class _CustomSurveyDialogState extends State<CustomSurveyDialog> {
+  final ExitProcess _exitProcess = locator<ExitProcess>();
+  int currentQuestionIndex = 0;
+  List<String> selectedOptions = [];
+  String? selectedOption;
 
-class _SurveyItemState extends State<SurveyItem> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Text((widget.index + 1).toString() + '.  '),
-            Expanded(
-              child: Text(
-                widget.survey.question.toString(),
-                overflow: TextOverflow.fade,
+    ExitSurveyData currentQuestion =
+        widget.surveyQuestions[currentQuestionIndex];
+
+    return AlertDialog(
+      title: const Text(
+        'Survey Questions:',
+        style: TextStyle(color: AppColor.primary),
+      ),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(currentQuestion.question.toString()),
+          Column(
+            children: [
+              Row(
+                children: [
+                  Radio<String>(
+                    value: currentQuestion.optionOne!,
+                    groupValue: selectedOption,
+                    onChanged: (String? value) {
+                      handleRadioChange(value!);
+                    },
+                  ),
+                  Text(currentQuestion.optionOne!),
+                ],
               ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: [
-            Checkbox(
-              value:
-                  selectedOption.contains(widget.survey.optionOne.toString()),
-              onChanged: (bool? value) {
-                handleCheckboxChange(widget.survey.optionOne.toString());
-              },
-            ),
-            Text(widget.survey.optionOne.toString()),
-            const SizedBox(width: 20),
-            Checkbox(
-              value:
-                  selectedOption.contains(widget.survey.optionTwo.toString()),
-              onChanged: (bool? value) {
-                handleCheckboxChange(widget.survey.optionTwo.toString());
-              },
-            ),
-            Text(widget.survey.optionTwo.toString()),
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: [
-            Checkbox(
-              value:
-                  selectedOption.contains(widget.survey.optionThree.toString()),
-              onChanged: (bool? value) {
-                handleCheckboxChange(widget.survey.optionThree.toString());
-              },
-            ),
-            Text(widget.survey.optionThree.toString()),
-            const SizedBox(width: 20),
-            Checkbox(
-              value:
-                  selectedOption.contains(widget.survey.optionFour.toString()),
-              onChanged: (bool? value) {
-                handleCheckboxChange(widget.survey.optionFour.toString());
-              },
-            ),
-            Text(widget.survey.optionFour.toString()),
-          ],
-        ),
-      ],
+              Row(
+                children: [
+                  Radio<String>(
+                    value: currentQuestion.optionTwo!,
+                    groupValue: selectedOption,
+                    onChanged: (String? value) {
+                      handleRadioChange(value!);
+                    },
+                  ),
+                  Text(currentQuestion.optionTwo!),
+                ],
+              ),
+              Row(
+                children: [
+                  Radio<String>(
+                    value: currentQuestion.optionThree!,
+                    groupValue: selectedOption,
+                    onChanged: (String? value) {
+                      handleRadioChange(value!);
+                    },
+                  ),
+                  Text(currentQuestion.optionThree!),
+                ],
+              ),
+              Row(
+                children: [
+                  Radio<String>(
+                    value: currentQuestion.optionFour!,
+                    groupValue: selectedOption,
+                    onChanged: (String? value) {
+                      handleRadioChange(value!);
+                    },
+                  ),
+                  Text(currentQuestion.optionFour!),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: AppColor.primary),
+                onPressed: () {
+                  if (currentQuestionIndex <
+                      widget.surveyQuestions.length - 1) {
+                    setState(() {
+                      currentQuestionIndex++;
+                      selectedOptions.clear();
+                    });
+                  }
+                },
+                child: const Text(
+                  'Skip',
+                  style: TextStyle(color: Colors.yellow),
+                ),
+              ),
+              ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: AppColor.primary),
+                onPressed: (selectedOption != null)
+                    ? () {
+                        onSubmit();
+
+                        if (currentQuestionIndex <
+                            widget.surveyQuestions.length - 1) {
+                          setState(() {
+                            currentQuestionIndex++;
+                            selectedOptions.clear();
+                          });
+                        } else {
+                          Navigator.of(context).pop();
+                        }
+                      }
+                    : null,
+                child: const Text('Next'),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
+  }
+
+  void onSubmit() async {
+    if (selectedOption != null) {
+      await _exitProcess.submitAnswer(
+        option: selectedOption.toString(),
+        question:
+            widget.surveyQuestions[currentQuestionIndex].question.toString(),
+        questioID:
+            widget.surveyQuestions[currentQuestionIndex].questionId.toString(),
+      );
+    }
   }
 
   void handleCheckboxChange(String option) {
     setState(() {
-      if (selectedOption == option) {
-        selectedOption = '';
+      if (selectedOptions.contains(option)) {
+        selectedOptions.remove(option);
       } else {
-        selectedOption = option;
+        selectedOptions.add(option);
       }
+      selectedOption = selectedOptions.isNotEmpty ? selectedOptions[0] : null;
+    });
+  }
+
+  void handleRadioChange(String? value) {
+    setState(() {
+      selectedOption = value;
     });
   }
 }

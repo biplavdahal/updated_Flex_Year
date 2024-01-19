@@ -14,7 +14,7 @@ class AppAccessClientCodeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<AppAccessClientCodeModel>(
+    return FrontView<AppAccessClientCodeModel>(
       enableTouchRepeal: true,
       builder: (ctx, model, child) {
         return Scaffold(

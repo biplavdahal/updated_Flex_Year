@@ -14,7 +14,7 @@ class ExitInterview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<ResignViewModel>(
+    return FrontView<ResignViewModel>(
         enableTouchRepeal: true,
         builder: (ctx, model, child) {
           return Scaffold(

@@ -15,7 +15,7 @@ class AppAccessView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<AppAccessModel>(
+    return FrontView<AppAccessModel>(
       onModelReady: (model) => model.init(),
       enableTouchRepeal: true,
       builder: (ctx, model, child) {

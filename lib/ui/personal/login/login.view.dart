@@ -1,5 +1,4 @@
 import 'package:bestfriend/bestfriend.dart';
-import 'package:flex_year_tablet/constants/api.constants.dart';
 import 'package:flex_year_tablet/helper/fy_validator.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/login/login.model.dart';
@@ -17,7 +16,7 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<LoginModel>(
+    return FrontView<LoginModel>(
       enableTouchRepeal: true,
       onModelReady: (model) => model.init(),
       builder: (ctx, model, child) {
@@ -133,8 +132,7 @@ class LoginView extends StatelessWidget {
                           child: const Text(
                             'Forget Password?',
                             style: TextStyle(
-                              fontSize: 12,
-                            ),
+                                fontSize: 12, color: AppColor.primary),
                           ),
                         ),
                       ),

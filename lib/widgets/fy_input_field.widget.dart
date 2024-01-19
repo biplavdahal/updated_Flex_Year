@@ -1,3 +1,4 @@
+import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
 
 class FYInputField extends StatefulWidget {
@@ -39,7 +40,7 @@ class _FYInputFieldState extends State<FYInputField> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext cpontext) {
     return TextFormField(
       autofocus: true,
       controller: widget.controller,
@@ -55,7 +56,7 @@ class _FYInputFieldState extends State<FYInputField> {
                 visualDensity: VisualDensity.compact,
                 icon: Icon(
                   _hidePassword ? Icons.visibility : Icons.visibility_off,
-                  color: Theme.of(context).primaryColor,
+                  color: AppColor.primary,
                 ),
                 onPressed: () {
                   visiblePassword = !_hidePassword;

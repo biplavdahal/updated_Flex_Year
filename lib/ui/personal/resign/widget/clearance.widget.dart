@@ -105,12 +105,12 @@ class ClearanceItem extends StatelessWidget {
                             Text(' '),
                             if (clearance.status == 'Pending')
                               const Icon(
-                                MdiIcons.clockOutline,
+                                Icons.pending,
                                 color: Colors.yellow,
                               ),
                             if (clearance.status == 'Approved')
                               const Icon(
-                                MdiIcons.checkBold,
+                                Icons.check,
                                 color: Colors.green,
                               ),
                             if (clearance.status == 'Declined')

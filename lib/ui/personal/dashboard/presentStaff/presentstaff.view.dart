@@ -3,7 +3,7 @@ import 'package:delayed_display/delayed_display.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/presentStaff/presentstaff.model.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/presentStaff/widget/presentstaff.item.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/presentStaff/widget/presentstaffsearch.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter/material.dart';
 
 import '../../../../widgets/fy_shimmer.widget.dart';
 
@@ -14,7 +14,7 @@ class PresentStaffView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<PresentStaffModel>(
+    return FrontView<PresentStaffModel>(
       onModelReady: (model) async {
         await model.init();
       },

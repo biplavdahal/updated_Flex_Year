@@ -9,6 +9,7 @@ import 'package:flex_year_tablet/helper/dio_helper.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/services/exit_process.service.dart';
+import 'package:flutter/material.dart';
 
 class ExitProcessImpl implements ExitProcess {
   final ApiService _apiService = locator<ApiService>();
@@ -132,27 +133,28 @@ class ExitProcessImpl implements ExitProcess {
 
   @override
   Future<void> submitAnswer(
-      {required String questionID,
-      required String optionOne,
-      required String optionTwo,
-      required String optionThree,
-      required String optionFour}) async {
+      {required String questioID,
+      required String option,
+      required String question}) async {
     try {
-      final _response = await _apiService.post(auStaffPostAnswer, {
-        'access_token': _authenticationService.user!.accessToken,
-        'company_id': _appAccessService.appAccess!.company.companyId,
-        'staff_id': _authenticationService.user!.id,
-        'survey': [
-          {
-            "question_id": questionID,
-            "option_1": optionOne,
-            "option_2": optionTwo,
-            "option_3": optionThree,
-            "option_4": optionFour
-          }
-        ]
-      });
+      final _response = await _apiService.post(
+        auStaffPostAnswer,
+        {
+          'access_token': _authenticationService.user!.accessToken,
+          'company_id': _appAccessService.appAccess!.company.companyId,
+          'staff_id': _authenticationService.user!.id,
+          'survey': [
+            {
+              "option": option.toString(),
+              "question": question.toString(),
+              "question_id": questioID.toString()
+            }
+          ]
+        },
+      );
+
       constructResponse(_response.data);
+
       return;
     } catch (e) {
       throw apiError(e);

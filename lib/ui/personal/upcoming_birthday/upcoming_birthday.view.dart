@@ -11,7 +11,7 @@ class AllStaffBirthdayView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<AllStaffBirthdayModel>(
+    return FrontView<AllStaffBirthdayModel>(
       onModelReady: (model) => model.init(),
       killViewOnClose: false,
       builder: (ctx, model, child) {

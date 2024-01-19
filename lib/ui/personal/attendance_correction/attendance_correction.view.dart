@@ -14,7 +14,7 @@ class AttendanceCorrectionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<AttendanceCorrectionModel>(
+    return FrontView<AttendanceCorrectionModel>(
       onModelReady: (model) => model.init(),
       killViewOnClose: false,
       builder: (ctx, model, child) {

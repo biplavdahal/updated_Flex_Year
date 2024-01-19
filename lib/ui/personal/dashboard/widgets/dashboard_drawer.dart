@@ -8,7 +8,6 @@ import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.model.dart';
 import 'package:flex_year_tablet/ui/personal/date_converter/date_converter.view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.view.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
-import 'package:flex_year_tablet/ui/personal/leave_requests_received/leave_request_received.view.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.argument.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.view.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.view.dart';
@@ -53,7 +52,7 @@ class DashboardDrawer extends StatelessWidget {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: const Icon(
+                    icon: Icon(
                       MdiIcons.close,
                       color: AppColor.primary,
                     ),
@@ -69,7 +68,7 @@ class DashboardDrawer extends StatelessWidget {
               onTap: () {
                 locator<DashboardModel>().goto(ProfileView.tag);
               },
-              leading: const Icon(
+              leading: Icon(
                 MdiIcons.accountOutline,
                 color: AppColor.primary,
               ),
@@ -82,7 +81,7 @@ class DashboardDrawer extends StatelessWidget {
               onTap: () {
                 locator<DashboardModel>().goto(AttendanceCorrectionView.tag);
               },
-              leading: const Icon(
+              leading: Icon(
                 MdiIcons.checkboxOutline,
                 color: AppColor.primary,
               ),
@@ -110,11 +109,11 @@ class DashboardDrawer extends StatelessWidget {
                                 .role
                                 ?.toLowerCase() ==
                             'super admin'
-                    ? const Icon(
+                    ? Icon(
                         MdiIcons.airplaneAlert,
                         color: Colors.orange,
                       )
-                    : const Icon(
+                    : Icon(
                         MdiIcons.shieldAirplaneOutline,
                         color: Colors.orange,
                       )),
@@ -127,7 +126,7 @@ class DashboardDrawer extends StatelessWidget {
                 locator<DashboardModel>().goto(PayrollFilterView.tag,
                     arguments: PayrollFilterArguments(returnBack: false));
               },
-              leading: const Icon(
+              leading: Icon(
                 MdiIcons.cash,
                 color: AppColor.primary,
               ),
@@ -264,7 +263,7 @@ class DashboardDrawer extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                leading: const Icon(
+                                leading: Icon(
                                   MdiIcons.chartBoxOutline,
                                   color: Colors.green,
                                 ),
@@ -282,7 +281,7 @@ class DashboardDrawer extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                leading: const Icon(
+                                leading: Icon(
                                   MdiIcons.chartBoxOutline,
                                   color: Colors.green,
                                 ),
@@ -300,7 +299,7 @@ class DashboardDrawer extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                leading: const Icon(
+                                leading: Icon(
                                   MdiIcons.chartBoxOutline,
                                   color: Colors.green,
                                 ),
@@ -311,7 +310,7 @@ class DashboardDrawer extends StatelessWidget {
                       );
                     });
               },
-              leading: const Icon(
+              leading: Icon(
                 MdiIcons.fileDocument,
                 color: Colors.green,
               ),
@@ -324,7 +323,7 @@ class DashboardDrawer extends StatelessWidget {
               onTap: () {
                 locator<DashboardModel>().goto(HolidaysView.tag);
               },
-              leading: const Icon(
+              leading: Icon(
                 MdiIcons.calendarStar,
                 color: AppColor.primary,
               ),
@@ -338,7 +337,7 @@ class DashboardDrawer extends StatelessWidget {
               onTap: () {
                 locator<DashboardModel>().goto(DateConverterView.tag);
               },
-              leading: const Icon(
+              leading: Icon(
                 MdiIcons.swapHorizontalBold,
                 color: AppColor.primary,
               ),
@@ -376,7 +375,7 @@ class DashboardDrawer extends StatelessWidget {
                                   locator<DashboardModel>()
                                       .goto(ResignView.tag);
                                 },
-                                leading: const Icon(
+                                leading: Icon(
                                   MdiIcons.doorOpen,
                                   color: Colors.orange,
                                 ),
@@ -390,7 +389,7 @@ class DashboardDrawer extends StatelessWidget {
                                   locator<DashboardModel>()
                                       .goto(ClearanceView.tag);
                                 },
-                                leading: const Icon(
+                                leading: Icon(
                                   MdiIcons.doorClosedLock,
                                   color: Colors.orange,
                                 ),
@@ -404,7 +403,7 @@ class DashboardDrawer extends StatelessWidget {
                                   locator<DashboardModel>()
                                       .goto(ExitInterview.tag);
                                 },
-                                leading: const Icon(
+                                leading: Icon(
                                   MdiIcons.chatQuestion,
                                   color: Colors.orange,
                                 ),
@@ -415,7 +414,7 @@ class DashboardDrawer extends StatelessWidget {
                       );
                     });
               },
-              leading: const Icon(
+              leading: Icon(
                 MdiIcons.doorSlidingOpen,
                 color: Color.fromARGB(255, 240, 119, 82),
               ),
@@ -449,7 +448,7 @@ class DashboardDrawer extends StatelessWidget {
                 onTap: () {
                   locator<DashboardModel>().goto(AttendanceCorrectionView.tag);
                 },
-                leading: const Icon(
+                leading: Icon(
                   MdiIcons.checkboxMultipleMarked,
                   color: Colors.blue,
                 ),
@@ -468,7 +467,7 @@ class DashboardDrawer extends StatelessWidget {
                 onTap: () {
                   locator<DashboardModel>().goto(AddAttendanceView.tag);
                 },
-                leading: const Icon(
+                leading: Icon(
                   MdiIcons.plusBoxMultiple,
                   color: Colors.blue,
                 ),
@@ -485,7 +484,7 @@ class DashboardDrawer extends StatelessWidget {
                   style: TextStyle(color: Colors.blue),
                 ),
                 onTap: () {},
-                leading: const Icon(
+                leading: Icon(
                   MdiIcons.plusBoxMultiple,
                   color: Colors.blue,
                 ),
@@ -530,7 +529,7 @@ class DashboardDrawer extends StatelessWidget {
                   locator<DashboardModel>().logout();
                 }
               },
-              leading: const Icon(
+              leading: Icon(
                 MdiIcons.logout,
                 color: Colors.red,
               ),

@@ -14,7 +14,7 @@ class WriteResignRequestView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<ResignViewModel>(
+    return FrontView<ResignViewModel>(
       onModelReady: (model) => model.init(arguments as ResighViewArguments?),
       enableTouchRepeal: true,
       builder: (ctx, model, child) {

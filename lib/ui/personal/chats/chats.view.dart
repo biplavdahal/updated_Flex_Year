@@ -16,7 +16,7 @@ class ChatsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<ChatsModel>(
+    return FrontView<ChatsModel>(
       killViewOnClose: false,
       onDispose: (model) => model.dispose(),
       enableTouchRepeal: true,
@@ -74,7 +74,7 @@ class ChatsView extends StatelessWidget {
                                 : model.sendMessage,
                             icon: model.isBusyWidget('send-btn')
                                 ? const CupertinoActivityIndicator()
-                                : const Icon(MdiIcons.send),
+                                : const Icon(Icons.send),
                           ),
                       ]),
                     ),

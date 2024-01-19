@@ -12,7 +12,7 @@ class LeaveRequestReceivedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<LeaveRequestReceivedModel>(
+    return FrontView<LeaveRequestReceivedModel>(
       onModelReady: (model) => model.init(),
       builder: (ctx, model, child) {
         return Scaffold(

@@ -1,6 +1,6 @@
 import 'package:bestfriend/di.dart';
+import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import '../../../../data_models/user.data.dart';
 import '../../../../services/authentication.service.dart';
 
@@ -23,6 +23,8 @@ class UtilityItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      color: Colors.white,
       margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
       child: InkWell(
         onTap: onPressed,

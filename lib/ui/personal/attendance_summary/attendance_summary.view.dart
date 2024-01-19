@@ -15,7 +15,7 @@ class AttendanceSummaryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<AttendanceSummaryModel>(
+    return FrontView<AttendanceSummaryModel>(
       onModelReady: (model) => model.init(
         arguments as AttendanceSummaryArguments,
       ),

@@ -16,7 +16,7 @@ class StaffLeaveView extends StatelessWidget {
   Widget build(BuildContext context) {
     final _user = locator<DashboardModel>().user;
     final ScrollController _scrollController = ScrollController();
-    return View<StaffLeavemodel>(
+    return FrontView<StaffLeavemodel>(
       onDispose: (model) {
         _scrollController.dispose();
       },

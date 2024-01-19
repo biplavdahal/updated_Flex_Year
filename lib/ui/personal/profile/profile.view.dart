@@ -16,14 +16,17 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<ProfileModel>(
+    return FrontView<ProfileModel>(
       onModelReady: (model) => model.init(),
       killViewOnClose: false,
       builder: (ctx, model, child) {
         return Scaffold(
           backgroundColor: AppColor.primary,
           appBar: AppBar(
-            title: const Text('Profile'),
+            title: const Text(
+              'Profile',
+            ),
+            backgroundColor: AppColor.primary,
             actions: [
               PopupMenuButton<String>(
                 onSelected: model.moreOptionActions,
@@ -226,8 +229,8 @@ class ProfileView extends StatelessWidget {
                               Center(
                                   child: Column(
                                 children: [
-                                  Row(
-                                    children: const [
+                                  const Row(
+                                    children: [
                                       Text(
                                         "Performance Report : ",
                                         style: TextStyle(
@@ -261,6 +264,10 @@ class ProfileView extends StatelessWidget {
                                                           reportDataMap));
                                             },
                                             child: Card(
+                                              color: Colors.grey.shade100,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(7)),
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(16),
@@ -315,7 +322,10 @@ class ProfileView extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 24),
       child: Row(
         children: [
-          Icon(icon),
+          Icon(
+            icon,
+            color: AppColor.primary,
+          ),
           const SizedBox(width: 5),
           Text(
             "$label : ",

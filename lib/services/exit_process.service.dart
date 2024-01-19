@@ -20,9 +20,8 @@ abstract class ExitProcess {
 
   //submit answer
   Future<void> submitAnswer(
-      {required String questionID,
-       required String optionOne,
-       required String optionTwo,
-     required String optionThree,
-     required String optionFour});
+     {required String questioID,
+     required String option,
+     required String question
+     });
 }

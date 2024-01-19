@@ -15,7 +15,7 @@ class RequestReviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<RequestReviewModel>(
+    return FrontView<RequestReviewModel>(
       enableTouchRepeal: true,
       onModelReady: (model) => model.init(arguments as RequestReviewArguments),
       builder: (ctx, model, child) {

@@ -2,7 +2,7 @@ import 'package:bestfriend/bestfriend.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class View<T extends ViewModel> extends StatefulWidget {
+class FrontView<T extends ViewModel> extends StatefulWidget {
   /// Provides a builder function that will build/re-build the widget/screen
   final Widget Function(BuildContext ctx, T model, Widget? child) builder;
 
@@ -23,7 +23,7 @@ class View<T extends ViewModel> extends StatefulWidget {
   /// softkey when pressed outside textfield.
   final bool enableTouchRepeal;
 
-  const View({
+  const FrontView({
     Key? key,
     required this.builder,
     this.onModelReady,
@@ -37,7 +37,7 @@ class View<T extends ViewModel> extends StatefulWidget {
   _ViewState<T> createState() => _ViewState();
 }
 
-class _ViewState<T extends ViewModel> extends State<View<T>> {
+class _ViewState<T extends ViewModel> extends State<FrontView<T>> {
   late T model;
 
   @override

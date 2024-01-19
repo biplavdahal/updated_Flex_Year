@@ -21,7 +21,7 @@ class PerformanceView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final StaffData _user = locator<AuthenticationService>().user!.staff;
-    return View<PerformanceModel>(
+    return FrontView<PerformanceModel>(
       onModelReady: (model) =>
           model.init(arguments as StaffPerformanceArguments),
       builder: (ctx, model, child) {

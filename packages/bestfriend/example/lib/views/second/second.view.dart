@@ -9,7 +9,7 @@ class SecondView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<SecondModel>(
+    return FrontView<SecondModel>(
       builder: (ctx, model, child) {
         return Scaffold(
           appBar: AppBar(

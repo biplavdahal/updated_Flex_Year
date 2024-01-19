@@ -5,7 +5,6 @@ import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/widgets/fy_input_field.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../../data_models/attendance_correction.data.dart';
 import '../../../../services/attendance.service.dart';
 
 class TodaysAttendanceActivities extends StatefulWidget
@@ -60,6 +59,8 @@ class _TodaysAttendanceActivitiesState
               height: 29,
               width: 103,
               child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColor.primary),
                   onPressed: () async {
                     showDialog(
                         context: context,
@@ -191,6 +192,8 @@ class _TodaysAttendanceActivitiesState
                           height: 29,
                           width: 110,
                           child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColor.primary),
                               onPressed: () async {
                                 showDialog(
                                     context: context,
@@ -301,6 +304,8 @@ class _TodaysAttendanceActivitiesState
                   height: 29,
                   width: 110,
                   child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColor.primary),
                       onPressed: () async {
                         showDialog(
                             context: context,

@@ -1,4 +1,3 @@
-import 'package:bestfriend/bestfriend.dart';
 import 'package:flutter/material.dart';
 
 abstract class NavigationService {

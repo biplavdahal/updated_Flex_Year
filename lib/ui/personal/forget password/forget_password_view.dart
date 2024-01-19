@@ -14,7 +14,7 @@ class ForgetPasswordFragment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<LoginModel>(
+    return FrontView<LoginModel>(
       enableTouchRepeal: true,
       builder: (ctx, model, child) {
         return Scaffold(

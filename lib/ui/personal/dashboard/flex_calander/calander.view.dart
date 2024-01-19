@@ -19,7 +19,7 @@ class CalanderView extends StatefulWidget {
 class _CalanderViewState extends State<CalanderView> {
   @override
   Widget build(BuildContext context) {
-    return View<CalanderModel>(
+    return FrontView<CalanderModel>(
       enableTouchRepeal: true,
       killViewOnClose: false,
       

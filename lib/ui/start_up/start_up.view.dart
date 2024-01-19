@@ -11,7 +11,7 @@ class StartUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<StartUpModel>(
+    return FrontView<StartUpModel>(
       onModelReady: (model) => model.init(),
       builder: (ctx, model, child) {
         return Scaffold(

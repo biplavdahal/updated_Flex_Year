@@ -23,7 +23,7 @@ class AttendanceReportFilterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<AttendanceReportFilterModel>(
+    return FrontView<AttendanceReportFilterModel>(
       onModelReady: (model) =>
           model.init(arguments as AttendanceReportFilterArguments),
       builder: (ctx, model, child) {

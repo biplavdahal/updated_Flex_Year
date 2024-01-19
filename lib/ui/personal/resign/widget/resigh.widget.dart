@@ -3,7 +3,6 @@ import 'package:flex_year_tablet/data_models/user_resign.data.dart';
 import 'package:flex_year_tablet/ui/personal/resign/clearance/clearance.view.dart';
 import 'package:flex_year_tablet/ui/personal/resign/resign_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../../../theme.dart';
 
 class ResignItem extends StatelessWidget {
@@ -64,7 +63,7 @@ class ResignItem extends StatelessWidget {
                           GestureDetector(
                             onTap: () {},
                             child: const Icon(
-                              MdiIcons.delete,
+                              Icons.delete,
                               color: Colors.grey,
                             ),
                           ),

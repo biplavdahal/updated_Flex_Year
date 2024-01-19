@@ -24,7 +24,7 @@ class BirthdayItem extends StatelessWidget {
                   Row(
                     children: [
                       const Icon(
-                        MdiIcons.calendar,
+                       Icons.calendar_month,
                         color: AppColor.secondaryTextColor,
                       ),
                       const SizedBox(

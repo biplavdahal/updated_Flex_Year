@@ -13,7 +13,7 @@ class AttendanceView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<AttendanceModel>(
+    return FrontView<AttendanceModel>(
       onModelReady: (model) => model.init(),
       builder: (ctx, model, child) {
         return Scaffold(

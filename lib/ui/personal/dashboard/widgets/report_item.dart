@@ -2,7 +2,6 @@ import 'package:flex_year_tablet/data_models/attendance_report.data.dart';
 import 'package:flex_year_tablet/helper/date_time_formatter.helper.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class MonthlyHorizontalReportItems extends StatelessWidget {
   final AttendanceReportData report;
@@ -19,6 +18,7 @@ class MonthlyHorizontalReportItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
       color: report.weekend.isNotEmpty
           ? const Color.fromARGB(255, 139, 213, 245)
           : report.leaveType.toString().isNotEmpty

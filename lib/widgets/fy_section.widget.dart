@@ -28,7 +28,7 @@ class FYSection extends StatelessWidget {
               title!,
               style: TextStyle(
                 color: infoBox ? Colors.deepOrange : AppColor.primary,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
               ),
             ),
           const SizedBox(height: 10),

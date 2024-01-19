@@ -24,7 +24,7 @@ class AttendanceReportView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<AttendanceReportModel>(
+    return FrontView<AttendanceReportModel>(
       onModelReady: (model) =>
           model.init(arguments as AttendanceReportArguments),
       builder: (ctx, model, child) {

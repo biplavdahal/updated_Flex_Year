@@ -29,7 +29,7 @@ class _StaffDirectoryDetailViewState extends State<StaffDirectoryDetailView> {
   Widget build(BuildContext context) {
     final ScrollController _scrollController = ScrollController();
 
-    return View<StaffDirectoryDetailViewModel>(
+    return FrontView<StaffDirectoryDetailViewModel>(
       onModelReady: (model) =>
           model.init(widget.arguments as StaffDirectoryArgument),
       builder: (ctx, model, child) {
