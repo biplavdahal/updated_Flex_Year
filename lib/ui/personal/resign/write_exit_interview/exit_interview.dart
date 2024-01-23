@@ -6,7 +6,6 @@ import 'package:flex_year_tablet/ui/personal/resign/write_exit_interview/survey.
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../widgets/fy_shimmer.widget.dart';
 
 class ExitInterview extends StatelessWidget {
   static String tag = 'exit-interview';
@@ -26,6 +25,7 @@ class ExitInterview extends StatelessWidget {
                       color: AppColor.primary,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(0, 20, 0, 50),
+                        // ignore: unnecessary_null_comparison
                         child: auBaseURL + model.logo.logoPath == null
                             ? Image.network(
                                 auBaseURL + model.logo.logoPath,

@@ -195,6 +195,7 @@ class DashboardView extends StatelessWidget {
           ),
           appBar: AppBar(
             centerTitle: true,
+            // ignore: unnecessary_null_comparison
             title: auBaseURL + model.logo.logoPath == null
                 ? Image.network(
                     auBaseURL + model.logo.logoPath,

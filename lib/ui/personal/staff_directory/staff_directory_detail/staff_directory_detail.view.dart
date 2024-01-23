@@ -37,7 +37,7 @@ class _StaffDirectoryDetailViewState extends State<StaffDirectoryDetailView> {
           model.index ??= 0;
 
           if (model.index! >= 0 && model.index! < model.details.length) {
-            final _report = model.details[model.index!];
+           
 
             return Scaffold(
               appBar: AppBar(

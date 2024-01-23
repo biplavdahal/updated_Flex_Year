@@ -55,7 +55,6 @@ import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filt
 import 'package:flex_year_tablet/ui/personal/performance/performance_model.dart';
 import 'package:flex_year_tablet/ui/personal/profile/profile.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
-import 'package:flex_year_tablet/ui/personal/resign/resign_view.dart';
 import 'package:flex_year_tablet/ui/personal/resign/resign_viewmodel.dart';
 import 'package:flex_year_tablet/ui/personal/staff_directory/staff_directory.viewmodel.dart';
 import 'package:flex_year_tablet/ui/personal/staff_directory/staff_directory_detail/staff_directory_detaill.viewmodel.dart';

@@ -1,16 +1,11 @@
 import 'dart:convert';
-
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bestfriend/bestfriend.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/services/company.service.dart';
-import 'package:flex_year_tablet/services/notification.service.dart';
 import 'package:flex_year_tablet/services/push.notification.service.dart';
 import 'package:flex_year_tablet/ui/app_access/app_access.view.dart';
 import 'package:flex_year_tablet/ui/frontdesk/enter_pin/enter_pin.view.dart';
-import 'package:flex_year_tablet/ui/personal/chats/chats.argument.dart';
 import 'package:flex_year_tablet/ui/personal/chats/chats.view.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/dashboard.view.dart';
 import 'package:flex_year_tablet/ui/personal/login/login.view.dart';

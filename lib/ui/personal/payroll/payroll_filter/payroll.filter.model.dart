@@ -1,6 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
-import 'package:flex_year_tablet/services/payroll.service.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.argument.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll/payroll.view.dart';
 import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filter.argument.dart';
@@ -12,7 +11,7 @@ import '../../../../services/app_access.service.dart';
 
 class PayrollFilterModel extends ViewModel with SnackbarMixin, DialogMixin {
   //Service
-  final PayrollService _payrollService = locator<PayrollService>();
+
 
   //Data
   List<PayrollData> _payrolls = [];

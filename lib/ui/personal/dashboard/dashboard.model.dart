@@ -40,7 +40,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
 
   // Data
   List<HolidayData> get holiday => _companyService.holidays;
-  final List<HolidayData> _holidays = [];
   CompanyData get company => locator<AppAccessService>().appAccess!.company;
   CompanyLogoData get logo => locator<AppAccessService>().appAccess!.logo;
   UserData get user => locator<AuthenticationService>().user!;

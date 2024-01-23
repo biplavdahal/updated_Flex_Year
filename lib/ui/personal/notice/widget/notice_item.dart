@@ -2,7 +2,6 @@ import 'package:flex_year_tablet/data_models/holiday.data.dart';
 import 'package:flex_year_tablet/widgets/fy_section.widget.dart';
 
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../../../theme.dart';
 

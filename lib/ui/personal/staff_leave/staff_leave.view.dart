@@ -1,11 +1,10 @@
-import 'package:bestfriend/di.dart';
+
 import 'package:bestfriend/ui/view.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests_received/widgets/request_item.dart';
 import 'package:flex_year_tablet/ui/personal/staff_leave/staff_leave.model.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/fy_shimmer.widget.dart';
-import '../dashboard/dashboard.model.dart';
 
 class StaffLeaveView extends StatelessWidget {
   static String tag = 'staff-leave-view';
@@ -14,7 +13,6 @@ class StaffLeaveView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _user = locator<DashboardModel>().user;
     final ScrollController _scrollController = ScrollController();
     return FrontView<StaffLeavemodel>(
       onDispose: (model) {

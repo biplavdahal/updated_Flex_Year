@@ -5,7 +5,6 @@ import 'package:flex_year_tablet/ui/personal/resign/resign_viewmodel.dart';
 import 'package:flex_year_tablet/ui/personal/resign/widget/resigh.widget.dart';
 import 'package:flex_year_tablet/ui/personal/resign/write_resigh_request/write_resign_request.view.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../../widgets/fy_shimmer.widget.dart';
 

@@ -21,10 +21,6 @@ class PayrollItem extends StatelessWidget {
     this.onDeletePressed,
   }) : super(key: key);
 
-  final Map<String, Color> _statusColor = {
-    "1": Colors.green.shade300,
-    "0": Colors.red.shade200
-  };
 
   @override
   Widget build(BuildContext context) {
