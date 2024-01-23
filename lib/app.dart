@@ -75,11 +75,5 @@ class FlexYearApp extends StatelessWidget {
       ),
     );
   }
-  // void _changeLocale(Locale newLocale) {
 
-  //   final localeProvider = Provider.of<LocaleProvider>(
-  //       navigatorKey.currentContext!,
-  //       listen: false);
-  //   localeProvider.setLocale(newLocale);
-  // }
 }

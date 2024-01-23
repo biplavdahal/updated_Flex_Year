@@ -42,7 +42,7 @@ class _FYInputFieldState extends State<FYInputField> {
   @override
   Widget build(BuildContext cpontext) {
     return TextFormField(
-      autofocus: true,
+      autofocus: false,
       controller: widget.controller,
       onChanged: (text) {
         if (widget.maxLength != null && text.length >= widget.maxLength!) {
@@ -50,6 +50,9 @@ class _FYInputFieldState extends State<FYInputField> {
         }
       },
       decoration: InputDecoration(
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 14.0, horizontal: 10.0),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
         labelText: widget.label,
         suffixIcon: widget.obscureText
             ? IconButton(

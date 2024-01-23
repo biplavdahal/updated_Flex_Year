@@ -69,7 +69,9 @@ class AuthenticationServiceImpl implements AuthenticationService {
 
       _sharedPreferenceService.set(pfLoggedInUser, jsonEncode(_user!.toJson()));
 
-      await _pushNotificationService.updateFcmToken(_user!.id);
+      await _pushNotificationService.updateFcmToken(
+        _user!.accessToken,
+        _user!.id);
 
       print(_user!.id);
     } catch (e) {
@@ -95,7 +97,9 @@ class AuthenticationServiceImpl implements AuthenticationService {
 
       _sharedPreferenceService.set(pfLoggedInUser, jsonEncode(_user!.toJson()));
 
-      await _pushNotificationService.updateFcmToken(_user!.id);
+      await _pushNotificationService.updateFcmToken(
+         _user!.accessToken,
+        _user!.id);
     } catch (e) {
       throw apiError(e);
     }

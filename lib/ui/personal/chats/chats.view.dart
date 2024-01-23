@@ -5,7 +5,6 @@ import 'package:flex_year_tablet/ui/personal/chats/widgets/message_item.dart';
 import 'package:flex_year_tablet/widgets/fy_input_field.widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ChatsView extends StatelessWidget {
   static String tag = 'chats_view';
@@ -24,11 +23,19 @@ class ChatsView extends StatelessWidget {
       builder: (ctx, model, child) {
         return Scaffold(
           appBar: AppBar(
-            centerTitle: false,
-            title: Text(
-              model.receiverName,
-            ),
-          ),
+              toolbarHeight: 60,
+              centerTitle: false,
+              title: Column(
+                children: [
+                  Text(
+                    model.receiverName,
+                  ),
+                  Text(
+                    'Online',
+                    style: TextStyle(fontSize: 11),
+                  )
+                ],
+              )),
           body: model.isLoading
               ? const Center(
                   child: CupertinoActivityIndicator(),
@@ -60,6 +67,9 @@ class ChatsView extends StatelessWidget {
                       color: Colors.grey[50],
                       padding: const EdgeInsets.all(6),
                       child: Row(children: [
+                        const SizedBox(
+                          width: 20,
+                        ),
                         Expanded(
                           child: FYInputField(
                             title: '',

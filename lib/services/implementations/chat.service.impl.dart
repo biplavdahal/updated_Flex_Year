@@ -53,13 +53,6 @@ class ChatServiceImpl implements ChatService {
   Future<List<ChatMessageData>> _fetchMessages(
       int receiverId, int senderId) async {
     try {
-      debugPrint({
-        'access_token': _authenticationService.user!.accessToken,
-        'sender_id': senderId,
-        'receiver_id': receiverId,
-        'company_id': _appAccessService.appAccess!.company.companyId,
-      }.toString());
-
       final response = await _apiService.get(auGetMessages, params: {
         'access_token': _authenticationService.user!.accessToken,
         'sender_id': senderId,
@@ -128,12 +121,6 @@ class ChatServiceImpl implements ChatService {
     required String message,
   }) async {
     try {
-      debugPrint({
-        'access_token': _authenticationService.user!.accessToken,
-        'receiver_id': receiverId,
-        'sender_id': senderId,
-        'message': message,
-      }.toString());
       final response = await _apiService.post(
         auSendTextMessage,
         {

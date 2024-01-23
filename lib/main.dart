@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bestfriend/di.dart';
 import 'package:bestfriend/services/api.service.dart';
@@ -37,7 +38,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
             id: 1,
             channelKey: 'message',
             title: message.data["full_name"],
-            body: message.notification!.body!, 
+            body: message.notification!.body!,
             payload: payload));
   }
 

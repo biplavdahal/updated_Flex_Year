@@ -47,7 +47,7 @@ class PushNotificationServiceImplementation implements PushNotificationService {
   }
 
   @override
-  Future<void> updateFcmToken(int uid) async {
+  Future<void> updateFcmToken(String accessToken, int uid) async {
     try {
       final token = await _firebaseMessaging.getToken();
       final response = await _apiService.post(auFCMNotificationPost, {
@@ -57,6 +57,9 @@ class PushNotificationServiceImplementation implements PushNotificationService {
       });
 
       final data = constructResponse(response.data);
+      print("tokeeeeeen : ${token}");
+      print("typeeeeee ${Platform.isIOS ? "Ios" : "Android"}");
+      print("user_idddddd : ${uid}");
 
       if (data!["status"] == "failure") {
         throw ErrorData.fromJson(data);
@@ -75,7 +78,7 @@ class PushNotificationServiceImplementation implements PushNotificationService {
   void initializeLocalNotification() async {
     AwesomeNotifications().initialize('', [
       NotificationChannel(
-        channelKey: 'channel1',
+        channelKey: 'channel',
         channelName: 'Flex Year',
         channelDescription:
             "This channel contains all of the foreground notifications.",
@@ -84,7 +87,7 @@ class PushNotificationServiceImplementation implements PushNotificationService {
         enableVibration: true,
       ),
       NotificationChannel(
-        channelKey: 'channel2',
+        channelKey: 'channel',
         channelName: 'Flex Year',
         channelDescription:
             "This channel contains all of the non-critical foreground notifications.",

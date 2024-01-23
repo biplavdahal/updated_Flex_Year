@@ -30,6 +30,7 @@ import 'package:flex_year_tablet/ui/personal/staff_directory/staff_directory.vie
 import 'package:flex_year_tablet/ui/personal/upcoming_birthday/upcoming_birthday.view.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_dropdown.widget.dart';
+import 'package:flex_year_tablet/widgets/fy_input_field.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_loader.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_section.widget.dart';
 import 'package:flex_year_tablet/widgets/fy_user_avatar_widget.dart';
@@ -502,13 +503,10 @@ class DashboardView extends StatelessWidget {
                   height: 20,
                 ),
                 Align(
-                    child: TextField(
-                  autofocus: false,
+                    child: FYInputField(
+                  label: 'Attendance Message',
+                  title: 'Attendance Message',
                   controller: model.attendanceMessageController,
-                  decoration: InputDecoration(
-                    hintText: 'Attendance message',
-                    hintStyle: TextStyle(color: Colors.grey.shade500),
-                  ),
                 )),
               ],
             ),
