@@ -1,4 +1,5 @@
 import 'package:bestfriend/bestfriend.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';

@@ -50,16 +50,17 @@ class PushNotificationServiceImplementation implements PushNotificationService {
   Future<void> updateFcmToken(String accessToken, int uid) async {
     try {
       final token = await _firebaseMessaging.getToken();
-      final response = await _apiService.post(auFCMNotificationPost, {
-        "type": Platform.isIOS ? "Ios" : "Android",
-        "token": token,
-        "user_id": uid
-      });
+      final response = await _apiService.post(
+          auFCMNotificationPost,
+          {
+            "type": Platform.isIOS ? "Ios" : "Android",
+            "token": token,
+            "user_id": uid
+          },
+          asFormData: true);
 
       final data = constructResponse(response.data);
-      print("tokeeeeeen : ${token}");
-      print("typeeeeee ${Platform.isIOS ? "Ios" : "Android"}");
-      print("user_idddddd : ${uid}");
+      print(response.data);
 
       if (data!["status"] == "failure") {
         throw ErrorData.fromJson(data);
@@ -126,10 +127,10 @@ class PushNotificationServiceImplementation implements PushNotificationService {
       id: 1,
       channelKey: 'message',
       title: senderName,
-      body: payload["Message"],
+      body: payload["Message_content"],
       payload: {
         "sender_id": payload["sender_id"],
-        "sender_name": payload["full_name"],
+        "from": payload["username"],
       },
     ));
   }
@@ -143,7 +144,7 @@ class PushNotificationServiceImplementation implements PushNotificationService {
       await AwesomeNotifications().createNotification(
         content: NotificationContent(
           id: 1,
-          channelKey: 'channel1',
+          channelKey: 'channel',
           title: notification["title"],
           body: notification["body"],
           bigPicture:
@@ -154,7 +155,7 @@ class PushNotificationServiceImplementation implements PushNotificationService {
       await AwesomeNotifications().createNotification(
         content: NotificationContent(
           id: 1,
-          channelKey: 'channel2',
+          channelKey: 'channel',
           title: title,
           body: body,
         ),

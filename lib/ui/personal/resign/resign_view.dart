@@ -84,7 +84,7 @@ class ResignView extends StatelessWidget {
                             child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text('No regignation Letter submitted !!'),
+                            const Text('No resignation Letter submitted !!'),
                             IconButton(
                                 onPressed: (() => model
                                     .init(arguments as ResighViewArguments?)),
@@ -92,7 +92,6 @@ class ResignView extends StatelessWidget {
                           ],
                         )),
                       )),
-              
                 ],
               ),
             ),

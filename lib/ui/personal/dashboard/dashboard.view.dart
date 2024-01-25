@@ -37,6 +37,7 @@ import 'package:flex_year_tablet/widgets/fy_user_avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import '../attendance_correction/attendance_correction.view.dart';
 import '../chat_contacts/chat_contacts.view.dart';
 import '../holidays/holidays.view.dart';
@@ -90,7 +91,7 @@ class DashboardView extends StatelessWidget {
           body: Container(
             width: double.infinity,
             height: MediaQuery.of(context).size.height,
-            margin: const EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 2),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.grey.shade100,
@@ -99,15 +100,24 @@ class DashboardView extends StatelessWidget {
                 topRight: Radius.circular(10),
               ),
             ),
-            child: RefreshIndicator(
+            child: SmartRefresher(
+              header: ClassicHeader(
+                idleText: "Pull down to refresh",
+                releaseText: "Release to refresh",
+                refreshingText: "Refreshing...",
+                completeText: "Refresh complete",
+                failedText: "Refre* sh failed",
+                completeIcon: Icon(MdiIcons.checkAll, color: Colors.grey),
+              ),
+              enablePullDown: true,
+              controller: model.refreshController,
               onRefresh: model.init,
               child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // if (model.attendanceCorrectionData.isNotEmpty)
-                    //   _buildProgressIndicator(model),
+                    if (model.attendanceCorrectionData.isNotEmpty)
+                      _buildProgressIndicator(model),
                     _buildValidAttendance(model),
                     _buildAttendanceActivities(model),
                     _buildForgotToCheckout(model),
@@ -207,6 +217,7 @@ class DashboardView extends StatelessWidget {
                     width: 145,
                   ),
             bottom: PreferredSize(
+              preferredSize: const Size(double.infinity, 70),
               child: Container(
                 color: AppColor.primary,
                 child: Padding(
@@ -218,8 +229,7 @@ class DashboardView extends StatelessWidget {
                           children: [
                             if (model.company.companyPreference == 'N')
                               Text(
-                                "  " +
-                                    formattedNepaliDate(model.currentDateTime),
+                                "  ${formattedNepaliDate(model.currentDateTime)}",
                                 style: const TextStyle(
                                   color: Colors.white,
                                 ),
@@ -227,16 +237,16 @@ class DashboardView extends StatelessWidget {
                               ),
                             if (model.company.companyPreference != 'N')
                               Text(
-                                "  " + formattedDate(model.currentDateTime),
+                                "  ${formattedDate(model.currentDateTime)}",
                                 style: const TextStyle(
                                   color: Colors.white,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
-                            Expanded(
+                            const Expanded(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   SizedBox(
                                     height: 20,
                                     child: VerticalDivider(
@@ -272,9 +282,7 @@ class DashboardView extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  _getGreeting() +
-                                      " " +
-                                      model.user.staff.firstName.toString(),
+                                  "${_getGreeting()} ${model.user.staff.firstName}",
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
@@ -286,7 +294,6 @@ class DashboardView extends StatelessWidget {
                       ],
                     )),
               ),
-              preferredSize: const Size(double.infinity, 70),
             ),
             actions: [
               IconButton(
@@ -338,9 +345,9 @@ class DashboardView extends StatelessWidget {
                   height: 11,
                 ),
                 itemBuilder: (context, index) {
-                  final _correction = model.attendanceCorrectionData[index];
+                  final correction = model.attendanceCorrectionData[index];
                   return TodaysAttendanceActivities(
-                    _correction,
+                    correction,
                   );
                 },
                 itemCount: model.attendanceCorrectionData.length,
@@ -740,79 +747,69 @@ class DashboardView extends StatelessWidget {
 
   Widget _buildCalander(DashboardModel model) {
     return FYSection(
-        title: "Upcoming Holidays ",
-        child: model.isLoading
-            ? null
-            : SizedBox(
-                height: 100,
-                child: RefreshIndicator(
-                    onRefresh: HolidaysModel.holidaydata,
-                    child: ListView.builder(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        final _holiday = HolidaysModel.holiday[index];
-                        DateFormat dateFormat = DateFormat('yyyy-MM-dd');
-                        DateTime date = dateFormat.parse(_holiday.date);
+      title: "Upcoming Holidays ",
+      child: model.isLoading
+          ? null
+          : SizedBox(
+              height: 100,
+              child: ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final _holiday = HolidaysModel.holiday[index];
+                  DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+                  DateTime date = dateFormat.parse(_holiday.date);
 
-                        if (date.compareTo(DateTime.now()) < 0) {
-                          return Container();
-                        }
-                        return HolidayItem(holiday: _holiday);
-                      },
-                      itemCount: HolidaysModel.holiday.length,
-                    )),
-              ));
+                  if (date.compareTo(DateTime.now()) < 0) {
+                    return Container();
+                  }
+                  return HolidayItem(holiday: _holiday);
+                },
+                itemCount: HolidaysModel.holiday.length,
+              )),
+    );
   }
 
-  // Widget _buildProgressIndicator(DashboardModel model) {
-  //   if (model.attendanceCorrectionData.isEmpty) {
-  //     return const Text('No attendance data available');
-  //   }
+  Widget _buildProgressIndicator(DashboardModel model) {
+    if (model.attendanceCorrectionData.isEmpty) {
+      return const Text('No attendance data available');
+    }
 
-  //   double progress = model.calculateProgress();
+    double progress = model.calculateProgress();
 
-  //   late DateTime checkoutTime;
-  //   if (model.attendanceCorrectionData.isNotEmpty &&
-  //       model.attendanceCorrectionData.last.checkoutDatetime != null) {
-  //     checkoutTime =
-  //         DateTime.parse(model.attendanceCorrectionData.last.checkoutDatetime!);
-  //   } else {
-  //     checkoutTime = DateTime.now();
-  //   }
+    late DateTime checkoutTime;
+    if (model.attendanceCorrectionData.isNotEmpty &&
+        model.attendanceCorrectionData.last.checkoutDatetime != null) {
+      checkoutTime =
+          DateTime.parse(model.attendanceCorrectionData.last.checkoutDatetime!);
+    } else {
+      checkoutTime = DateTime.now();
+    }
 
-  //   DateTime checkinTime =
-  //       DateTime.parse(model.attendanceCorrectionData[0].checkinDatetime!);
-  //   DateTime now = DateTime.now();
-  //   Duration remainingTime =
-  //       checkinTime.add(const Duration(hours: 8, minutes: 30)).difference(now);
-  //   Color progressBarColor = progress >= 1.0 ? Colors.green : AppColor.primary;
+    DateTime checkinTime =
+        DateTime.parse(model.attendanceCorrectionData[0].checkinDatetime!);
+    DateTime now = DateTime.now();
+    Duration remainingTime =
+        checkinTime.add(const Duration(hours: 8, minutes: 30)).difference(now);
+    Color progressBarColor = progress >= 1.0 ? Colors.green : AppColor.primary;
 
-  //   Duration difference = checkoutTime.difference(checkinTime);
+    Duration difference = checkoutTime.difference(checkinTime);
 
-  //   return SizedBox(
-  //     height: 20,
-  //     child: LiquidLinearProgressIndicator(
-  //       value: progress.clamp(0.0, 1.0),
-  //       valueColor: AlwaysStoppedAnimation(progressBarColor),
-  //       backgroundColor: Colors.grey,
-  //       borderColor: Colors.white,
-  //       borderWidth: 1.0,
-  //       borderRadius: 12.0,
-  //       direction: Axis.horizontal,
-  //       center: Text(
-  //         model.attendanceCorrectionData.isNotEmpty &&
-  //                 model.attendanceCorrectionData.last.checkoutDatetime != null
-  //             ? "Today time: ${formatDuration(difference)}"
-  //             : "Remaining Time: ${remainingTime.inHours}h ${remainingTime.inMinutes.remainder(60)}m ${remainingTime.inSeconds.remainder(60)}s",
-  //         style: const TextStyle(
-  //           color: Colors.white,
-  //           fontSize: 11,
-  //           fontWeight: FontWeight.bold,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+    return Center(
+      child: Text(
+        model.attendanceCorrectionData.isNotEmpty &&
+                model.attendanceCorrectionData.last.checkoutDatetime != null
+            ? "Today time: ${formatDuration(difference)}"
+            : remainingTime.isNegative
+                ? "Overtime: ${formatDuration(checkinTime.add(const Duration(hours: 8, minutes: 30)).difference(now))}"
+                : "Remaining Time: ${remainingTime.inHours}h ${remainingTime.inMinutes.remainder(60)}m ${remainingTime.inSeconds.remainder(60)}s",
+        style: TextStyle(
+          fontSize: 14.0,
+          color: Colors.grey,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
 
   String _getGreeting() {
     final currentTime = DateTime.now();

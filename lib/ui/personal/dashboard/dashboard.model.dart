@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bestfriend/bestfriend.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flex_year_tablet/data_models/attendance_correction.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_forgot.data.dart';
 import 'package:flex_year_tablet/data_models/attendance_status.data.dart';
@@ -27,6 +28,7 @@ import 'package:flex_year_tablet/ui/personal/profile/profile.view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import '../../../data_models/attendance_report.data.dart';
 import '../../../data_models/attendance_report_summary.data.dart';
 import '../attendance_correction/attendance_correction.view.dart';
@@ -88,9 +90,8 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   late String? present = _reportSummary[0].present.toString();
   late String? absent = _reportSummary[0].absent.toString();
 
-
   MyClass() {
-  WorkingHours =
+    WorkingHours =
         _reportSummary.isNotEmpty ? _reportSummary[0].workingHours : null;
     Leave = _reportSummary.isNotEmpty
         ? _reportSummary[0].leaveTotal.toString()
@@ -101,7 +102,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
         _reportSummary.isNotEmpty ? _reportSummary[0].present.toString() : null;
     absent =
         _reportSummary.isNotEmpty ? _reportSummary[0].absent.toString() : null;
-
   }
 
   AttendanceSummaryData? _attendanceData;
@@ -168,6 +168,22 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     }
   }
 
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+
+  Future<void> checkNetworkAndRefresh() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+
+    if (connectivityResult == ConnectivityResult.none) {
+      Fluttertoast.showToast(
+          msg: 'No Internet Connection', backgroundColor: Colors.red);
+    } else {
+      await init();
+    }
+  }
+
+  
+
   // Actions
   Future<void> init() async {
     try {
@@ -206,6 +222,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     }
 
     setWidgetBusy('todays-attendance');
+    refreshController.refreshCompleted();
 
     _attendanceService
         .getAttendanceStatus(
@@ -235,6 +252,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       _monthlyReport = await _attendanceService.getMonthlyReport(
         data: _searchParams,
       );
+
       setIdle();
     } catch (e) {
       rethrow;
@@ -410,5 +428,4 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   }
 
   ///ADMIN STUFFS
-
 }

@@ -1,5 +1,4 @@
 import 'package:bestfriend/di.dart';
-import 'package:flex_year_tablet/theme.dart';
 import 'package:flutter/material.dart';
 import '../../../../data_models/user.data.dart';
 import '../../../../services/authentication.service.dart';

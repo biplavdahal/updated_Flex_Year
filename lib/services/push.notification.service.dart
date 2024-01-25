@@ -8,7 +8,7 @@ abstract class PushNotificationService {
   Future<bool> getPermission();
 
   /// Update FCM Token into user's firestore document.
-  Future<void> updateFcmToken( String accessToken, int userId);
+  Future<void> updateFcmToken(String accessToken, int userId);
 
   /// Listen to foreground notification
   Stream<RemoteMessage> onNotificationArrive();

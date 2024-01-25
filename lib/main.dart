@@ -29,7 +29,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     await AwesomeNotifications().cancelAll();
 
     Map<String, String> payload = {
-      "sender_name": message.data["full_name"],
+      "from": message.data["username"],
       "sender_id": message.data["sender_id"],
     };
 
@@ -37,12 +37,23 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
         content: NotificationContent(
             id: 1,
             channelKey: 'message',
-            title: message.data["full_name"],
+            title: message.data["username"],
             body: message.notification!.body!,
             payload: payload));
   }
 
   debugPrint("Handling a background message: ${message.data}");
+
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    RemoteNotification notification = message.notification!;
+    AndroidNotification? android = message.notification?.android;
+  });
 }
 
 void main() async {
