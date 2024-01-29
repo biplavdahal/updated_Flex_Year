@@ -96,7 +96,9 @@ class AppAccessView extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          Text('Company: ${model.appAccess!.company.companyName}'),
+          Text(
+            'Company: ${model.appAccess!.company.companyName}',
+          ),
           Card(
             margin: const EdgeInsets.all(16),
             child: Padding(

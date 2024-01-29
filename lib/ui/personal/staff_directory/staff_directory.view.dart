@@ -30,12 +30,12 @@ class StaffDirectoryView extends StatelessWidget {
                     Expanded(
                       child: ListView.separated(
                         itemBuilder: (context, index) {
-                          final _directory = model.departmentListData[index];
+                          final directory = model.departmentListData[index];
                           return StaffDirectoryItem(
-                            directory: _directory,
+                            directory: directory,
                             onClick: () async {
                               model.onClick(
-                                  _directory.departmentName!.toString(), index);
+                                  directory.departmentName!.toString(), index);
                             },
                           );
                         },

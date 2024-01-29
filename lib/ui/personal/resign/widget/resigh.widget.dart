@@ -74,15 +74,23 @@ class ResignItem extends StatelessWidget {
                 ),
                 Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Text(resign.letter.toString())),
-                const Divider(),
-                Card(
-                    child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Text(resign.feedBack.toString() != '' &&
-                                resign.feedBack.toString() != 'null'
-                            ? resign.feedBack.toString()
-                            : 'No Feedback'))),
+                    child: Column(
+                      children: [
+                        Text('Reason : ${resign.reason.toString()}'),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(resign.letter.toString()),
+                      ],
+                    )),
+                // const Divider(),
+                // Card(
+                //     child: Padding(
+                //         padding: const EdgeInsets.all(10),
+                //         child: Text(resign.feedBack.toString() != '' &&
+                //                 resign.feedBack.toString() != 'null'
+                //             ? resign.feedBack.toString()
+                //             : 'No Feedback'))),
                 const SizedBox(
                   height: 40,
                 ),

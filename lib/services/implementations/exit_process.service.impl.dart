@@ -9,7 +9,6 @@ import 'package:flex_year_tablet/helper/dio_helper.dart';
 import 'package:flex_year_tablet/services/app_access.service.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
 import 'package:flex_year_tablet/services/exit_process.service.dart';
-import 'package:flutter/material.dart';
 
 class ExitProcessImpl implements ExitProcess {
   final ApiService _apiService = locator<ApiService>();
@@ -138,20 +137,20 @@ class ExitProcessImpl implements ExitProcess {
       required String question}) async {
     try {
       final _response = await _apiService.post(
-        auStaffPostAnswer,
-        {
-          'access_token': _authenticationService.user!.accessToken,
-          'company_id': _appAccessService.appAccess!.company.companyId,
-          'staff_id': _authenticationService.user!.id,
-          'survey': [
-            {
-              "option": option.toString(),
-              "question": question.toString(),
-              "question_id": questioID.toString()
-            }
-          ]
-        },
-      );
+          auStaffPostAnswer,
+          {
+            'access_token': _authenticationService.user!.accessToken,
+            'company_id': _appAccessService.appAccess!.company.companyId,
+            'staff_id': _authenticationService.user!.id,
+            'survey': [
+              {
+                "option": option.toString(),
+                "question": question.toString(),
+                "question_id": questioID.toString()
+              }
+            ]
+          },
+          asFormData: true);
 
       constructResponse(_response.data);
 

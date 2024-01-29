@@ -52,8 +52,16 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
   bool _isEditMode = false;
   String? _requestId;
 
-
-
+  List<String> items = [
+    'Carrer Growth',
+    'Salary Issue',
+    'Change City',
+    'Job Satisfaction',
+    'Promotion Issue',
+    'Personal Issue',
+    'Others'
+  ];
+  String? selecteditems;
 
   Future<void> init(ResighViewArguments? arguments) async {
     if (arguments?.resign != null) {
@@ -62,6 +70,7 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
       _resignDate = DateTime.parse(arguments.resign!.date.toString());
       _resignLetterController.text = arguments.resign!.letter.toString();
       _resignFeedbackController.text = arguments.resign!.feedBack.toString();
+      selecteditems = arguments.resign!.reason.toString();
     } else {
       _resignLetterController.text = '';
       _resignFeedbackController.text = '';
@@ -75,7 +84,6 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
       setIdle();
     } catch (e) {
       setIdle();
-      snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     }
   }
 
@@ -116,6 +124,7 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
     data['letter'] = _resignLetterController.text;
     data['feedback'] = _resignFeedbackController.text;
     data['date'] = _resignDate.toString();
+    data['reason'] = selecteditems.toString();
 
     if (_isEditMode) {
       data['id'] = _requestId;
@@ -151,8 +160,4 @@ class ResignViewModel extends ViewModel with SnackbarMixin, DialogMixin {
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     }
   }
-
-  
-
-
 }

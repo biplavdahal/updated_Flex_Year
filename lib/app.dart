@@ -4,7 +4,6 @@ import 'package:flex_year_tablet/routes.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/start_up/start_up.view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'main.dart';
@@ -25,11 +24,6 @@ class FlexYearApp extends StatelessWidget {
               supportedLocales: const [
                 Locale('en'),
                 Locale('ne'),
-              ],
-              localizationsDelegates: const [
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
               ],
               localeResolutionCallback: (locale, supportedLocales) {
                 for (var supportedLocale in supportedLocales) {
@@ -75,5 +69,4 @@ class FlexYearApp extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -23,17 +23,21 @@ class StaffDirectoryViewModel extends ViewModel with SnackbarMixin {
 
   Future<void> onClick(String departmentName, int departId) async {
     setLoading();
-    Map<String, dynamic> _searchParams = {};
 
-    _searchParams['limit'] = 15;
-    _searchParams['page'] = 1;
-    _searchParams['search'] = [
-      {'department_name': departmentName, 'description': ''}
-    ];
+    // Allow the UI to update before navigating
+    await Future.microtask(() async {
+      Map<String, dynamic> searchParams = {};
+      searchParams['limit'] = 15;
+      searchParams['page'] = 1;
+      searchParams['search'] = [
+        {'department_name': departmentName, 'description': ''}
+      ];
 
-    goto(StaffDirectoryDetailView.tag,
-        arguments: StaffDirectoryArgument(
-            searchParams: _searchParams, departID: departId));
+      await goto(StaffDirectoryDetailView.tag,
+          arguments: StaffDirectoryArgument(
+              searchParams: searchParams, departID: departId));
+    });
+
     setIdle();
   }
 }

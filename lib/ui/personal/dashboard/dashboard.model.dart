@@ -182,14 +182,12 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     }
   }
 
-  
-
   // Actions
   Future<void> init() async {
     try {
       setLoading();
-      final _holidays = await _companyService.getHolidays();
-      _companyService.holidays = _holidays;
+      final holidays = await _companyService.getHolidays();
+      _companyService.holidays = holidays;
       setIdle();
     } catch (e) {
       rethrow;
@@ -237,6 +235,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       unsetWidgetBusy('dashboard');
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     });
+    
     try {
       setLoading();
       Map<String, dynamic> _searchParams = {};

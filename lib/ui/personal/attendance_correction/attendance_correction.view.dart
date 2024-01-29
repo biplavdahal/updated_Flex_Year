@@ -4,6 +4,8 @@ import 'package:flex_year_tablet/ui/personal/attendance_correction/attendance_co
 import 'package:flex_year_tablet/ui/personal/attendance_correction/widgets/correction_item.dart';
 import 'package:flex_year_tablet/widgets/fy_shimmer.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../../theme.dart';
 
@@ -75,7 +77,18 @@ class AttendanceCorrectionView extends StatelessWidget {
                 if (!model.isLoading)
                   if (model.correctionsToShow.isNotEmpty)
                     Expanded(
-                      child: RefreshIndicator(
+                      child: SmartRefresher(
+                        header: ClassicHeader(
+                          idleText: "Pull down to refresh",
+                          releaseText: "Release to refresh",
+                          refreshingText: "Refreshing...",
+                          completeText: "Refresh complete",
+                          failedText: "Refre* sh failed",
+                          completeIcon:
+                              Icon(MdiIcons.checkAll, color: Colors.grey),
+                        ),
+                        enablePullDown: true,
+                        controller: model.refreshController,
                         onRefresh: model.init,
                         child: ListView.separated(
                           physics: const AlwaysScrollableScrollPhysics(),
@@ -103,7 +116,18 @@ class AttendanceCorrectionView extends StatelessWidget {
                     )
                   else if (model.selectedTab == '0')
                     Expanded(
-                      child: RefreshIndicator(
+                      child: SmartRefresher(
+                        header: ClassicHeader(
+                          idleText: "Pull down to refresh",
+                          releaseText: "Release to refresh",
+                          refreshingText: "Refreshing...",
+                          completeText: "Refresh complete",
+                          failedText: "Refre* sh failed",
+                          completeIcon:
+                              Icon(MdiIcons.checkAll, color: Colors.grey),
+                        ),
+                        enablePullDown: true,
+                        controller: model.refreshController,
                         onRefresh: model.init,
                         child: ListView.separated(
                             physics: const AlwaysScrollableScrollPhysics(),

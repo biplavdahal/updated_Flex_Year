@@ -27,18 +27,17 @@ class StaffDirectoryDetailView extends StatefulWidget {
 class _StaffDirectoryDetailViewState extends State<StaffDirectoryDetailView> {
   @override
   Widget build(BuildContext context) {
-    final ScrollController _scrollController = ScrollController();
+    final ScrollController scrollController = ScrollController();
 
     return FrontView<StaffDirectoryDetailViewModel>(
-      onModelReady: (model) =>
-          model.init(widget.arguments as StaffDirectoryArgument),
+      onModelReady: (model) => 
+        model.init(widget.arguments as StaffDirectoryArgument),
+    
       builder: (ctx, model, child) {
         if (model.details.isNotEmpty) {
           model.index ??= 0;
 
           if (model.index! >= 0 && model.index! < model.details.length) {
-           
-
             return Scaffold(
               appBar: AppBar(
                 title: Text(model.searchParams['search'][0]['department_name']),
@@ -50,7 +49,7 @@ class _StaffDirectoryDetailViewState extends State<StaffDirectoryDetailView> {
                     SizedBox(
                       height: 75,
                       child: Scrollbar(
-                        controller: _scrollController,
+                        controller: scrollController,
                         thumbVisibility: true,
                         scrollbarOrientation: ScrollbarOrientation.bottom,
                         child: SingleChildScrollView(
@@ -58,7 +57,7 @@ class _StaffDirectoryDetailViewState extends State<StaffDirectoryDetailView> {
                           child: Row(
                             children: [
                               Scrollable(
-                                controller: _scrollController,
+                                controller: scrollController,
                                 axisDirection: AxisDirection.right,
                                 viewportBuilder: (BuildContext context, mode) {
                                   return ListView.separated(

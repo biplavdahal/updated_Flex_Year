@@ -5,6 +5,7 @@ import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/leave.service.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/write_leave_request/write_leave_request.view.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../dashboard/dashboard.model.dart';
 
@@ -26,14 +27,15 @@ class LeaveRequestModel extends ViewModel with SnackbarMixin, DialogMixin {
 
   bool light = false;
 
-  final _user = locator<DashboardModel>().user;
-
   List<LeaveRequestData> _requests = [];
   final _status = {"0": "1", "1": "2", "2": "3", "": "0"};
   List<LeaveRequestData> get requestsToShow => _requests
       .where((request) => _status[request.status] == _selectedTab)
       .toList();
   List<LeaveRequestData> get request => _requests;
+
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
 
   // Action
   Future<void> init() async {

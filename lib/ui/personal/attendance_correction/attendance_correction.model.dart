@@ -3,6 +3,7 @@ import 'package:flex_year_tablet/data_models/attendance_correction_review.data.d
 import 'package:flex_year_tablet/managers/dialog/dialog.mixin.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/attendance.service.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import '../dashboard/dashboard.model.dart';
 
 class AttendanceCorrectionModel extends ViewModel
@@ -18,7 +19,7 @@ class AttendanceCorrectionModel extends ViewModel
 
   int _limit = 10;
 
-  int get id => _user.id!;
+  int get id => _user.id;
 
   set selectedTab(String tab) {
     _selectedTab = tab;
@@ -33,6 +34,9 @@ class AttendanceCorrectionModel extends ViewModel
       .toList();
 
   List<AttendanceCorrectionReviewData> get corrections => _corrections;
+
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: false);
 
   // Actions
   Future<void> init() async {

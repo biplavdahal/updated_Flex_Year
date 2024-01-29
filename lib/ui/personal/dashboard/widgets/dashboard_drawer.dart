@@ -1,6 +1,7 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
+import 'package:flex_year_tablet/services/exit_process.service.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/add_attendance/add_attendance.view.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_correction/attendance_correction.view.dart';
@@ -419,19 +420,6 @@ class DashboardDrawer extends StatelessWidget {
                 color: Color.fromARGB(255, 240, 119, 82),
               ),
             ),
-            // ListTile(
-            //   title: const Text(
-            //     'Resign',
-            //     style: TextStyle(color: AppColor.primary),
-            //   ),
-            //   onTap: () {
-            //     locator<DashboardModel>().goto(ResignView.tag);
-            //   },
-            //   leading: const Icon(
-            //     MdiIcons.doorOpen,
-            //     color: AppColor.primary,
-            //   ),
-            // ),
 
             const Divider(),
             if (locator<AuthenticationService>().user!.role?.toLowerCase() ==
