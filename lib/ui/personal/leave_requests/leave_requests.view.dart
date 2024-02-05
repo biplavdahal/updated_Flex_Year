@@ -108,7 +108,7 @@ class LeaveRequestView extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "${_user.staff.remainingLeave} " + 'days',
+                      "${_user.staff.remainingLeave} " 'days',
                       style: const TextStyle(color: Colors.orange),
                     ),
                   ],

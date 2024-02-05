@@ -1,5 +1,6 @@
 import 'package:bestfriend/model/arguments.model.dart';
 import 'package:bestfriend/ui/view.dart';
+import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/resign/resign_arguments.dart';
 import 'package:flex_year_tablet/ui/personal/resign/resign_viewmodel.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
@@ -81,7 +82,6 @@ class _WriteResignRequestViewState extends State<WriteResignRequestView> {
                           model.resignLetterController.text = modifiedValue;
                         }),
                     const SizedBox(height: 20),
-                  
                     const SizedBox(
                       height: 20,
                     ),

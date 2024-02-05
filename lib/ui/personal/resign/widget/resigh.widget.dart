@@ -76,8 +76,10 @@ class ResignItem extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Column(
                       children: [
-                        Text('Reason : ${resign.reason.toString()}'),
-                        SizedBox(
+                        Text(resign.reason!.isNotEmpty
+                            ? 'Reason : ${resign.reason.toString()}'
+                            : 'Reason :  --'),
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(resign.letter.toString()),

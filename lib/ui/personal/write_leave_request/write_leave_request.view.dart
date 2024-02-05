@@ -94,19 +94,43 @@ class WriteLeaveRequestView extends StatelessWidget {
                     const SizedBox(
                       height: 16,
                     ),
-                    FYDateField(
-                      title: 'Leave Date From',
-                      value: model.leaveDateFrom,
-                      onChanged: (value) => model.leaveDateFrom = value,
+                    FYSecondaryButton(
+                      label: ' Select date ',
+                      onPressed: () async {
+                        DateTimeRange? selectedDateRange = await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return DateRangePickerDialog(
+                              initialEntryMode:
+                                  DatePickerEntryMode.calendarOnly,
+                              firstDate: DateTime.now()
+                                  .subtract(const Duration(days: 365)),
+                              lastDate:
+                                  DateTime.now().add(const Duration(days: 365)),
+                            );
+                          },
+                        );
+
+                        // Update the values if a date range is selected
+                        if (selectedDateRange != null) {
+                          model.leaveDateFrom = selectedDateRange.start;
+                          model.leaveDateUpto = selectedDateRange.end;
+                        }
+                      },
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    FYDateField(
-                      title: 'Leave Date Upto',
-                      value: model.leaveDateUpto,
-                      onChanged: (value) => model.leaveDateUpto = value,
-                    ),
+                    if (model.leaveDateFrom != null)
+                      FYDateField(
+                        title: 'Leave Date From',
+                        value: model.leaveDateFrom,
+                        onChanged: (value) => model.leaveDateFrom = value,
+                      ),
+                    const SizedBox(height: 16),
+                    if (model.leaveDateUpto != null)
+                      FYDateField(
+                        title: 'Leave Date Upto',
+                        value: model.leaveDateUpto,
+                        onChanged: (value) => model.leaveDateUpto = value,
+                      ),
                     const SizedBox(
                       height: 16,
                     ),

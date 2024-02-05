@@ -220,7 +220,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     }
 
     setWidgetBusy('todays-attendance');
-    refreshController.refreshCompleted();
 
     _attendanceService
         .getAttendanceStatus(
@@ -235,22 +234,24 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       unsetWidgetBusy('dashboard');
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     });
-    
+    refreshController.refreshCompleted();
+
     try {
       setLoading();
-      Map<String, dynamic> _searchParams = {};
-      _searchParams['date_from'] = formattedStartOfMonths;
-      _searchParams['date_to'] = formattedDate;
+      Map<String, dynamic> searchParams = {};
+      searchParams['date_from'] = formattedStartOfMonths;
+      searchParams['date_to'] = formattedDate;
       _monthlyReport = await _attendanceService.getMonthlyReport(
-        data: _searchParams,
+        data: searchParams,
       );
       _reportSummary =
-          await _attendanceService.getMonthlySummary(data: _searchParams);
-      _searchParams['date_from'] = formattedStartOfMonths;
-      _searchParams['date_to'] = formattedDate;
+          await _attendanceService.getMonthlySummary(data: searchParams);
+      searchParams['date_from'] = formattedStartOfMonths;
+      searchParams['date_to'] = formattedDate;
       _monthlyReport = await _attendanceService.getMonthlyReport(
-        data: _searchParams,
+        data:  searchParams,
       );
+      refreshController.refreshCompleted();
 
       setIdle();
     } catch (e) {

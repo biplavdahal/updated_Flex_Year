@@ -92,7 +92,7 @@ class _NepaliCalanderItemsState extends State<NepaliCalanderItems> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              monthName + "  ",
+                              "$monthName  ",
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
