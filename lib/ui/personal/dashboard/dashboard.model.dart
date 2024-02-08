@@ -412,7 +412,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
         type: DialogType.confirmation,
         title: "Are you sure you want to logout?",
         dismissable: true,
-      ));
+      ));   
       if (isConfirm?.result != null) {
         dialog.showDialog(DialogRequest(
             type: DialogType.progress, title: "Logging you out..."));

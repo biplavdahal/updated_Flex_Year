@@ -17,6 +17,7 @@ import 'package:flex_year_tablet/ui/personal/dashboard/widgets/dashboard_drawer.
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/dashboard_todays_attendance_activities.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/report_item.dart';
 import 'package:flex_year_tablet/ui/personal/dashboard/widgets/utility_item.dart';
+import 'package:flex_year_tablet/ui/personal/date_converter/date_converter.view.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/holidays.model.dart';
 import 'package:flex_year_tablet/ui/personal/holidays/widgets/holiday_item.dart';
 import 'package:flex_year_tablet/ui/personal/leave_requests/leave_requests.view.dart';
@@ -26,6 +27,7 @@ import 'package:flex_year_tablet/ui/personal/payroll/payroll_filter/payroll.filt
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.arguments.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.model.dart';
 import 'package:flex_year_tablet/ui/personal/request_review/request_review.view.dart';
+import 'package:flex_year_tablet/ui/personal/resign/resign_view.dart';
 import 'package:flex_year_tablet/ui/personal/staff_directory/staff_directory.view.dart';
 import 'package:flex_year_tablet/ui/personal/upcoming_birthday/upcoming_birthday.view.dart';
 import 'package:flex_year_tablet/widgets/fy_button.widget.dart';
@@ -104,10 +106,14 @@ class DashboardView extends StatelessWidget {
               header: ClassicHeader(
                 idleText: "Pull down to refresh",
                 releaseText: "Release to refresh",
-                refreshingText: "Refreshing...",
+                refreshingText: "",
                 completeText: "Refresh complete",
                 failedText: "Refre* sh failed",
                 completeIcon: Icon(MdiIcons.checkAll, color: Colors.grey),
+                refreshingIcon: Image.asset(
+                  "assets/images/flex-year.gif",
+                  width: 100,
+                ),
               ),
               enablePullDown: true,
               controller: model.refreshController,
@@ -633,10 +639,28 @@ class DashboardView extends StatelessWidget {
                   model.goto(StaffDirectoryView.tag);
                 },
               );
+            } else if (index == 9) {
+              utilityItem = UtilityItem(
+                title: "Date    Converter",
+                iconColor: Colors.orange,
+                icon: MdiIcons.swapHorizontalBold,
+                onPressed: () {
+                  model.goto(DateConverterView.tag);
+                },
+              );
+            } else if (index == 10) {
+              utilityItem = UtilityItem(
+                title: "Resignation",
+                iconColor: Colors.red,
+                icon: MdiIcons.doorOpen,
+                onPressed: () {
+                  model.goto(ResignView.tag);
+                },
+              );
             }
             return utilityItem;
           },
-          childCount: 9,
+          childCount: 11,
         ),
       ),
     );

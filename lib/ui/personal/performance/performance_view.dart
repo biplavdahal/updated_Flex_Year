@@ -29,37 +29,22 @@ class PerformanceView extends StatelessWidget {
           appBar: AppBar(
             title: const Text("Performance report"),
             bottom: PreferredSize(
+              preferredSize: const Size(double.infinity, 50),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Image.network(
-                          auBaseURL + model.logo.logoPath,
-                          width: 90,
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "Performance review of " +
-                              (model.data['year'] ?? '') +
-                              " " +
-                              (model.data['month_name'] ?? '').toUpperCase(),
-                          style: const TextStyle(color: Colors.white),
-                        )
-                      ],
+                    Text(
+                      "Performance review of " +
+                          (model.data['year'] ?? '') +
+                          " " +
+                          (model.data['month_name'] ?? '').toUpperCase(),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ],
                 ),
               ),
-              preferredSize: const Size(double.infinity, 50),
             ),
           ),
           body: Container(

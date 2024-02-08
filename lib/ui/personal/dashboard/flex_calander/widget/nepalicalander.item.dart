@@ -56,6 +56,7 @@ class _NepaliCalanderItemsState extends State<NepaliCalanderItems> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           CleanNepaliCalendar(
+            language: Language.english,
             controller: _nepaliCalendarController,
             headerDayType: HeaderDayType.halfName,
             initialDate: initialNepaliDate,

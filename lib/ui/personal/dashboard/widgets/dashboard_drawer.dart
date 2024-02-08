@@ -1,7 +1,6 @@
 import 'package:bestfriend/bestfriend.dart';
 import 'package:flex_year_tablet/managers/dialog/dialog.model.dart';
 import 'package:flex_year_tablet/services/authentication.service.dart';
-import 'package:flex_year_tablet/services/exit_process.service.dart';
 import 'package:flex_year_tablet/theme.dart';
 import 'package:flex_year_tablet/ui/personal/add_attendance/add_attendance.view.dart';
 import 'package:flex_year_tablet/ui/personal/attendance_correction/attendance_correction.view.dart';
