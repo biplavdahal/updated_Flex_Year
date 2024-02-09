@@ -249,7 +249,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       searchParams['date_from'] = formattedStartOfMonths;
       searchParams['date_to'] = formattedDate;
       _monthlyReport = await _attendanceService.getMonthlyReport(
-        data:  searchParams,
+        data: searchParams,
       );
       refreshController.refreshCompleted();
 
@@ -374,9 +374,17 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
         Fluttertoast.showToast(
             msg: 'You have Successfully lunchin',
             backgroundColor: Colors.green);
-      } else {
+      } else if (status == 'lunchout') {
         Fluttertoast.showToast(
             msg: 'You have successfully lunchout',
+            backgroundColor: Colors.green);
+      } else if (status == 'breakin') {
+        Fluttertoast.showToast(
+            msg: 'You have successfully break in',
+            backgroundColor: Colors.green);
+      } else {
+        Fluttertoast.showToast(
+            msg: 'You have successfully break out',
             backgroundColor: Colors.green);
       }
     } catch (e) {
@@ -412,7 +420,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
         type: DialogType.confirmation,
         title: "Are you sure you want to logout?",
         dismissable: true,
-      ));   
+      ));
       if (isConfirm?.result != null) {
         dialog.showDialog(DialogRequest(
             type: DialogType.progress, title: "Logging you out..."));

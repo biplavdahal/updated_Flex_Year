@@ -45,6 +45,7 @@ class LeaveRequestView extends StatelessWidget {
       builder: (ctx, model, child) {
         return Scaffold(
           appBar: AppBar(
+            centerTitle: true,
             title: const Text('Leave Requests'),
           ),
 

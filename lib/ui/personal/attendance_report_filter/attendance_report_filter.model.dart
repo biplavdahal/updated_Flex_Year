@@ -322,7 +322,6 @@ class AttendanceReportFilterModel extends ViewModel
       ),
     );
 
-
     if (_response != null) {
       if ((_response as Set<CompanyStaffData>).isNotEmpty) {
         _selectedStaffs = _response;

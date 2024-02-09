@@ -49,7 +49,7 @@ class AttendanceButton extends StatelessWidget {
                           Icon(
                             icon,
                             color: Colors.white,
-                            size: isTablet ? 64 : null,
+                            size: isTablet ? 64 : 20,
                           ),
                           const SizedBox(
                             width: 25,

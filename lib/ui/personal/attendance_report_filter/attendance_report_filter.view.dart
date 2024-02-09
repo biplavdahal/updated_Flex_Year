@@ -57,10 +57,20 @@ class AttendanceReportFilterView extends StatelessWidget {
                       ),
                     const SizedBox(height: 16),
                     if (locator<AuthenticationService>()
-                            .user!
-                            .role
-                            ?.toLowerCase() ==
-                        "manager")
+                                .user!
+                                .role
+                                ?.toLowerCase() ==
+                            'manager' ||
+                        locator<AuthenticationService>()
+                                .user!
+                                .role
+                                ?.toLowerCase() ==
+                            'admin' ||
+                        locator<AuthenticationService>()
+                                .user!
+                                .role
+                                ?.toLowerCase() ==
+                            'super admin')
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Wrap(

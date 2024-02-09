@@ -422,29 +422,144 @@ class DashboardView extends StatelessWidget {
                 ),
                 GridView.count(
                   physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
+                  crossAxisCount: 3,
                   shrinkWrap: true,
                   childAspectRatio: 3.5,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                   children: [
                     AttendanceButton(
-                      titles: '',
-                      title: "Check In",
-                      icon: MdiIcons.clockStart,
-                      color: Colors.green,
-                      onPressed: model.attendanceStatus?.checkIn == null ||
-                              model.attendanceStatus?.checkIn == 1
-                          ? () {
-                              model.onAttendanceButtonPressed('checkin',
-                                  model.attendanceMessageController.toString());
-                            }
-                          : null,
-                    ),
+                        titles: '',
+                        title: model.attendanceStatus?.checkIn == 1
+                            ? 'Start'
+                            : 'Resume',
+                        icon: model.attendanceStatus?.checkIn == 1
+                            ? MdiIcons.clock
+                            : MdiIcons.play,
+                        color: Colors.green,
+                        onPressed: model.attendanceStatus?.checkIn == null ||
+                                model.attendanceStatus?.checkIn == 1
+                            ? () {
+                                model.onAttendanceButtonPressed(
+                                    'checkin',
+                                    model.attendanceMessageController
+                                        .toString());
+                              }
+                            : model.attendanceStatus?.lunchOut == 1
+                                ? () {
+                                    model.onAttendanceButtonPressed(
+                                        'lunchout',
+                                        model.attendanceMessageController
+                                            .toString());
+                                  }
+                                : model.attendanceStatus?.onsiteOut == 1
+                                    ? () {
+                                        model.onAttendanceButtonPressed(
+                                            'onsiteout',
+                                            model.attendanceMessageController
+                                                .toString());
+                                      }
+                                    : model.attendanceStatus?.breakOut == 1
+                                        ? () {
+                                            model.onAttendanceButtonPressed(
+                                                'breakout',
+                                                model.attendanceStatus
+                                                    .toString());
+                                          }
+                                        : null),
+                    if (model.attendanceStatus?.checkIn == 0)
+                      PopupMenuButton(
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            onTap: model.attendanceStatus?.lunchIn == 1
+                                ? () {
+                                    model.onAttendanceButtonPressed(
+                                        'lunchin',
+                                        model.attendanceMessageController
+                                            .toString());
+                                  }
+                                : null,
+                            value: 1,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  MdiIcons.food,
+                                  color: Colors.orange,
+                                  size: 20,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                const Text(
+                                  'Lunch',
+                                  style: TextStyle(
+                                      color: AppColor.primary, fontSize: 14.5),
+                                )
+                              ],
+                            ),
+                          ),
+                          PopupMenuItem(
+                            onTap: model.attendanceStatus?.breakIn == 1
+                                ? () {
+                                    model.onAttendanceButtonPressed(
+                                        'breakin',
+                                        model.attendanceMessageController
+                                            .toString());
+                                  }
+                                : null,
+                            value: 2,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  MdiIcons.link,
+                                  color: Colors.red,
+                                  size: 20,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                const Text(
+                                  'Break',
+                                  style: TextStyle(
+                                      color: AppColor.primary, fontSize: 14.5),
+                                )
+                              ],
+                            ),
+                          ),
+                          PopupMenuItem(
+                            onTap: model.attendanceStatus?.onsiteIn == 1
+                                ? () {
+                                    model.onAttendanceButtonPressed(
+                                        'onsitein',
+                                        model.attendanceMessageController
+                                            .toString());
+                                  }
+                                : null,
+                            value: 2,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  MdiIcons.bicycle,
+                                  color: AppColor.primary,
+                                  size: 20,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                const Text(
+                                  'Onsite',
+                                  style: TextStyle(
+                                      color: AppColor.primary, fontSize: 14.5),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     AttendanceButton(
                       titles: "",
-                      title: "Check Out",
-                      icon: MdiIcons.clockEnd,
+                      title: "Stop",
+                      icon: MdiIcons.stop,
                       color: Colors.red,
                       onPressed: model.attendanceStatus?.checkOut == 1
                           ? () {
@@ -452,65 +567,7 @@ class DashboardView extends StatelessWidget {
                                   model.attendanceMessageController.toString());
                             }
                           : null,
-                    ),
-                    if (model.attendanceStatus?.checkIn == 0)
-                      AttendanceButton(
-                        titles: "",
-                        title: "Lunch In",
-                        icon: MdiIcons.food,
-                        color: AppColor.primary,
-                        onPressed: model.attendanceStatus?.lunchIn == 1
-                            ? () {
-                                model.onAttendanceButtonPressed(
-                                    'lunchin',
-                                    model.attendanceMessageController
-                                        .toString());
-                              }
-                            : null,
-                      ),
-                    if (model.attendanceStatus?.checkIn == 0)
-                      AttendanceButton(
-                        titles: "",
-                        title: "Lunch Out",
-                        icon: MdiIcons.foodOff,
-                        color: AppColor.primary,
-                        onPressed: model.attendanceStatus?.lunchOut == 1
-                            ? () {
-                                model.onAttendanceButtonPressed(
-                                    'lunchout',
-                                    model.attendanceMessageController
-                                        .toString());
-                              }
-                            : null,
-                      ),
-                    if (model.attendanceStatus?.checkIn == 0)
-                      AttendanceButton(
-                          titles: "",
-                          title: "Onsite In",
-                          icon: MdiIcons.bicycle,
-                          color: AppColor.primary,
-                          onPressed: model.attendanceStatus?.onsiteIn == 1
-                              ? () {
-                                  model.onAttendanceButtonPressed(
-                                      'onsitein',
-                                      model.attendanceMessageController
-                                          .toString());
-                                }
-                              : null),
-                    if (model.attendanceStatus?.checkIn == 0)
-                      AttendanceButton(
-                          titles: "",
-                          title: "Onsite Out",
-                          icon: MdiIcons.bicycle,
-                          color: AppColor.primary,
-                          onPressed: model.attendanceStatus?.onsiteOut == 1
-                              ? () {
-                                  model.onAttendanceButtonPressed(
-                                      'onsiteout',
-                                      model.attendanceMessageController
-                                          .toString());
-                                }
-                              : null),
+                    )
                   ],
                 ),
                 const SizedBox(
