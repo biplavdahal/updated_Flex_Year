@@ -47,6 +47,86 @@ class LeaveRequestView extends StatelessWidget {
           appBar: AppBar(
             centerTitle: true,
             title: const Text('Leave Requests'),
+            
+            actions: [
+              
+              IconButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          content: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Padding(
+                              padding: EdgeInsets.all(8),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        MdiIcons.check,
+                                        color: Colors.green,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text('=  Approved')
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        MdiIcons.close,
+                                        color: Colors.red,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text('=  Declined')
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.edit,
+                                        color: AppColor.primary,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text('=  Edit')
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        MdiIcons.delete,
+                                        color: Colors.red,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text('=  Delete')
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      });
+                },
+                icon: Icon(MdiIcons.information),
+                tooltip: 'Approved  \n Declined \n Edit \n Delete',
+              ),
+              const SizedBox(
+                width: 10,
+              )
+            ],
           ),
 
           floatingActionButton: Stack(

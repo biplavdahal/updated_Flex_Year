@@ -422,7 +422,10 @@ class DashboardView extends StatelessWidget {
                 ),
                 GridView.count(
                   physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 3,
+                  crossAxisCount: model.attendanceStatus?.checkIn == 1 ||
+                          model.attendanceStatus?.checkIn == null
+                      ? 2
+                      : 3,
                   shrinkWrap: true,
                   childAspectRatio: 3.5,
                   mainAxisSpacing: 10,
@@ -430,7 +433,8 @@ class DashboardView extends StatelessWidget {
                   children: [
                     AttendanceButton(
                         titles: '',
-                        title: model.attendanceStatus?.checkIn == 1
+                        title: model.attendanceStatus?.checkIn == 1 ||
+                                model.attendanceStatus?.checkIn == null
                             ? 'Start'
                             : 'Resume',
                         icon: model.attendanceStatus?.checkIn == 1
@@ -780,7 +784,9 @@ class DashboardView extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  convertIntoHrs(model.WorkingHours?.toString() ?? 'N/A'),
+                 model.WorkingHours!.isNotEmpty
+                      ? convertIntoHrs(model.WorkingHours!.toString())
+                      : 'N/A',
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 12,
@@ -871,7 +877,7 @@ class DashboardView extends StatelessWidget {
     DateTime now = DateTime.now();
     Duration remainingTime =
         checkinTime.add(const Duration(hours: 8, minutes: 30)).difference(now);
-    Color progressBarColor = progress >= 1.0 ? Colors.green : AppColor.primary;
+    Color progressBarColor = progress >= 1.0 ? Colors.green : Colors.grey;
 
     Duration difference = checkoutTime.difference(checkinTime);
 
@@ -885,7 +891,7 @@ class DashboardView extends StatelessWidget {
                 : "Remaining Time: ${remainingTime.inHours}h ${remainingTime.inMinutes.remainder(60)}m ${remainingTime.inSeconds.remainder(60)}s",
         style: TextStyle(
           fontSize: 14.0,
-          color: Colors.grey,
+          color: progressBarColor,
           fontWeight: FontWeight.bold,
         ),
       ),

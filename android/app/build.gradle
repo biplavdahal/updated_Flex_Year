@@ -53,8 +53,8 @@ android {
         applicationId "work.flexyear.flex_year_tablet"
         minSdkVersion 23
         targetSdkVersion 33
-        versionCode 14
-        versionName "1.2.1"
+        versionCode 16
+        versionName "1.2.3"
         multiDexEnabled true
     }
 

@@ -91,8 +91,9 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
   late String? absent = _reportSummary[0].absent.toString();
 
   MyClass() {
-    WorkingHours =
-        _reportSummary.isNotEmpty ? _reportSummary[0].workingHours : null;
+    WorkingHours = _reportSummary.isNotEmpty
+        ? _reportSummary[0].workingHours.toString()
+        : null;
     Leave = _reportSummary.isNotEmpty
         ? _reportSummary[0].leaveTotal.toString()
         : null;
@@ -192,6 +193,7 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
     } catch (e) {
       rethrow;
     }
+
     _staffBirthdayData = await _notificationService.getStaffBirthday();
 
     _attendanceForgot = null;
@@ -234,7 +236,6 @@ class DashboardModel extends ViewModel with DialogMixin, SnackbarMixin {
       unsetWidgetBusy('dashboard');
       snackbar.displaySnackbar(SnackbarRequest.of(message: e.toString()));
     });
-    refreshController.refreshCompleted();
 
     try {
       setLoading();

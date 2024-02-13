@@ -521,18 +521,27 @@ class DashboardDrawer extends StatelessWidget {
                 color: Colors.red,
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
+
             const ListTile(
-              title: Text(
-                '       © 2023, All Rights Reserved | Design by Bent Ray Technologies',
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 10,
+                title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '    © 2023, All Rights Reserved  |',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 10,
+                  ),
                 ),
-              ),
-            )
+                Text(
+                  'Design by Bent Ray Technologies',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 10,
+                  ),
+                ),
+              ],
+            ))
           ],
         ),
       ),
